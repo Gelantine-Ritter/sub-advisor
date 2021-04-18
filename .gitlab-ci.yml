@@ -1,0 +1,44 @@
+cache:
+  paths:
+
+stages:
+  - build
+  - quality_assurance
+  - tests
+  - deploy
+
+build:project:
+  stage: build
+  script:
+    - echo "build project"
+  artifacts:
+    paths:
+
+build:backend:
+  stage: build
+  script:
+    - cd ./backend && echo "build backend"
+  artifacts:
+    paths:
+
+build:frontend:
+    stage: build
+    script:
+      - cd ./frontend && echo "build frontend"
+    artifacts:
+      paths:
+
+lint:
+  stage: quality_assurance
+  script:
+    - echo "linting code structure"
+
+test:
+  stage: tests
+  script: 
+    - echo "testing everything"
+
+deploy:
+  stage: deploy
+  script:
+    - echo "deploy everything"
