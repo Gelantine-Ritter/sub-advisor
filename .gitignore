@@ -1,0 +1,6 @@
+# (hidden) program folders #
+.idea
+/node-modules
+
+# mac-stuff
+.DS_store
