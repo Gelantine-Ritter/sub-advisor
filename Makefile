@@ -7,7 +7,10 @@ stop-be:
 test:
 	echo "testing whole app"
 
-d-build-be:
+mvn-package-and-clean:
+	cd backend && ./mvnw clean && ./mvnw package
+
+d-build-be: mvn-package-and-clean
 	cd backend && docker build -t springio/gs-spring-boot-docker .
 
 d-start-be:
