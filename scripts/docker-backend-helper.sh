@@ -7,6 +7,8 @@ CONTAINER_RUNNING=$(docker ps -q -f name=$SUBADVISOR_CONTAINER)
 CONTAINER_PRESENT=$(docker ps -aq -f name=$SUBADVISOR_CONTAINER)
 AMOUNT_CONTAINERS_PRESENT=0;
 AMOUNT_CONTAINERS_RUNNING=0;
+IMAGE_PRESENT=$(docker images $SUBADVISOR_IMAGE)
+
 
 STEP=1
 SUB_COMMAND="[SUB_COMMAND] $STEP:"
@@ -27,6 +29,10 @@ count_containers_running() {
   for c in $CONTAINER_RUNNING; do
     ((AMOUNT_CONTAINERS_RUNNING=$AMOUNT_CONTAINERS_RUNNING+1))
   done
+}
+
+count_images(){
+  f
 }
 
 docker_helper() {
@@ -90,10 +96,10 @@ clean() {
       echo "$SUB_COMMAND no sub-advisor-container present"  && increase
     fi
 
-    if [ $IMAGE_PRESENT ]
+    if [ "$IMAGE_PRESENT" ]
     then
       echo "$SUB_COMMAND remove all images" && increase
-      docker rmi $IMAGE_PRESENT
+      docker rmi "$SUBADVISOR_IMAGE"
       echo "$SUB_COMMAND removed all images" && increase
     else
       echo "$SUB_COMMAND no sub-advisor-image present"  && increase
