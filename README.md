@@ -6,9 +6,9 @@ Build the Image with:
 make d-build
 ```
 
-Then,run a container with:
+Then, run a container with:
 ```bash
-make d-start
+make d-run
 ```
 You can also stop and restart running container with:
 ```bash
