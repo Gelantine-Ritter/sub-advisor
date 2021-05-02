@@ -36,6 +36,7 @@ docker_helper() {
       start) start; return ;;
       clean) clean; return ;;
       stop) stop; return ;;
+      run) run; return ;;
     esac
 }
 
@@ -97,6 +98,16 @@ clean() {
     else
       echo "$SUB_COMMAND no sub-advisor-image present"  && increase
     fi
+}
+
+run() {
+  echo "$SUB_COMMAND run container from image" && increase
+  docker run -p 8080:8080 -d --name "$SUBADVISOR_CONTAINER" "$SUBADVISOR_IMAGE"
+  count_containers_running
+  if [ $CONTAINER_RUNNING ]
+  then
+    echo "$SUB_COMMAND container started sucessfully in detached-mode" && increase
+  fi
 }
 
 

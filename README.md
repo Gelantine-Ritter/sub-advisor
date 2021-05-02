@@ -16,7 +16,15 @@ make d-stop
 make d-start
 ```
 
-If you run in a problem, you can stop and remove al running container and images with:
+If you run in a problem, you can stop and remove all running container and images with:
 ```bash
 make d-clean
+```
+You can also restart your container with:
+```bash
+make d-restart
+```
+A good way to start the working day is to clean everything, build a new Image and start a fresh container with:
+```bash
+make d-complete
 ```

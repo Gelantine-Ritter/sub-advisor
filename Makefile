@@ -14,7 +14,7 @@ d-build:
 	cd backend && docker build -t $(SUBADVISOR_IMAGE) .
 
 d-run:
-	docker run -p 8080:8080 --name $(SUBADVISOR_CONTAINER) $(SUBADVISOR_IMAGE)
+	source scripts/docker-backend-helper.sh && docker_helper run
 
 d-start:
 	source scripts/docker-backend-helper.sh && docker_helper start
@@ -25,7 +25,9 @@ d-stop:
 d-clean:
 	source scripts/docker-backend-helper.sh && docker_helper clean
 
-d-complete: d-clean
-	d-build
+d-complete: d-clean d-build d-run
+
+d-restart: d-stop d-start
+
 
 
