@@ -8,24 +8,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/venues")
 public class VenueController {
 
     @Autowired
     IVenueService venueService;
 
-    @GetMapping("/venues")
+    @GetMapping("/")
     @ResponseBody
     public List<Venue> getAllVenues(){
         return venueService.getAllVenues();
     }
 
-    @PostMapping("/venues")
+    @PostMapping("/")
     @ResponseBody
     public void createVenue ( Venue venue) {
         venueService.createVenue(venue);
     }
 
-    @GetMapping("/venues/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public Venue getVenueById(@PathVariable(value="id") Long venueId){
         Optional<Venue> venue_opt = venueService.getVenueById(venueId);
@@ -35,7 +36,7 @@ public class VenueController {
         return null;
     }
 
-    @DeleteMapping("/venues/{id}")
+    @DeleteMapping("/{id}")
     @ResponseBody
     public void deleteVenueById(@PathVariable(value="id") Long venueId){
         venueService.deleteVenueById(venueId);

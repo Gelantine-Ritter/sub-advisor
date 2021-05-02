@@ -11,12 +11,16 @@ public class Venue {
     private Long id;
 
     private String name;
+    private String email;
+    private String info;
 
     public Venue () {}
 
-    public Venue(Long id, String name) {
+    public Venue(Long id, String name, String email, String info) {
         this.id = id;
         this.name = name;
+        this.email = email;
+        this.info = info;
     }
 
     public Long getId() {
@@ -31,6 +35,22 @@ public class Venue {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,7 +61,7 @@ public class Venue {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, info);
     }
 
     @Override
