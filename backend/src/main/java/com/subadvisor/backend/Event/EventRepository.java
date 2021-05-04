@@ -1,6 +1,6 @@
-package com.subadvisor.backend.repository;
+package com.subadvisor.backend.Event;
 
-import com.subadvisor.backend.model.Event;
+import com.subadvisor.backend.Event.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

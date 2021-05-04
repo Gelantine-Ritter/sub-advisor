@@ -1,4 +1,4 @@
-package com.subadvisor.backend.model;
+package com.subadvisor.backend.Event;
 
 import javax.persistence.*;
 import java.util.Objects;

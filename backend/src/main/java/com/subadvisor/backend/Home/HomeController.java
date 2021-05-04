@@ -1,4 +1,4 @@
-package com.subadvisor.backend;
+package com.subadvisor.backend.Home;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

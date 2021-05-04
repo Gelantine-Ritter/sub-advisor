@@ -1,33 +1,27 @@
-package com.subadvisor.backend.controller;
+package com.subadvisor.backend.Venue;
 
-import com.subadvisor.backend.model.Venue;
-import com.subadvisor.backend.service.IVenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/venues")
 public class VenueController {
 
     @Autowired
     IVenueService venueService;
 
-    @GetMapping("/")
-    @ResponseBody
+    @GetMapping("/venues")
     public List<Venue> getAllVenues(){
         return venueService.getAllVenues();
     }
 
-    @PostMapping("/")
-    @ResponseBody
-    public void createVenue ( Venue venue) {
+    @PostMapping(path = "/venues")
+    public void createVenue (@RequestBody Venue venue) {
         venueService.createVenue(venue);
     }
 
-    @GetMapping("/{id}")
-    @ResponseBody
+    @GetMapping("/venues/{id}")
     public Venue getVenueById(@PathVariable(value="id") Long venueId){
         Optional<Venue> venue_opt = venueService.getVenueById(venueId);
         if (venue_opt.isPresent()){
@@ -36,8 +30,7 @@ public class VenueController {
         return null;
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseBody
+    @DeleteMapping("/venues/{id}")
     public void deleteVenueById(@PathVariable(value="id") Long venueId){
         venueService.deleteVenueById(venueId);
     }

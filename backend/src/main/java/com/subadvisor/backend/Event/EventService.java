@@ -1,8 +1,5 @@
-package com.subadvisor.backend.service;
+package com.subadvisor.backend.Event;
 
-import com.subadvisor.backend.model.Event;
-import com.subadvisor.backend.model.Venue;
-import com.subadvisor.backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EventService implements IEventService{
+public class EventService implements IEventService {
 
     @Autowired
     EventRepository repository;

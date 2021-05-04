@@ -1,6 +1,6 @@
-package com.subadvisor.backend.service;
+package com.subadvisor.backend.Event;
 
-import com.subadvisor.backend.model.Event;
+import com.subadvisor.backend.Event.Event;
 import java.util.List;
 import java.util.Optional;
 

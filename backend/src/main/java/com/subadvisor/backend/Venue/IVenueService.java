@@ -1,6 +1,6 @@
-package com.subadvisor.backend.service;
+package com.subadvisor.backend.Venue;
 
-import com.subadvisor.backend.model.Venue;
+import com.subadvisor.backend.Venue.Venue;
 import java.util.List;
 import java.util.Optional;
 

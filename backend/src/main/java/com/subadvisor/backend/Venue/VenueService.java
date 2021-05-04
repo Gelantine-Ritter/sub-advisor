@@ -1,7 +1,5 @@
-package com.subadvisor.backend.service;
+package com.subadvisor.backend.Venue;
 
-import com.subadvisor.backend.model.Venue;
-import com.subadvisor.backend.repository.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
