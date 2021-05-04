@@ -1,4 +1,4 @@
-package com.subadvisor.backend.Event;
+package com.subadvisor.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ public class EventController {
 
     @GetMapping("/events/")
     public List<Event> getAllEvents() {
+
         return eventService.getAllEvents();
     }
 

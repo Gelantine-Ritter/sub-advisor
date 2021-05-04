@@ -1,4 +1,4 @@
-package com.subadvisor.backend.Event;
+package com.subadvisor.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

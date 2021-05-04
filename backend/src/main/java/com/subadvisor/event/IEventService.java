@@ -1,6 +1,6 @@
-package com.subadvisor.backend.Event;
+package com.subadvisor.event;
 
-import com.subadvisor.backend.Event.Event;
+import com.subadvisor.event.Event;
 import java.util.List;
 import java.util.Optional;
 

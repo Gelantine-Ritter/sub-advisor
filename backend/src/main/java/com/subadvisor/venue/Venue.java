@@ -1,10 +1,9 @@
-package com.subadvisor.backend.Venue;
+package com.subadvisor.venue;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="venues")
 public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

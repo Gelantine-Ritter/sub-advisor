@@ -1,6 +1,6 @@
-package com.subadvisor.backend.Venue;
+package com.subadvisor.venue;
 
-import com.subadvisor.backend.Venue.Venue;
+import com.subadvisor.venue.Venue;
 import java.util.List;
 import java.util.Optional;
 

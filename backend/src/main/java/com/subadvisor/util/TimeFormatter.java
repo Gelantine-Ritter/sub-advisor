@@ -1,4 +1,4 @@
-package com.subadvisor.backend.util;
+package com.subadvisor.util;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

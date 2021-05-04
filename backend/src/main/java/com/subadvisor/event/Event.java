@@ -1,10 +1,9 @@
-package com.subadvisor.backend.Event;
+package com.subadvisor.event;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="events")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
