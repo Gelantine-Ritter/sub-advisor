@@ -25,6 +25,10 @@ count_containers_present() {
   done
 }
 
+container_running() {
+  docker ps -q -f name=$SUBADVISOR_CONTAINER
+}
+
 count_containers_running() {
   for c in $CONTAINER_RUNNING; do
     ((AMOUNT_CONTAINERS_RUNNING=$AMOUNT_CONTAINERS_RUNNING+1))
@@ -108,11 +112,14 @@ clean() {
 
 run() {
   echo "$SUB_COMMAND run container from image" && increase
-  docker run -p 8080:8080 -d --name "$SUBADVISOR_CONTAINER" "$SUBADVISOR_IMAGE"
+  docker run -p 8080:8080 -d --name "$SUBADVISOR_CONTAINER" "$SUBADVISOR_IMAGE" & process_id=$!
+  wait $process_id
   count_containers_running
-  if [ $CONTAINER_RUNNING ]
+  if [ "$(docker ps -q -f name=$SUBADVISOR_CONTAINER)" ]
   then
     echo "$SUB_COMMAND container started sucessfully in detached-mode" && increase
+  else
+    echo "$SUB_COMMAND Something went wrong." && increase
   fi
 }
 
