@@ -1,22 +1,21 @@
 package com.subadvisor.venue;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Venue {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
+    private @Id @GeneratedValue Long id;
     private String name;
     private String email;
     private String info;
 
     public Venue () {}
 
-    public Venue(Long id, String name, String email, String info) {
-        this.id = id;
+    public Venue(String name, String email, String info) {
         this.name = name;
         this.email = email;
         this.info = info;

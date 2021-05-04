@@ -1,6 +1,5 @@
 package com.subadvisor.venue;
 
-import com.subadvisor.venue.Venue;
 import java.util.List;
 import java.util.Optional;
 

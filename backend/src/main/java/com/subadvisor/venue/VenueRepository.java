@@ -1,6 +1,5 @@
 package com.subadvisor.venue;
 
-import com.subadvisor.venue.Venue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
