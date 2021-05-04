@@ -1,4 +1,4 @@
-package com.subadvisor.backend;
+package com.subadvisor.home;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

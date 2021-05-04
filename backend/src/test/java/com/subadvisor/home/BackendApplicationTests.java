@@ -1,4 +1,4 @@
-package com.subadvisor.backend;
+package com.subadvisor.home;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
