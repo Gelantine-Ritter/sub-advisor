@@ -14,16 +14,16 @@ d-build:
 	cd backend && docker build -t $(SUBADVISOR_IMAGE) .
 
 d-run:
-	source scripts/docker-backend-helper.sh && docker_helper run
+	. scripts/docker-backend-helper.sh && docker_helper run
 
 d-start:
-	source scripts/docker-backend-helper.sh && docker_helper start
+	. scripts/docker-backend-helper.sh && docker_helper start
 
 d-stop:
-	source scripts/docker-backend-helper.sh && docker_helper stop
+	. scripts/docker-backend-helper.sh && docker_helper stop
 
 d-clean:
-	source scripts/docker-backend-helper.sh && docker_helper clean
+	. scripts/docker-backend-helper.sh && docker_helper clean
 
 d-complete: d-clean d-build d-run
 
