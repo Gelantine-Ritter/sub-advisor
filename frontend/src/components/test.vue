@@ -1,7 +1,13 @@
 <template></template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      firstName: 'Anna',
+    }
+  },
+}
 </script>
 
 <style></style>
