@@ -7,6 +7,15 @@ run-be:
 stop-be:
 	cd backend && ./mvnw clean spring-boot:stop
 
+test-unit:
+	cd backend && ./mvnw clean && ./mvnw test
+
+test-all:
+	cd backend && ./mvnw clean && ./mvnw verify
+
+test-it:
+	 cd backend && mvn clean test-compile failsafe:integration-test
+
 mvn-package-and-clean:
 	cd backend && ./mvnw clean && ./mvnw package
 
@@ -26,7 +35,6 @@ d-clean:
 	. scripts/docker-backend-helper.sh && docker_helper clean
 
 d-complete: d-clean d-build d-run
-
 d-restart: d-stop d-start
 
 
