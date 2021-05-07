@@ -3,8 +3,8 @@ package com.subadvisor.venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VenueService implements IVenueService {
@@ -23,8 +23,11 @@ public class VenueService implements IVenueService {
     }
 
     @Override
-    public Optional<Venue> getVenueById(Long venueId) {
-        return repository.findById(venueId);
+    public Venue getVenueById(Long venueId) {
+
+        return repository
+                .findById(venueId)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

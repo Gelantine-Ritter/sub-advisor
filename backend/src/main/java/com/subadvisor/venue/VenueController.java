@@ -23,11 +23,7 @@ public class VenueController {
 
     @GetMapping("/venues/{id}")
     public Venue getVenueById(@PathVariable(value="id") Long venueId){
-        Optional<Venue> venue_opt = venueService.getVenueById(venueId);
-        if (venue_opt.isPresent()){
-            return venue_opt.get();
-        }
-        return null;
+        return venueService.getVenueById(venueId);
     }
 
     @DeleteMapping("/venues/{id}")
