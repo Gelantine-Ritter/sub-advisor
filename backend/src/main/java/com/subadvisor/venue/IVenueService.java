@@ -8,4 +8,5 @@ public interface IVenueService {
     void createVenue(Venue venue);
     Optional<Venue> getVenueById(Long venueId);
     void deleteVenueById(Long venueId);
+    void updateVenueById(Venue newVenue, Long venueId);
 }

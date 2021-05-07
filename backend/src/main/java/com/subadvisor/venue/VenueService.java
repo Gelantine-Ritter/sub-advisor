@@ -13,7 +13,7 @@ public class VenueService implements IVenueService {
     VenueRepository repository;
 
     @Override
-    public List<Venue> getAllVenues(){
+    public List<Venue> getAllVenues() {
         return repository.findAll();
     }
 
@@ -23,12 +23,29 @@ public class VenueService implements IVenueService {
     }
 
     @Override
-    public Optional<Venue> getVenueById(Long venueId){
+    public Optional<Venue> getVenueById(Long venueId) {
         return repository.findById(venueId);
     }
 
     @Override
     public void deleteVenueById(Long venueId) {
         repository.deleteById(venueId);
+    }
+
+    @Override
+    public void updateVenueById(Venue newVenue, Long venueId) {
+
+        repository.findById(venueId)
+                .map(venue ->
+                        repository.save(venue
+                                .setName(newVenue.getName())
+                                .setEmail(newVenue.getEmail())
+                                .setInfo(newVenue.getInfo())
+                        ))
+                .orElseGet(() ->
+                        repository.save(
+                                newVenue.setId(venueId)
+                        )
+                );
     }
 }
