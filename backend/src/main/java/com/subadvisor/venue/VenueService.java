@@ -18,8 +18,8 @@ public class VenueService implements IVenueService {
     }
 
     @Override
-    public void createVenue(Venue venue) {
-        repository.save(venue);
+    public Venue createVenue(Venue venue) {
+        return repository.save(venue);
     }
 
     @Override
@@ -36,9 +36,9 @@ public class VenueService implements IVenueService {
     }
 
     @Override
-    public void updateVenueById(Venue newVenue, Long venueId) {
+    public Venue updateVenueById(Venue newVenue, Long venueId) {
 
-        repository.findById(venueId)
+        return repository.findById(venueId)
                 .map(venue ->
                         repository.save(venue
                                 .setName(newVenue.getName())
@@ -50,5 +50,12 @@ public class VenueService implements IVenueService {
                                 newVenue.setId(venueId)
                         )
                 );
+    }
+
+    @Override
+    public Venue findByName(String name) {
+
+        return repository.findByName(name);
+
     }
 }
