@@ -16,10 +16,11 @@ build-project:
 build-backend:
   stage: build
   script:
-    - cd ./backend && ./mvnw package
+    - cd ./backend && ./mvnw package -Dmaven.test.skip && ./mvnw test-compile
+
   artifacts:
     paths:
-      - backend/target/*.jar
+      - backend/target/
 
 build-frontend:
     stage: build
@@ -35,8 +36,8 @@ lint:
 
 test-backend-IT:
   stage: tests
-  script: 
-    - cd backend && ./mvnw test-compile failsafe:integration-test
+  script:
+    - cd ./backend && ./mvnw failsafe:integration-test
 
 deploy:
   stage: deploy
