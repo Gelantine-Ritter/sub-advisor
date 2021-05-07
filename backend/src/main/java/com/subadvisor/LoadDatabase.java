@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 class LoadDatabase {
 
-
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
@@ -21,5 +20,4 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
         };
     }
-
 }
