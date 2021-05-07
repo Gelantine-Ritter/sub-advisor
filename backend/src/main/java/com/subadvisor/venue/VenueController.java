@@ -9,7 +9,7 @@ import java.util.Optional;
 public class VenueController {
 
     @Autowired
-    IVenueService venueService;
+    VenueService venueService;
 
     @GetMapping("/venues")
     public List<Venue> getAllVenues(){
@@ -33,5 +33,10 @@ public class VenueController {
     @DeleteMapping("/venues/{id}")
     public void deleteVenueById(@PathVariable(value="id") Long venueId){
         venueService.deleteVenueById(venueId);
+    }
+
+    @PutMapping("/venues/{id}")
+    public void updateVenueById(@RequestBody Venue newVenue, @PathVariable Long id) {
+        venueService.updateVenueById(newVenue, id);
     }
 }
