@@ -27,7 +27,7 @@ public class VenueService implements IVenueService {
 
         return repository
                 .findById(venueId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException(("No Venue found for the id " + venueId)));
     }
 
     @Override
