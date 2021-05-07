@@ -29,22 +29,26 @@ public class Venue {
         return name;
     }
 
-    public Venue setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public Venue setEmail(String email) {
-        this.email = email;
+    public String getInfo() {
+        return info;
+    }
+
+    public Venue setId(Long id) {
+        this.id = id;
         return this;
     }
 
-    public String getInfo() {
-        return info;
+    public Venue setName(String name) {
+        this.name = name;
+        return this;
+    }
+    public Venue setEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     public Venue setInfo(String info) {
