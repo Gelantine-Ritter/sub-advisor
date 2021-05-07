@@ -1,5 +1,4 @@
-cache:
-  paths:
+image: maven:3.8.1-jdk-11
 
 stages:
   - build
@@ -15,7 +14,6 @@ build-project:
     paths:
 
 build-backend:
-  image: maven:3.8.1-jdk-11
   stage: build
   script:
     - cd ./backend && ./mvnw package
@@ -36,10 +34,9 @@ lint:
     - echo "linting code structure"
 
 test-backend-IT:
-  image: openjdk:11-jre-slim-buster
   stage: tests
   script: 
-    - cd backend && ./mvnw failsafe:integration-test
+    - cd backend && ./mvnw test-compile failsafe:integration-test
 
 deploy:
   stage: deploy
