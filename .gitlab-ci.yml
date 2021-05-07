@@ -7,21 +7,23 @@ stages:
   - tests
   - deploy
 
-build:project:
+build-project:
   stage: build
   script:
     - echo "build project"
   artifacts:
     paths:
 
-build:backend:
+build-backend:
+  image: maven:3.8.1-jdk-11
   stage: build
   script:
-    - cd ./backend && echo "build backend"
+    - cd ./backend && ./mvnw package
   artifacts:
     paths:
+      - backend/target/*.jar
 
-build:frontend:
+build-frontend:
     stage: build
     script:
       - cd ./frontend && echo "build frontend"
@@ -33,10 +35,11 @@ lint:
   script:
     - echo "linting code structure"
 
-test:
+test-backend-IT:
+  image: openjdk:11-jre-slim-buster
   stage: tests
   script: 
-    - echo "testing everything"
+    - cd backend && ./mvnw failsafe:integration-test
 
 deploy:
   stage: deploy
