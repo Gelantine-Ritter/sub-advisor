@@ -29,24 +29,27 @@ public class Venue {
         return name;
     }
 
-    public void setName(String name) {
+    public Venue setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Venue setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getInfo() {
         return info;
     }
 
-    public void setInfo(String info) {
+    public Venue setInfo(String info) {
         this.info = info;
+        return this;
     }
 
     @Override
