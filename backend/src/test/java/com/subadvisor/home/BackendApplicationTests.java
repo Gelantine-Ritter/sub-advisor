@@ -14,5 +14,4 @@ class BackendApplicationTests {
 		String response = testController.greeting();
 		assertEquals(response, "Hey there, this is the backend-service for sub-advisor!");
 	}
-
 }
