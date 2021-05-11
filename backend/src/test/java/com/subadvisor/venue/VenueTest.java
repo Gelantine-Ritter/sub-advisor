@@ -1,16 +1,16 @@
 package com.subadvisor.venue;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class VenueTest {
 
 
     private static Venue venue;
 
-    @Before
-    public void setUp () {
+    @BeforeAll
+    public static void setUp () {
         venue = new Venue("Berghain", "berghain@steil.de", "Tolle Hütte, viel Freude.");
     }
 
