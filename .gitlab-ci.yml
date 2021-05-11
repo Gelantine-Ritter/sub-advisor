@@ -34,6 +34,11 @@ lint:
   script:
     - echo "linting code structure"
 
+test-backend-unit:
+  stage: tests
+  script:
+    - cd backend && ./mvnw test-compile surefire:test
+
 test-backend-IT:
   stage: tests
   script:
