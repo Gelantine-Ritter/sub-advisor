@@ -11,6 +11,8 @@ public class VenueController {
     @Autowired
     VenueService venueService;
 
+    public String getTestVenue() { return "Hallo, Testen Funktioniert!"; }
+
     @GetMapping("/venues")
     public List<Venue> getAllVenues() {
         return venueService.getAllVenues();
