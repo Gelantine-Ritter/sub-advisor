@@ -11,11 +11,16 @@ If you want to run the application local you have to install:
 
 An Alternative is to use our [Docker-System](#usage-with-docker)
 
-### Usage locally
+## Usage locally
+```bash
+# run the application (includes packaging)
+make run-be
 
-### Test the API
+# stop the application (includes a cleanup)
+make stop-be
+```
 
-
+## Test the API
 
 ## Changelog
 
@@ -26,30 +31,23 @@ The advantage to choose Subadvisor with Docker is that you do not need a
 local installation of Maven or Java JDK.
 You just need a Docker Daemon to run the Container.
 
-Build the Image with:
 ```bash
+# build the image
 make d-build
-```
 
-Then, run a container with:
-```bash
+# run a container from a previously build image
 make d-run
-```
-You can also stop and restart running container with:
-```bash
+
+# stop and start a container
 make d-stop
 make d-start
-```
 
-If you run in a problem, you can stop and remove all running container and images with:
-```bash
-make d-clean
-```
-You can also restart your container with:
-```bash
+# restart a container
 make d-restart
-```
-A good way to start the working day is to clean everything, build a new Image and start a fresh container with:
-```bash
+
+# stop and remove all running container and images
+make d-clean
+
+# start the day with a good and clean complete
 make d-complete
 ```
