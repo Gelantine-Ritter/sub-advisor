@@ -2,6 +2,6 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <logger name="org.springframework" level="OFF"/>
-    <logger name="org.hibernate" level="ERROR"/>
-    <logger name="com.zaxxer" level="ERROR"/>
+    <logger name="org.hibernate" level="DEBUG"/>
+    <logger name="com.zaxxer" level="DEBUG"/>
 </configuration>
