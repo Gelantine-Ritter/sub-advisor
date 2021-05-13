@@ -18,9 +18,22 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(VenueRepository venueRepository, UserRepository userRepository) {
         return args -> {
-            log.info("Preloading " + venueRepository.save(new Venue("://about_blank", "blank@info.com", "netter Ort für lange Wochenenden")));
-            log.info("Preloading " + venueRepository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
 
+            // Load Venues
+            log.info("Preloading " + venueRepository.save(
+                    Venue.builder()
+                            .username("about-blank")
+                            .password("blank blank")
+                            .email("blank@info.com")
+                            .info("netter Ort für lange Wochenenden")
+                            .name("://about_blank")
+                            .build()
+            ));
+
+
+            /*
+            log.info("Preloading " + venueRepository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
+*/
             // Load TestUser
             log.info("Preloading " + userRepository.save(
                     User.builder()
