@@ -1,79 +1,80 @@
 package com.subadvisor.venue;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Venue {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Accessors(fluent = true, chain = true)
+public class Venue implements UserDetails, Serializable {
 
-    private @Id @GeneratedValue Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
+    private String username;
+    private String password;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
+
     private String name;
     private String email;
     private String info;
 
-    public Venue () {}
+    private boolean enabled = true;
 
-    public Venue(String name, String email, String info) {
-        this.name = name;
-        this.email = email;
-        this.info = info;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public Venue setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public Venue setName(String name) {
-        this.name = name;
-        return this;
-    }
-    public Venue setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public Venue setInfo(String info) {
-        this.info = info;
-        return this;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Venue venue = (Venue) o;
-        return Objects.equals(id, venue.id) && Objects.equals(name, venue.name);
+    public String getPassword() {
+        return password;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id, name, info);
+    public String getUsername() {
+        return username;
     }
 
     @Override
-    public String toString() {
-        return "Venue{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public boolean isAccountNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return enabled;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }
