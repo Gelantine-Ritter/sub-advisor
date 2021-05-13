@@ -35,7 +35,7 @@ public class VenueIT {
 
     @BeforeAll
     static void setUpData() {
-        venue = new Venue("about_blank", "blank@test.com", "cooler club");
+        //venue = new Venue("about_blank", "blank@test.com", "cooler club");
     }
 
 @Disabled
@@ -53,9 +53,9 @@ public class VenueIT {
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.name").value(venue.getName()),
-                                jsonPath("$.info").value(venue.getInfo()),
-                                jsonPath("$.email").value(venue.getEmail())
+                                jsonPath("$.name").value(venue.name()),
+                                jsonPath("$.info").value(venue.info()),
+                                jsonPath("$.email").value(venue.email())
                         )
                 )
                 .andReturn()
@@ -73,13 +73,13 @@ public class VenueIT {
     void getOneVenueById() throws Exception {
 
         mockMvc
-                .perform(get("/venues/" + venueEntity.getId()))
+                .perform(get("/venues/" + venueEntity.id()))
                 .andExpect(matchAll(
                         status().isOk(),
-                        jsonPath("$.id").value(venueEntity.getId()),
-                        jsonPath("$.name").value(venueEntity.getName()),
-                        jsonPath("$.info").value(venueEntity.getInfo()),
-                        jsonPath("$.email").value(venueEntity.getEmail())
+                        jsonPath("$.id").value(venueEntity.id()),
+                        jsonPath("$.name").value(venueEntity.name()),
+                        jsonPath("$.info").value(venueEntity.info()),
+                        jsonPath("$.email").value(venueEntity.email())
                 ));
     }
 
@@ -88,20 +88,20 @@ public class VenueIT {
     @Order(3)
     void updateOneVenueById() throws Exception {
 
-        venueEntity.setName("Bla");
+        venueEntity.name("Bla");
 
         mockMvc
-                .perform(put("/venues/" + venueEntity.getId())
+                .perform(put("/venues/" + venueEntity.id())
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(venueEntity)
                         )
                 )
                 .andExpect(matchAll(
                         status().isOk(),
-                        jsonPath("$.id").value(venueEntity.getId()),
-                        jsonPath("$.name").value(venueEntity.getName()),
-                        jsonPath("$.info").value(venueEntity.getInfo()),
-                        jsonPath("$.email").value(venueEntity.getEmail())
+                        jsonPath("$.id").value(venueEntity.id()),
+                        jsonPath("$.name").value(venueEntity.name()),
+                        jsonPath("$.info").value(venueEntity.info()),
+                        jsonPath("$.email").value(venueEntity.email())
                 ));
     }
 
@@ -110,10 +110,10 @@ public class VenueIT {
     @Order(4)
     void deleteOneVenueById() throws Exception {
 
-        mockMvc.perform(delete("/venues/" + venueEntity.getId()))
+        mockMvc.perform(delete("/venues/" + venueEntity.id()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/venues/" + venueEntity.getId()))
+        mockMvc.perform(get("/venues/" + venueEntity.id()))
                 .andExpect(status().is(404));
 
     }
