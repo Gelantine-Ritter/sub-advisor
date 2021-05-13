@@ -19,16 +19,15 @@
       </v-container>
     </v-main>
 
-    <v-footer app>
-      <!-- -->
-    </v-footer>
+    <v-footer app> <Footer /> </v-footer>
   </v-app>
 </template>
 
 <script>
+import Footer from './components/AppFooter'
 export default {
   name: 'App',
 
-  components: {},
+  components: { Footer },
 }
 </script>
