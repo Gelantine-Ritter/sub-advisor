@@ -1,15 +1,14 @@
 package com.subadvisor.auth;
 
+import com.subadvisor.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthController {
@@ -18,29 +17,29 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-    @RequestMapping("hello")
+    @GetMapping("/hello")
     public String hello() {
         return "Hello World";
     }
 
-    @PostMapping("authenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken
             (@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         try {
-            authenticationManager.authenticate(
+           authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getUsername(),
                             authenticationRequest.getPassword()
                     )
             );
         } catch (BadCredentialsException e) {
-            throw new Exception("Incorrect usernam or password", e);
+            throw new Exception("Incorrect username or password", e);
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
