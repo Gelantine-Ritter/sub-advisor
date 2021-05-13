@@ -2,12 +2,16 @@
   <!-- App.vue -->
 
   <v-app>
-    <v-navigation-drawer app>
-      <!-- -->
+    <v-navigation-drawer>
+      <Drawer />
     </v-navigation-drawer>
 
-    <v-app-bar app>
-      <!-- -->
+    <v-app-bar elevation="0" app>
+      <v-app-bar-nav-icon
+        @click.stop="sideNav = !sideNav"
+        class="d-flex d-sm-none"
+      ></v-app-bar-nav-icon>
+      <Navbar />
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -25,9 +29,12 @@
 
 <script>
 import Footer from './components/AppFooter'
+import Navbar from './components/header/AppNavbar'
+import Drawer from './components/header/AppDrawer'
+
 export default {
   name: 'App',
 
-  components: { Footer },
+  components: { Navbar, Drawer, Footer },
 }
 </script>
