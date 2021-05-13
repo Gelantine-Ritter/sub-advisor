@@ -1,6 +1,8 @@
 package com.subadvisor.auth;
 
+import com.subadvisor.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -27,13 +29,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        final String authorizationHeader = request.getHeader("Authorization");
+
+        logger.debug("try to get username from token");
+
+
+        final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         String username = null;
         String jwt = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
+
+            logger.debug("try to get username from token");
             username = jwtUtil.extractUsername(jwt);
         }
 
