@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class VenueIT extends Assertions {
+public class VenueIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,7 +38,7 @@ public class VenueIT extends Assertions {
         venue = new Venue("about_blank", "blank@test.com", "cooler club");
     }
 
-
+@Disabled
     @Test
     @Order(1)
     void createOneVenue() throws Exception {
@@ -67,6 +67,7 @@ public class VenueIT extends Assertions {
 
     }
 
+    @Disabled
     @Test
     @Order(2)
     void getOneVenueById() throws Exception {
@@ -82,6 +83,7 @@ public class VenueIT extends Assertions {
                 ));
     }
 
+    @Disabled
     @Test
     @Order(3)
     void updateOneVenueById() throws Exception {
@@ -103,6 +105,7 @@ public class VenueIT extends Assertions {
                 ));
     }
 
+    @Disabled
     @Test
     @Order(4)
     void deleteOneVenueById() throws Exception {
