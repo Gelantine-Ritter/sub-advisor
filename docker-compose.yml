@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+
+  db:
+    image: "postgres:9.6-alpine"
+    container_name: sub-postgres
+    restart: always
+    volumes:
+      - sub-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: sub
+      POSTGRES_USER: sub
+      POSTGRES_PASSWORD: sub
+    networks:
+      - spring-cloud-network
+
+  backend:
+    build: ./backend
+    container_name: sub-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/sub
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: sub-frontend
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - spring-cloud-network
+    depends_on:
+      - backend
+
+networks:
+  spring-cloud-network:
+    driver: bridge
+
+volumes:
+  sub-data:
