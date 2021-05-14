@@ -13,14 +13,19 @@
 <script>
 export default {
   name: 'Drawer',
-  items: [
-    { icon: 'account_circle' },
-    { title: 'test1' },
-    { title: 'tets1' },
-    { title: 'test3' },
-    { title: 'test4' },
-  ],
-  sideNav: false,
+
+  data() {
+    return {
+      sideNav: false,
+      menuItems: [
+        { icon: 'account_circle' },
+        { icon: 'home', title: 'test1' },
+        { icon: 'home', title: 'test2' },
+        { icon: 'home', title: 'test3' },
+        { icon: 'home', title: 'test4' },
+      ],
+    }
+  },
 }
 </script>
 
