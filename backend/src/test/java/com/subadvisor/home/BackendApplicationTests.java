@@ -9,6 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class BackendApplicationTests {
 
 	@Test
+	void contextLoads() {
+
+	}
+
+	@Test
 	void testHomeController(){
 		TestController testController = new TestController();
 		String response = testController.greeting();
