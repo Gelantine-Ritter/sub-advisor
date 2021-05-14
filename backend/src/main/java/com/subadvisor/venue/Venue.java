@@ -42,26 +42,15 @@ public class Venue implements UserDetails, Serializable {
 
     private boolean enabled = true;
 
+
+    // CONSTRUCTORS
     public Venue (String name, String email, String info) {
         this.name = name;
         this.email = email;
         this.info = info;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
+    // =====
 
     @Override
     public boolean isAccountNonExpired() {
@@ -84,6 +73,21 @@ public class Venue implements UserDetails, Serializable {
     }
 
     // GETTER / SETTER
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
 
     public String getName() {
         return name;

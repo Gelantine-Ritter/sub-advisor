@@ -59,9 +59,7 @@ public class VenueService implements UserDetailsService, IVenueService {
 
     @Override
     public Venue findByName(String name) {
-
         return repository.findByName(name);
-
     }
 
     @Override
