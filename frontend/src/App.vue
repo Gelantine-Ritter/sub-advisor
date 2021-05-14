@@ -1,22 +1,40 @@
 <template>
-  <div>
-    <h4>{{ title }}</h4>
-    <Test />
-  </div>
+  <!-- App.vue -->
+
+  <v-app>
+    <v-navigation-drawer>
+      <Drawer />
+    </v-navigation-drawer>
+
+    <v-app-bar elevation="0" app>
+      <v-app-bar-nav-icon
+        @click.stop="sideNav = !sideNav"
+        class="d-flex d-sm-none"
+      ></v-app-bar-nav-icon>
+      <Navbar />
+    </v-app-bar>
+
+    <!-- Sizes your content based upon application components -->
+    <v-main>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid>
+        <!-- If using vue-router -->
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+
+    <v-footer app> <Footer /> </v-footer>
+  </v-app>
 </template>
 
 <script>
-import Test from './components/test.vue'
+import Footer from './components/AppFooter'
+import Navbar from './components/header/AppNavbar'
+import Drawer from './components/header/AppDrawer'
 
 export default {
   name: 'App',
 
-  components: {
-    Test,
-  },
-
-  data: () => ({
-    title: 'Just a test',
-  }),
+  components: { Navbar, Drawer, Footer },
 }
 </script>

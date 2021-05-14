@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class TestController {
-
-    TestController(){}
+public class HomeController {
 
     @RequestMapping("/")
     public @ResponseBody

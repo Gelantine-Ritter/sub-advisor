@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: "Sub Advisor Backend API"
+  description: "This is the current Sub-Advisor-API for storing Venues, Members and Events"
+  version: 0.0.1
+
+paths:
+  /authentication/login:
+    post:
+      tags:
+        - "Authentication"
+      description: "login via username and password"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginObject"
+      responses:
+        200:
+          description: Ok
+        404:
+          description: Not Found
+  /venues:
+    post:
+      tags:
+        - "Venues"
+      description: "create an Venue"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Venue"
+      responses:
+        201:
+          description: Created
+        400:
+          description: Not Created
+    get:
+      tags:
+        - "Venues"
+      description: "Get an Venue by Id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Venue"
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Venue"
+  /venues/{venueId}:
+    parameters:
+      - name: venueId
+        in: path
+        description: "venueId represents the key of a venue in the database"
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - "Venues"
+      description: "Get an Venue by Id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Venue"
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Venue"
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    put:
+      tags:
+        - "Venues"
+      description: "update a Venue by id"
+      operationId: "updateVenue"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Venue"
+      responses:
+        204:
+          description: Updated
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+    delete:
+      tags:
+        - "Venues"
+      description: "delete a Venue by id"
+      operationId: "deleteVenue"
+      responses:
+        202:
+          description: Accepted
+        400:
+          description: "Invalid id supplied"
+        404:
+          description: "Venue not found"
+components:
+  schemas:
+    Venue:
+      type: object
+      required:
+        - email
+        - name
+      properties:
+        email:
+          type: string
+          example: "foto-bande-nk@gmail.com"
+        name:
+          type: string
+          example: "Fotobande Neukölln"
+        info:
+          type: string
+          example: "Fotobande Neukölln ist eine Gruppe vom Personen..."
+
+
+
+
+

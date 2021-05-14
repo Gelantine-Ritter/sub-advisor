@@ -1,13 +1,18 @@
 package com.subadvisor.venue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+import static java.lang.String.format;
+
 @Service
-public class VenueService implements IVenueService {
+public class VenueService implements UserDetailsService, IVenueService {
 
     @Autowired
     VenueRepository repository;
@@ -41,13 +46,13 @@ public class VenueService implements IVenueService {
         return repository.findById(venueId)
                 .map(venue ->
                         repository.save(venue
-                                .setName(newVenue.getName())
-                                .setEmail(newVenue.getEmail())
-                                .setInfo(newVenue.getInfo())
+                                .name(newVenue.name())
+                                .email(newVenue.email())
+                                .info(newVenue.info())
                         ))
                 .orElseGet(() ->
                         repository.save(
-                                newVenue.setId(venueId)
+                                newVenue.id(venueId)
                         )
                 );
     }
@@ -57,5 +62,16 @@ public class VenueService implements IVenueService {
 
         return repository.findByName(name);
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return repository
+                .findByUsername(s)
+                .orElseThrow(
+                        () -> new UsernameNotFoundException(
+                                format("User with username - %s, not found", s)
+                        )
+                );
     }
 }

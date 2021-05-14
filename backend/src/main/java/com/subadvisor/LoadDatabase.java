@@ -1,5 +1,7 @@
 package com.subadvisor;
 
+import com.subadvisor.user.User;
+import com.subadvisor.user.UserRepository;
 import com.subadvisor.venue.Venue;
 import com.subadvisor.venue.VenueRepository;
 import org.slf4j.Logger;
@@ -14,10 +16,40 @@ class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(VenueRepository repository) {
+    CommandLineRunner initDatabase(VenueRepository venueRepository, UserRepository userRepository) {
         return args -> {
-            log.info("Preloading " + repository.save(new Venue("://about_blank", "blank@info.com", "netter Ort für lange Wochenenden")));
-            log.info("Preloading " + repository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
+
+            // Load Venues
+            log.info("Preloading " + venueRepository.save(
+                    Venue.builder()
+                            .username("about-blank")
+                            .password("blank blank")
+                            .email("blank@info.com")
+                            .info("netter Ort für lange Wochenenden")
+                            .name("://about_blank")
+                            .build()
+            ));
+
+
+            /*
+            log.info("Preloading " + venueRepository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
+*/
+            // Load TestUser
+            log.info("Preloading " + userRepository.save(
+                    User.builder()
+                            .username("Jimmy-Bleu")
+                            .password("supercool")
+                            .enabled(true)
+
+                            .build())
+            );
+
+            log.info("Preloading " + userRepository.save(
+                    User.builder()
+                            .username("Nayla Thalhammer")
+                            .password("hammerschlag")
+                            .build())
+            );
         };
     }
 }
