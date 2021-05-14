@@ -42,7 +42,6 @@ public class Venue implements UserDetails, Serializable {
 
     private boolean enabled = true;
 
-
     // CONSTRUCTORS
     public Venue (String name, String email, String info) {
         this.name = name;
