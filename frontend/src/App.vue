@@ -16,7 +16,25 @@
 
     <!-- Sizes your content based upon application components -->
     <v-main>
-      <!-- Provides the application the proper gutter -->
+      
+      <AppButton text="ENTER"/>
+      <br>
+      <AppButton text="READ MORE"/>
+      <br>
+      <AppButton text="UNITED WE STREAM"/>
+      <br>
+      <AppButton text="SEE ON MAP"/>
+      <br>
+      <AppButton text="ONLINE ONLY"/>
+      <br>
+      <AppButton text="SELECT A DATE"/>
+      <br>
+      <br>
+      <AppButton text="TOO LONG TOO LONG TOO LONG TOO LONG TOO LONG"/>
+      <br>
+      <AppButton text="HIHI"/>
+      <br>
+      
       <v-container fluid>
         <!-- If using vue-router -->
         <router-view></router-view>
@@ -28,13 +46,17 @@
 </template>
 
 <script>
+
 import Footer from './components/AppFooter'
 import Navbar from './components/header/AppNavbar'
 import Drawer from './components/header/AppDrawer'
+import AppButton from './components/ui/AppButton.vue'
 
 export default {
   name: 'App',
 
-  components: { Navbar, Drawer, Footer },
+  components: { Navbar, Drawer, Footer, AppButton, },
+
 }
 </script>
+
