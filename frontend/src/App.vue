@@ -6,25 +6,11 @@
       <Navbar />
     </v-app-bar>
     <!-- Sizes your content based upon application components -->
-    <v-main>
-      <AppButton text="ENTER" />
-      <br />
-      <AppButton text="READ MORE" />
-      <br />
-      <AppButton text="UNITED WE STREAM" />
-      <br />
-      <AppButton text="SEE ON MAP" />
-      <br />
-      <AppButton text="ONLINE ONLY" />
-      <br />
-      <AppButton text="SELECT A DATE" />
-      <br />
-      <br />
-      <AppButton text="TOO LONG TOO LONG TOO LONG TOO LONG TOO LONG" />
-      <br />
-      <AppButton text="HIHI" />
-      <br />
 
+    <v-main style="padding:0;">
+
+      <LandingPage text="THIS IS HAPPENING"/>
+      
       <v-container fluid>
         <!-- If using vue-router -->
         <router-view></router-view>
@@ -38,11 +24,21 @@
 <script>
 import Footer from './components/AppFooter'
 import Navbar from './components/header/AppNavbar'
-import AppButton from './components/ui/AppButton.vue'
+import LandingPage from './views/LandingPage'
 
 export default {
   name: 'App',
 
-  components: { Navbar, Footer, AppButton },
+  components: { Navbar, Footer, LandingPage},
+
+
 }
 </script>
+
+<style scoped>
+.v-main{
+  padding-top:0;
+}
+
+</style>
+
