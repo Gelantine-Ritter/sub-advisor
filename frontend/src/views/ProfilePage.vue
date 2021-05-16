@@ -1,5 +1,5 @@
 <template>
-  <h1>Hier gibts bald About</h1>
+  <h1>Hier gibts bald Profile</h1>
 </template>
 
 <script>

@@ -25,6 +25,7 @@
     </v-navigation-drawer>
     <!-- navigation drawer-->
     <!-- left aligned items-->
+    <!--EVENT-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -37,12 +38,16 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="item in subEvents" :key="item.title">
+        <v-list-item
+          v-for="item in subEvents"
+          :key="item.title"
+          :to="item.route"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-
+    <!--PLACES-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -55,20 +60,23 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="item in subPlaces" :key="item.title">
+        <v-list-item
+          v-for="item in subPlaces"
+          :key="item.title"
+          :to="item.route"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-
     <!-- left aligned items-->
     <v-spacer></v-spacer>
     <v-toolbar-title class="d-none d-sm-flex white--text"
       ><img src="../../assets/logo.png" width="360px" alt="subadvisor logo"
     /></v-toolbar-title>
     <v-spacer></v-spacer>
-
     <!-- right aligned items-->
+    <!--CONTACT-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -81,12 +89,16 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="item in subContact" :key="item.title">
+        <v-list-item
+          v-for="item in subContact"
+          :key="item.title"
+          :to="item.route"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-
+    <!--ABOUT-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -99,12 +111,17 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="item in subAbout" :key="item.title">
+        <v-list-item
+          link
+          v-for="item in subAbout"
+          :key="item.title"
+          :to="item.route"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
-
+    <!--PROFILE-->
     <v-menu offset-y class="d-none d-sm-flex">
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon class="ml-5" v-bind="attrs" v-on="on">
@@ -112,7 +129,11 @@
         </v-btn>
       </template>
       <v-list>
-        <v-list-item v-for="item in subProfile" :key="item.title">
+        <v-list-item
+          v-for="item in subProfile"
+          :key="item.title"
+          :to="item.route"
+        >
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -134,11 +155,26 @@ export default {
         { icon: 'contact_support', title: 'Contact' },
         { icon: 'groups', title: 'About' },
       ],
-      subEvents: [{ title: 'Event 1' }, { title: 'Event 2' }],
-      subPlaces: [{ title: 'Place 1' }, { title: 'Place 2' }],
-      subContact: [{ title: 'Contact 1' }, { title: 'Contact 2' }],
-      subAbout: [{ title: 'About 1' }, { title: 'About 2' }],
-      subProfile: [{ title: 'Profile 1' }, { title: 'Profile 2' }],
+      subEvents: [
+        { title: 'route to event', route: '/events' },
+        { title: 'Event 2', route: '/events' },
+      ],
+      subPlaces: [
+        { title: 'Place 1', route: '/places' },
+        { title: 'Place 2', route: '/places' },
+      ],
+      subContact: [
+        { title: 'Contact 1', route: '/contact' },
+        { title: 'Contact 2', route: '/contact' },
+      ],
+      subAbout: [
+        { title: 'About 1', route: '/about' },
+        { title: 'route to about', route: '/about' },
+      ],
+      subProfile: [
+        { title: 'Profile 1' },
+        { title: 'Profile 2', route: '/profile' },
+      ],
     }
   },
 }
