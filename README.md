@@ -5,19 +5,19 @@ This will start the spring-backend, vue-frontend and postgres-db as dev-docker-c
 
 
 ```bash
-# all-in-one (remove all images and container, create new ones and bring them up)
-make dc-complete
-
 # start the cluster
 make dc-up
 
 # stop the cluster
-make dc-stop:
+make dc-stop
 
 # stop and remove all container and images
 make dc-clean
 
-# kill everything - also the volumes
+# all-in-one (remove all images and container, create new ones and bring them up)
+make dc-complete
+
+# kill everything - even the volumes
 make dc-doom
 ```
 
