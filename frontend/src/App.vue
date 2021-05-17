@@ -2,21 +2,14 @@
   <!-- App.vue -->
 
   <v-app>
-    <v-navigation-drawer>
-      <Drawer />
-    </v-navigation-drawer>
-
     <v-app-bar elevation="0" app>
-      <v-app-bar-nav-icon
-        @click.stop="sideNav = !sideNav"
-        class="d-flex d-sm-none"
-      ></v-app-bar-nav-icon>
       <Navbar />
     </v-app-bar>
-
     <!-- Sizes your content based upon application components -->
-    <v-main>
-      <!-- Provides the application the proper gutter -->
+
+    <v-main style="padding: 0">
+      <LandingPage text="THIS IS HAPPENING" />
+
       <v-container fluid>
         <!-- If using vue-router -->
         <router-view></router-view>
@@ -30,11 +23,17 @@
 <script>
 import Footer from './components/AppFooter'
 import Navbar from './components/header/AppNavbar'
-import Drawer from './components/header/AppDrawer'
+import LandingPage from './views/LandingPage'
 
 export default {
   name: 'App',
 
-  components: { Navbar, Drawer, Footer },
+  components: { Navbar, Footer, LandingPage },
 }
 </script>
+
+<style scoped>
+.v-main {
+  padding-top: 0;
+}
+</style>

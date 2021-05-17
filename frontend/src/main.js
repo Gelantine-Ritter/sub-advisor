@@ -11,11 +11,56 @@ import vuetify from './plugins/vuetify'
 import VueCompositionAPI from '@vue/composition-api'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+import Router from 'vue-router'
+import Events from './views/EventsPage.vue'
+import About from './views/AboutPage.vue'
+import Landing from './views/LandingPage.vue'
+import Contact from './views/ContactPage.vue'
+import Places from './views/PlacesPage.vue'
+import Profile from './views/ProfilePage.vue'
+
 Vue.use(VueCompositionAPI)
+Vue.use(Router)
 
 Vue.config.productionTip = false
 
+const router = new Router({
+  routes: [
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: Contact,
+    },
+    {
+      path: '/places',
+      name: 'places',
+      component: Places,
+    },
+    {
+      path: '/events',
+      name: 'events',
+      component: Events,
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: Landing,
+    },
+  ],
+})
+
 new Vue({
   vuetify,
+  router,
   render: (h) => h(App),
 }).$mount('#app')
