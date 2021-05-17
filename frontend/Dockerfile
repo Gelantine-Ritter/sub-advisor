@@ -1,16 +1,13 @@
 FROM node:lts-alpine
 
-WORKDIR /app
+WORKDIR /src
 
-COPY package*.json ./
+ADD package.json /src
 
-RUN npm install
+RUN npm install --silent
 
-COPY . .
+ADD . /src
 
 RUN npm run build
 
-EXPOSE 3000
-ENV HOST=0.0.0.0
-
-CMD [ "npm", "run", "serve" ]
+CMD [ "npm", "run", "serve", "--port ${PORT}"]
