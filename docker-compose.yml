@@ -17,12 +17,14 @@ services:
       - subadvisor-network
 
   backend:
-    build: ./backend
+    image: maven:3.8.1-jdk-11
     container_name: sub-backend
     environment:
       spring_profiles_active: "dev"
+    command: mvn spring-boot:run
     volumes:
-      - ./backend:/app/
+      - ./backend:/app:rw
+    working_dir: /app
     ports:
       - 8080:8080
     #restart: always
