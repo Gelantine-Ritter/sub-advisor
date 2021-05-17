@@ -3,13 +3,31 @@ SUBADVISOR_CONTAINER=subadvisor-backend
 
 p?=dev
 
+# ----- docker-compose ----- #
+
+dc-complete: dc-clean
+	docker-compose up --build
+
+dc-up:
+	docker-compose up
+
+dc-stop:
+	docker-compose stop
+
+dc-rm-volume:
+	docker-compose down -v
+
+dc-clean: dc-stop
+	docker-compose down --rmi all
+
+dc-doom: dc-rm-volume dc-clean
+
+
+
+# ----- building backend ----- #
+
 mvn-clean-package:
 	cd backend && ./mvnw clean package -Dmaven.test.skip && ./mvnw test-compile
-
-# this show how to inject programm-args directly from cli to spring
-# access the argument via @Value({DB_HOST}) in the code or in application.properties with ${DB_HOST}
-test-prog-args: mvn-clean-package
-	cd backend && java -jar target/*.jar --DB_HOST="postgres"
 
 run-be-with-profil:
 	cd backend && java -jar -Dspring.profiles.active=$(p) target/*.jar
@@ -31,6 +49,8 @@ test-all:
 test-it:
 	 cd backend && mvn clean test-compile -Dspring.profiles.active=default failsafe:integration-test
 
+# ----- using backend docker ----- #
+
 d-build:
 	cd backend && docker build -t $(SUBADVISOR_IMAGE) .
 
@@ -50,26 +70,7 @@ d-complete: d-clean d-build d-run
 d-restart: d-stop d-start
 
 
-# docker-compose
 
-dc-complete: dc-clean
-	docker-compose up --build
-
-dc-up:
-	docker-compose up
-
-dc-stop:
-	docker-compose stop
-
-dc-rm-volume:
-	docker-compose down -v
-
-dc-clean: dc-stop
-	docker-compose down --rmi all
-
-dc-doom: dc-rm-volume dc-clean
-
-dc-test-it:
 
 
 
