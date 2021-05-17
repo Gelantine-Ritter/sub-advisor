@@ -19,7 +19,7 @@ public class BackendApplication {
 	@Bean
 	ApplicationRunner applicationRunner(Environment env ,
 										// $HOME is system-env-varibale. Will print something like /Users/matti
-										@Value("${spring_profiles_active}") String profile
+										@Value("${spring.profiles.active}") String profile
 										) {
 		return args -> {
 			// using @Value is better than env
