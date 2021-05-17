@@ -53,3 +53,14 @@ make d-clean
 # start the day with a good and clean complete
 make d-complete
 ```
+
+### Set environment-variables
+
+There are plenty ways to set environment-variables.
+
+```bash
+java -jar target/*.jar --server.port=8768
+
+# when using -D it comes right after the java-command
+java -Dserver.port=9999 -jar target/*.jar 
+```
