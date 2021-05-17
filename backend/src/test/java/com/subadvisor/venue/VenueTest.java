@@ -11,43 +11,47 @@ public class VenueTest {
 
     @BeforeAll
     public static void setUp () {
-        venue = new Venue("Berghain", "berghain@steil.de", "Tolle Hütte, viel Freude.");
+        venue = new Venue.VenueBuilder()
+                .name("Berghain")
+                .email("berghain@steil.de")
+                .info("Tolle Hütte, viel Freude.")
+                .build();
     }
 
     @Test
     public void testGetVenueName() {
-        assertEquals(venue.getName(), "Berghain");
+        assertEquals(venue.name(), "Berghain");
     }
 
     @Test
     public void testGetVenueEmail() {
-        assertEquals("berghain@steil.de", venue.getEmail());
+        assertEquals("berghain@steil.de", venue.email());
     }
 
     @Test
     public void testGetVenueInfo() {
-        assertEquals(venue.getInfo(), "Tolle Hütte, viel Freude.");
+        assertEquals(venue.info(), "Tolle Hütte, viel Freude.");
     }
 
     @Test
     public void testSetVenueName() {
         String name = "AboutBlank";
-        venue.setName(name);
-        assertEquals(name, venue.getName());
+        venue.name(name);
+        assertEquals(name, venue.name());
     }
 
     @Test
     public void testSetVenueEmail() {
         String email = "andereMail@berghain.com";
-        venue.setEmail(email);
-        assertEquals(email, venue.getEmail());
+        venue.email(email);
+        assertEquals(email, venue.email());
     }
 
     @Test
     public void testSetVenueInfo() {
         String info = "War mal hier, war nicht so...";
-        venue.setInfo(info);
-        assertEquals(info, venue.getInfo());
+        venue.info(info);
+        assertEquals(info, venue.info());
     }
 }
 
