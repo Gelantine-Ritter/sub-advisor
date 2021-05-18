@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface IUserAccount {
     Optional<UserDetails> findByUsername(String username);
+    Optional<UserDetails> createAccount(RegistrationRequest registrationRequest);
 }

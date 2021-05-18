@@ -12,6 +12,9 @@ public class AuthController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    @Autowired
+    private RegistrationService registrationService;
+
 
     // Endpoint to test authentification
     @GetMapping("/hello")
@@ -25,6 +28,14 @@ public class AuthController {
 
         return new ResponseEntity<>(
                 authenticationService.authenticateUser(authenticationRequest),
+                HttpStatus.OK
+        );
+    }
+
+    @PostMapping("/authenticate/registrate/")
+    public ResponseEntity<?> registerAccount (@RequestBody RegistrationRequest registrationRequest) {
+        return new ResponseEntity<>(
+                registrationService.registrateUser(registrationRequest),
                 HttpStatus.OK
         );
     }
