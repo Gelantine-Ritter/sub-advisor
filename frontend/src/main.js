@@ -12,6 +12,7 @@ import VueCompositionAPI from '@vue/composition-api'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import Router from 'vue-router'
+
 import Events from './views/EventsPage.vue'
 import About from './views/AboutPage.vue'
 import Landing from './views/LandingPage.vue'
@@ -25,6 +26,7 @@ Vue.use(Router)
 Vue.config.productionTip = false
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/profile',

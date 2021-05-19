@@ -1,12 +1,10 @@
 <template>
     <v-parallax class="myparallax " style="height: 100%;" src="../assets/tv-noise.jpeg" alt="Welcome to SUB">
       <div class="rounded-xl mycontainer " fluid>
-          <h1>{{text}}</h1>
+          <h1>THIS IS HAPPENING</h1>
           <div class=text-center>
              <v-btn large block outlined  elevation="1" class="rounded-pill" style="font-size:125%;">ENTER</v-btn>
       </div>
-
-        <router-view></router-view>
       </div>
     </v-parallax> 
 </template>
