@@ -20,6 +20,7 @@ import Contact from './views/ContactPage.vue'
 import Places from './views/PlacesPage.vue'
 import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
+import Signup from './views/SignupPage.vue'
 
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
@@ -63,6 +64,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup,
     },
   ],
 })
