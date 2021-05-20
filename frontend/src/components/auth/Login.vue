@@ -67,9 +67,9 @@ export default {
     }
   },
   methods: {
-    handleSubmit(){
-      console.log("Enter has been clicked");
-    }
+    handleSubmit() {
+      console.log('Enter has been clicked')
+    },
     /* 
     async handleSubmit(){
         console.log("Enter has been clicked"));
@@ -79,7 +79,7 @@ export default {
         });
         console.log(response);
     }
-     */ 
+     */
   },
 }
 </script>
@@ -91,11 +91,12 @@ export default {
   margin-top: 5vw;
   margin-left: 15vw;
   margin-right: 15vw;
+  margin-bottom: 5vw;
   background: white;
   padding: 5vw;
 }
 h1 {
-  font-size: 8vw;
+  font-size: 5.5vw;
   color: black;
   text-align: center;
 }
