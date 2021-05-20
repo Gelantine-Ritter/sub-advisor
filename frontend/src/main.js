@@ -12,6 +12,7 @@ import VueCompositionAPI from '@vue/composition-api'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import Router from 'vue-router'
+import axios from 'axios'
 
 import Events from './views/EventsPage.vue'
 import About from './views/AboutPage.vue'
@@ -22,6 +23,10 @@ import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
 
+window.axios = axios
+// axios.defaults.baseURL = 'http://127.0.0.1:3333'
+
+Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
 
