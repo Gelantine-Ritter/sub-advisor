@@ -25,6 +25,7 @@
     </v-navigation-drawer>
     <!-- navigation drawer-->
     <!-- left aligned items-->
+
     <!--EVENT-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
