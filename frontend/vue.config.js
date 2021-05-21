@@ -12,7 +12,7 @@ module.exports = {
         Accept: 'application/json',
       },
       proxy: 'http://localhost:8080/',
-      port: 3030,
+      // port: 3030,
       progress: false,
     },
     plugins: [

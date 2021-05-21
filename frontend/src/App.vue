@@ -8,10 +8,10 @@
     <!-- Sizes your content based upon application components -->
 
     <v-main>
-        <router-view></router-view>
+      <router-view></router-view>
     </v-main>
 
-    <v-footer app> <Footer /> </v-footer>
+    <footer><Footer /></footer>
   </v-app>
 </template>
 
@@ -26,6 +26,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
