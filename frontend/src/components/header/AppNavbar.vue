@@ -156,14 +156,8 @@ export default {
         { icon: 'contact_support', title: 'Contact' },
         { icon: 'groups', title: 'About' },
       ],
-      subEvents: [
-        { title: 'route to event', route: '/events' },
-        { title: 'Event 2', route: '/events' },
-      ],
-      subPlaces: [
-        { title: 'Place 1', route: '/places' },
-        { title: 'Place 2', route: '/places' },
-      ],
+      subEvents: [{ title: 'All Events', route: '/events' }],
+      subPlaces: [{ title: 'All Places', route: '/places' }],
       subContact: [
         { title: 'Contact 1', route: '/contact' },
         { title: 'Contact 2', route: '/contact' },
@@ -173,8 +167,8 @@ export default {
         { title: 'route to about', route: '/about' },
       ],
       subProfile: [
-        { title: 'Profile 1' },
-        { title: 'Profile 2', route: '/profile' },
+        { title: 'Login', route: '/login' },
+        { title: 'Signup', route: '/signup' },
       ],
     }
   },

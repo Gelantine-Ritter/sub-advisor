@@ -1,7 +1,7 @@
 <template>
   <v-container my-5>
     <h1 class="h1Style text-center display-3 font-weight-medium">PLACES</h1>
-    <!-- <h1><v-btn @click="testMethod">Test</v-btn></h1>-->
+    <h1><v-btn @click="testMethod">Test</v-btn></h1>
     <v-layout row wrap>
       <v-flex xs12 sm6 md4 lg3 v-for="event in venues1" :key="event.name">
         <div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-//  import axios from 'axios'
+import axios from 'axios'
 
 export default {
   data() {
@@ -47,20 +47,20 @@ export default {
       ],
     }
   },
-  // methods: {
-  //   testMethod() {
-  //     console.log('Test clicked')
-  //     axios.get('/venues', {}).then((err, response) => {
-  //       if (err) {
-  //         console.log(err)
-  //       } else if (!response) {
-  //         console.log('SchadeMarmelade')
-  //       } else {
-  //         console.log(response)
-  //       }
-  //     })
-  //   },
-  // },
+  methods: {
+    testMethod() {
+      console.log('Test clicked')
+      axios.get('http://localhost:8080/venues', {}).then((err, response) => {
+        if (err) {
+          console.log(err)
+        } else if (!response) {
+          console.log('SchadeMarmelade')
+        } else {
+          console.log(response)
+        }
+      })
+    },
+  },
 }
 </script>
 
