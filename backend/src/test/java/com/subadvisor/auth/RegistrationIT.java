@@ -49,6 +49,7 @@ public class RegistrationIT {
     private static final String PASSWORD_VALID = "password_valid";
     private static final String PASSWORD_NON_VALID = "password_non_valid";
 
+    User user;
 
     @BeforeAll
     void setUp(){
@@ -57,7 +58,7 @@ public class RegistrationIT {
 
     @Test
     void testUserRegistration () throws Exception {
-        User user = User.builder()
+        user = User.builder()
                 .username(USER_NAME_VALID)
                 .password(PASSWORD_VALID)
                 .userRole(UserRole.MEMBER)
