@@ -1,5 +1,16 @@
 image: maven:3.8.1-jdk-11
 
+cache:
+  paths:
+    - backend/target
+    - frontend/node_modules
+    - frontend/dist
+
+# necessary to turn off TSL in order to use DinD
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ''
+
 stages:
   - build
   - quality_assurance
@@ -22,17 +33,23 @@ build-backend:
       - backend/target/
 
 build-frontend:
-    stage: build
-    script:
-      - cd ./frontend && npm install --progress=false
-      - cd ./frontend && npm run build
-    artifacts:
-      paths:
-        - frontend/dist
-        - frontend/node_modules
+  image: node:lts-alpine
+  stage: build
+  script:
+    - cd ./frontend && npm install --progress=false
+    - cd ./frontend && npm run build
+  artifacts:
+    paths:
+      - frontend/dist
+      - frontend/node_modules
 
 build-docker-compose:
   stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  tags:
+    - docker-privileged
   script:
     - make dc-complete ARGS=-d
 
