@@ -87,7 +87,6 @@ public class AuthIT {
         MockHttpServletResponse response = mockMvc
                 .perform(
                         post("/authenticate/")
-                                .contentType("application/json")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(authReq))
                 )
@@ -96,7 +95,7 @@ public class AuthIT {
                 .andReturn()
                 .getResponse();
 
-        TOKEN = objectMapper.readValue(response.getContentAsString(), TokenResponseDTO.class).getJwt();
+        TOKEN = objectMapper.readValue(response.getContentAsString(), TokenResponseDto.class).getJwt();
     }
 
     @Test
@@ -128,7 +127,7 @@ public class AuthIT {
                 .getResponse();
 
 
-        TOKEN = objectMapper.readValue(response.getContentAsString(), TokenResponseDTO.class).getJwt();
+        TOKEN = objectMapper.readValue(response.getContentAsString(), TokenResponseDto.class).getJwt();
     }
 
     @Test
