@@ -4,7 +4,7 @@ WORKDIR /src
 
 ADD package.json /src
 
-RUN npm install --silent
+RUN npm install --progress=false
 
 ADD . /src
 

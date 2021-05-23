@@ -36,8 +36,9 @@ build-frontend:
   image: node:lts-alpine
   stage: build
   script:
-    - cd ./frontend && npm install --progress=false
-    - cd ./frontend && npm run build
+    - cd ./frontend
+    - npm install --progress=false
+    - npm run build
   artifacts:
     paths:
       - frontend/dist
@@ -45,11 +46,13 @@ build-frontend:
 
 build-docker-compose:
   stage: build
-  image: docker:latest
+  image: docker/compose:latest
   services:
     - docker:dind
   tags:
     - docker-privileged
+  before_script:
+    - apk update && apk add make
   script:
     - make dc-complete ARGS=-d
 
