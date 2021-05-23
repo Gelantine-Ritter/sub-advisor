@@ -1,6 +1,7 @@
 package com.subadvisor.api.venue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class VenueController {
     }
 
     @PutMapping("/venues/{id}")
+    @PreAuthorize("authentication.principal.username == #username || hasRole('ADMIN')")
     public Venue updateVenueById(@RequestBody Venue newVenue, @PathVariable Long id) {
         return venueService.updateVenueById(newVenue, id);
     }
