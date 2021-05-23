@@ -40,6 +40,8 @@ public class User implements UserDetails, Serializable {
 
     private boolean enabled = true;
 
+    private UserRole userRole;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -73,5 +75,10 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    // additional Method
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
