@@ -22,6 +22,19 @@ dc-clean: dc-stop
 
 dc-doom: dc-rm-volume dc-clean
 
+# ----- test backend ----- #
+
+# when testing the default-profile is used -> H2 instead of Postgres
+
+test-unit:
+	cd backend && ./mvnw clean && ./mvnw test
+
+test-all:
+	cd backend && ./mvnw clean && ./mvnw verify
+
+test-it:
+	 cd backend && mvn clean test-compile -Dspring.profiles.active=default failsafe:integration-test
+
 
 
 # ----- building backend ----- #
@@ -40,15 +53,7 @@ run-be: mvn-clean-package run-be-with-profil
 stop-be:
 	cd backend && ./mvnw clean spring-boot:stop
 
-test-unit:
-	cd backend && ./mvnw clean && ./mvnw test
-
-test-all:
-	cd backend && ./mvnw clean && ./mvnw verify
-
-test-it:
-	 cd backend && mvn clean test-compile -Dspring.profiles.active=default failsafe:integration-test
-
+# ----- DEPRECATED ------ #
 # ----- using backend docker ----- #
 
 d-build:

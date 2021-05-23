@@ -1,9 +1,9 @@
 package com.subadvisor;
 
-import com.subadvisor.user.User;
-import com.subadvisor.user.UserRepository;
-import com.subadvisor.venue.Venue;
-import com.subadvisor.venue.VenueRepository;
+import com.subadvisor.api.user.User;
+import com.subadvisor.api.user.UserRepository;
+import com.subadvisor.api.venue.Venue;
+import com.subadvisor.api.venue.VenueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
