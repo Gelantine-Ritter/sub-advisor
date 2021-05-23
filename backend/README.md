@@ -11,7 +11,7 @@ If you want to run the application local you have to install:
 + Maven
 + Java 11
 
-An Alternative is to use our [Docker-System](#usage-with-docker)
+An Alternative is to use our [~~Docker~~ (deprecated)](#@deprecated-~~usage-with-docker~~) or better [docker-compose](../README.md#starting-with-docker-compose "start with docker-compose")
 
 ## Usage locally
 ```bash
@@ -22,11 +22,28 @@ make run-be
 make stop-be
 ```
 
-## Test the API
+## Testing
+
+```bash
+# run Unit-Tests for backend
+make test-unit
+
+# run Integration-tests
+make test-it
+
+# run all tests together
+make run test-all
+```
 
 ## Changelog
 
-## Usage with Docker
+## Usage with Docker-Compose
+
+Since Dev-mode is also supported for Spring-backend (changes are mirrored automatilcy via volumes in the running container) we support development with docker-compose.
+
+Read the [README](../README.md "BACKEND REAMDE") of the whole project for further instructions.
+
+## @Deprecated ~~Usage with Docker~~ 
 
 You can run the backendservice as a docker-container on port 8080.
 The advantage to choose Subadvisor with Docker is that you do not need a 
