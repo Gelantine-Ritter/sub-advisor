@@ -52,6 +52,7 @@ public class UserService implements UserDetailsService, IUserService {
         if(!userRepository.findByUsername(registrationRequest.getUsername()).isPresent()){
             User user = User.builder()
                     .username(registrationRequest.getUsername())
+                    .email(registrationRequest.getEmail())
                     .password(new WebConfig().bCryptPasswordEncoder().encode(registrationRequest.getPassword()))
                     .userRole(UserRole.MEMBER)
                     .enabled(true)
@@ -62,6 +63,8 @@ public class UserService implements UserDetailsService, IUserService {
             confirmationTokenService.saveConfirmationToken(confirmationToken);
 
             System.out.println("Saved User");
+
+            sendConfirmationMail(registrationRequest.getEmail(), confirmationToken.getConfirmationToken());
 
         }else {
             System.out.println("Username already in Use");
@@ -75,6 +78,7 @@ public class UserService implements UserDetailsService, IUserService {
         final ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenService.saveConfirmationToken(confirmationToken);
         */
+
 
     }
 
@@ -100,7 +104,7 @@ public class UserService implements UserDetailsService, IUserService {
                 "Thank you for registering. Please click on the below link to activate your account." + "http://localhost:8080/sign-up/confirm?token="
                         + token);
 
-        emailSenderService.sendEmail(mailMessage);
+        // emailSenderService.sendEmail(mailMessage);
     }
 }
 

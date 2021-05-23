@@ -32,6 +32,7 @@ public class User implements UserDetails, Serializable {
     @GeneratedValue
     private Long id;
     private String username;
+    private String email;
     private String password;
     @CreatedDate
     private LocalDateTime createdAt;
