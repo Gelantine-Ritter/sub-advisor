@@ -1,6 +1,6 @@
 package com.subadvisor.security;
 
-import com.subadvisor.api.user.UserService;
+import com.subadvisor.api.member.MemberService;
 import com.subadvisor.api.venue.VenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +24,7 @@ import static java.lang.String.format;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserService userDetailsService;
+    private MemberService userDetailsService;
 
     @Autowired
     private VenueService venueDetailsService;

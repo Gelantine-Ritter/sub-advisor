@@ -1,4 +1,4 @@
-package com.subadvisor.api.user;
+package com.subadvisor.api.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +13,14 @@ import static java.lang.String.format;
  */
 
 @Service
-public class UserService implements UserDetailsService, IUserService {
+public class MemberService implements UserDetailsService, IMemberService {
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository
+        return memberRepository
                 .findByUsername(username)
                 .orElseThrow(
                         () -> new UsernameNotFoundException(

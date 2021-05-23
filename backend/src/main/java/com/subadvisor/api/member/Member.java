@@ -1,4 +1,4 @@
-package com.subadvisor.api.user;
+package com.subadvisor.api.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,13 +20,12 @@ import java.util.Collection;
 
 
 @Entity
-@Table(name = "`users`")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Accessors(fluent = true, chain = true)
-public class User implements UserDetails, Serializable {
+public class Member implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue

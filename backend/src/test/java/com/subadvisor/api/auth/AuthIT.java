@@ -2,14 +2,15 @@ package com.subadvisor.api.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subadvisor.api.auth.dto.AuthenticationRequest;
-import com.subadvisor.api.user.User;
-import com.subadvisor.api.user.UserRepository;
+import com.subadvisor.api.member.Member;
+import com.subadvisor.api.member.MemberRepository;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.VenueRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrint;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -22,13 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(print = MockMvcPrint.NONE)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthIT {
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @Autowired
     VenueRepository venueRepository;
@@ -52,8 +53,8 @@ public class AuthIT {
     @BeforeAll
     void setUp(){
 
-        userRepository.save(
-                User.builder()
+        memberRepository.save(
+                Member.builder()
                         .username(USER_NAME_VALID)
                         .password(PASSWORD_VALID)
                         .enabled(true)

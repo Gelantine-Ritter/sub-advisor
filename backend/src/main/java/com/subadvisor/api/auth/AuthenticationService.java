@@ -2,7 +2,8 @@ package com.subadvisor.api.auth;
 
 import com.subadvisor.api.auth.dto.AuthenticationRequest;
 import com.subadvisor.api.auth.dto.AuthenticationResponse;
-import com.subadvisor.api.user.UserRepository;
+import com.subadvisor.api.member.MemberRepository;
+import com.subadvisor.api.member.MemberService;
 import com.subadvisor.api.venue.VenueRepository;
 import com.subadvisor.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class AuthenticationService {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserRepository userRepository;
+    MemberRepository memberRepository;
 
     @Autowired
     VenueRepository venueRepository;
@@ -32,7 +33,7 @@ public class AuthenticationService {
         // TODO: It should be Best Practice to use User- and VenueService insteat of repository/DAO diretly
         return authenticateByRepo(venueRepository, authReq)
                 .or(
-                        () -> authenticateByRepo(userRepository, authReq)
+                        () -> authenticateByRepo(memberRepository, authReq)
                 )
                 .orElseThrow(() -> new EntityNotFoundException("Account not found"));
     }

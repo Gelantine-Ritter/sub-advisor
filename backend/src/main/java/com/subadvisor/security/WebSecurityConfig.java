@@ -1,7 +1,7 @@
 package com.subadvisor.security;
 
 
-import com.subadvisor.api.user.UserService;
+import com.subadvisor.api.member.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     Logger logger = LoggerFactory.getLogger("Logger");
 
     @Autowired
-    private UserService userService;
+    private MemberService userService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
