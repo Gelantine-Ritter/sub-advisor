@@ -6,7 +6,7 @@ p?=dev
 # ----- docker-compose ----- #
 
 dc-complete: dc-clean
-	docker-compose up --build
+	docker-compose up $(ARGS) --build
 
 dc-up:
 	docker-compose up
