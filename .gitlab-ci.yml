@@ -17,7 +17,6 @@ build-backend:
   stage: build
   script:
     - cd ./backend && ./mvnw package -Dmaven.test.skip && ./mvnw test-compile
-
   artifacts:
     paths:
       - backend/target/
@@ -25,9 +24,17 @@ build-backend:
 build-frontend:
     stage: build
     script:
-      - cd ./frontend && echo "build frontend"
+      - cd ./frontend && npm install --progress=false
+      - cd ./frontend && npm run build
     artifacts:
       paths:
+        - frontend/dist
+        - frontend/node_modules
+
+build-docker-compose:
+  stage: build
+  script:
+    - make dc-complete ARGS=-d
 
 lint:
   stage: quality_assurance
