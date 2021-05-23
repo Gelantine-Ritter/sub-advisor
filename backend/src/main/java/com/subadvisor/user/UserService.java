@@ -45,6 +45,8 @@ public class UserService implements UserDetailsService, IUserService {
 
     public void signUpUser(User user) {
 
+        System.out.println("SIGNUP USER");
+
         final String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
 
         user.setPassword(encryptedPassword);

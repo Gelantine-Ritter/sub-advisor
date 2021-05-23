@@ -1,7 +1,9 @@
 package com.subadvisor.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.subadvisor.user.User;
 import com.subadvisor.user.UserRepository;
+import com.subadvisor.user.UserRole;
 import com.subadvisor.venue.Venue;
 import com.subadvisor.venue.VenueRepository;
 import org.junit.jupiter.api.*;
@@ -55,10 +57,10 @@ public class RegistrationIT {
 
     @Test
     void testUserRegistration () throws Exception {
-        RegistrationRequest registrationRequest = RegistrationRequest.builder()
+        User user = User.builder()
                 .username(USER_NAME_VALID)
                 .password(PASSWORD_VALID)
-                .email(USER_EMAIL_VALID)
+                .userRole(UserRole.MEMBER)
                 .build();
 
         MockHttpServletResponse response = mockMvc
@@ -66,7 +68,7 @@ public class RegistrationIT {
                         post("/authenticate/registration")
                                 .contentType("application/json")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(registrationRequest))
+                                .content(objectMapper.writeValueAsString(user))
                 )
                 .andExpect(status().isOk())
                 .andReturn()

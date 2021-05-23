@@ -19,7 +19,7 @@ public class RegistrationController {
     String dies () { return "asdasdsadasd";}
 
     @PostMapping("/authenticate/registrate/")
-    String signUp (User user) {
+    String signUp (@RequestBody User user) {
         userService.signUpUser(user);
         return "redirect:/";
     }
