@@ -6,12 +6,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 /**
  * @author Matti Henning
@@ -20,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc( addFilters = false)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class VenueIT {
 
@@ -33,12 +35,25 @@ public class VenueIT {
     private static Venue venue;
     private static Venue venueEntity;
 
+    private static final String USER_NAME = "about-party";
+    private static final String PASSWORD = "roterosen161";
+    private static final String NAME = "://about blank";
+    private static final String INFO = "nette location für lange wochenenden";
+    private static final String EMAIL = "about@blank.li";
+
+
     @BeforeAll
     static void setUpData() {
-        //venue = new Venue("about_blank", "blank@test.com", "cooler club");
+
+        venue = Venue.builder()
+                .username(USER_NAME)
+                .password(PASSWORD)
+                .name(NAME)
+                .email(EMAIL)
+                .info(INFO)
+                .build();
     }
 
-@Disabled
     @Test
     @Order(1)
     void createOneVenue() throws Exception {
@@ -46,16 +61,19 @@ public class VenueIT {
         String res = mockMvc
                 .perform(
                         post("/venues/")
-                                .contentType("application/json")
+                                .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(venue)
                                 )
                 )
+                .andDo(print())
                 .andExpect(
                         matchAll(
                                 status().isOk(),
+                                jsonPath("$.username").value(venue.username()),
                                 jsonPath("$.name").value(venue.name()),
                                 jsonPath("$.info").value(venue.info()),
-                                jsonPath("$.email").value(venue.email())
+                                jsonPath("$.email").value(venue.email()),
+                                jsonPath("$.password").doesNotExist()
                         )
                 )
                 .andReturn()
@@ -67,7 +85,6 @@ public class VenueIT {
 
     }
 
-    @Disabled
     @Test
     @Order(2)
     void getOneVenueById() throws Exception {
@@ -83,7 +100,6 @@ public class VenueIT {
                 ));
     }
 
-    @Disabled
     @Test
     @Order(3)
     void updateOneVenueById() throws Exception {
@@ -105,7 +121,6 @@ public class VenueIT {
                 ));
     }
 
-    @Disabled
     @Test
     @Order(4)
     void deleteOneVenueById() throws Exception {
