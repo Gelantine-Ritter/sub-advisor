@@ -12,15 +12,17 @@ import java.util.Optional;
 @RestController
 public class RegistrationController {
 
+    @Autowired
     private UserService userService;
+    @Autowired
     private ConfirmationTokenService confirmationTokenService;
 
     @GetMapping("/authenticate/registrate/")
     String dies () { return "asdasdsadasd";}
 
     @PostMapping("/authenticate/registrate/")
-    String signUp (@RequestBody User user) {
-        userService.signUpUser(user);
+    public String signUp (@RequestBody RegistrationRequest registrationRequest) {
+        userService.signUpUser(registrationRequest);
         return "redirect:/";
     }
 

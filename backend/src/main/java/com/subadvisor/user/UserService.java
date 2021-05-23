@@ -1,9 +1,11 @@
 package com.subadvisor.user;
 
+import com.subadvisor.config.WebConfig;
 import com.subadvisor.mailservice.EmailSenderService;
 import com.subadvisor.registration.ConfirmationToken;
 import com.subadvisor.registration.ConfirmationTokenRepository;
 import com.subadvisor.registration.ConfirmationTokenService;
+import com.subadvisor.registration.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -43,19 +45,36 @@ public class UserService implements UserDetailsService, IUserService {
                 );
     }
 
-    public void signUpUser(User user) {
+    public void signUpUser(RegistrationRequest registrationRequest) {
 
+        System.out.println("Saving User");
+
+        if(!userRepository.findByUsername(registrationRequest.getUsername()).isPresent()){
+            User user = User.builder()
+                    .username(registrationRequest.getUsername())
+                    .password(new WebConfig().bCryptPasswordEncoder().encode(registrationRequest.getPassword()))
+                    .userRole(UserRole.MEMBER)
+                    .enabled(true)
+                    .build();
+
+            userRepository.save(user);
+            final ConfirmationToken confirmationToken = new ConfirmationToken(user);
+            confirmationTokenService.saveConfirmationToken(confirmationToken);
+
+            System.out.println("Saved User");
+
+        }else {
+            System.out.println("Username already in Use");
+        }
+
+        /*
         System.out.println("SIGNUP USER");
-
         final String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-
         user.setPassword(encryptedPassword);
-
         final User createdUser = userRepository.save(user);
-
         final ConfirmationToken confirmationToken = new ConfirmationToken(user);
-
         confirmationTokenService.saveConfirmationToken(confirmationToken);
+        */
 
     }
 
