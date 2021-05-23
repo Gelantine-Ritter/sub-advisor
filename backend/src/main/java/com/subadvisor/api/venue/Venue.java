@@ -1,23 +1,22 @@
 package com.subadvisor.api.venue;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,13 +27,17 @@ public class Venue implements UserDetails, Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @NonNull
     private String username;
+    @NonNull
     private String password;
     @CreatedDate
-    private LocalDateTime createdAt;
+    @Column(updatable = false)
+    private LocalDateTime created;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    @NonNull
     private String name;
     private String email;
     private String info;
