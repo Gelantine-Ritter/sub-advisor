@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-class TokenResponseDto implements Serializable {
+public class TokenResponseDto implements Serializable {
     //@JsonProperty("id_token")
     private String jwt;
 }
