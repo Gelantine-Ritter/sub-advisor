@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Accessors(fluent = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class VenuePersonalDto {
+public class VenuePersonalDto implements IVenueDto {
 
     private String id;
     private String username;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class VenuePublicDto {
+public class VenuePublicDto implements IVenueDto {
 
     private String name;
     private String email;
