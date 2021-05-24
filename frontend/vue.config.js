@@ -11,7 +11,13 @@ module.exports = {
       //   'Content-Type': 'application/json',
       //   Accept: 'application/json',
       // },
-      //  proxy: 'http://localhost:8080/',
+      // proxy: {
+      //   '/': {
+      //     target: 'http://localhost:8080',
+      //     ws: true,
+      //     changeOrigin: true,
+      //   },
+      // },
 
       progress: false,
     },

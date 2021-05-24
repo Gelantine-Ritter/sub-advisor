@@ -24,7 +24,7 @@ import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
 
 window.axios = axios
-// axios.defaults.baseURL = 'http://127.0.0.1:3000'
+axios.defaults.baseURL = 'http://localhost:8080'
 
 Vue.use(axios)
 Vue.use(VueCompositionAPI)

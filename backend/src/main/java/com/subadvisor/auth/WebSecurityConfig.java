@@ -19,8 +19,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 
 /**
@@ -79,25 +85,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // public endpoints
-                .antMatchers(HttpMethod.POST,"/authenticate/").permitAll()
+                .antMatchers(HttpMethod.POST, "/authenticate/").permitAll()
                 .antMatchers(HttpMethod.GET, "/venues/**").permitAll()//.hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/events/**").permitAll()//.hasRole("ADMIN")
                 .antMatchers("/").permitAll()
                 // private endpoints
                 .anyRequest().authenticated();
 
+        final String corsOrigin = "http://localhost:3000";
 
-        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        /*
-        @Override
-        protected void configure(HttpSecurity httpSecurity) throws Exception {
-            httpSecurity.headers().frameOptions().disable().and().cors().and().csrf().disable();
-            httpSecurity.addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-        }
+        http
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new CorsFilter(corsConfigurationSource(corsOrigin)), AbstractPreAuthenticatedProcessingFilter.class);
+    }
 
-         */
-
+    private CorsConfigurationSource corsConfigurationSource(String corsOrigin) {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(corsOrigin));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "HEAD", "OPTIONS", "PUT", "PATCH", "DELETE"));
+        configuration.setMaxAge(10L);
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Accept", "Access-Control-Request-Method", "Access-Control-Request-Headers",
+                "Accept-Language", "Authorization", "Content-Type", "Request-Name", "Request-Surname", "Origin", "X-Request-AppVersion",
+                "X-Request-OsVersion", "X-Request-Device", "X-Requested-With"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean

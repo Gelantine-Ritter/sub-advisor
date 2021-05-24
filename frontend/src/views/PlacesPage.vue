@@ -1,7 +1,9 @@
 <template>
   <v-container my-5>
     <h1 class="h1Style text-center display-3 font-weight-medium">PLACES</h1>
-    <h1><v-btn @click="testMethod">Test</v-btn></h1>
+    <h1>
+      <v-btn @click="testMethod">Test</v-btn>
+    </h1>
     <v-layout row wrap>
       <v-flex xs12 sm6 md4 lg3 v-for="event in venues1" :key="event.name">
         <div>
@@ -20,8 +22,8 @@
             </v-responsive>
             <v-card-actions>
               <v-btn width="100%" flat color="rounded-pill black white--text"
-                >United we Stream</v-btn
-              >
+                >United we Stream
+              </v-btn>
             </v-card-actions>
           </v-card>
         </div>
@@ -50,7 +52,7 @@ export default {
   methods: {
     testMethod() {
       console.log('Test clicked')
-      axios.get('http://localhost:8080/venues', {}).then((err, response) => {
+      axios.get('/venues').then((err, response) => {
         if (err) {
           console.log(err)
         } else if (!response) {
