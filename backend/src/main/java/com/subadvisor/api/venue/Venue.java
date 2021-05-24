@@ -2,7 +2,10 @@ package com.subadvisor.api.venue;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -35,10 +38,16 @@ public class Venue implements UserDetails, Serializable {
     private String username;
     @NonNull
     private String password;
+
     @CreatedDate
     @Column(updatable = false)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime created;
+
     @LastModifiedDate
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime modifiedAt;
 
     @NonNull
@@ -47,6 +56,9 @@ public class Venue implements UserDetails, Serializable {
     @Getter
     private String email;
     private String info;
+    @NonNull
+    @Builder.Default
+    private String role = "VENUE";
 
     private boolean enabled = true;
 
