@@ -65,6 +65,7 @@ public class Venue implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+        //return AuthorityUtils.createAuthorityList(role());
     }
 
     @Override
