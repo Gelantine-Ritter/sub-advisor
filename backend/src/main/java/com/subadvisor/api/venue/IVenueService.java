@@ -1,11 +1,13 @@
 package com.subadvisor.api.venue;
 
+import com.subadvisor.api.venue.dto.VenuePersonalDto;
+
 import java.util.List;
 
 public interface IVenueService {
     List<Venue> getAllVenues();
 
-    Venue createVenue(Venue venue);
+    VenuePersonalDto createVenue(Venue venue);
 
     Venue getVenueById(Long venueId);
 

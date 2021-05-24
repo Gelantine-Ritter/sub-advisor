@@ -1,5 +1,7 @@
 package com.subadvisor.api.venue;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,14 +19,21 @@ public class VenueService implements UserDetailsService, IVenueService {
     @Autowired
     VenueRepository repository;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public List<Venue> getAllVenues() {
         return repository.findAll();
     }
 
     @Override
-    public Venue createVenue(Venue venue) {
-        return repository.save(venue);
+    public VenuePersonalDto createVenue(Venue venue) {
+
+        return objectMapper.convertValue(
+                repository.save(venue),
+                VenuePersonalDto.class
+        );
     }
 
     @Override
