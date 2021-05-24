@@ -1,8 +1,11 @@
 package com.subadvisor.api.venue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.subadvisor.api.venue.dto.IVenueDto;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
+import com.subadvisor.api.venue.dto.VenuePublicDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,11 +40,27 @@ public class VenueService implements UserDetailsService, IVenueService {
     }
 
     @Override
-    public Venue getVenueById(Long venueId) {
+    public IVenueDto getVenueById(Authentication authentication, Long venueId) {
 
-        return repository
-                .findById(venueId)
-                .orElseThrow(() -> new EntityNotFoundException(("No Venue found for the id " + venueId)));
+        return repository.findById(venueId)
+                .map(venue ->
+                        authentication == null ?
+                                objectMapper.convertValue(
+                                        venue,
+                                        VenuePublicDto.class) :
+                                ((Venue) authentication.getPrincipal()).id() == venueId ?
+                                        objectMapper.convertValue(
+                                                venue,
+                                                VenuePersonalDto.class
+                                        ) : objectMapper.convertValue(
+                                        venue,
+                                        VenuePublicDto.class)
+
+                ).orElseThrow(
+                        () -> new UsernameNotFoundException(
+                                format("Venue with it - %s, not found", venueId)
+                        )
+                );
     }
 
     @Override
@@ -50,20 +69,26 @@ public class VenueService implements UserDetailsService, IVenueService {
     }
 
     @Override
-    public Venue updateVenueById(Venue newVenue, Long venueId) {
+    public IVenueDto updateVenueById(Venue newVenue, Long venueId) {
 
-        return repository.findById(venueId)
-                .map(venue ->
-                        repository.save(venue
-                                .name(newVenue.name())
-                                .email(newVenue.email())
-                                .info(newVenue.info())
-                        ))
-                .orElseGet(() ->
-                        repository.save(
-                                newVenue.id(venueId)
+        return objectMapper.convertValue(
+                repository.findById(venueId)
+                        .map(venue ->
+                                repository.save(
+                                        venue
+                                                .username(newVenue.username())
+                                                .password(newVenue.password())
+                                                .name(newVenue.name())
+                                                .email(newVenue.email())
+                                                .info(newVenue.info())
+                                )
                         )
-                );
+                        .orElseGet(() ->
+                                repository.save(
+                                        newVenue.id(venueId)
+                                )
+                        ),
+                VenuePersonalDto.class);
     }
 
     @Override
