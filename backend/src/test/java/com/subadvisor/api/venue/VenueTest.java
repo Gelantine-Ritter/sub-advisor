@@ -11,7 +11,9 @@ public class VenueTest {
 
     @BeforeAll
     public static void setUp () {
-        venue = new Venue.VenueBuilder()
+        venue = Venue.builder()
+                .username("bergi-gangster91")
+                .password("geheim")
                 .name("Berghain")
                 .email("berghain@steil.de")
                 .info("Tolle Hütte, viel Freude.")
