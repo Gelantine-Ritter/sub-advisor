@@ -65,6 +65,7 @@ public class AuthIT {
 
         venueRepository.save(
                 Venue.builder()
+                        .name("lala")
                         .username(VENUE_NAME_VALID)
                         .password(PASSWORD_VALID)
                         .enabled(true)

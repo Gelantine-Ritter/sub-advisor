@@ -1,14 +1,16 @@
 package com.subadvisor.api.venue;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.subadvisor.api.Driver;
+import com.subadvisor.operators.LoginOperator;
+import io.jsonwebtoken.lang.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -21,115 +23,271 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
  * This class uses @SpringBootTest wich includes also Persistance Layer
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
-@AutoConfigureMockMvc( addFilters = false)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class VenueIT {
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+public class VenueIT extends Driver {
 
-    @Autowired
-    private MockMvc mockMvc;
+    private static Venue VENUE;
+    private static Venue OTHER_VENUE;
+    private static Venue VENUE_UPDATED;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private static final String USER_NAME_VENUE = "about-party";
+    private static final String PASSWORD_VENUE = "roterosen161";
+    private static final String NAME_VENUE = "://about blank";
+    private static final String INFO_VENUE = "nette location für lange wochenenden";
+    private static final String EMAIL_VENUE = "about@blank.li";
 
-    private static Venue venue;
-    private static Venue venueEntity;
+    private static final String USER_NAME_OTHER_VENUE = "tennis-café";
+    private static final String PASSWORD_OTHER_VENUE = "guter-aufschlag";
+    private static final String NAME_OTHER_VENUE = "cafè tennis";
+    private static final String INFO_OTHER_VENUE = "gemütliche Kneipe mit schönem Keller";
+    private static final String EMAIL_OTHER_VENUE = "tennis@schlaeger.info";
 
-    private static final String USER_NAME = "about-party";
-    private static final String PASSWORD = "roterosen161";
-    private static final String NAME = "://about blank";
-    private static final String INFO = "nette location für lange wochenenden";
-    private static final String EMAIL = "about@blank.li";
+    private static String TOKEN_VENUE;
+    private static String TOKEN_OTHER_VENUE;
 
+    private Driver DRIVER = driver();
 
     @BeforeAll
-    static void setUpData() {
+    void setUp() throws Exception {
 
-        venue = Venue.builder()
-                .username(USER_NAME)
-                .password(PASSWORD)
-                .name(NAME)
-                .email(EMAIL)
-                .info(INFO)
+        // FIXME: Since registration is not implemtneted yet, this is roundabout
+        VENUE = venueRepository.save(
+                Venue.builder()
+                        .username(USER_NAME_VENUE)
+                        .password(PASSWORD_VENUE)
+                        .name(NAME_VENUE)
+                        .email(EMAIL_VENUE)
+                        .info(INFO_VENUE)
+                        .build()
+        );
+
+        OTHER_VENUE = venueRepository.save(
+                Venue.builder()
+                        .username(USER_NAME_OTHER_VENUE)
+                        .password(PASSWORD_OTHER_VENUE)
+                        .name(NAME_OTHER_VENUE)
+                        .email(EMAIL_OTHER_VENUE)
+                        .info(INFO_OTHER_VENUE)
+                        .build()
+        );
+
+        VENUE_UPDATED = Venue.builder()
+                .username(USER_NAME_VENUE)
+                .password(PASSWORD_VENUE)
+                .name(NAME_VENUE + "_update")
+                .email(EMAIL_VENUE + "_update")
+                .info(INFO_VENUE + "_update")
                 .build();
+
+        // FIXME: Not optimal. for now it is not possible that all dependencies are autowired once in abstract class.
+        TOKEN_VENUE =
+                new LoginOperator(DRIVER)
+                        .login(USER_NAME_VENUE, PASSWORD_VENUE)
+                        .token();
+
+        TOKEN_OTHER_VENUE =
+                new LoginOperator(DRIVER)
+                        .login(USER_NAME_OTHER_VENUE, PASSWORD_OTHER_VENUE)
+                        .token();
     }
 
     @Test
     @Order(1)
-    void createOneVenue() throws Exception {
+    void guestCanReadPublicVenueAccount() throws Exception {
 
-        String res = mockMvc
+        DRIVER.mockMvc()
                 .perform(
-                        post("/venues/")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(venue)
-                                )
+                        get("/venues/" + VENUE.id())
                 )
-                .andDo(print())
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.username").value(venue.username()),
-                                jsonPath("$.name").value(venue.name()),
-                                jsonPath("$.info").value(venue.info()),
-                                jsonPath("$.email").value(venue.email()),
-                                jsonPath("$.password").doesNotExist()
+                                jsonPath("$.username").doesNotExist(),
+                                jsonPath("$.id").doesNotExist(),
+                                jsonPath("$.name").value(VENUE.name()),
+                                jsonPath("$.info").value(VENUE.info()),
+                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.password").doesNotExist(),
+                                jsonPath("$.created").doesNotExist(),
+                                jsonPath("$.modifiedAt").doesNotExist(),
+                                status().isOk()
                         )
                 )
+                .andDo(print())
                 .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        // save response as new Venue to use id for further tests
-        venueEntity = new ObjectMapper().readValue(res, Venue.class);
-
+                .getResponse();
     }
 
     @Test
     @Order(2)
-    void getOneVenueById() throws Exception {
+    void venueCanReadOwnPrivateVenueAccount() throws Exception {
 
-        mockMvc
-                .perform(get("/venues/" + venueEntity.id()))
-                .andExpect(matchAll(
-                        status().isOk(),
-                        jsonPath("$.id").value(venueEntity.id()),
-                        jsonPath("$.name").value(venueEntity.name()),
-                        jsonPath("$.info").value(venueEntity.info()),
-                        jsonPath("$.email").value(venueEntity.email())
-                ));
+        DRIVER.mockMvc()
+                .perform(
+                        get("/venues/" + VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                )
+                .andExpect(
+                        matchAll(
+                                status().isOk(),
+                                jsonPath("$.username").value(VENUE.username()),
+                                jsonPath("$.id").value(VENUE.id()),
+                                jsonPath("$.name").value(VENUE.name()),
+                                jsonPath("$.info").value(VENUE.info()),
+                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.password").doesNotExist(),
+                                jsonPath("$.created").exists(),
+                                jsonPath("$.modifiedAt").exists(),
+                                status().isOk()
+                        )
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
     }
+
 
     @Test
     @Order(3)
-    void updateOneVenueById() throws Exception {
+    void venueCanReadOtherPublicVenueAccount() throws Exception {
 
-        venueEntity.name("Bla");
-
-        mockMvc
-                .perform(put("/venues/" + venueEntity.id())
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(venueEntity)
+        DRIVER.mockMvc()
+                .perform(
+                        get("/venues/" + OTHER_VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                )
+                .andExpect(
+                        matchAll(
+                                status().isOk(),
+                                jsonPath("$.username").doesNotExist(),
+                                jsonPath("$.id").doesNotExist(),
+                                jsonPath("$.name").value(OTHER_VENUE.name()),
+                                jsonPath("$.info").value(OTHER_VENUE.info()),
+                                jsonPath("$.email").value(OTHER_VENUE.email()),
+                                jsonPath("$.password").doesNotExist(),
+                                jsonPath("$.created").doesNotExist(),
+                                jsonPath("$.modifiedAt").doesNotExist(),
+                                status().isOk()
                         )
                 )
-                .andExpect(matchAll(
-                        status().isOk(),
-                        jsonPath("$.id").value(venueEntity.id()),
-                        jsonPath("$.name").value(venueEntity.name()),
-                        jsonPath("$.info").value(venueEntity.info()),
-                        jsonPath("$.email").value(venueEntity.email())
-                ));
+                .andDo(print())
+                .andReturn()
+                .getResponse();
     }
 
     @Test
     @Order(4)
-    void deleteOneVenueById() throws Exception {
+    void venueCanUpdateOwnVenueAccount() throws Exception {
 
-        mockMvc.perform(delete("/venues/" + venueEntity.id()))
-                .andExpect(status().isOk());
+        Long idhello = VENUE.id();
 
-        mockMvc.perform(get("/venues/" + venueEntity.id()))
-                .andExpect(status().is(404));
+        DRIVER.mockMvc()
+                .perform(
+                        put("/venues/" + VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        VENUE_UPDATED
+                                ))
+                )
+                .andExpect(
+                        matchAll(
+                                status().isOk(),
+                                jsonPath("$.username").value(VENUE.username()),
+                                jsonPath("$.id").value(VENUE.id()),
+                                jsonPath("$.name").value(VENUE_UPDATED.name()),
+                                jsonPath("$.info").value(VENUE_UPDATED.info()),
+                                jsonPath("$.email").value(VENUE_UPDATED.email()),
+                                jsonPath("$.password").doesNotExist(),
+                                jsonPath("$.created").exists(),
+                                jsonPath("$.modifiedAt").exists(),
+                                status().isOk()
+                        )
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
 
+
+    }
+
+    @Test
+    @Order(5)
+    void venueCanNotUpdateOtherVenueAccount() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/venues/" + OTHER_VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        VENUE_UPDATED
+                                ))
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is(403)
+                );
+
+        VENUE.id();
+
+        Assertions.assertEquals(OTHER_VENUE.username(), venueRepository
+                .findById(OTHER_VENUE.id())
+                .get()
+                .username());
+    }
+
+    @Test
+    @Order(6)
+    void venueCanNotDeleteOtherVenueAccount() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/venues/" + OTHER_VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is(403)
+                );
+
+        VENUE.id();
+
+        Assertions.assertNotNull(venueRepository.findById(OTHER_VENUE.id()));
+    }
+
+    @Test
+    @Order(7)
+    void venueCanDeleteOwnVenueAccount() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/venues/" + VENUE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is(200)
+                );
+
+
+        Assertions.assertEquals(Optional.empty(), venueRepository.findById(VENUE.id()));
+    }
+
+    @Test
+    @Order(8)
+    void guestCanNotReadDeleteVenueAccount() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        get("/venues/" + VENUE.id())
+                )
+                .andExpect(
+                        status().is(401)
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
     }
 }
