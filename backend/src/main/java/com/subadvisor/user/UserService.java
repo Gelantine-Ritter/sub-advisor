@@ -1,13 +1,9 @@
 package com.subadvisor.user;
 
 import com.subadvisor.config.WebConfig;
-import com.subadvisor.mailservice.EmailSenderService;
-import com.subadvisor.registration.ConfirmationToken;
-import com.subadvisor.registration.ConfirmationTokenRepository;
-import com.subadvisor.registration.ConfirmationTokenService;
-import com.subadvisor.registration.RegistrationRequest;
+import com.subadvisor.registration.*;
+import com.subadvisor.registration.dto.RegistrationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,11 +25,6 @@ public class UserService implements UserDetailsService, IUserService {
     @Autowired
     ConfirmationTokenService confirmationTokenService;
 
-    @Autowired
-    EmailSenderService emailSenderService;
-
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
@@ -47,39 +38,33 @@ public class UserService implements UserDetailsService, IUserService {
 
     public void signUpUser(RegistrationRequest registrationRequest) {
 
-        System.out.println("Saving User");
+        User user;
 
         if(!userRepository.findByUsername(registrationRequest.getUsername()).isPresent()){
-            User user = User.builder()
-                    .username(registrationRequest.getUsername())
-                    .email(registrationRequest.getEmail())
-                    .password(new WebConfig().bCryptPasswordEncoder().encode(registrationRequest.getPassword()))
-                    .userRole(UserRole.MEMBER)
-                    .enabled(true)
-                    .build();
 
+            if (registrationRequest.getUserRole().equals(String.valueOf(UserRole.MEMBER))){
+                user = User.builder()
+                        .username(registrationRequest.getUsername())
+                        .email(registrationRequest.getEmail())
+                        .password(new WebConfig().bCryptPasswordEncoder().encode(registrationRequest.getPassword()))
+                        .userRole(UserRole.MEMBER)
+                        .enabled(true)
+                        .build();
+            }else {
+                user = User.builder()
+                        .username(registrationRequest.getUsername())
+                        .email(registrationRequest.getEmail())
+                        .password(new WebConfig().bCryptPasswordEncoder().encode(registrationRequest.getPassword()))
+                        .userRole(UserRole.VENUE)
+                        .enabled(true)
+                        .build();
+            }
             userRepository.save(user);
-            final ConfirmationToken confirmationToken = new ConfirmationToken(user);
-            confirmationTokenService.saveConfirmationToken(confirmationToken);
 
             System.out.println("Saved User");
-
-            sendConfirmationMail(registrationRequest.getEmail(), confirmationToken.getConfirmationToken());
-
         }else {
             System.out.println("Username already in Use");
         }
-
-        /*
-        System.out.println("SIGNUP USER");
-        final String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
-        final User createdUser = userRepository.save(user);
-        final ConfirmationToken confirmationToken = new ConfirmationToken(user);
-        confirmationTokenService.saveConfirmationToken(confirmationToken);
-        */
-
-
     }
 
     public void confirmUser(ConfirmationToken confirmationToken) {
@@ -92,19 +77,6 @@ public class UserService implements UserDetailsService, IUserService {
 
         confirmationTokenService.deleteConfirmationToken(confirmationToken.getId());
 
-    }
-
-    void sendConfirmationMail(String userMail, String token) {
-
-        final SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(userMail);
-        mailMessage.setSubject("Mail Confirmation Link!");
-        mailMessage.setFrom("<MAIL>");
-        mailMessage.setText(
-                "Thank you for registering. Please click on the below link to activate your account." + "http://localhost:8080/sign-up/confirm?token="
-                        + token);
-
-        // emailSenderService.sendEmail(mailMessage);
     }
 }
 
