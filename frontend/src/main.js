@@ -12,19 +12,28 @@ import VueCompositionAPI from '@vue/composition-api'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import Router from 'vue-router'
+import axios from 'axios'
+
 import Events from './views/EventsPage.vue'
 import About from './views/AboutPage.vue'
 import Landing from './views/LandingPage.vue'
 import Contact from './views/ContactPage.vue'
 import Places from './views/PlacesPage.vue'
 import Profile from './views/ProfilePage.vue'
+import Login from './views/LoginPage.vue'
+import Signup from './views/SignupPage.vue'
 
+window.axios = axios
+axios.defaults.baseURL = 'http://localhost:8080'
+
+Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
 
 Vue.config.productionTip = false
 
 const router = new Router({
+  mode: 'history',
   routes: [
     {
       path: '/profile',
@@ -55,6 +64,16 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Landing,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Signup,
     },
   ],
 })

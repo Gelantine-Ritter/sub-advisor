@@ -1,22 +1,20 @@
 package com.subadvisor;
 
-import com.subadvisor.user.User;
-import com.subadvisor.user.UserRepository;
-import com.subadvisor.venue.Venue;
-import com.subadvisor.venue.VenueRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.subadvisor.api.member.Member;
+import com.subadvisor.api.member.MemberRepository;
+import com.subadvisor.api.venue.Venue;
+import com.subadvisor.api.venue.VenueRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+@Log4j2
 @Configuration
 class LoadDatabase {
 
-    private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-
     @Bean
-    CommandLineRunner initDatabase(VenueRepository venueRepository, UserRepository userRepository) {
+    CommandLineRunner initDatabase(VenueRepository venueRepository, MemberRepository memberRepository) {
         return args -> {
 
             // Load Venues
@@ -30,13 +28,9 @@ class LoadDatabase {
                             .build()
             ));
 
-
-            /*
-            log.info("Preloading " + venueRepository.save(new Venue("café tennis", "zumtennis@info.com", "nettes café für nette Abende")));
-*/
             // Load TestUser
-            log.info("Preloading " + userRepository.save(
-                    User.builder()
+            log.info("Preloading " + memberRepository.save(
+                    Member.builder()
                             .username("Jimmy-Bleu")
                             .password("supercool")
                             .enabled(true)
@@ -44,8 +38,8 @@ class LoadDatabase {
                             .build())
             );
 
-            log.info("Preloading " + userRepository.save(
-                    User.builder()
+            log.info("Preloading " + memberRepository.save(
+                    Member.builder()
                             .username("Nayla Thalhammer")
                             .password("hammerschlag")
                             .build())

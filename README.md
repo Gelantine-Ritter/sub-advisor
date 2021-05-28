@@ -1,3 +1,7 @@
+[![pipeline status](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/badges/master/pipeline.svg)](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/commits/master)
+
+# Subadvisor - v0.0.1
+
 ### Starting with Docker-Compose
 
 We recommend to start our project as a docker-cluster with docker-compose.
