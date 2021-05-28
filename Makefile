@@ -33,7 +33,7 @@ test-all:
 	cd backend && ./mvnw clean && ./mvnw verify
 
 test-it:
-	cd backend && mvn clean test-compile -Dspring.profiles.active=default failsafe:integration-test
+	cd backend && mvn clean test-compile -Dspring.profiles.active=default failsafe:integration-test failsafe:verify
 
 
 

@@ -64,12 +64,14 @@ lint:
 test-backend-IT:
   stage: tests
   script:
-    - cd ./backend && ./mvnw failsafe:integration-test
+    - cd ./backend
+    - ./mvnw failsafe:integration-test failsafe:verify
 
 test-backend-unit:
   stage: tests
   script:
-    - cd backend && ./mvnw surefire:test
+    - cd backend
+    - ./mvnw surefire:test
 
 deploy:
   stage: deploy
