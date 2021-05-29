@@ -12,7 +12,7 @@
         label=""
         type="text"
         required
-        v-model="username"
+        v-model="form.username"
       ></v-text-field>
       <h1>PASSWORD</h1>
       <v-text-field
@@ -25,7 +25,7 @@
         label=""
         type="password"
         required
-        v-model="password"
+        v-model="form.password"
       ></v-text-field>
 
       <div class="text-center">
@@ -53,32 +53,35 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
-  props: {
-    source: String,
-  },
+  // props: {
+  //   source: String,
+  // },
   data() {
     return {
-      username: '',
-      password: '',
+      form: {
+        username: '',
+        password: '',
+      },
     }
   },
   methods: {
-    /*
+    ...mapActions({
+      login: 'auth/login',
+    }),
     handleSubmit() {
-      console.log('Enter has been clicked')
-    },
-    */
-    async handleSubmit() {
-      console.log('Enter has been clicked')
-      const response = await axios.post('/authenticate/', {
-        username: this.username,
-        password: this.password,
-      })
-      console.log(response)
+      this.login(this.form)
+        .then(() => {
+          this.$router.replace({
+            name: 'home',
+          })
+        })
+        .catch(() => {
+          console.log('failed')
+          // ADD A ERROR MESSAGE
+        })
     },
   },
 }
