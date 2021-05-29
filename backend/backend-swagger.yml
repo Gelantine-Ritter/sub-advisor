@@ -5,7 +5,7 @@ info:
   version: 0.0.1
 
 paths:
-  /authentication/login:
+  /authenticate:
     post:
       tags:
         - "Authentication"
@@ -20,37 +20,35 @@ paths:
           description: Ok
         404:
           description: Not Found
-  /venues:
+  /authenticate/registration:
     post:
       tags:
-        - "Venues"
-      description: "create an Venue"
+        - "Authentication"
+      description: "Registration"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Venue"
+              $ref: "#/components/schemas/RegistrationVenue"
       responses:
-        201:
-          description: Created
-        400:
-          description: Not Created
+         200:
+            description: Ok
+         400:
+            description: Error
+
+  /venues:
     get:
       tags:
         - "Venues"
-      description: "Get an Venue by Id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Venue"
+      description: "Get all venues"
       responses:
         200:
           description: Ok
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Venue"
+                $ref: "#/components/schemas/VenueList"
+
   /venues/{venueId}:
     parameters:
       - name: venueId
@@ -63,18 +61,15 @@ paths:
       tags:
         - "Venues"
       description: "Get an Venue by Id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Venue"
       responses:
         200:
           description: Ok
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Venue"
+                oneOf:
+                  - $ref: "#/components/schemas/PublicVenue"
+                  - $ref: "#/components/schemas/PrivateVenue"
         400:
           description: Bad Request
         404:
@@ -84,16 +79,21 @@ paths:
         - "Venues"
       description: "update a Venue by id"
       operationId: "updateVenue"
+      security:
+        - BearerAuth: [member]
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Venue"
+              $ref: '#/components/schemas/JsonPutValue'
+
       responses:
         204:
           description: Updated
         400:
           description: Bad Request
+        401:
+          description: Not Authenticated
         404:
           description: Not Found
     delete:
@@ -101,32 +101,130 @@ paths:
         - "Venues"
       description: "delete a Venue by id"
       operationId: "deleteVenue"
+      security:
+          - BearerAuth: [admin]
       responses:
         202:
           description: Accepted
         400:
-          description: "Invalid id supplied"
+          description: Invalid id supplied
+        401:
+          description: Not Authenticated
         404:
-          description: "Venue not found"
+          description: Venue not found
 components:
   schemas:
-    Venue:
+    LoginObject:
       type: object
       required:
         - email
+        - password
+      properties:
+        email:
+          type: string
+          example: my-mail@mail.com
+        password:
+          type: string
+          example: mysecretpassword
+
+    RegistrationVenue:
+      type: object
+      required:
+        - email
+        - username
+        - password
         - name
       properties:
         email:
           type: string
           example: "foto-bande-nk@gmail.com"
+        username:
+          type: string
+          example: "die-foto-bande"
+        password:
+          type: string
+          example: "mysecretpassword123"
         name:
           type: string
           example: "Fotobande Neukölln"
-        info:
+
+    PublicVenue:
+      type: object
+      properties:
+        name:
           type: string
-          example: "Fotobande Neukölln ist eine Gruppe vom Personen..."
+          example: "Fotobande Neukölln"
+        description:
+          type: string
+          example: "dies ist die beschreibung der venue"
+        adress:
+          type: string
+          example: "Baumweg 123 Berlin"
+        website:
+          type: string
+          example: "myclub-berlin.com"
+        logo:
+          type: string
+          example: 010100000101010010001
+          format: binary
+
+    PrivateVenue:
+      type: object
+      required:
+        - email
+        - username
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          example: "foto-bande-nk@gmail.com"
+        username:
+          type: string
+          example: "die-foto-bande"
+        password:
+          type: string
+          example: "mysecretpassword123"
+        name:
+          type: string
+          example: "Fotobande Neukölln"
+        description:
+          type: string
+          example: "dies ist die beschreibung der venue"
+        adress:
+          type: string
+          example: "Baumweg 123 Berlin"
+        website:
+          type: string
+          example: "myclub-berlin.com"
+        logo:
+          type: string
+          example: 010100000101010010001
+          format: binary
+
+    VenueList:
+      description: "collection of all Venues in db"
+      type: array
+      items:
+          oneOf:
+            - $ref: "#/components/schemas/PublicVenue"
+            - $ref: "#/components/schemas/PrivateVenue"
+
+    JsonPutValue:
+      type: object
+      example:
+        name: mynewclubname
 
 
-
-
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+# Schemas:
+# alle weiteren Routen
+# PrivateVenue
+# PublicVenue
 
