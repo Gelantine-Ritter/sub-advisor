@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface VenueRepository extends JpaRepository<Venue, Long>, IUserAccount {
 
     Venue findByName(String name);
-
 }

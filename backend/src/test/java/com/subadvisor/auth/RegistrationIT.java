@@ -1,11 +1,8 @@
 package com.subadvisor.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.subadvisor.user.User;
-import com.subadvisor.user.UserRepository;
-import com.subadvisor.user.UserRole;
-import com.subadvisor.venue.Venue;
-import com.subadvisor.venue.VenueRepository;
+import com.subadvisor.api.auth.dto.RegistrationRequest;
+import com.subadvisor.api.venue.VenueRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RegistrationIT {
+    /*
 
-    @Autowired
-    UserRepository userRepository;
 
     @Autowired
     VenueRepository venueRepository;
@@ -40,16 +36,16 @@ public class RegistrationIT {
     private MockMvc mockMvc;
 
     private static final String USER_NAME_VALID = "user_name_valid";
-    private static final String VENUE_NAME_VALID = "venue_name-valid";
+    private static final String NAME_VALID = "venue_name-valid";
     private static final String USER_EMAIL_VALID = "user_email_valid";
     private static final String USER_NAME_NON_VALID = "user_name_non_valid";
-    private static final String VENUE_NAME_NON_VALID = "venue_name_non_valid";
+    private static final String NAME_NON_VALID = "venue_name_non_valid";
     private static final String USER_EMAIL_NON_VALID = "user_email_non_valid";
 
     private static final String PASSWORD_VALID = "password_valid";
     private static final String PASSWORD_NON_VALID = "password_non_valid";
 
-    User user;
+    Venue venue;
 
     @BeforeAll
     void setUp(){
@@ -58,10 +54,10 @@ public class RegistrationIT {
 
     @Test
     void testUserRegistration () throws Exception {
-        user = User.builder()
+        venue = RegistrationRequest.builder()
                 .username(USER_NAME_VALID)
                 .password(PASSWORD_VALID)
-                .userRole(UserRole.MEMBER)
+                .name(NAME_VALID)
                 .build();
 
         MockHttpServletResponse response = mockMvc
@@ -75,6 +71,8 @@ public class RegistrationIT {
                 .andReturn()
                 .getResponse();
         System.out.println(response.getContentAsString());
+
+
     }
 
     @Test
@@ -82,5 +80,5 @@ public class RegistrationIT {
 
     }
 
-
+*/
 }

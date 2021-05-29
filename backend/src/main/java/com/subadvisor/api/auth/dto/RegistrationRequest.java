@@ -1,6 +1,5 @@
-package com.subadvisor.registration.dto;
+package com.subadvisor.api.auth.dto;
 
-import com.subadvisor.user.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RegistrationRequest {
-    private UserRole userRole;
     private String username;
+    private String name;
     private String email;
     private String password;
 }
