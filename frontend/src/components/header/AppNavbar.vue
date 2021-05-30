@@ -129,21 +129,37 @@
           <v-icon large class="ml-5 d-none d-sm-flex"> account_circle </v-icon>
         </v-btn>
       </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subProfile"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+      <!-- START AUTHENTICATION CONTROL -->
+      <template v-if="authenticated">
+        <v-list>
+          <v-list-item
+            v-for="item in subProfileLoggedIn"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </template>
+      <template v-else>
+        <v-list>
+          <v-list-item
+            v-for="item in subProfile"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </template>
+      <!-- END AUTHENTICATION CONTROL -->
     </v-menu>
     <!-- right aligned items-->
   </v-toolbar>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Navbar',
   data() {
@@ -170,7 +186,14 @@ export default {
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
       ],
+      subProfileLoggedIn: [{ title: 'Logout', route: '/' }],
     }
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+      //   user: 'auth/user',
+    }),
   },
 }
 </script>

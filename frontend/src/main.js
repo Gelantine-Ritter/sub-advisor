@@ -22,9 +22,14 @@ import Places from './views/PlacesPage.vue'
 import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
+import store from './store'
+
+require('@/store/subscriber')
 
 window.axios = axios
 axios.defaults.baseURL = 'http://localhost:8080'
+
+store.dispatch('auth/attempt', localStorage.getItem('token'))
 
 Vue.use(axios)
 Vue.use(VueCompositionAPI)
@@ -81,5 +86,6 @@ const router = new Router({
 new Vue({
   vuetify,
   router,
+  store,
   render: (h) => h(App),
 }).$mount('#app')

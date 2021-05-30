@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
@@ -93,6 +94,8 @@ public class AuthIT {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.jwt").exists())
+                .andDo(print())
+                .andExpect(jsonPath("$.userId").exists())
                 .andReturn()
                 .getResponse();
 
@@ -124,6 +127,8 @@ public class AuthIT {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.jwt").exists())
+                .andExpect(jsonPath("$.userId").exists())
+                .andExpect(jsonPath("$.role").value("VENUE"))
                 .andReturn()
                 .getResponse();
 
@@ -153,6 +158,7 @@ public class AuthIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(authReq))
                 )
+                .andDo(print())
                 .andExpect(status().is(404))
                 .andExpect(jsonPath("$.jwt").doesNotExist());
     }
@@ -163,6 +169,7 @@ public class AuthIT {
         mockMvc
                 .perform(get("/hello")
                 )
+                .andDo(print())
                 .andExpect(
                         status().is(401)
                 );

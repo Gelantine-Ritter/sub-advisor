@@ -9,4 +9,10 @@ public class AuthenticationResponse {
     @Getter
     private final String jwt;
 
+    @Getter
+    private final String userId;
+
+    @Getter
+    private final String ROLE;
+
 }

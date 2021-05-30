@@ -142,7 +142,6 @@ export default {
         (v) => !!v || 'E-mail is required',
         (v) => v === this.password || 'Password must match',
       ],
-      info: '',
     }
   },
   methods: {

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
+import com.subadvisor.api.auth.IUserId;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -30,6 +32,7 @@ import java.util.Collection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
+
 public class Venue implements UserDetails, Serializable, IRegistrationRequestDto {
 
     @Id
@@ -59,7 +62,7 @@ public class Venue implements UserDetails, Serializable, IRegistrationRequestDto
     private String info;
     @NonNull
     @Builder.Default
-    private String role = "VENUE";
+    private String ROLE = "VENUE";
 
     private boolean enabled = true;
 
@@ -97,5 +100,9 @@ public class Venue implements UserDetails, Serializable, IRegistrationRequestDto
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public Long userId() {
+        return this.id;
     }
 }

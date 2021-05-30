@@ -32,7 +32,6 @@ public class AuthenticationService {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-
     public AuthenticationResponse authenticateUser(AuthenticationRequest authReq) {
         // TODO: It should be Best Practice to use User- and VenueService insteat of repository/DAO diretly
         return authenticateByRepo(venueRepository, authReq)
@@ -46,7 +45,13 @@ public class AuthenticationService {
         return repo
                 .findByUsername(authReq.getUsername())
                 .filter(account -> passwordEncoder.matches(authReq.getPassword(), account.getPassword()))
-                .map(account -> new AuthenticationResponse(jwtTokenUtil.generateToken(authReq.getUsername())));
+                .map(
+                        account -> new AuthenticationResponse(
+                                jwtTokenUtil.generateToken(authReq.getUsername()),
+                                ((IUserId) account).userId().toString(),
+                                ((IUserId) account).ROLE()
+                        )
+                );
     }
 
     public RegistrationResponseDto registrateUser(IRegistrationRequestDto registrationRequestDto) {
