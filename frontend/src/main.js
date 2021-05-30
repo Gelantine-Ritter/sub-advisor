@@ -24,6 +24,8 @@ import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
 import store from './store'
 
+require('@/store/subscriber')
+
 window.axios = axios
 axios.defaults.baseURL = 'http://localhost:8080'
 

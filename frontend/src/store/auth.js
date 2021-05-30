@@ -53,9 +53,9 @@ export default {
       try {
         //  Change the '/'route to a route that gives the user object with the data. example: '/venue/venueId'
         const response = await axios.get('/', {
-          headers: {
-            Authorization: 'Bearer ' + jwt,
-          },
+          // headers: {
+          //   Authorization: 'Bearer ' + jwt,
+          // },
         })
         console.log(response)
         //   commit('SET_USER', response.data)
