@@ -1,20 +1,15 @@
 package com.subadvisor.api.auth;
 
-import com.subadvisor.api.auth.dto.AuthenticationRequest;
-import com.subadvisor.api.auth.dto.AuthenticationResponse;
-import com.subadvisor.api.auth.dto.RegistrationResponse;
-import com.subadvisor.api.event.EventService;
+import com.subadvisor.api.auth.dto.*;
+import com.subadvisor.api.member.Member;
 import com.subadvisor.api.member.MemberRepository;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.VenueRepository;
 import com.subadvisor.api.venue.VenueService;
-import com.subadvisor.config.WebConfig;
-import com.subadvisor.api.auth.dto.RegistrationRequest;
 import com.subadvisor.security.JwtUtil;
-import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -54,22 +49,16 @@ public class AuthenticationService {
                 .map(account -> new AuthenticationResponse(jwtTokenUtil.generateToken(authReq.getUsername())));
     }
 
-    public Optional<RegistrationResponse> registrateUser(RegistrationRequest registrationRequest) {
-        if (venueRepository.findByUsername(registrationRequest.getUsername()).isEmpty()) {
-
-            Venue venue = Venue.builder()
-                    .username(registrationRequest.getUsername())
-                    .name(registrationRequest.getName())
-                    .email(registrationRequest.getEmail())
-                    .password(registrationRequest.getPassword())
-                    .enabled(true)
-                    .build();
-            venueService.createVenue(venue);
-            System.out.println("Created Venue: " + venue.name());
-
-        }else {
-            System.out.println("Username already in Use");
+    public RegistrationResponseDto registrateUser(IRegistrationRequestDto registrationRequestDto) {
+        if (registrationRequestDto instanceof Member){
+            // Create Member
+            System.out.println("member");
+            return null;
+        }else if (registrationRequestDto instanceof Venue){
+                System.out.println("venue");
+                return venueService.createVenue((Venue) registrationRequestDto);
         }
+        System.out.println("null");
         return null;
     }
 }

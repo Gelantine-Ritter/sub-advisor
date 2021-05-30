@@ -1,6 +1,7 @@
 package com.subadvisor.api.member;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,7 @@ import java.util.Collection;
 @Builder
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
-public class Member implements UserDetails, Serializable {
+public class Member implements UserDetails, Serializable, IRegistrationRequestDto {
 
     @Id
     @GeneratedValue

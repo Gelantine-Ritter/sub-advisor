@@ -1,7 +1,9 @@
 package com.subadvisor.api.auth;
 
 import com.subadvisor.api.auth.dto.AuthenticationRequest;
-import com.subadvisor.api.auth.dto.RegistrationRequest;
+import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
+import com.subadvisor.api.auth.dto.RegistrationRequestVenue;
+import com.subadvisor.api.venue.Venue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +30,19 @@ public class AuthenticationController {
                 HttpStatus.OK
         );
     }
-
+/*
     @PostMapping("/authenticate/registrate/")
-    public ResponseEntity<?> registrateUser (@RequestBody RegistrationRequest registrationRequest) {
+    public ResponseEntity<?> registrateUser (@RequestBody IRegistrationRequestDto registrationRequestDto) {
         return new ResponseEntity<>(
-                authenticationService.registrateUser(registrationRequest),
+                authenticationService.registrateUser(registrationRequestDto),
+                HttpStatus.OK
+        );
+    }
+*/
+    @PostMapping("/authenticate/registrate/")
+    public ResponseEntity<?> registrateUser (@RequestBody Venue venue) {
+        return new ResponseEntity<>(
+                authenticationService.registrateUser(venue),
                 HttpStatus.OK
         );
     }

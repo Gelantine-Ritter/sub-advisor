@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -29,7 +30,7 @@ import java.util.Collection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
-public class Venue implements UserDetails, Serializable {
+public class Venue implements UserDetails, Serializable, IRegistrationRequestDto {
 
     @Id
     @GeneratedValue
