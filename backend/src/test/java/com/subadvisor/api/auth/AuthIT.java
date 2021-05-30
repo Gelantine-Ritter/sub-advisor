@@ -128,6 +128,7 @@ public class AuthIT {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.jwt").exists())
                 .andExpect(jsonPath("$.userId").exists())
+                .andExpect(jsonPath("$.role").value("VENUE"))
                 .andReturn()
                 .getResponse();
 

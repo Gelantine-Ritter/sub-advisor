@@ -133,6 +133,7 @@ components:
       required:
         - jwt
         - userId
+        - role
       properties:
         jwt:
           type: string
@@ -140,6 +141,9 @@ components:
         userId:
           type: string
           example: "4"
+        role:
+          type: string
+          example: "VENUE"
     Venue:
       type: object
       required:
