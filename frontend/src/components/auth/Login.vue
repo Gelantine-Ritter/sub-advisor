@@ -53,7 +53,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -67,19 +67,19 @@ export default {
     }
   },
   methods: {
+    /*
     handleSubmit() {
       console.log('Enter has been clicked')
     },
-    /* 
-    async handleSubmit(){
-        console.log("Enter has been clicked"));
-        const response = await axios.post('/authentication/login', {
-          username: this.username,
-          password: this.password
-        });
-        console.log(response);
-    }
-     */
+    */
+    async handleSubmit() {
+      console.log('Enter has been clicked')
+      const response = await axios.post('/authenticate/', {
+        username: this.username,
+        password: this.password,
+      })
+      console.log(response)
+    },
   },
 }
 </script>
