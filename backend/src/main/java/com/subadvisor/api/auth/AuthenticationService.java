@@ -3,7 +3,6 @@ package com.subadvisor.api.auth;
 import com.subadvisor.api.auth.dto.AuthenticationRequest;
 import com.subadvisor.api.auth.dto.AuthenticationResponse;
 import com.subadvisor.api.member.MemberRepository;
-import com.subadvisor.api.member.MemberService;
 import com.subadvisor.api.venue.VenueRepository;
 import com.subadvisor.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,6 @@ public class AuthenticationService {
     @Autowired
     private JwtUtil jwtTokenUtil;
 
-
     public AuthenticationResponse authenticateUser(AuthenticationRequest authReq) {
         // TODO: It should be Best Practice to use User- and VenueService insteat of repository/DAO diretly
         return authenticateByRepo(venueRepository, authReq)
@@ -42,6 +40,11 @@ public class AuthenticationService {
         return repo
                 .findByUsername(authReq.getUsername())
                 .filter(account -> passwordEncoder.matches(authReq.getPassword(), account.getPassword()))
-                .map(account -> new AuthenticationResponse(jwtTokenUtil.generateToken(authReq.getUsername())));
+                .map(
+                        account -> new AuthenticationResponse(
+                                jwtTokenUtil.generateToken(authReq.getUsername()),
+                                ((IUserId) account).userId().toString()
+                        )
+                );
     }
 }
