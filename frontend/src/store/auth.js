@@ -32,10 +32,17 @@ export default {
       dispatch('attempt', response.data.jwt)
       console.log(response)
     },
-    async attempt({ commit }, jwt) {
+    async attempt({ commit, state }, jwt) {
       //  { commit } will commit a mutation
       //  console.log(jwt)
-      commit('SET_TOKEN', jwt)
+      if (jwt) {
+        commit('SET_TOKEN', jwt)
+      }
+
+      if (!state.token) {
+        //  if there is no token do not continue with a request
+        return
+      }
       /* 
       var base64Url = jwt.split('.')[1]
       var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
@@ -52,11 +59,7 @@ export default {
       */
       try {
         //  Change the '/'route to a route that gives the user object with the data. example: '/venue/venueId'
-        const response = await axios.get('/', {
-          // headers: {
-          //   Authorization: 'Bearer ' + jwt,
-          // },
-        })
+        const response = await axios.get('/')
         console.log(response)
         //   commit('SET_USER', response.data)
       } catch (e) {

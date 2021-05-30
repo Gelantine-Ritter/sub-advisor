@@ -29,6 +29,8 @@ require('@/store/subscriber')
 window.axios = axios
 axios.defaults.baseURL = 'http://localhost:8080'
 
+store.dispatch('auth/attempt', localStorage.getItem('token'))
+
 Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
