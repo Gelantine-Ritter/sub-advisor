@@ -157,6 +157,7 @@ public class AuthIT {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(authReq))
                 )
+                .andDo(print())
                 .andExpect(status().is(404))
                 .andExpect(jsonPath("$.jwt").doesNotExist());
     }
@@ -167,6 +168,7 @@ public class AuthIT {
         mockMvc
                 .perform(get("/hello")
                 )
+                .andDo(print())
                 .andExpect(
                         status().is(401)
                 );
