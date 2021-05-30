@@ -2,10 +2,7 @@ package com.subadvisor.api.member;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.subadvisor.api.auth.IUserId;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -38,6 +35,10 @@ public class Member implements UserDetails, Serializable, IUserId {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+    @NonNull
+    @Builder.Default
+    private String ROLE = "MEMBER";
+
 
     private boolean enabled = true;
 

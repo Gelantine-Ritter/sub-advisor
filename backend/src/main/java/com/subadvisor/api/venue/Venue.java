@@ -59,7 +59,7 @@ public class Venue implements UserDetails, Serializable, IUserId {
     private String info;
     @NonNull
     @Builder.Default
-    private String role = "VENUE";
+    private String ROLE = "VENUE";
 
     private boolean enabled = true;
 
