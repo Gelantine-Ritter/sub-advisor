@@ -1,6 +1,7 @@
 package com.subadvisor.api.member;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.subadvisor.api.auth.IUserId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,7 @@ import java.util.Collection;
 @Builder
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
-public class Member implements UserDetails, Serializable {
+public class Member implements UserDetails, Serializable, IUserId {
 
     @Id
     @GeneratedValue
@@ -73,5 +74,10 @@ public class Member implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public Long userId() {
+        return id;
     }
 }
