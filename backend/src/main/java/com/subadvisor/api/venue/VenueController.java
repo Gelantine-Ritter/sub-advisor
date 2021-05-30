@@ -45,7 +45,6 @@ public class VenueController {
     @DeleteMapping("/venues/{id}")
     @PreAuthorize("authentication.principal.id == #id || hasRole('ADMIN')")
     public void deleteVenueById(@PathVariable Long id, Authentication authentication) {
-        System.out.println(id);
         venueService.deleteVenueById(id);
     }
 }
