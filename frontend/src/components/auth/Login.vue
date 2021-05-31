@@ -45,6 +45,7 @@
           elevation="1"
           class="rounded-pill"
           style="font-size: 125%"
+          :to="{ path: '/signup' }"
           >REGISTER</v-btn
         >
       </div>
@@ -79,6 +80,9 @@ export default {
           })
         })
         .catch(() => {
+          this.form.username = ''
+          this.form.password = ''
+          alert('It seems like you entered wrong data... Try again!')
           console.log('failed')
           // ADD A ERROR MESSAGE
         })
