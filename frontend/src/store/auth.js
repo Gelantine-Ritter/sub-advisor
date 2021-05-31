@@ -34,6 +34,14 @@ export default {
   },
 
   actions: {
+    async logout({ commit, state }) {
+      commit('SET_TOKEN', null)
+      // console.log('STATE TOKEN: ' + state.token)
+      commit('SET_USER', null)
+      // console.log('STATE USER: ' + state.user)
+      commit('SET_ROLE', null)
+      // console.log('STATE ROLE: ' + state.role)
+    },
     async login({ dispatch }, credentials) {
       const response = await axios.post('/authenticate/', credentials)
       const responseDataObject = {
@@ -46,7 +54,6 @@ export default {
     async attempt({ commit, state }, responseDataObject) {
       //  { commit } will commit a mutation
       if (responseDataObject == null) {
-        console.log('userDataObject is null')
         return
       }
       const jwt = responseDataObject.jwt
