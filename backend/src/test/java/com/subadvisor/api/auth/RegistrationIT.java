@@ -27,17 +27,11 @@ public class RegistrationIT extends Driver {
 
     private static Venue VENUE;
 
-    private static final String USER_NAME_VENUE = "about-party";
+    private static final String USER_NAME_VENUE = "my-party";
     private static final String PASSWORD_VENUE = "roterosen161";
-    private static final String NAME_VENUE = "://about blank";
+    private static final String NAME_VENUE = "://without blank";
     private static final String INFO_VENUE = "nette location für lange wochenenden";
-    private static final String EMAIL_VENUE = "about@blank.li";
-
-    private static final String USER_NAME_OTHER_VENUE = "tennis-café";
-    private static final String PASSWORD_OTHER_VENUE = "guter-aufschlag";
-    private static final String NAME_OTHER_VENUE = "cafè tennis";
-    private static final String INFO_OTHER_VENUE = "gemütliche Kneipe mit schönem Keller";
-    private static final String EMAIL_OTHER_VENUE = "tennis@schlaeger.info";
+    private static final String EMAIL_VENUE = "without@blank.li";
 
     private static String TOKEN_VENUE;
     private Driver DRIVER = driver();
