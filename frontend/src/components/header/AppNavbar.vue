@@ -27,6 +27,53 @@
     <!-- left aligned items-->
 
     <!--EVENT-->
+    <template v-if="role=='VENUE'">
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          Event
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="item in subEventsLoggedInPlace"
+          :key="item.title"
+          :to="item.route"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    </template>
+    <template v-else-if="role=='MEMBER'">
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          Event
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="item in subEventsLoggedInMember"
+          :key="item.title"
+          :to="item.route"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    </template>
+    <template v-else>
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -48,7 +95,55 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    </template>
     <!--PLACES-->
+    <template v-if="role=='VENUE'">
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          Places
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="item in subPlacesLoggedInPlace"
+          :key="item.title"
+          :to="item.route"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    </template>
+    <template v-else-if="role=='MEMBER'">
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          Places
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="item in subPlacesLoggedInMember"
+          :key="item.title"
+          :to="item.route"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    </template>
+    <template v-else>
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
@@ -70,6 +165,7 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    </template>
     <!-- left aligned items-->
     <v-spacer></v-spacer>
     <v-toolbar-title class="d-none d-sm-flex white--text"
@@ -173,7 +269,27 @@ export default {
         { icon: 'groups', title: 'About' },
       ],
       subEvents: [{ title: 'All Events', route: '/events' }],
+      subEventsLoggedInPlace: [
+        { title: 'Your Events', route: '/events' },
+        { title: 'Create Event', route: '/events' },
+        { title: 'All Events', route: '/events' }
+      ],
+      subEventsLoggedInMember: [
+        { title: 'Your Calendar', route: '/events' },
+        { title: 'All Events', route: '/events' },
+        { title: 'Popular Events', route: '/events' }
+      ],
       subPlaces: [{ title: 'All Places', route: '/places' }],
+      subPlacesLoggedInPlace: [
+        { title: 'Your Place', route: '/places' },
+        { title: 'All Places', route: '/places' },
+        { title: 'Pic of the week', route: '/places' }
+      ],
+      subPlacesLoggedInMember: [
+        { title: 'Your Places', route: '/places' },
+        { title: 'All Places', route: '/places' },
+        { title: 'Pic of the week', route: '/places' }
+      ],       
       subContact: [
         { title: 'Contact 1', route: '/contact' },
         { title: 'Contact 2', route: '/contact' },
@@ -192,7 +308,8 @@ export default {
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
-      //   user: 'auth/user',
+      user: 'auth/user',
+      role: 'auth/role',
     }),
   },
 }
