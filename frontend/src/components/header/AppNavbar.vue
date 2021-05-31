@@ -27,144 +27,144 @@
     <!-- left aligned items-->
 
     <!--EVENT-->
-    <template v-if="role=='VENUE'">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Event
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subEventsLoggedInPlace"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <template v-if="role == 'VENUE'">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Event
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subEventsLoggedInPlace"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
-    <template v-else-if="role=='MEMBER'">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Event
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subEventsLoggedInMember"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <template v-else-if="role == 'MEMBER'">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Event
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subEventsLoggedInMember"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
     <template v-else>
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Event
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subEvents"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Event
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subEvents"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
     <!--PLACES-->
-    <template v-if="role=='VENUE'">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Places
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subPlacesLoggedInPlace"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <template v-if="role == 'VENUE'">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Places
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subPlacesLoggedInPlace"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
-    <template v-else-if="role=='MEMBER'">
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Places
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subPlacesLoggedInMember"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <template v-else-if="role == 'MEMBER'">
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Places
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subPlacesLoggedInMember"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
     <template v-else>
-    <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-          text
-          v-bind="attrs"
-          v-on="on"
-        >
-          Places
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          v-for="item in subPlaces"
-          :key="item.title"
-          :to="item.route"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
+          >
+            Places
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item
+            v-for="item in subPlaces"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </template>
     <!-- left aligned items-->
     <v-spacer></v-spacer>
@@ -232,6 +232,7 @@
             v-for="item in subProfileLoggedIn"
             :key="item.title"
             :to="item.route"
+            @click="logoutSubmit"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -255,7 +256,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'Navbar',
   data() {
@@ -272,24 +274,24 @@ export default {
       subEventsLoggedInPlace: [
         { title: 'Your Events', route: '/events' },
         { title: 'Create Event', route: '/events' },
-        { title: 'All Events', route: '/events' }
+        { title: 'All Events', route: '/events' },
       ],
       subEventsLoggedInMember: [
         { title: 'Your Calendar', route: '/events' },
         { title: 'All Events', route: '/events' },
-        { title: 'Popular Events', route: '/events' }
+        { title: 'Popular Events', route: '/events' },
       ],
       subPlaces: [{ title: 'All Places', route: '/places' }],
       subPlacesLoggedInPlace: [
         { title: 'Your Place', route: '/places' },
         { title: 'All Places', route: '/places' },
-        { title: 'Pic of the week', route: '/places' }
+        { title: 'Pic of the week', route: '/places' },
       ],
       subPlacesLoggedInMember: [
         { title: 'Your Places', route: '/places' },
         { title: 'All Places', route: '/places' },
-        { title: 'Pic of the week', route: '/places' }
-      ],       
+        { title: 'Pic of the week', route: '/places' },
+      ],
       subContact: [
         { title: 'Contact 1', route: '/contact' },
         { title: 'Contact 2', route: '/contact' },
@@ -302,7 +304,7 @@ export default {
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
       ],
-      subProfileLoggedIn: [{ title: 'Logout', route: '/' }],
+      subProfileLoggedIn: [{ title: 'Logout' }],
     }
   },
   computed: {
@@ -311,6 +313,16 @@ export default {
       user: 'auth/user',
       role: 'auth/role',
     }),
+  },
+  methods: {
+    ...mapActions({
+      logout: 'auth/logout',
+    }),
+    logoutSubmit() {
+      this.logout().catch(() => {
+        console.log('failed')
+      })
+    },
   },
 }
 </script>
