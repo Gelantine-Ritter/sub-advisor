@@ -2,6 +2,7 @@ package com.subadvisor.api.member;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.subadvisor.api.auth.IUserId;
+import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedDate;
