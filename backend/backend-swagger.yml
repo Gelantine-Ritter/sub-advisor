@@ -26,6 +26,21 @@ paths:
           description: Full authentication is required to access this resource
         404:
           description: Not Found
+  /authenticate/registrate:
+    post:
+      tags:
+        - "Authentication"
+      description: "registrate a venue (username, name, email, password)"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationRequestVenue"
+      responses:
+        200:
+          description: Ok
+        400:
+          description: Bad Request
   /venues:
     post:
       tags:
@@ -144,6 +159,26 @@ components:
         role:
           type: string
           example: "VENUE"
+    RegistrationRequestVenue:
+      type: object
+      required:
+        - username
+        - name
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          example: "about_blank777"
+        name:
+          type: string
+          example: "About_Blank"
+        email:
+          type: string
+          example: "about_blank@club.de"
+        password:
+          type: string
+          example: "about_pa55w0rd"
     Venue:
       type: object
       required:
