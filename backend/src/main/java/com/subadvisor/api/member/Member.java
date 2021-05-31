@@ -26,7 +26,7 @@ import java.util.Collection;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
 
-public class Member implements UserDetails, Serializable, IRegistrationRequestDto {
+public class Member implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
     @GeneratedValue
@@ -79,6 +79,7 @@ public class Member implements UserDetails, Serializable, IRegistrationRequestDt
         return enabled;
     }
 
+    @Override
     public Long userId() {
         return id;
     }

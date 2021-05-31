@@ -33,7 +33,7 @@ import java.util.Collection;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
 
-public class Venue implements UserDetails, Serializable, IRegistrationRequestDto {
+public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
     @GeneratedValue
@@ -102,6 +102,7 @@ public class Venue implements UserDetails, Serializable, IRegistrationRequestDto
         return enabled;
     }
 
+    @Override
     public Long userId() {
         return this.id;
     }
