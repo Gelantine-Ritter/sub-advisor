@@ -8,6 +8,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -24,15 +26,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class RegistrationIT extends Driver {
 
     private static Venue VENUE;
+    private static Venue VENUE_DUPLICATE;
 
     private static final String USER_NAME_VENUE = "my-party";
     private static final String NAME_VENUE = "://without blank";
     private static final String EMAIL_VENUE = "without@blank.li";
     private static final String PASSWORD_VENUE = "roterosen161";
 
-    private static String TOKEN_VENUE;
+    private static final String USER_NAME_OTHER_VENUE = "my-party";
+    private static final String NAME_OTHER_VENUE = "://without blank";
+    private static final String EMAIL_OTHER_VENUE = "without@blank.li";
+    private static final String PASSWORD_OTHER_VENUE = "mauer-aufschlag";
 
-    long ID_VENUE;
+
+
+    private static String TOKEN_VENUE;
+    private static String TOKEN_OTHER_VENUE;
+
+    private static long ID_VENUE;
 
     private Driver DRIVER = driver();
 
@@ -44,6 +55,13 @@ public class RegistrationIT extends Driver {
                 .name(NAME_VENUE)
                 .email(EMAIL_VENUE)
                 .password(PASSWORD_VENUE)
+                .build();
+
+        VENUE_DUPLICATE = Venue.builder()
+                .username(USER_NAME_OTHER_VENUE)
+                .name(NAME_OTHER_VENUE)
+                .email(EMAIL_OTHER_VENUE)
+                .password(PASSWORD_OTHER_VENUE)
                 .build();
     }
 
@@ -78,7 +96,7 @@ public class RegistrationIT extends Driver {
                 .getResponse();
 
         // Store ID of the Venue to use in later tests
-        ID_VENUE = venueRepository.findByName(NAME_VENUE).id();
+        ID_VENUE = DRIVER.venueRepository().findByName(NAME_VENUE).id();
     }
 
     @Test
@@ -93,7 +111,7 @@ public class RegistrationIT extends Driver {
 
     @Test
     @Order(3)
-    void venueIsPresentInDataBase() throws Exception{
+    void venueIsPresentPublicInDataBase() throws Exception{
 
         DRIVER.mockMvc()
                 .perform(
@@ -145,4 +163,29 @@ public class RegistrationIT extends Driver {
                 .andReturn()
                 .getResponse();
     }
+
+    /*
+    @Test
+    @Order(6)
+    void duplicateUsernameSignIn() throws Exception {
+
+
+        DRIVER.mockMvc()
+                .perform(
+                        post("/authenticate/registrate/")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        //VENUE_DUPLICATE
+                                        VENUE
+                                ))
+                )
+                .andDo(print())
+                .andExpect(
+                    status().isOk()
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+    }
+    */
 }
