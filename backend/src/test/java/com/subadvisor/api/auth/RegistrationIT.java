@@ -164,28 +164,24 @@ public class RegistrationIT extends Driver {
                 .getResponse();
     }
 
-    /*
+
     @Test
     @Order(6)
     void duplicateUsernameSignIn() throws Exception {
-
-
         DRIVER.mockMvc()
                 .perform(
                         post("/authenticate/registrate/")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
-                                        //VENUE_DUPLICATE
-                                        VENUE
+                                        VENUE_DUPLICATE
                                 ))
                 )
                 .andDo(print())
                 .andExpect(
-                    status().isOk()
+                    status().is4xxClientError()
                 )
                 .andDo(print())
                 .andReturn()
                 .getResponse();
     }
-    */
 }

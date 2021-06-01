@@ -41,10 +41,17 @@ public class AuthenticationController {
 */
     @PostMapping("/authenticate/registrate/")
     public ResponseEntity<?> registrateUser (@RequestBody Venue venue) {
-        return new ResponseEntity<>(
-                authenticationService.registrateUser(venue),
-                HttpStatus.OK
-        );
-    }
 
+        try {
+            return new ResponseEntity<>(
+                    authenticationService.registrateUser(venue),
+                    HttpStatus.OK
+            );
+        }catch(Exception e) {
+            return new ResponseEntity<>(
+                    null,
+                    HttpStatus.CONFLICT
+            );
+        }
+    }
 }

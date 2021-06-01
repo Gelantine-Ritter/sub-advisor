@@ -57,13 +57,10 @@ public class AuthenticationService {
     public RegistrationResponseDto registrateUser(IRegistrationRequestDto registrationRequestDto) {
         if (registrationRequestDto instanceof Member){
             // Create Member
-            System.out.println("member");
             return null;
         }else if (registrationRequestDto instanceof Venue){
-                System.out.println("venue");
                 return venueService.createVenue((Venue) registrationRequestDto);
         }
-        System.out.println("null");
         return null;
     }
 }

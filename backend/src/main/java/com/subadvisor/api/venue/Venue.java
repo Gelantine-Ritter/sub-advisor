@@ -32,13 +32,13 @@ import java.util.Collection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
-
 public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
     @GeneratedValue
     private Long id;
     @NonNull
+    @Column(unique = true)
     private String username;
     @NonNull
     private String password;

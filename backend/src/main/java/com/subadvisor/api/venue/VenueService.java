@@ -5,6 +5,7 @@ import com.subadvisor.api.venue.dto.IVenueDto;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,10 +34,11 @@ public class VenueService implements UserDetailsService, IVenueService {
     @Override
     public VenuePersonalDto createVenue(Venue venue) {
 
-        return objectMapper.convertValue(
-                repository.save(venue),
-                VenuePersonalDto.class
-        );
+            return objectMapper.convertValue(
+                    repository.save(venue),
+                    VenuePersonalDto.class
+            );
+
     }
 
     @Override
