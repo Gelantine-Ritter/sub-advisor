@@ -57,9 +57,6 @@
 import { mapActions } from 'vuex'
 export default {
   name: 'Login',
-  // props: {
-  //   source: String,
-  // },
   data() {
     return {
       form: {
@@ -83,8 +80,6 @@ export default {
           this.form.username = ''
           this.form.password = ''
           alert('It seems like you entered wrong data... Try again!')
-          console.log('failed')
-          // ADD A ERROR MESSAGE
         })
     },
   },

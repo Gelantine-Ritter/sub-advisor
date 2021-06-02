@@ -21,26 +21,20 @@ export default {
   mutations: {
     SET_TOKEN(state, jwt) {
       state.token = jwt
-      // console.log('STATE TOKEN: ' + state.token)
     },
     SET_USER(state, data) {
       state.user = data
-      // console.log('STATE USER: ' + state.user.name + ' ' + state.user.email + ' ' + state.user.info)
     },
     SET_ROLE(state, role) {
       state.role = role
-      // console.log('STATE ROLE: ' + state.role)
     },
   },
 
   actions: {
     async logout({ commit, state }) {
       commit('SET_TOKEN', null)
-      // console.log('STATE TOKEN: ' + state.token)
       commit('SET_USER', null)
-      // console.log('STATE USER: ' + state.user)
       commit('SET_ROLE', null)
-      // console.log('STATE ROLE: ' + state.role)
     },
     async login({ dispatch }, credentials) {
       const response = await axios.post('/authenticate/', credentials)
@@ -52,7 +46,6 @@ export default {
       dispatch('attempt', responseDataObject)
     },
     async attempt({ commit, state }, responseDataObject) {
-      //  { commit } will commit a mutation
       if (responseDataObject == null) {
         return
       }
@@ -77,13 +70,24 @@ export default {
 
       try {
         const response = await axios.get('/venues/' + userId)
-        // console.log(response)
         commit('SET_USER', response.data)
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
         commit('SET_ROLE', null)
       }
+    },
+
+    // REGISTRATE
+    async signupVenue({ commit }, username, name, password, email) {
+      const response = await axios.post(
+        '/authenticate/registrate/',
+        username,
+        email,
+        password,
+        name
+      )
+      console.log(response)
     },
   },
 }

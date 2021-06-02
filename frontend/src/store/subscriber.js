@@ -6,10 +6,8 @@ import axios from 'axios'
  * - manage localStorage and reauthenticating  */
 
 store.subscribe((mutation) => {
-  //  console.log(mutation)
   switch (mutation.type) {
     case 'auth/SET_TOKEN':
-      //  console.log(mutation.payload)
       if (mutation.payload) {
         axios.defaults.headers.common.Authorization = `Baerer ${mutation.payload}`
         localStorage.setItem('token', mutation.payload)
