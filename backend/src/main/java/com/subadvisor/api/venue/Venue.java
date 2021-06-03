@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import com.subadvisor.api.auth.IUserId;
+import com.subadvisor.api.event.Event;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -22,6 +23,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -32,6 +35,7 @@ import java.util.Collection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
+@Table(name = "venue")
 public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
@@ -63,6 +67,9 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @NonNull
     @Builder.Default
     private String ROLE = "VENUE";
+
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
+    private Set<Event> events = new HashSet<>();
 
     private boolean enabled = true;
 
