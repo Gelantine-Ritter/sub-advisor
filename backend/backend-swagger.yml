@@ -5,11 +5,12 @@ info:
   version: 0.0.1
 
 paths:
-  /authenticate:
+  /authenticate/:
     post:
       tags:
         - "Authentication"
       description: "login via username and password"
+      operationId: "login"
       requestBody:
         content:
           application/json:
@@ -17,20 +18,21 @@ paths:
               $ref: "#/components/schemas/AuthRequest"
       responses:
         200:
-          description: Ok
+          description: "Ok"
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/AuthResponse"
         401:
-          description: Full authentication is required to access this resource
+          description: "Full authentication is required to access this resource"
         404:
-          description: Not Found
-  /authenticate/registrate:
+          description: "Not Found"
+  /authenticate/registrate/:
     post:
       tags:
         - "Authentication"
       description: "registrate a venue (username, name, email, password)"
+      operationId: "registrate"
       requestBody:
         content:
           application/json:
@@ -38,41 +40,27 @@ paths:
               $ref: "#/components/schemas/RegistrationRequestVenue"
       responses:
         200:
-          description: Ok
+          description: "Ok"
         400:
-          description: Bad Request
-  /venues:
-    post:
-      tags:
-        - "Venues"
-      description: "create an Venue"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Venue"
-      responses:
-        201:
-          description: Created
-        400:
-          description: Not Created
+          description: "Bad Request"
+  /venues/:
     get:
       tags:
         - "Venues"
-      description: "Get an Venue by Id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Venue"
+      description: "Get all the registered Venues"
+      operationId: "getVenues"
       responses:
         200:
-          description: Ok
+          description: "Ok"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Venue"
-  /venues/{venueId}:
+                oneOf:
+                  - $ref: "#/components/schemas/VenuePrivateResonse"
+                  - $ref: "#/components/schemas/VenuePersonalResonse"
+        400:
+          description: "Bad Request"
+  /venues/{venueId}/:
     parameters:
       - name: venueId
         in: path
@@ -84,39 +72,37 @@ paths:
       tags:
         - "Venues"
       description: "Get an Venue by Id"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Venue"
+      operationId: "getVenue"
       responses:
         200:
-          description: Ok
+          description: "Ok"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Venue"
+                oneOf:
+                  - $ref: "#/components/schemas/VenuePrivateResonse"
+                  - $ref: "#/components/schemas/VenuePersonalResonse"
         400:
-          description: Bad Request
+          description: "Bad Request"
         404:
-          description: Not Found
+          description: "Not Found"
     put:
       tags:
         - "Venues"
-      description: "update a Venue by id"
+      description: "update a Venue by id - takes any valid existing property of venue"
       operationId: "updateVenue"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Venue"
+              $ref: "#/components/schemas/PutValue"
       responses:
         204:
-          description: Updated
+          description: "Updated"
         400:
-          description: Bad Request
+          description: "Bad Request"
         404:
-          description: Not Found
+          description: "Not Found"
     delete:
       tags:
         - "Venues"
@@ -124,11 +110,79 @@ paths:
       operationId: "deleteVenue"
       responses:
         202:
-          description: Accepted
+          description: "Accepted"
         400:
           description: "Invalid id supplied"
         404:
           description: "Venue not found"
+  /events/:
+    post:
+      tags:
+        - "Events"
+      description: "post new event"
+      operationId: "postEvent"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Event"
+      responses:
+        201:
+          description: "Accepted"
+        400:
+          description: "Bad request"
+    get:
+      tags:
+        - "Events"
+      description: "get all Events"
+      operationId: "getEvents"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Not Found"
+  /events/{eventId}/:
+    parameters:
+      - name: eventId
+        in: path
+        description: "eventId represents the key of a venue in the database"
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - "Events"
+      description: "Get an Event by Id"
+      operationId: "getEvent"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+        - "Events"
+      description: "delete an Event by id"
+      operationId: "deleteEvent"
+      responses:
+        202:
+          description: "Accepted"
+        400:
+          description: "Invalid id supplied"
+        404:
+          description: "Event not found"
 components:
   schemas:
     AuthRequest:
@@ -179,12 +233,21 @@ components:
         password:
           type: string
           example: "about_pa55w0rd"
+    PutValue:
+      type: object
+      properties:
+        value:
+          type: string
+          example: "MyNewValue"
     Venue:
       type: object
-      required:
-        - email
-        - name
       properties:
+        venueId:
+          type: string
+          example: 2
+        username:
+          type: string
+          example: "club_profile22"
         email:
           type: string
           example: "foto-bande-nk@gmail.com"
@@ -194,8 +257,51 @@ components:
         info:
           type: string
           example: "Fotobande Neukölln ist eine Gruppe vom Personen..."
-
-
-
-
-
+    VenuePersonalResonse:
+      type: object
+      properties:
+        venueId:
+          type: string
+          example: 2
+        username:
+          type: string
+          example: "club_profile22"
+        name:
+          type: string
+          example: "The Club"
+        email:
+          type: string
+          example: "my-club@mail.com"
+        info:
+          type: string
+          example: "Dies ist eine Info Beschreibung"
+    VenuePrivateResonse:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "The Club"
+        email:
+          type: string
+          example:
+        info:
+          type: string
+          example: "Dies ist eine Info Beschreibung"
+    Event:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 21
+        title:
+          type: string
+          example: "my gib party"
+        price:
+          type: number
+          example: 22.98
+        date:
+          type: string
+          example: "22-01-2021"
+        time:
+          type: string
+          example: "22:00:00"
