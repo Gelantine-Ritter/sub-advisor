@@ -21,8 +21,6 @@ build-project:
   stage: build
   script:
     - echo "build project"
-  artifacts:
-    paths:
 
 build-backend:
   stage: build
@@ -61,13 +59,13 @@ lint:
   script:
     - echo "linting code structure"
 
-test-backend-IT:
+IT-backend:
   stage: tests
   script:
     - cd ./backend
     - ./mvnw failsafe:integration-test failsafe:verify
 
-test-backend-unit:
+UT-backend:
   stage: tests
   script:
     - cd backend
