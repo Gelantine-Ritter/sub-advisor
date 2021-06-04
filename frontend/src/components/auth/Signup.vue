@@ -114,18 +114,28 @@ export default {
       valid: true,
       radios: null,
       name: '',
-      nameRules: [(v) => !!v || 'Name is required'],
+      nameRules: [
+        (v) => !!v || 'Name is required',
+        (v) => (v && !!v.trim()) || 'Name cannot be blank',
+        (v) => !!v.substring(1) === ' ' || 'You can not start with a space',
+      ],
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
       username: '',
-      usernameRules: [(v) => !!v || 'Username is required'],
+      usernameRules: [
+        (v) => !!v || 'Username is required',
+        (v) => (v && !!v.trim()) || 'Username cannot be blank',
+        (v) => !!v.substring(1) === ' ' || 'You can not start with a space',
+      ],
       password: '',
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) => v.length >= 8 || 'Min 8 characters',
+        (v) => (v && !!v.trim()) || 'Seriously? just a blank password?',
+        (v) => !!v.substring(1) === ' ' || 'You can not start with a space',
       ],
       password_confirm: '',
       passwordMatchRules: [
