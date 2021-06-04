@@ -112,14 +112,13 @@ public class EventIT extends Driver {
                 .getResponse();
     }
 
-    /*
     @Test
     @Order(2)
     void guestCannotGetNonExistingEvent() throws Exception {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/200")
+                        get("/events/567")
                 )
                 .andExpect(
                         matchAll(
@@ -129,8 +128,6 @@ public class EventIT extends Driver {
                 .andReturn()
                 .getResponse();
     }
-
-     */
 
     @Test
     @Order(3)
@@ -165,6 +162,32 @@ public class EventIT extends Driver {
 
         EVENT_CRALLE = objectMapper.readValue(response.getContentAsString(), Event.class);
 
+    }
+
+    @Test
+    @Order(4)
+    void guestCantGetExistingEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/" + EVENT_CRALLE.id())
+                )
+                .andExpect(
+                        matchAll(
+                                status().isOk(),
+                                jsonPath("$.id").exists(),
+                                jsonPath("$.title").value(EVENT_TITLE),
+                                jsonPath("$.info").value(EVENT_INFO),
+                                jsonPath("$.artists").exists(),
+                                jsonPath("$.price").value(Double.parseDouble(EVENT_PRICE)),
+                                jsonPath("$.created").exists(),
+                                jsonPath("$.modifiedAt").exists(),
+                                jsonPath("$.start").value(EVENT_START),
+                                jsonPath("$.end").value(EVENT_END)
+                        )
+                )
+                .andReturn()
+                .getResponse();
     }
 
 }
