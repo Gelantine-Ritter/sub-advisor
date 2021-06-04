@@ -180,8 +180,6 @@ public class VenueIT extends Driver {
     @Order(4)
     void venueCanUpdateOwnVenueAccount() throws Exception {
 
-        Long idhello = VENUE.id();
-
         DRIVER.mockMvc()
                 .perform(
                         put("/venues/" + VENUE.id())

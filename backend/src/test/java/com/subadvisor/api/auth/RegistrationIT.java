@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 /**
- * @author Matti Henning
+ * @author Kilian Klammt
  * <p>
  * This class uses @SpringBootTest wich includes also Persistance Layer
  */

@@ -62,8 +62,12 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @Getter
     private String name;
     @Getter
+    @Column(unique = true)
     private String email;
     private String info;
+    private String address;
+    private String url;
+    private String website;
     @NonNull
     @Builder.Default
     private String ROLE = "VENUE";
