@@ -26,7 +26,6 @@ public class VenueController {
     @GetMapping("/venues/{id}")
     public ResponseEntity<?>  getVenueById(@PathVariable(value = "id") Long venueId,
                                            Authentication authentication) {
-
         return new ResponseEntity<>(
                 venueService.getVenueById(authentication, venueId),
                 HttpStatus.OK

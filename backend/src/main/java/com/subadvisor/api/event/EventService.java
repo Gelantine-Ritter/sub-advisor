@@ -7,8 +7,10 @@ import com.subadvisor.api.venue.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
+
+import static java.lang.String.format;
 
 
 @Service
@@ -38,8 +40,14 @@ public class EventService extends DataAccess implements IEventService {
     }
 
     @Override
-    public Optional<Event> getEventById(Long eventId) {
-        return eventRepo.findById(eventId);
+    public Event getEventById(Long eventId) {
+        return eventRepo
+                .findById(eventId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                format("Event with id - %s, not found", eventId)
+                        )
+                );
     }
 
     @Override
