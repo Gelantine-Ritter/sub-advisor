@@ -1,9 +1,14 @@
 <template>
   <div class="rounded-xl mycontainer" fluid>
-    <v-form ref="form" v-model="form.valid" lazy-validation>
+    <v-form
+      @submit.prevent="registrateSubmit"
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
       <h2>YOU WANT TO REGISTRER AS A</h2>
 
-      <v-radio-group v-model="form.radios" mandatory>
+      <v-radio-group v-model="radios" mandatory>
         <v-row>
           <v-col class="myCol" cols="12" sm="6" md="6">
             <v-radio label="VENUE" color="black" value="VENUE"></v-radio>
@@ -25,8 +30,8 @@
         label=""
         type="text"
         required
-        v-model="form.name"
-        :rules="form.nameRules"
+        v-model="name"
+        :rules="nameRules"
       ></v-text-field>
       <h2>E-MAIL</h2>
       <v-text-field
@@ -39,8 +44,8 @@
         label=""
         type="text"
         required
-        v-model="form.email"
-        :rules="form.emailRules"
+        v-model="email"
+        :rules="emailRules"
       ></v-text-field>
 
       <h2>USERNAME</h2>
@@ -54,8 +59,8 @@
         label=""
         type="text"
         required
-        v-model="form.username"
-        :rules="form.usernameRules"
+        v-model="username"
+        :rules="usernameRules"
       ></v-text-field>
       <h2>PASSWORD</h2>
       <v-text-field
@@ -68,8 +73,8 @@
         label=""
         type="password"
         required
-        v-model="form.password"
-        :rules="form.passwordRules"
+        v-model="password"
+        :rules="passwordRules"
       ></v-text-field>
       <h2>CONFIRM PASSWORD</h2>
       <v-text-field
@@ -82,8 +87,8 @@
         label=""
         type="password"
         required
-        v-model="form.password_confirm"
-        :rules="form.passwordMatchRules"
+        v-model="password_confirm"
+        :rules="passwordMatchRules"
       ></v-text-field>
       <div class="text-center">
         <v-btn
@@ -92,7 +97,7 @@
           outlined
           elevation="1"
           class="rounded-pill myEnterBtn"
-          @click="registrateSubmit"
+          type="submit"
           >REGISTER</v-btn
         >
       </div>
@@ -106,29 +111,27 @@ export default {
   name: 'Signup',
   data() {
     return {
-      form: {
-        valid: true,
-        radios: null,
-        name: '',
-        nameRules: [(v) => !!v || 'Name is required'],
-        email: '',
-        emailRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ],
-        username: '',
-        usernameRules: [(v) => !!v || 'Name is required'],
-        password: '',
-        passwordRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => v.length >= 8 || 'Min 8 characters',
-        ],
-        password_confirm: '',
-        passwordMatchRules: [
-          (v) => !!v || 'E-mail is required',
-          (v) => v === this.password || 'Password must match',
-        ],
-      },
+      valid: true,
+      radios: null,
+      name: '',
+      nameRules: [(v) => !!v || 'Name is required'],
+      email: '',
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      username: '',
+      usernameRules: [(v) => !!v || 'Username is required'],
+      password: '',
+      passwordRules: [
+        (v) => !!v || 'Password is required',
+        (v) => v.length >= 8 || 'Min 8 characters',
+      ],
+      password_confirm: '',
+      passwordMatchRules: [
+        (v) => !!v || 'Password is required',
+        (v) => v === this.password || 'Password must match',
+      ],
     }
   },
   methods: {
@@ -136,22 +139,26 @@ export default {
       signupVenue: 'auth/signupVenue',
     }),
     registrateSubmit() {
-      if (this.form.radios === 'VENUE') {
-        this.signupVenue(this.form)
-          .then(() => {
-            alert('Successfully registrated')
-            this.$router.replace({
-              name: 'home',
+      if (this.$refs.form.validate()) {
+        if (this.radios === 'VENUE') {
+          this.signupVenue(this.$data)
+            .then(() => {
+              this.$toast.open(
+                'You have been successfully registered and can log in now!'
+              )
+              this.$router.replace({
+                name: 'login',
+              })
             })
-          })
-          .catch(() => {
-            alert('Failed')
-            this.$router.go()
-          })
-      } else {
-        //  TODO MEMBER
-        alert('You can only register as a venue right now')
-        this.$router.go()
+            .catch(() => {
+              this.$toast.open('You are already registered!')
+              this.$router.go()
+            })
+        } else {
+          //  TODO MEMBER
+          this.$toast.open('You can currently only register as a venue')
+          this.$router.go()
+        }
       }
     },
   },

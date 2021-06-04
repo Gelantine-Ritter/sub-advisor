@@ -319,9 +319,13 @@ export default {
       logout: 'auth/logout',
     }),
     logoutSubmit() {
-      this.logout().catch(() => {
-        console.log('failed')
-      })
+      this.logout()
+        .then(() => {
+          this.$toast.open('You have logged out')
+        })
+        .catch(() => {
+          console.log('failed')
+        })
     },
   },
 }

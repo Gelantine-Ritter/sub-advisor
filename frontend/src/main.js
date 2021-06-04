@@ -23,6 +23,8 @@ import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
 import store from './store'
+import VueToast from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-sugar.css'
 
 require('@/store/subscriber')
 
@@ -34,6 +36,13 @@ store.dispatch('auth/attempt', localStorage.getItem('token'))
 Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
+
+Vue.use(VueToast, {
+  type: 'default',
+  position: 'top',
+  dismissible: true,
+  duration: 2000,
+})
 
 Vue.config.productionTip = false
 

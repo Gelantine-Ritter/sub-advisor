@@ -1,6 +1,6 @@
 <template>
   <div class="rounded-xl mycontainer" fluid>
-    <v-form>
+    <v-form @submit.prevent="handleSubmit">
       <h1>USERNAME</h1>
       <v-text-field
         large
@@ -35,8 +35,9 @@
           outlined
           elevation="1"
           class="rounded-pill myEnterBtn"
-          @click="handleSubmit"
+          type="submit"
           >ENTER</v-btn
+        >
         >
         <v-btn
           large
@@ -77,9 +78,9 @@ export default {
           })
         })
         .catch(() => {
+          this.$toast.open('Wrong password or username')
           this.form.username = ''
           this.form.password = ''
-          alert('It seems like you entered wrong data... Try again!')
         })
     },
   },
