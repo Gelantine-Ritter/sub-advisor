@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -34,9 +35,19 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "venue_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Venue venue;
+
     @NonNull
     @Column(unique = true)
     private String title;
+    private String info;
+    // TODO: Artist could be an own entity -> feature request
+    @ElementCollection
+    private Set<String> artists;
+
     private double price;
 
     @CreatedDate
@@ -52,12 +63,10 @@ public class Event implements Serializable {
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime date;
+    private LocalDateTime start;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "venue_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Venue venue;
-
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime end;
 
 }
