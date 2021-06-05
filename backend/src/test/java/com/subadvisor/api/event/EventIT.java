@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -148,6 +149,9 @@ public class EventIT extends Driver {
                                 ))
                 )
                 .andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.errors", hasItem("Please provide a title")))
+                .andExpect(jsonPath("$.errors", hasItem("title should not be empty")))
                 .andReturn()
                 .getResponse();
 
