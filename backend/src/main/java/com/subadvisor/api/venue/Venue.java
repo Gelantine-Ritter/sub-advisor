@@ -72,6 +72,9 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @Builder.Default
     private String ROLE = "VENUE";
 
+    @Lob
+    private byte[] pic;
+
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     private Set<Event> events = new HashSet<>();
 

@@ -50,6 +50,9 @@ public class Event implements Serializable {
 
     private double price;
 
+    @Lob
+    private byte[] pic;
+
     @CreatedDate
     @Column(updatable = false)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
