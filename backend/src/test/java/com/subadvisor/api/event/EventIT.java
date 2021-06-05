@@ -82,8 +82,8 @@ public class EventIT extends Driver {
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price(EVENT_PRICE)
-                .start(EVENT_START)
-                .end(EVENT_END)
+                .eventStart(EVENT_START)
+                .eventEnd(EVENT_END)
                 .build();
 
         TOKEN_VENUE = new LoginOperator(DRIVER)
@@ -152,8 +152,8 @@ public class EventIT extends Driver {
                                 jsonPath("$.price").value(Double.parseDouble(EVENT_PRICE)),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
-                                jsonPath("$.start").value(EVENT_START),
-                                jsonPath("$.end").value(EVENT_END),
+                                jsonPath("$.eventStart").value(EVENT_START),
+                                jsonPath("$.eventEnd").value(EVENT_END),
                                 status().isOk()
                         )
                 )
@@ -182,8 +182,8 @@ public class EventIT extends Driver {
                                 jsonPath("$.price").value(Double.parseDouble(EVENT_PRICE)),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
-                                jsonPath("$.start").value(EVENT_START),
-                                jsonPath("$.end").value(EVENT_END)
+                                jsonPath("$.eventStart").value(EVENT_START),
+                                jsonPath("$.eventEnd").value(EVENT_END)
                         )
                 )
                 .andReturn()

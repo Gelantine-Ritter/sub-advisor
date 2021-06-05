@@ -1,5 +1,7 @@
 package com.subadvisor;
 
+import com.subadvisor.api.event.Event;
+import com.subadvisor.api.event.EventRepository;
 import com.subadvisor.api.member.Member;
 import com.subadvisor.api.member.MemberRepository;
 import com.subadvisor.api.venue.Venue;
@@ -14,17 +16,17 @@ import org.springframework.context.annotation.Configuration;
 class LoadDatabase {
 
     @Bean
-    CommandLineRunner initDatabase(VenueRepository venueRepository, MemberRepository memberRepository) {
+    CommandLineRunner initDatabase(VenueRepository venueRepository, MemberRepository memberRepository, EventRepository eventRepository) {
         return args -> {
 
             // Load Venues
             log.info("Preloading " + venueRepository.save(
                     Venue.builder()
-                            .username("about-blank")
-                            .password("blank blank")
-                            .email("blank@info.com")
-                            .info("netter Ort für lange Wochenenden")
-                            .name("://about_blank")
+                            .username("trude-ruth")
+                            .password("rudiruth")
+                            .email("ruth@info.com")
+                            .info("nette tanzabende")
+                            .name("Trude Ruth")
                             .build()
             ));
 

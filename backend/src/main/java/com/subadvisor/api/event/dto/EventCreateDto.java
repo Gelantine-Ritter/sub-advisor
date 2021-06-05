@@ -22,6 +22,7 @@ public class EventCreateDto {
     private String info;
     private String[] artists;
     private String price;
-    private String start;
-    private String end;
+    private String eventStart;
+    private String eventEnd;
+    private byte[] pic;
 }

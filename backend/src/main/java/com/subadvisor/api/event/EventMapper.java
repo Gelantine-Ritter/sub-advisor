@@ -21,19 +21,20 @@ public class EventMapper {
 
         return Event.builder()
                 .venue(
-                        DATA.venueRepository().findById(Long.parseLong(dto.venueId()))
+                        DATA.venues().findById(Long.parseLong(dto.venueId()))
                                 .orElseThrow(() -> new UsernameNotFoundException(
                                         format("Venue with it - %s, not found", dto.venueId())
                                 ))
                 )
                 .title(dto.title())
                 .info(dto.info())
+                .pic(dto.pic())
                 .artists(Set.of(dto.artists()))
                 .price(
                         Double.parseDouble(dto.price())
                 )
-                .start(LocalDateTime.parse(dto.start()))
-                .end(LocalDateTime.parse(dto.end()))
+                .eventStart(LocalDateTime.parse(dto.eventStart()))
+                .eventEnd(LocalDateTime.parse(dto.eventEnd()))
                 .build();
     }
 }
