@@ -1,4 +1,4 @@
-package com.subadvisor;
+package com.subadvisor.erroradvice;
 
 
 import org.springframework.http.HttpStatus;

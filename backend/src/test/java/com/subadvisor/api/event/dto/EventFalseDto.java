@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.Accessors;
-import javax.validation.constraints.*;
+
 
 @Data
 @NoArgsConstructor
@@ -13,14 +13,10 @@ import javax.validation.constraints.*;
 @Accessors(fluent = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class EventCreateDto {
+public class EventFalseDto {
 
     private String id;
-    @NotNull(message = "Please provide a venueId")
-    @NotEmpty(message = "venueId should not be empty")
     private String venueId;
-    @NotNull(message = "Please provide a title")
-    @NotEmpty(message = "title should not be empty")
     private String title;
     private String info;
     private String[] artists;

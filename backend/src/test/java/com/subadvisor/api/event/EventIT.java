@@ -2,8 +2,8 @@ package com.subadvisor.api.event;
 
 import com.subadvisor.api.Driver;
 import com.subadvisor.api.event.dto.EventCreateDto;
+import com.subadvisor.api.event.dto.EventFalseDto;
 import com.subadvisor.api.venue.Venue;
-import com.subadvisor.api.event.Event;
 import com.subadvisor.operators.LoginOperator;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,10 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,6 +34,7 @@ public class EventIT extends Driver {
 
     private static Venue VENUE_CRALLE;
     private static EventCreateDto EVENT_DTO;
+    private static EventFalseDto EVENT_DTO_FALSE;
     private static Event EVENT_CRALLE;
 
     private static final String USER_NAME_VENUE = "crallecralle";
@@ -52,8 +49,6 @@ public class EventIT extends Driver {
     private static final String EVENT_PRICE = "10.00";
     private static final String EVENT_START = "2021-09-04T20:00:00";
     private static final String EVENT_END = "2021-09-04T23:00:00";
-    //private static final LocalDateTime EVENT_START = LocalDateTime.of(2021, 9, 4, 20, 00);
-    //private static final LocalDateTime EVENT_END = LocalDateTime.of(2021, 9, 4, 23, 00);
 
     private static String TOKEN_VENUE;
 
@@ -78,6 +73,16 @@ public class EventIT extends Driver {
 
         EVENT_DTO = EventCreateDto.builder()
                 .title(EVENT_TITLE)
+                .venueId(VENUE_CRALLE.id().toString())
+                .info(EVENT_INFO)
+                .artists(EVENT_ARTISTS)
+                .price(EVENT_PRICE)
+                .eventStart(EVENT_START)
+                .eventEnd(EVENT_END)
+                .build();
+
+        EVENT_DTO_FALSE = EventFalseDto.builder()
+                .title(null)
                 .venueId(VENUE_CRALLE.id().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
@@ -131,6 +136,27 @@ public class EventIT extends Driver {
 
     @Test
     @Order(3)
+    void venueCannotCreateEventWithoutRequiredProps() throws Exception {
+
+        MockHttpServletResponse response = DRIVER.mockMvc()
+                .perform(
+                        post("/events/")
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        EVENT_DTO_FALSE
+                                ))
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        EVENT_CRALLE = objectMapper.readValue(response.getContentAsString(), Event.class);
+
+    }
+
+    @Test
+    @Order(4)
     void venueCanCreateAnEvent() throws Exception {
 
         MockHttpServletResponse response = DRIVER.mockMvc()
@@ -165,8 +191,8 @@ public class EventIT extends Driver {
     }
 
     @Test
-    @Order(4)
-    void guestCantGetExistingEvent() throws Exception {
+    @Order(5)
+    void guestCanGetExistingEvent() throws Exception {
 
         DRIVER.mockMvc()
                 .perform(
@@ -189,5 +215,7 @@ public class EventIT extends Driver {
                 .andReturn()
                 .getResponse();
     }
+
+
 
 }
