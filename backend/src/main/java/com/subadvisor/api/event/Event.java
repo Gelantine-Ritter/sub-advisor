@@ -63,10 +63,10 @@ public class Event implements Serializable {
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime start;
+    private LocalDateTime eventStart;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime end;
+    private LocalDateTime eventEnd;
 
 }
