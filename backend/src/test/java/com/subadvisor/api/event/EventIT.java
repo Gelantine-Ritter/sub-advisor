@@ -280,7 +280,7 @@ public class EventIT extends Driver {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void guestCanNotGetEventsOfNonExistingVenue() throws Exception {
 
         DRIVER.mockMvc()
@@ -291,4 +291,27 @@ public class EventIT extends Driver {
                 .andReturn()
                 .getResponse();
     }
+
+    @Test
+    @Order(8)
+    void guestCanGetAllEvents() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/")
+                )
+                .andExpect(
+                        matchAll(
+                                status().isOk(),
+                                jsonPath("$").isArray(),
+                                jsonPath("$", hasSize(2)),
+                                jsonPath("$[0].title", is(EVENT_OTHER.title())),
+                                jsonPath("$[1].title", is(EVENT_CRALLE.title()))
+
+                        )
+                )
+                .andReturn()
+                .getResponse();
+    }
+
 }
