@@ -58,6 +58,7 @@ public class EventController {
     }
 
     @DeleteMapping("/events/{id}")
+    @PreAuthorize("@creatorCheck.checkIfOwner(#eventId,authentication)|| hasRole('ADMIN')")
     public void deleteEventById(@PathVariable(value = "id") Long eventId) {
         eventService.deleteEventById(eventId);
     }

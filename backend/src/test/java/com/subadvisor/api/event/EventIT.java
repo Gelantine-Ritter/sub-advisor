@@ -13,6 +13,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
@@ -399,5 +401,39 @@ public class EventIT extends Driver {
                 )
                 .andReturn()
                 .getResponse();
+    }
+
+    @Test
+    @Order(12)
+    void otherVenueCanNotDeleteVenuesEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/events/" + EVENT_CRALLE.id())
+                                .header("authorization", "Bearer " + TOKEN_OTHER_VENUE)
+                )
+                .andExpect(
+                        status().is4xxClientError()
+                )
+                .andReturn()
+                .getResponse();
+
+        Assertions.assertNotNull(eventRepository.findById(EVENT_CRALLE.id()));
+    }
+
+    @Test
+    @Order(12)
+    void VenueCanDeleteOwnEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/events/" + EVENT_CRALLE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+
+        Assertions.assertEquals(Optional.empty(), eventRepository.findById(EVENT_CRALLE.id()));
     }
 }
