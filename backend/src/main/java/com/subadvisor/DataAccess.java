@@ -21,13 +21,13 @@ public abstract class DataAccess {
         protected ObjectMapper objectMapper;
 
         @Autowired
-        protected VenueRepository venueRepository;
+        protected VenueRepository venues;
 
         @Autowired
-        protected MemberRepository memberRepository;
+        protected MemberRepository members;
 
         @Autowired
-        protected EventRepository eventRepository;
+        protected EventRepository events;
 
         protected DataAccess driver() {
             return this;
