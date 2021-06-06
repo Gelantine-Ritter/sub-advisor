@@ -19,6 +19,7 @@ import About from './views/AboutPage.vue'
 import Landing from './views/LandingPage.vue'
 import Contact from './views/ContactPage.vue'
 import Places from './views/PlacesPage.vue'
+import DetailPlace from './views/DetailPlacePage.vue'
 import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
@@ -63,6 +64,11 @@ const router = new Router({
       path: '/places',
       name: 'places',
       component: Places,
+    },
+    {
+      path: '/place',
+      name: 'place',
+      component: DetailPlace,
     },
     {
       path: '/events',
