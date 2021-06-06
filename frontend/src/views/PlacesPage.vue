@@ -19,7 +19,11 @@
               />
             </v-responsive>
             <v-card-actions>
-              <v-btn width="100%" flat color="rounded-pill black white--text"
+              <v-btn
+                @click="redirectToPlaceDetail(event.placeId)"
+                width="100%"
+                flat
+                color="rounded-pill black white--text"
                 >United we Stream
               </v-btn>
             </v-card-actions>
@@ -38,16 +42,22 @@ export default {
     return {
       styleObject: { border: '2px solid #cafb03' },
       venues1: [
-        { name: 'Event 1', image1: '../../public/venue1.png' },
-        { name: 'Event 2', image1: '../../public/venue2.png' },
-        { name: 'Event 3', image1: '../../public/venue3.jpeg' },
-        { name: 'Event 4', image1: '../../public/venue4.jpeg' },
-        { name: 'Event 5', image1: '../../public/venue1.png' },
-        { name: 'Event 6', image1: '../../public/venue2.png' },
+        { name: 'Place 1', placeId: '1', image1: '../../public/venue1.png' },
+        { name: 'Place 2', placeId: '2', image1: '../../public/venue2.png' },
+        { name: 'Place 3', placeId: '3', image1: '../../public/venue3.jpeg' },
+        { name: 'Place 4', placeId: '4', image1: '../../public/venue4.jpeg' },
+        { name: 'Place 5', placeId: '5', image1: '../../public/venue1.png' },
+        { name: 'Place 6', placeId: '6', image1: '../../public/venue2.png' },
       ],
     }
   },
   methods: {
+    redirectToPlaceDetail(placeId) {
+      console.log("redirect", placeId);
+      this.$router.push({
+        path: `/places/${placeId}`,
+      })
+    },
     testMethod() {
       console.log('Test clicked')
       axios.get('/venues').then((err, response) => {

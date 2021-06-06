@@ -55,24 +55,19 @@ export default {
       venueObj: {
         name: 'SampleName',
         email: 'SampleMail',
-        info: getLorem(),
+        info: 'SampleInfo',
       },
     }
   },
   mounted() {
-    // HARDCODE --- NEEDS TO CHANGE
-    axios.get('/venues/1')
+    const param = this.$route.params.id
+    axios.get(`/venues/${param}`)
         .then(response => {
             this.venueObj.name = response.data.name
             this.venueObj.email = response.data.email
             this.venueObj.info = response.data.info
         })
   },
-}
-
-// Test Functionality
-const getLorem = (words) => {
-  return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit deserunt mollit anim id est laborum.'
 }
 </script>
 

@@ -66,7 +66,7 @@ const router = new Router({
       component: Places,
     },
     {
-      path: '/place',
+      path: '/places/:id',
       name: 'place',
       component: DetailPlace,
     },
