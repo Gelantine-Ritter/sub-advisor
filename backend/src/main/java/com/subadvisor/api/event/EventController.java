@@ -16,9 +16,10 @@ public class EventController {
     EventService eventService;
 
     @GetMapping("/events/")
-    public ResponseEntity<?> getAllEvents(@RequestParam("venue") String venueId) {
+    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue) {
+
         return new ResponseEntity<>(
-                venueId != null ? eventService.getEventsByVenue(venueId) :
+                venue != null ? eventService.getEventsByVenue(venue) :
                         eventService.getAllEvents(),
                 HttpStatus.OK
         );
