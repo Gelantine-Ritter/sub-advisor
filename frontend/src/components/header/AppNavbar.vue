@@ -298,7 +298,7 @@ export default {
       ],
       subAbout: [
         { title: 'About 1', route: '/about' },
-        { title: 'route to about', route: '/about' },
+        { title: 'myProfile', route: '/myProfile' },
       ],
       subProfile: [
         { title: 'Login', route: '/login' },
@@ -321,7 +321,9 @@ export default {
     logoutSubmit() {
       this.logout()
         .then(() => {
-          this.$toast.open('You have logged out')
+          this.$router.replace({
+            name: 'home',
+          })
         })
         .catch(() => {
           console.log('failed')

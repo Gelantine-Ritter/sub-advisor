@@ -23,7 +23,9 @@ import DetailPlace from './views/DetailPlacePage.vue'
 import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
+import VenueProfile from './views/VenueProfile.vue'
 import store from './store'
+import auth from './store/auth'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
@@ -95,7 +97,29 @@ const router = new Router({
       name: 'signup',
       component: Signup,
     },
+    {
+      path: '/myProfile',
+      name: 'myProfile',
+      component: VenueProfile,
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    console.log(auth.state.token)
+    if (auth.state.token !== null) {
+      //  console.log('isAuth')
+      next()
+      return
+    }
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 new Vue({
