@@ -3,6 +3,7 @@ package com.subadvisor.api.event;
 import com.subadvisor.api.Driver;
 import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.api.event.dto.EventFalseDto;
+import com.subadvisor.api.event.dto.EventUpdateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.operators.LoginOperator;
 import org.junit.jupiter.api.*;
@@ -38,6 +39,7 @@ public class EventIT extends Driver {
     private static Venue VENUE_CRALLE;
     private static Venue VENUE_OTHER;
     private static EventCreateDto EVENT_DTO;
+    private static EventUpdateDto EVENT_UPDATE;
     private static EventFalseDto EVENT_DTO_FALSE;
     private static Event EVENT_CRALLE;
     private static Event EVENT_OTHER;
@@ -56,6 +58,7 @@ public class EventIT extends Driver {
     private static final String EVENT_END = "2021-09-04T23:00:00";
 
     private static String TOKEN_VENUE;
+    private static String TOKEN_OTHER_VENUE;
 
 
     private Driver DRIVER = driver();
@@ -111,8 +114,21 @@ public class EventIT extends Driver {
                 .eventEnd(EVENT_END)
                 .build();
 
+        EVENT_UPDATE = EventUpdateDto.builder()
+                .title(EVENT_TITLE)
+                .info(EVENT_INFO)
+                .artists(EVENT_ARTISTS)
+                .price("15.00")
+                .eventStart(EVENT_START)
+                .eventEnd(EVENT_END)
+                .build();
+
         TOKEN_VENUE = new LoginOperator(DRIVER)
                 .login(USER_NAME_VENUE, PASSWORD_VENUE)
+                .token();
+
+        TOKEN_OTHER_VENUE = new LoginOperator(DRIVER)
+                .login("Other", PASSWORD_VENUE)
                 .token();
     }
 
@@ -314,4 +330,74 @@ public class EventIT extends Driver {
                 .getResponse();
     }
 
+    @Test
+    @Order(9)
+    void venueCanUpdateOwnEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/events/" + EVENT_CRALLE.id())
+                                .header("authorization", "Bearer " + TOKEN_VENUE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        EVENT_UPDATE
+                                ))
+                )
+                .andExpect(
+                        matchAll(
+                                jsonPath("$.id").exists(),
+                                jsonPath("$.title").value(EVENT_TITLE),
+                                jsonPath("$.info").value(EVENT_INFO),
+                                jsonPath("$.artists").exists(),
+                                jsonPath("$.price").value(Double.parseDouble(EVENT_UPDATE.price())),
+                                jsonPath("$.created").exists(),
+                                jsonPath("$.modifiedAt").exists(),
+                                jsonPath("$.eventStart").value(EVENT_START),
+                                jsonPath("$.eventEnd").value(EVENT_END),
+                                status().isOk()
+                        )
+                )
+                .andReturn()
+                .getResponse();
+    }
+
+    @Test
+    @Order(10)
+    void guestCanNotUpdateVenuesEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/events/" + EVENT_CRALLE.id())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        EVENT_UPDATE
+                                ))
+                )
+                .andExpect(
+                        status().is4xxClientError()
+                )
+                .andReturn()
+                .getResponse();
+    }
+
+    @Test
+    @Order(11)
+    void otherVenueCanNotUpdateVenuesEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/events/" + EVENT_CRALLE.id())
+                                .header("authorization", "Bearer " + TOKEN_OTHER_VENUE)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(
+                                        EVENT_UPDATE
+                                ))
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is4xxClientError()
+                )
+                .andReturn()
+                .getResponse();
+    }
 }

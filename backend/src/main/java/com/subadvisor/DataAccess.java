@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subadvisor.api.event.EventRepository;
 import com.subadvisor.api.member.MemberRepository;
 import com.subadvisor.api.venue.VenueRepository;
+import com.subadvisor.security.CreatorCheck;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public abstract class DataAccess {
 
         @Autowired
         protected EventRepository events;
+
+        @Autowired
+        protected CreatorCheck check;
 
         protected DataAccess driver() {
             return this;
