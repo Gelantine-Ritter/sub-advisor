@@ -125,10 +125,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Event"
+              $ref: "#/components/schemas/EventCreateDto"
       responses:
-        201:
-          description: "Accepted"
+        200:
+          description: "Ok"
         400:
           description: "Bad request"
     get:
@@ -136,13 +136,22 @@ paths:
         - "Events"
       description: "get all Events"
       operationId: "getEvents"
+      parameters:
+        - in: query
+          name: venue
+          schema:
+            type: string
+          required: false
+          description: use venueId as a param to get all Events of a single Venue
       responses:
         200:
           description: "Ok"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Event"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
         400:
           description: "Bad Request"
         404:
@@ -151,7 +160,7 @@ paths:
     parameters:
       - name: eventId
         in: path
-        description: "eventId represents the key of a venue in the database"
+        description: "eventId represents the key of an event in the database"
         required: true
         schema:
           type: integer
@@ -171,6 +180,21 @@ paths:
           description: "Bad Request"
         404:
           description: "Not Found"
+    put:
+      tags:
+        - "Events"
+      description: "update an event"
+      operationId: "updateEvent"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventUpdateDto"
+      responses:
+        200:
+          description: "Ok"
+        400:
+          description: "Bad request"
     delete:
       tags:
         - "Events"
@@ -292,16 +316,101 @@ components:
       properties:
         id:
           type: string
-          example: 21
+          example: 12
+        venue_id:
+          type: string
+          example: "12375"
+          description: "venueId represents the creator and is needed as Foreign Key in Event Realtion"
         title:
           type: string
-          example: "my gib party"
+          example: "Away From Everything"
+        info:
+          type: string
+          example: "Real authentic female hardcore am Samstag"
+        artists:
+          type: array
+          items:
+            type: string
+          example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
         price:
-          type: number
-          example: 22.98
-        date:
           type: string
-          example: "22-01-2021"
-        time:
+          example: "10.00"
+        event_start:
           type: string
-          example: "22:00:00"
+          example: "2021-09-04T20:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        event_end:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
+    EventCreateDto:
+      type: object
+      required:
+        - venueId
+        - title
+      properties:
+        venue_id:
+          type: string
+          example: "12375"
+          description: "venueId represents the creator and is needed as Foreign Key in Event Realtion"
+        title:
+          type: string
+          example: "Away From Everything"
+        info:
+          type: string
+          example: "Real authentic female hardcore am Samstag"
+        artists:
+          type: array
+          items:
+            type: string
+          example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
+        price:
+          type: string
+          example: "10.00"
+        event_start:
+          type: string
+          example: "2021-09-04T20:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        event_end:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
+    EventUpdateDto:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          example: "Away From Everything"
+        info:
+          type: string
+          example: "Real authentic female hardcore am Samstag"
+        artists:
+          type: array
+          items:
+            type: string
+          example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
+        price:
+          type: string
+          example: "10.00"
+        event_start:
+          type: string
+          example: "2021-09-04T20:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        event_end:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
