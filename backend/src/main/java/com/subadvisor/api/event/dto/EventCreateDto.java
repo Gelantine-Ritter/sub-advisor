@@ -15,7 +15,6 @@ import javax.validation.constraints.*;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EventCreateDto {
 
-    private String id;
     @NotNull(message = "Please provide a venueId")
     @NotEmpty(message = "venueId should not be empty")
     private String venueId;

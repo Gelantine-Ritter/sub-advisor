@@ -2,7 +2,7 @@ package com.subadvisor.api.event;
 
 import com.subadvisor.DataAccess;
 import com.subadvisor.api.event.dto.EventCreateDto;
-import com.subadvisor.api.venue.VenueRepository;
+import com.subadvisor.api.event.dto.EventUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +47,20 @@ public class EventService extends DataAccess implements IEventService {
     public Event getEventById(Long eventId) {
         return DATA.events()
                 .findById(eventId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                format("Event with id - %s, not found", eventId)
+                        )
+                );
+    }
+
+    @Override
+    public Event updateEventById(EventUpdateDto updateEvent, Long eventId) {
+        return DATA.events()
+                .findById(eventId)
+                .map(
+                        event -> new EventMapper(DATA).updatingEventEntity(event, updateEvent)
+                )
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 format("Event with id - %s, not found", eventId)

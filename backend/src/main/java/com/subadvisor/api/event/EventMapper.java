@@ -2,6 +2,7 @@ package com.subadvisor.api.event;
 
 import com.subadvisor.DataAccess;
 import com.subadvisor.api.event.dto.EventCreateDto;
+import com.subadvisor.api.event.dto.EventUpdateDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,5 +37,16 @@ public class EventMapper {
                 .eventStart(LocalDateTime.parse(dto.eventStart()))
                 .eventEnd(LocalDateTime.parse(dto.eventEnd()))
                 .build();
+    }
+
+    public Event updatingEventEntity(Event event, EventUpdateDto dto) {
+
+        return event
+                .title(dto.title())
+                .info(dto.info())
+                .artists(Set.of(dto.artists()))
+                .price(Double.parseDouble(dto.price()))
+                .eventStart(LocalDateTime.parse(dto.eventStart()))
+                .eventEnd(LocalDateTime.parse(dto.eventEnd()));
     }
 }
