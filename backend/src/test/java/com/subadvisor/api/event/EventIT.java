@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
 import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.hamcrest.Matchers.*;
 
 /**
  * @author Matti Henning
@@ -34,9 +36,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 public class EventIT extends Driver {
 
     private static Venue VENUE_CRALLE;
+    private static Venue VENUE_OTHER;
     private static EventCreateDto EVENT_DTO;
     private static EventFalseDto EVENT_DTO_FALSE;
     private static Event EVENT_CRALLE;
+    private static Event EVENT_OTHER;
 
     private static final String USER_NAME_VENUE = "crallecralle";
     private static final String PASSWORD_VENUE = "CralleCralle";
@@ -69,6 +73,21 @@ public class EventIT extends Driver {
                         .name(NAME_VENUE)
                         .email(EMAIL_VENUE)
                         .info(INFO_VENUE)
+                        .build()
+        );
+
+        VENUE_OTHER = venueRepository.save(
+                Venue.builder()
+                        .username("Other")
+                        .name("Other")
+                        .password(PASSWORD_VENUE)
+                        .build()
+        );
+
+        EVENT_OTHER = eventRepository.save(
+                Event.builder()
+                        .title("Other")
+                        .venue(VENUE_OTHER)
                         .build()
         );
 
@@ -202,6 +221,7 @@ public class EventIT extends Driver {
                 .perform(
                         get("/events/" + EVENT_CRALLE.id())
                 )
+                .andDo(print())
                 .andExpect(
                         matchAll(
                                 status().isOk(),
@@ -220,6 +240,55 @@ public class EventIT extends Driver {
                 .getResponse();
     }
 
+    @Test
+    @Order(6)
+    void guestCanGetEventsOfVenue() throws Exception {
 
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/").param("venue", VENUE_CRALLE.id().toString())
+                )
+                .andExpect(
+                        matchAll(
+                                matchAll(
+                                        jsonPath("$").isArray(),
+                                        jsonPath("$", hasSize(1)),
+                                        jsonPath("$[0].title", is(EVENT_CRALLE.title()))
+                                )
+                        )
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
 
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/").param("venue", VENUE_OTHER.id().toString())
+                )
+                .andExpect(
+                        matchAll(
+                                matchAll(
+                                        jsonPath("$").isArray(),
+                                        jsonPath("$", hasSize(1)),
+                                        jsonPath("$[0].title", is(EVENT_OTHER.title()))
+                                )
+                        )
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+    }
+
+    @Test
+    @Order(6)
+    void guestCanNotGetEventsOfNonExistingVenue() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/").param("venue", "32489567")
+                )
+                .andDo(print())
+                .andReturn()
+                .getResponse();
+    }
 }
