@@ -16,9 +16,12 @@ public class EventController {
     EventService eventService;
 
     @GetMapping("/events/")
-    public List<Event> getAllEvents(@RequestParam("venue") String venueName) {
-        return venueName != null ? eventService.getEventsByVenue(venueName) :
-                eventService.getAllEvents();
+    public ResponseEntity<?> getAllEvents(@RequestParam("venue") String venueId) {
+        return new ResponseEntity<>(
+                venueId != null ? eventService.getEventsByVenue(venueId) :
+                        eventService.getAllEvents(),
+                HttpStatus.OK
+        );
     }
 
     @PostMapping("/events/")
