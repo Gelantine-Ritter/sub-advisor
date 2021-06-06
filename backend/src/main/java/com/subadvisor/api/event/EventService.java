@@ -1,6 +1,5 @@
 package com.subadvisor.api.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.subadvisor.DataAccess;
 import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.api.venue.VenueRepository;
@@ -17,31 +16,36 @@ import static java.lang.String.format;
 public class EventService extends DataAccess implements IEventService {
 
     @Autowired
-    EventRepository eventRepo;
-
-    @Autowired
-    VenueRepository venueRepo;
-
-    @Autowired
     DataAccess DATA;
 
     @Override
     public List<Event> getAllEvents() {
-        return eventRepo.findAll();
+        return DATA.events().findAll();
+    }
+
+    @Override
+    public List<Event> getEventsByVenue(String venueId) {
+        return DATA.events()
+                .findByVenueId(Long.parseLong(venueId))
+                .filter(opt -> !opt.isEmpty())
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                format("No Events found for %s ", venueId)
+                        )
+                );
     }
 
     @Override
     public Event createEvent(EventCreateDto dto) {
 
-        return DATA.eventRepository().save(
+        return DATA.events().save(
                 new EventMapper(DATA).mapToEventEntity(dto)
         );
-        //objectMapper.convertValue(eventCreateDto, Event.class)
     }
 
     @Override
     public Event getEventById(Long eventId) {
-        return eventRepo
+        return DATA.events()
                 .findById(eventId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(
@@ -52,6 +56,6 @@ public class EventService extends DataAccess implements IEventService {
 
     @Override
     public void deleteEventById(Long eventId) {
-        eventRepo.deleteById(eventId);
+        DATA.events().deleteById(eventId);
     }
 }
