@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-container class="head_container">
-      <a href="../" class="lastPage">&lt;&lt;</a>
+      <a @click="redirectBackwards" class="lastPage">&lt;&lt;</a>
       <h1 class="h1Style text-center display-3 font-weight-medium">
         {{ venueObj.name }}
       </h1>
@@ -29,13 +29,20 @@
           </div>
         </v-col>
         <v-col cols="6" md="4">
-          <div class="md-layout-item text-left" outlined tile>
+          <div class="md-layout-item text-center" outlined tile>
             <v-img
               class="ma-5 border border-dark"
-              height="250"
+              height="100%"
               src="../../public/venue2.png"
               alt=""
             />
+            <v-btn
+                @click="redirectBackwards()"
+                width="80%"
+                flat
+                color="rounded-pill black white--text"
+                >{{venueObj.name}}
+              </v-btn>
           </div>
         </v-col>
       </v-row>
@@ -67,6 +74,11 @@ export default {
             this.venueObj.email = response.data.email
             this.venueObj.info = response.data.info
         })
+  },
+  methods: {
+    redirectBackwards() {
+      history.back()
+    },
   },
 }
 </script>

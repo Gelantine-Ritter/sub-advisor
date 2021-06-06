@@ -3,7 +3,7 @@
     <h1 class="h1Style text-center display-3 font-weight-medium">PLACES</h1>
 
     <v-layout row wrap>
-      <v-flex xs12 sm6 md4 lg3 v-for="event in venues1" :key="event.name">
+      <v-flex xs12 sm6 md4 lg3 v-for="venue in venues1" :key="venue.name">
         <div>
           <v-card
             center
@@ -20,11 +20,11 @@
             </v-responsive>
             <v-card-actions>
               <v-btn
-                @click="redirectToPlaceDetail(event.placeId)"
+                @click="redirectToPlaceDetail(venue.id)"
                 width="100%"
                 flat
                 color="rounded-pill black white--text"
-                >United we Stream
+                >{{venue.name}}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -41,33 +41,20 @@ export default {
   data() {
     return {
       styleObject: { border: '2px solid #cafb03' },
-      venues1: [
-        { name: 'Place 1', placeId: '1', image1: '../../public/venue1.png' },
-        { name: 'Place 2', placeId: '2', image1: '../../public/venue2.png' },
-        { name: 'Place 3', placeId: '3', image1: '../../public/venue3.jpeg' },
-        { name: 'Place 4', placeId: '4', image1: '../../public/venue4.jpeg' },
-        { name: 'Place 5', placeId: '5', image1: '../../public/venue1.png' },
-        { name: 'Place 6', placeId: '6', image1: '../../public/venue2.png' },
-      ],
+      venues1: [],
     }
+  },
+  mounted() {
+    axios.get('/venues/')
+        .then(response => {
+            this.venues1 = response.data;
+        })
   },
   methods: {
     redirectToPlaceDetail(placeId) {
       console.log("redirect", placeId);
       this.$router.push({
         path: `/places/${placeId}`,
-      })
-    },
-    testMethod() {
-      console.log('Test clicked')
-      axios.get('/venues').then((err, response) => {
-        if (err) {
-          console.log(err)
-        } else if (!response) {
-          console.log('SchadeMarmelade')
-        } else {
-          console.log(response)
-        }
       })
     },
   },
