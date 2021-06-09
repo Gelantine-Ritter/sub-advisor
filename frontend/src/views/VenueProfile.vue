@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="rounded-xl mycontainer" fluid>
-      <v-card center class="rounded-xl ma-7" :style="styleObject">
+      <v-card center class="rounded-xl mb-7" :style="styleObject">
         <v-responsive>
           <v-img
             class="ma-5 border border-dark"
@@ -12,9 +12,12 @@
         </v-responsive>
       </v-card>
       <div>
-        <v-card class="d-flex justify-space-between mb-6" flat tile>
+        <v-card class="d-flex justify-space-between mb-1" flat tile>
           <v-card class="pa-2" flat tile>
-            <h4>GENERAL</h4>
+            <h4>YOUR ACCOUNT</h4>
+            <p class="font-weight-thin">
+              Here you can find your private account data.
+            </p>
           </v-card>
           <v-card class="pa-2" flat tile>
             <h4>
@@ -47,9 +50,12 @@
       </v-list-item>
       <v-divider></v-divider>
       <div>
-        <v-card class="d-flex justify-space-between mb-6" flat tile>
+        <v-card class="d-flex justify-space-between mb-1" flat tile>
           <v-card class="pa-2" flat tile>
             <h4>YOUR PLACE</h4>
+            <p class="font-weight-thin">
+              Here you can edit your data for your Place.
+            </p>
           </v-card>
           <v-card class="pa-2" flat tile>
             <h4>
@@ -116,6 +122,6 @@ export default {
   margin-right: 15vw;
   margin-bottom: 5vw;
   background: white;
-  padding: 5vw;
+  padding: 3vw;
 }
 </style>
