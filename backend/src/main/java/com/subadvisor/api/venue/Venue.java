@@ -13,6 +13,8 @@ import com.subadvisor.api.venue.dto.IVenueDto;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
