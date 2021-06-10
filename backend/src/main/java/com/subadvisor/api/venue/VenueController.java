@@ -19,8 +19,11 @@ public class VenueController {
     VenueService venueService;
 
     @GetMapping("/venues")
-    public List<Venue> getAllVenues() {
-        return venueService.getAllVenues();
+    public ResponseEntity<?> getAllVenues() {
+        return new ResponseEntity<>(
+                venueService.getAllVenues(),
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/venues/{id}")

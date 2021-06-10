@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -27,8 +29,16 @@ public class VenueService implements UserDetailsService, IVenueService {
     private ObjectMapper objectMapper;
 
     @Override
-    public List<Venue> getAllVenues() {
-        return repository.findAll();
+    public List<VenuePublicDto> getAllVenues() {
+        return repository.findAll()
+                .stream()
+                .map(
+                        venue -> objectMapper.convertValue(
+                                venue,
+                                VenuePublicDto.class
+                        )
+                ).collect(Collectors.toList());
+
     }
 
     @Override
@@ -78,11 +88,15 @@ public class VenueService implements UserDetailsService, IVenueService {
                         .map(venue ->
                                 repository.save(
                                         venue
-                                                .username(newVenue.username())
                                                 .password(newVenue.password())
                                                 .name(newVenue.name())
                                                 .email(newVenue.email())
                                                 .info(newVenue.info())
+                                                .hours(newVenue.hours())
+                                                .mobile(newVenue.mobile())
+                                                .website(newVenue.website())
+                                                .address(newVenue.address())
+                                                .pic(newVenue.pic())
                                 )
                         )
                         .orElseGet(() ->
