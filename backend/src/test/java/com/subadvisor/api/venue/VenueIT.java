@@ -1,16 +1,18 @@
 package com.subadvisor.api.venue;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.subadvisor.api.Driver;
+import com.subadvisor.api.event.Event;
+import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.operators.LoginOperator;
-import io.jsonwebtoken.lang.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -30,6 +32,7 @@ public class VenueIT extends Driver {
     private static Venue VENUE;
     private static Venue OTHER_VENUE;
     private static Venue VENUE_UPDATED;
+    private static Event EVENT;
 
     private static final String USER_NAME_VENUE = "about-party";
     private static final String PASSWORD_VENUE = "roterosen161";
@@ -37,10 +40,15 @@ public class VenueIT extends Driver {
     private static final String INFO_VENUE = "nette location für lange wochenenden";
     private static final String EMAIL_VENUE = "about@blank.li";
 
-    private static final String USER_NAME_OTHER_VENUE = "tennis-café";
+    private static final String EVENT_TITLE = "Away From Everything";
+    private static final String EVENT_INFO = "Real authentic female hardcore am Samstag";
+    private static final String[] EVENT_ARTISTS = {"Krimewatch", "The Distillers", "Bikini Kill"};
+    private static final String EVENT_PRICE = "10.00";
+
+    private static final String USER_NAME_OTHER_VENUE = "tennis-cafe";
     private static final String PASSWORD_OTHER_VENUE = "guter-aufschlag";
-    private static final String NAME_OTHER_VENUE = "cafè tennis";
-    private static final String INFO_OTHER_VENUE = "gemütliche Kneipe mit schönem Keller";
+    private static final String NAME_OTHER_VENUE = "cafe tennis";
+    private static final String INFO_OTHER_VENUE = "gemuetliche Kneipe mit schoenem Keller";
     private static final String EMAIL_OTHER_VENUE = "tennis@schlaeger.info";
 
     private static String TOKEN_VENUE;
@@ -59,8 +67,34 @@ public class VenueIT extends Driver {
                         .name(NAME_VENUE)
                         .email(EMAIL_VENUE)
                         .info(INFO_VENUE)
+                        .hours(
+                                Map.of("monday", "closed",
+                                        "tuesday", "17:00 - 23:00",
+                                        "wednesday", "17:00 - 23:00",
+                                        "thursday", "17:00 - 23:00",
+                                        "friday", "17:00 - 02:00",
+                                        "saturday", "17:00 - 02:00",
+                                        "sunday", "17:00 - 02:00"
+                                )
+                        )
+                        .address(
+                                Map.of(
+                                        "street", "Flughafenstraße",
+                                        "number", "38",
+                                        "city", "Berlin",
+                                        "plz", "12053"
+                                )
+                        )
                         .build()
         );
+
+        EVENT = eventRepository.save(Event.builder()
+                .title(EVENT_TITLE)
+                .venue(VENUE)
+                .info(EVENT_INFO)
+                .artists(Set.of("Reka Zalan", "Giraffi Dog"))
+                .price(15)
+                .build());
 
         OTHER_VENUE = venueRepository.save(
                 Venue.builder()
@@ -104,13 +138,15 @@ public class VenueIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
-                                jsonPath("$.id").doesNotExist(),
+                                jsonPath("$.id").exists(),
                                 jsonPath("$.name").value(VENUE.name()),
                                 jsonPath("$.info").value(VENUE.info()),
                                 jsonPath("$.email").value(VENUE.email()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").doesNotExist(),
                                 jsonPath("$.modifiedAt").doesNotExist(),
+                                jsonPath("$.address").isMap(),
+                                jsonPath("$.hours").isMap(),
                                 status().isOk()
                         )
                 )
@@ -161,7 +197,7 @@ public class VenueIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
-                                jsonPath("$.id").doesNotExist(),
+                                jsonPath("$.id").value(OTHER_VENUE.id()),
                                 jsonPath("$.name").value(OTHER_VENUE.name()),
                                 jsonPath("$.info").value(OTHER_VENUE.info()),
                                 jsonPath("$.email").value(OTHER_VENUE.email()),
