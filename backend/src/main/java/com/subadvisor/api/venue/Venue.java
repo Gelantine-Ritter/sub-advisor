@@ -1,7 +1,6 @@
 package com.subadvisor.api.venue;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -10,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import com.subadvisor.api.auth.IUserId;
 import com.subadvisor.api.event.Event;
+import com.subadvisor.api.venue.dto.IVenueDto;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -22,9 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -36,7 +34,7 @@ import java.util.Set;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Accessors(fluent = true, chain = true)
 @Table(name = "venue")
-public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
+public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto, IVenueDto {
 
     @Id
     @GeneratedValue
@@ -65,9 +63,14 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @Column(unique = true)
     private String email;
     private String info;
-    private String address;
-    private String url;
+    private String mobile;
+    @ElementCollection
+    private Map<String, String> hours;
     private String website;
+
+    @ElementCollection
+    private Map<String, String> address;
+
     @NonNull
     @Builder.Default
     private String ROLE = "VENUE";
@@ -75,6 +78,8 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @Lob
     private byte[] pic;
 
+    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
     private Set<Event> events = new HashSet<>();
 
