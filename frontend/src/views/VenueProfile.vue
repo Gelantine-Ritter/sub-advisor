@@ -21,10 +21,11 @@
           </v-card>
           <v-card class="pa-2" flat tile>
             <h4>
-              <v-btn icon class="ml-5">
+              <v-btn @click.stop="showDialogPrivate = true" icon class="ml-5">
                 <v-icon class="text-right" dense color="grey"
                   >far fa-edit</v-icon
                 >
+                <ModalPrivate v-model="showDialogPrivate" />
               </v-btn>
             </h4>
           </v-card>
@@ -39,7 +40,7 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-subtitle>MAIL</v-list-item-subtitle>
-          <v-list-item-title> {{ auth.user.email }} </v-list-item-title>
+          <v-list-item-title> {{ user.email }} </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-list-item two-line>
@@ -59,10 +60,11 @@
           </v-card>
           <v-card class="pa-2" flat tile>
             <h4>
-              <v-btn icon class="ml-5">
+              <v-btn @click.stop="showDialogPublic = true" icon class="ml-5">
                 <v-icon class="text-right" dense color="grey"
                   >far fa-edit</v-icon
                 >
+                <ModalPublic v-model="showDialogPublic" />
               </v-btn>
             </h4>
           </v-card>
@@ -72,14 +74,14 @@
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-subtitle> PLACE </v-list-item-subtitle>
-          <v-list-item-title> {{ auth.user.name }} </v-list-item-title>
+          <v-list-item-title> {{ user.name }} </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-subtitle>DESCRIPTION</v-list-item-subtitle>
-          <v-list-item-title> {{ auth.user.info }} </v-list-item-title>
+          <v-list-item-title> {{ user.info }} </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -100,15 +102,26 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
+import ModalPrivate from './DialogAccountUpdate.vue'
+import ModalPublic from './DialogPublicPlaceUpdate.vue'
+
 export default {
   data() {
     return {
       styleObject: { border: '2px solid #cafb03' },
+      showDialogPrivate: false,
+      showDialogPublic: false,
     }
   },
   computed: {
-    ...mapState(['auth']),
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
+  components: {
+    ModalPrivate,
+    ModalPublic,
   },
 }
 </script>
