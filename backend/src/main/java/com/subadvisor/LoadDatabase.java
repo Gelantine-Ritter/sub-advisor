@@ -11,6 +11,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Set;
+
 @Log4j2
 @Configuration
 class LoadDatabase {
@@ -19,16 +23,54 @@ class LoadDatabase {
     CommandLineRunner initDatabase(VenueRepository venueRepository, MemberRepository memberRepository, EventRepository eventRepository) {
         return args -> {
 
-            // Load Venues
-            log.info("Preloading " + venueRepository.save(
+            Venue trudeRuth = venueRepository.save(
                     Venue.builder()
                             .username("trude-ruth")
                             .password("rudiruth")
+                            .name("Trude Ruth")
                             .email("ruth@info.com")
                             .info("nette tanzabende")
-                            .name("Trude Ruth")
+                            .mobile("0189-28347619")
+                            .hours(
+                                    Map.of("monday", "closed",
+                                            "tuesday", "17:00 - 23:00",
+                                            "wednesday", "17:00 - 23:00",
+                                            "thursday", "17:00 - 23:00",
+                                            "friday", "17:00 - 02:00",
+                                            "saturday", "17:00 - 02:00",
+                                            "sunday", "17:00 - 02:00"
+                                    )
+                            )
+                            .address(
+                                    Map.of(
+                                            "street", "Flughafenstrasse",
+                                            "number", "38",
+                                            "city", "Berlin",
+                                            "plz", "12053"
+                                    )
+                            )
+                            .website("https://trude-ruth.com")
                             .build()
-            ));
+            );
+
+
+            // Load Venues
+            log.info("Preloading " + trudeRuth);
+
+            Event eventTrudeRuth = eventRepository.save(
+                    Event.builder()
+                    .title("Tischtennis am Mittwoch")
+                    .venue(trudeRuth)
+                    .info("nettes indoor-tischtennis im Hinterraum")
+                    .artists(Set.of("Timo Boll"))
+                    .price(10)
+                    .build()
+            );
+
+
+
+            // Load Venues
+            log.info("Preloading " + eventTrudeRuth);
 
             // Load TestUser
             log.info("Preloading " + memberRepository.save(

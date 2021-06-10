@@ -55,9 +55,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: "#/components/schemas/VenuePrivateResonse"
-                  - $ref: "#/components/schemas/VenuePersonalResonse"
+                $ref: "#/components/schemas/VenuePublicDto"
         400:
           description: "Bad Request"
   /venues/{venueId}/:
@@ -80,8 +78,8 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/VenuePrivateResonse"
-                  - $ref: "#/components/schemas/VenuePersonalResonse"
+                  - $ref: "#/components/schemas/VenuePrivateDto"
+                  - $ref: "#/components/schemas/VenuePublicDto"
         400:
           description: "Bad Request"
         404:
@@ -95,7 +93,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PutValue"
+              $ref: "#/components/schemas/VenueUpdateDto"
       responses:
         204:
           description: "Updated"
@@ -257,12 +255,49 @@ components:
         password:
           type: string
           example: "about_pa55w0rd"
-    PutValue:
+    VenueUpdateDto:
       type: object
       properties:
-        value:
+        name:
           type: string
-          example: "MyNewValue"
+          example: "The Club"
+        email:
+          type: string
+          example: "my-club@mail.com"
+        info:
+          type: string
+          example: "Dies ist eine Info Beschreibung"
+        mobile:
+          type: string
+          example: "0177-21987356"
+        hours:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            monday: "closed"
+            tuesday: "17:00 - 23:00"
+            wednesday: "17:00 - 23:00"
+            thursday: "17:00 - 23:00"
+            friday: "17:00 - 02:00"
+            saturday: "17:00 - 02:00"
+            sunday: "17:00 - 02:00"
+        website:
+          type: string
+          example: "https://the-club.com"
+        address:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            street: "Flughafenstrasse"
+            number: "38"
+            city: "Berlin"
+            plz: "12053"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
     Venue:
       type: object
       properties:
@@ -281,15 +316,12 @@ components:
         info:
           type: string
           example: "Fotobande Neukölln ist eine Gruppe vom Personen..."
-    VenuePersonalResonse:
+    VenuePublicDto:
       type: object
       properties:
-        venueId:
+        id:
           type: string
           example: 2
-        username:
-          type: string
-          example: "club_profile22"
         name:
           type: string
           example: "The Club"
@@ -299,18 +331,86 @@ components:
         info:
           type: string
           example: "Dies ist eine Info Beschreibung"
-    VenuePrivateResonse:
+        hours:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            monday: "closed"
+            tuesday: "17:00 - 23:00"
+            wednesday: "17:00 - 23:00"
+            thursday: "17:00 - 23:00"
+            friday: "17:00 - 02:00"
+            saturday: "17:00 - 02:00"
+            sunday: "17:00 - 02:00"
+        website:
+          type: string
+          example: "https://the-club.com"
+        address:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            street: "Flughafenstrasse"
+            number: "38"
+            city: "Berlin"
+            plz: "12053"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
+    VenuePrivateDto:
       type: object
       properties:
+        id:
+          type: string
+          example: 2
+        username:
+          type: string
+          example: "my-username"
         name:
           type: string
           example: "The Club"
         email:
           type: string
-          example:
+          example: "my-club@mail.com"
         info:
           type: string
           example: "Dies ist eine Info Beschreibung"
+        mobile:
+          type: string
+          example: "0177-21987356"
+        hours:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            monday: "closed"
+            tuesday: "17:00 - 23:00"
+            wednesday: "17:00 - 23:00"
+            thursday: "17:00 - 23:00"
+            friday: "17:00 - 02:00"
+            saturday: "17:00 - 02:00"
+            sunday: "17:00 - 02:00"
+        website:
+          type: string
+          example: "https://the-club.com"
+        address:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            street: "Flughafenstrasse"
+            number: "38"
+            city: "Berlin"
+            plz: "12053"
+        pic:
+          type: string
+          format: byte
+          example: 10101101110101010101010
+        role:
+          type: string
+          example: "VENUE"
     Event:
       type: object
       properties:
