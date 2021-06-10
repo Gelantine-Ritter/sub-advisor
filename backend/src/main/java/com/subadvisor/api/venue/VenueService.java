@@ -1,6 +1,7 @@
 package com.subadvisor.api.venue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.subadvisor.api.auth.dto.VenueRegistrateDto;
 import com.subadvisor.api.venue.dto.IVenueDto;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
@@ -42,13 +43,15 @@ public class VenueService implements UserDetailsService, IVenueService {
     }
 
     @Override
-    public VenuePersonalDto createVenue(Venue venue) {
-
-            return objectMapper.convertValue(
-                    repository.save(venue),
-                    VenuePersonalDto.class
-            );
-
+    public VenuePersonalDto createVenue(VenueRegistrateDto venueRegistrateDto) {
+        return objectMapper.convertValue(
+                repository.save(
+                        objectMapper.convertValue(
+                                venueRegistrateDto,
+                                Venue.class
+                        )),
+                VenuePersonalDto.class
+        );
     }
 
     @Override

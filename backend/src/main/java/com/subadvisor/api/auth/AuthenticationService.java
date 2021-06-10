@@ -6,6 +6,7 @@ import com.subadvisor.api.member.MemberRepository;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.VenueRepository;
 import com.subadvisor.api.venue.VenueService;
+import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,13 +55,7 @@ public class AuthenticationService {
                 );
     }
 
-    public RegistrationResponseDto registrateUser(IRegistrationRequestDto registrationRequestDto) {
-        if (registrationRequestDto instanceof Member){
-            // Create Member
-            return null;
-        }else if (registrationRequestDto instanceof Venue){
-                return venueService.createVenue((Venue) registrationRequestDto);
-        }
-        return null;
+    public VenuePersonalDto registrateUser(VenueRegistrateDto venueRegistrateDto) {
+            return venueService.createVenue(venueRegistrateDto);
     }
 }

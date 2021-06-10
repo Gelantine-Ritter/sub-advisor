@@ -1,6 +1,7 @@
 package com.subadvisor.api.auth;
 
 import com.subadvisor.api.Driver;
+import com.subadvisor.api.auth.dto.VenueRegistrateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.operators.LoginOperator;
 import org.junit.jupiter.api.*;
@@ -25,11 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class RegistrationIT extends Driver {
 
-    private static Venue VENUE;
+    private static VenueRegistrateDto VENUE;
     private static Venue VENUE_DUPLICATE;
 
     private static final String USER_NAME_VENUE = "my-party";
-    private static final String NAME_VENUE = "://without blank";
+    private static final String NAME_VENUE = "withoutblank";
     private static final String EMAIL_VENUE = "without@blank.li";
     private static final String PASSWORD_VENUE = "roterosen161";
 
@@ -50,7 +51,7 @@ public class RegistrationIT extends Driver {
     @BeforeAll
     void setUp() throws Exception {
 
-        VENUE = Venue.builder()
+        VENUE = VenueRegistrateDto.builder()
                 .username(USER_NAME_VENUE)
                 .name(NAME_VENUE)
                 .email(EMAIL_VENUE)
@@ -83,11 +84,8 @@ public class RegistrationIT extends Driver {
                                 status().isOk(),
                                 jsonPath("$.username").value(VENUE.username()),
                                 jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.info").value(VENUE.info()),
                                 jsonPath("$.email").value(VENUE.email()),
                                 jsonPath("$.password").doesNotExist(),
-                                jsonPath("$.created").exists(),
-                                jsonPath("$.modifiedAt").exists(),
                                 status().isOk()
                         )
                 )
@@ -121,9 +119,8 @@ public class RegistrationIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
-                                jsonPath("$.id").doesNotExist(),
+                                jsonPath("$.id").exists(),
                                 jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.info").value(VENUE.info()),
                                 jsonPath("$.email").value(VENUE.email()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").doesNotExist(),
@@ -151,7 +148,6 @@ public class RegistrationIT extends Driver {
                                 jsonPath("$.username").value(VENUE.username()),
                                 jsonPath("$.id").value(ID_VENUE),
                                 jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.info").value(VENUE.info()),
                                 jsonPath("$.email").value(VENUE.email()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").exists(),

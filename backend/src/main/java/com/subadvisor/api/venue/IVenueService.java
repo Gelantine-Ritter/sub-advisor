@@ -1,5 +1,6 @@
 package com.subadvisor.api.venue;
 
+import com.subadvisor.api.auth.dto.VenueRegistrateDto;
 import com.subadvisor.api.venue.dto.IVenueDto;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
@@ -10,7 +11,7 @@ import java.util.List;
 public interface IVenueService {
     List<VenuePublicDto> getAllVenues();
 
-    VenuePersonalDto createVenue(Venue venue);
+    VenuePersonalDto createVenue(VenueRegistrateDto venueRegistrateDto);
 
     IVenueDto getVenueById(Authentication authentication, Long venueId);
 
