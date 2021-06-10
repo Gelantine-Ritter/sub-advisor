@@ -257,7 +257,6 @@ public class EventIT extends Driver {
                 .andReturn()
                 .getResponse();
     }
-
     @Test
     @Order(6)
     void guestCanGetEventsOfVenue() throws Exception {
@@ -322,9 +321,9 @@ public class EventIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$").isArray(),
-                                jsonPath("$", hasSize(2)),
-                                jsonPath("$[0].title", is(EVENT_OTHER.title())),
-                                jsonPath("$[1].title", is(EVENT_CRALLE.title()))
+                                jsonPath("$", hasSize(3)),
+                                jsonPath("$[1].title", is(EVENT_OTHER.title())),
+                                jsonPath("$[2].title", is(EVENT_CRALLE.title()))
 
                         )
                 )
