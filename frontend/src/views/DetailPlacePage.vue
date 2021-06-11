@@ -7,53 +7,48 @@
       </h1>
       <p></p>
     </v-container>
+
     <v-card
       center
       class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
-      <v-row gutters>
-        <v-col cols="12" sm="6" md="8">
-          <div class="childElem md-layout-item text-left">
-            {{ venueObj.email }}
-          </div>
-        </v-col>
-        <v-col cols="6" md="4">
-          <div class="md-layout-item text-left" outlined tile></div>
-        </v-col>
-      </v-row>
-      <v-row no-gutters>
-        <v-col cols="12" sm="6" md="8">
-          <div class="childElem md-layout-item text-left">
-            {{ venueObj.info }}
-          </div>
-        </v-col>
-        <v-col cols="6" md="4">
-          <div class="md-layout-item text-center" outlined tile>
-            <v-img
-              class="ma-5 border border-dark"
-              height="100%"
-              src="../../public/venue2.png"
-              alt=""
-            />
-            <v-btn
-                @click="redirectBackwards()"
-                width="80%"
-                flat
-                color="rounded-pill black white--text"
-                >{{venueObj.name}}
-              </v-btn>
-          </div>
-        </v-col>
-      </v-row>
-
-      <v-card-actions> </v-card-actions>
+      <v-list-item three-line>
+        <v-list-item-content>
+          <div class="text-overline mb-4">{{ venueObj.email }}</div>
+          <v-list-item-title class="text-h5 mb-1">
+            {{ venueObj.name }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <template>
+        <v-container>
+          <v-row>
+            <!--big screens-->
+            <v-col cols="12" md="8">
+              <v-card class="pa-2" flat tile> {{ venueObj.info }} </v-card>
+            </v-col>
+            <v-col align="center" class="d-none d-md-block" cols="6" md="4">
+              <v-card class="pa-2" flat tile>
+                <MapsView :adress="venueObj.adress" />
+              </v-card>
+            </v-col>
+            <!--small screens-->
+            <v-col class="d-lg-none" cols="12" md="4">
+              <v-card class="pa-2" flat tile>
+                <MapsView :adress="venueObj.adress" />
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </template>
     </v-card>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
+import MapsView from '../components/features/MapsView.vue'
 
 export default {
   data() {
@@ -63,22 +58,35 @@ export default {
         name: 'SampleName',
         email: 'SampleMail',
         info: 'SampleInfo',
+        adress: {
+          street: 'Prenzlauer Allee',
+          number: '22',
+          plz: '10407',
+          city: 'Berlin',
+        },
       },
     }
   },
   mounted() {
     const param = this.$route.params.id
-    axios.get(`/venues/${param}`)
-        .then(response => {
-            this.venueObj.name = response.data.name
-            this.venueObj.email = response.data.email
-            this.venueObj.info = response.data.info
-        })
+    axios.get(`/venues/${param}`).then((response) => {
+      this.venueObj.name = response.data.name
+      this.venueObj.email = response.data.email
+      // this.venueObj.info = response.data.info
+      this.venueObj.info = this.getLorem()
+      this.venueObj.adress = response.data.address
+    })
   },
   methods: {
     redirectBackwards() {
       history.back()
     },
+    getLorem() {
+      return 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
+    },
+  },
+  components: {
+    MapsView,
   },
 }
 </script>
