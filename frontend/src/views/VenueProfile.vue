@@ -40,7 +40,7 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle>USERNAME</v-list-item-subtitle>
-              <v-list-item-title> ..... </v-list-item-title>
+              <v-list-item-title> {{ user.username }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item two-line>
@@ -52,7 +52,7 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle> PASSWORD </v-list-item-subtitle>
-              <v-list-item-title> ... </v-list-item-title>
+              <v-list-item-title> {{user.password}} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
@@ -98,20 +98,28 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle>OPENING HOURS</v-list-item-subtitle>
-              <v-list-item-title> ... </v-list-item-title>
+              <v-list-item-title> MONDAY: {{ user.hours.monday }} </v-list-item-title>
+              <v-list-item-title> TUESDAY: {{ user.hours.tuesday }} </v-list-item-title>
+              <v-list-item-title> WEDNESDAY: {{ user.hours.wednesday }} </v-list-item-title>
+              <v-list-item-title> THURSDAY: {{ user.hours.thursday }} </v-list-item-title>
+              <v-list-item-title> FRIDAY: {{ user.hours.friday }} </v-list-item-title>
+              <v-list-item-title> SATURDAY: {{ user.hours.saturday }} </v-list-item-title>
+              <v-list-item-title> SUNDAY: {{ user.hours.sunday }} </v-list-item-title>
+
             </v-list-item-content>
           </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle>ADDRESS</v-list-item-subtitle>
-              <v-list-item-title> ... </v-list-item-title>
+              <v-list-item-title> {{ user.address.street }}  {{ user.address.number }}</v-list-item-title>
+              <v-list-item-title> {{ user.address.plz }} {{ user.address.city }} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
           <v-divider></v-divider>
 
           <v-row justify="center">
-            <v-btn color="error" @click.stop="deleteDialog = true">
+            <v-btn class="myDeleteButton" color="error" @click.stop="deleteDialog = true">
               DELETE YOUR ACCOUNT
             </v-btn>
             <v-dialog v-model="deleteDialog" max-width="500">
@@ -197,5 +205,8 @@ export default {
   margin-bottom: 5vw;
   background: white;
   padding: 3vw;
+}
+.myDeleteButton {
+  margin: 30px;
 }
 </style>
