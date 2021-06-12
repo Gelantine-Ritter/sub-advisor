@@ -24,7 +24,7 @@
                 width="100%"
                 flat
                 color="rounded-pill black white--text"
-                >{{venue.name}}
+                >{{ venue.name }}
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -45,14 +45,12 @@ export default {
     }
   },
   mounted() {
-    axios.get('/venues/')
-        .then(response => {
-            this.venues1 = response.data;
-        })
+    axios.get('/venues/').then((response) => {
+      this.venues1 = response.data
+    })
   },
   methods: {
     redirectToPlaceDetail(placeId) {
-      console.log("redirect", placeId);
       this.$router.push({
         path: `/places/${placeId}`,
       })
