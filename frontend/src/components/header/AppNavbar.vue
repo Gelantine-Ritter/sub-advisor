@@ -324,8 +324,6 @@ export default {
 
     logoutSubmit(action) {
       if (action === this.logout) {
-        console.log('Bin in if logout')
-
         this.logout()
           .then(() => {
             this.$router.replace({

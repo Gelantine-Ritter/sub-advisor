@@ -40,8 +40,6 @@ export default {
       // Obtain the default map types from the platform object
       var maptypes = this.platform.createDefaultLayers()
 
-      console.log('AAAA', this.adress)
-
       // GET LAT LONG VALUES
       const url = 'http://dev.virtualearth.net/REST/v1/Locations/DE/'
       const plz = this.adress.plz
@@ -63,7 +61,7 @@ export default {
         'key=' +
         API_KEY_BING
 
-      console.log(finalUrl)
+      //  console.log(finalUrl)
 
       axios.get(finalUrl).then((response) => {
         const latLngValue =
@@ -78,7 +76,7 @@ export default {
 
         addEventListener('resize', () => map.getViewPort().resize())
 
-        console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
+        //  console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
 
         // add UI
         H.ui.UI.createDefault(map, maptypes)

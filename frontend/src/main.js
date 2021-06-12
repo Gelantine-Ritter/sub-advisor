@@ -55,8 +55,8 @@ Vue.use(VueToast, {
 Vue.use(VueGoogleMaps, {
   load: {
     key: process.env.VUE_APP_API_KEY,
-  }
-});
+  },
+})
 
 Vue.config.productionTip = false
 
@@ -121,9 +121,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    console.log(auth.state.token)
     if (auth.state.token !== null) {
-      //  console.log('isAuth')
       next()
       return
     }

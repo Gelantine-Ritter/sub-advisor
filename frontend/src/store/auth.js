@@ -80,22 +80,21 @@ export default {
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
-      const response = await axios.post(
+      await axios.post(
         '/authenticate/registrate/',
         username,
         email,
         password,
         name
       )
-      console.log(response)
     },
 
     // DELETE ACCOUNT
-    async deleteProfile({commit, state}){
-      const response = await axios.delete(
-        '/venues/' + state.user.id, {"headers":{'Authorization': 'Bearer ' + state.token}})
-      console.log(response)
-        commit('SET_TOKEN', null)
+    async deleteProfile({ commit, state }) {
+      await axios.delete('/venues/' + state.user.id, {
+        headers: { Authorization: 'Bearer ' + state.token },
+      })
+      commit('SET_TOKEN', null)
       commit('SET_USER', null)
       commit('SET_ROLE', null)
     },
