@@ -29,19 +29,21 @@ export default {
 
   components: { Navbar, Footer },
   beforeMount() {
-    console.log('APP MOUNTED')
     if (!auth.state.token) {
-      if (localStorage.getItem('token')) {
         console.log('Token before: ', auth.state.token)
         console.log('Reload Token : localStorage TO state')
         store.dispatch('auth/setToken', localStorage.getItem('token'))
         console.log('Token after: ', auth.state.token)
 
+        console.log('Role before: ', auth.state.role)
+        console.log('Reload Role : localStorage TO state')
+        store.dispatch('auth/setRole', localStorage.getItem('role'))
+        console.log('Role after: ', auth.state.role)
+
         console.log('User before: ', auth.state.user)
         console.log('Reload User : localStorage TO state')
-        store.dispatch('auth/setUser', this.sendReq())
+        this.sendReq()
         console.log('User after: ', auth.state.user)
-      }
     }
   },
   methods: {
@@ -52,7 +54,7 @@ export default {
           'Authorization': 'Bearer'+auth.state.token
         }
       })
-      return response
+      await store.dispatch('auth/setUser', response.data)
     }
   }
 }

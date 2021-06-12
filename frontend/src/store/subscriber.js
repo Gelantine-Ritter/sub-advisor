@@ -23,14 +23,12 @@ store.subscribe((mutation) => {
         localStorage.removeItem('userId')
       }
       break
-    /*
-case 'auth/SET_ROLE':
-  if (mutation.payload) {
-    localStorage.setItem('role', mutation.payload)
-  } else {
-    localStorage.removeItem('role')
-  }
-  break
-*/
+    case 'auth/SET_ROLE':
+      if (mutation.payload) {
+        localStorage.setItem('role', mutation.payload)
+      } else {
+        localStorage.removeItem('role')
+      }
+      break
   }
 })

@@ -9,6 +9,7 @@ export default {
   },
   getters: {
     authenticated(state) {
+      console.log('AUTHENTICATED: ', state.token, state.user, state.role);
       return state.token && state.user && state.role
     },
     user(state) {
@@ -93,6 +94,11 @@ export default {
     async setUser({commit, state}, user) {
       if(user) {
         commit('SET_USER', user)
+      }
+    },
+    async setRole({commit, state}, role) {
+      if(role) {
+        commit('SET_ROLE', role)
       }
     },
 

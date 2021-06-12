@@ -109,7 +109,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('URL CHANGE; THIS IS TOKEN', auth.state.token);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (auth.state.token !== null) {
       // console.log('isAuth')
