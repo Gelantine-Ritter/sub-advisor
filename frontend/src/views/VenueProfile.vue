@@ -3,22 +3,39 @@
     <template v-if="user != null">
       <v-container>
         <div class="rounded-xl mycontainer" fluid>
-          <v-card center class="rounded-xl mb-7" :style="styleObject">
+          <v-card center class="rounded-xl d-flex justify-space-between mb-1" flat tile >
+            <v-card class="pa-2 rounded-xl myLogoCard" flat tile :style="styleObject">
             <v-responsive>
-              <v-img
-                class="ma-5 border border-dark"
-                height="250"
+              <v-img 
+                contain
+                class="myLogo"
+                height="150"
                 src="../../public/venue2.png"
                 alt=""
               />
             </v-responsive>
+            </v-card>
+              <v-card class="pa-2" flat tile>
+                <h4>
+                  <v-btn
+                    @click.stop="showDialogPicture = true"
+                    icon
+                    class="ml-5"
+                  >
+                    <v-icon class="text-right" color="black"
+                      >far fa-edit</v-icon
+                    >
+                    <ModalPicture v-model="showDialogPicture" />
+                  </v-btn>
+                </h4>
+              </v-card>
           </v-card>
           <div>
             <v-card class="d-flex justify-space-between mb-1" flat tile>
               <v-card class="pa-2" flat tile>
                 <h4>YOUR ACCOUNT</h4>
                 <p class="font-weight-thin">
-                  Here you can find your private account data.
+                  Here you can edit your private account data.
                 </p>
               </v-card>
               <v-card class="pa-2" flat tile>
@@ -28,7 +45,7 @@
                     icon
                     class="ml-5"
                   >
-                    <v-icon class="text-right" dense color="grey"
+                    <v-icon class="text-right" color="black"
                       >far fa-edit</v-icon
                     >
                     <ModalPrivate v-model="showDialogPrivate" />
@@ -45,14 +62,20 @@
           </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
+              <v-list-item-subtitle> PASSWORD </v-list-item-subtitle>
+              <v-list-item-title type="password"> {{user.password}} </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item two-line>
+            <v-list-item-content>
               <v-list-item-subtitle>MAIL</v-list-item-subtitle>
               <v-list-item-title> {{ user.email }} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-subtitle> PASSWORD </v-list-item-subtitle>
-              <v-list-item-title> {{user.password}} </v-list-item-title>
+              <v-list-item-subtitle> MOBILE </v-list-item-subtitle>
+              <v-list-item-title> {{user.mobile}} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
@@ -61,7 +84,7 @@
               <v-card class="pa-2" flat tile>
                 <h4>YOUR PLACE</h4>
                 <p class="font-weight-thin">
-                  Here you can edit your data for your Place.
+                  Here you can edit the public informations about your Place.
                 </p>
               </v-card>
               <v-card class="pa-2" flat tile>
@@ -71,7 +94,7 @@
                     icon
                     class="ml-5"
                   >
-                    <v-icon class="text-right" dense color="grey"
+                    <v-icon class="text-right" color="black"
                       >far fa-edit</v-icon
                     >
                     <ModalPublic v-model="showDialogPublic" />
@@ -87,7 +110,12 @@
               <v-list-item-title> {{ user.name }} </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-subtitle>WEBSITE</v-list-item-subtitle>
+              <v-list-item-title> {{ user.website }} </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle>DESCRIPTION</v-list-item-subtitle>
@@ -98,14 +126,41 @@
           <v-list-item two-line>
             <v-list-item-content>
               <v-list-item-subtitle>OPENING HOURS</v-list-item-subtitle>
-              <v-list-item-title> MONDAY: {{ user.hours.monday }} </v-list-item-title>
-              <v-list-item-title> TUESDAY: {{ user.hours.tuesday }} </v-list-item-title>
-              <v-list-item-title> WEDNESDAY: {{ user.hours.wednesday }} </v-list-item-title>
-              <v-list-item-title> THURSDAY: {{ user.hours.thursday }} </v-list-item-title>
-              <v-list-item-title> FRIDAY: {{ user.hours.friday }} </v-list-item-title>
-              <v-list-item-title> SATURDAY: {{ user.hours.saturday }} </v-list-item-title>
-              <v-list-item-title> SUNDAY: {{ user.hours.sunday }} </v-list-item-title>
-
+              <v-list-item-title> <v-row>
+                <v-col cols="3">MONDAY:</v-col>
+                <v-col >{{ user.hours.monday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">TUESDAY:</v-col>
+                <v-col >{{ user.hours.tuesday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">WEDNESDAY:</v-col>
+                <v-col >{{ user.hours.wednesday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">THURSDAY:</v-col>
+                <v-col >{{ user.hours.thursday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">FRIDAY:</v-col>
+                <v-col >{{ user.hours.friday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">SATURDAY:</v-col>
+                <v-col >{{ user.hours.saturday }}</v-col>
+              </v-row>
+              </v-list-item-title>
+              <v-list-item-title> <v-row>
+                <v-col cols="3">SUNDAY:</v-col>
+                <v-col >{{ user.hours.sunday }}</v-col>
+              </v-row>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item two-line>
@@ -119,7 +174,7 @@
           <v-divider></v-divider>
 
           <v-row justify="center">
-            <v-btn class="myDeleteButton" color="error" @click.stop="deleteDialog = true">
+            <v-btn class="myDeleteButton" outlined rounded text @click.stop="deleteDialog = true">
               DELETE YOUR ACCOUNT
             </v-btn>
             <v-dialog v-model="deleteDialog" max-width="500">
@@ -134,7 +189,7 @@
                     color="light"
                     @click="deleteDialog = false"
                   >
-                    Let me think again about it...
+                    Let me think about it...
                   </v-btn>
 
                   <v-btn color="error" outlined @click="deleteProfileSubmit">
@@ -161,6 +216,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import ModalPrivate from './DialogAccountUpdate.vue'
 import ModalPublic from './DialogPublicPlaceUpdate.vue'
+import ModalPicture from './DialogPicturePlaceUpdate.vue'
 
 export default {
   data() {
@@ -168,6 +224,7 @@ export default {
       styleObject: { border: '2px solid #cafb03' },
       showDialogPrivate: false,
       showDialogPublic: false,
+      showDialogPicture: false,
       deleteDialog: false,
     }
   },
@@ -179,6 +236,7 @@ export default {
   components: {
     ModalPrivate,
     ModalPublic,
+    ModalPicture
   },
   methods: {
     ...mapActions({
@@ -195,7 +253,7 @@ export default {
 }
 </script>
 
-<style>
+<style >
 .mycontainer {
   border: solid 2px black;
   width: auto;
@@ -206,7 +264,17 @@ export default {
   background: white;
   padding: 3vw;
 }
-.myDeleteButton {
+.myDeleteButton{
   margin: 30px;
 }
+
+.myLogo{
+  object-fit: scale-down;
+}
+.myLogoCard{
+  width: 80%;
+  padding: 2%;
+  margin-bottom: 8%;
+}
 </style>
+

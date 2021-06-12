@@ -8,48 +8,177 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>PLACE</v-list-item-subtitle>
+              <v-col cols="12" sm="6" md="6">
+                <v-list-item-subtitle class="text-h6"
+                  >PLACE</v-list-item-subtitle
+                >
                 <v-text-field type="text" v-model="userData.name">
                   <label> {{ user.name }} </label>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-list-item-subtitle>DESCRIPTION</v-list-item-subtitle>
+                <v-list-item-subtitle class="text-h6"
+                  >WEBSITE</v-list-item-subtitle
+                >
+                <v-text-field type="text" v-model="userData.website">
+                  <label> {{ user.website }} </label>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-list-item-subtitle class="text-h6"
+                  >DESCRIPTION</v-list-item-subtitle
+                >
                 <v-text-field type="text" v-model="userData.info">
                   <label> {{ user.info }} </label>
                 </v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>OPENING HOURS</v-list-item-subtitle>
-                <v-text-field
-                  ><template v-slot:label>
-                    <div>
-                      {{ user.hours }}
-                    </div>
-                  </template></v-text-field
+              <v-col cols="12" sm="7" md="7">
+                <v-list-item-subtitle class="text-h6"
+                  >ADDRESS</v-list-item-subtitle
                 >
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="3">STREET:</v-col>
+                    <v-col cols="9">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.address.street"
+                      >
+                        <label> {{ user.address.street }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="3">NUMBER:</v-col>
+                    <v-col cols="9">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.address.number"
+                      >
+                        <label> {{ user.address.number }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="3">CITY:</v-col>
+                    <v-col cols="9">
+                      <v-text-field type="text" v-model="userData.address.city">
+                        <label> {{ user.address.city }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="3">PLZ:</v-col>
+                    <v-col cols="9">
+                      <v-text-field type="text" v-model="userData.address.plz">
+                        <label> {{ user.address.plz }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>ADDRESS</v-list-item-subtitle>
-
-                <v-text-field
-                  ><template v-slot:label>
-                    <div>
-                      {{ user.address }}
-                    </div>
-                  </template></v-text-field
+              <v-col cols="12" sm="5" md="5">
+                <v-list-item-subtitle class="text-h6"
+                  >OPENING HOURS</v-list-item-subtitle
                 >
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">MONDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field type="text" v-model="userData.hours.monday">
+                        <label> {{ user.hours.monday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">TUESDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.hours.tuesday"
+                      >
+                        <label> {{ user.hours.tuesday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">WEDNESDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.hours.wednesday"
+                      >
+                        <label> {{ user.hours.wednesday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">THURSDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.hours.thursday"
+                      >
+                        <label> {{ user.hours.thursday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">FRIDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field type="text" v-model="userData.hours.friday">
+                        <label> {{ user.hours.friday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">SATURDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.hours.saturday"
+                      >
+                        <label> {{ user.hours.saturday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
+                <v-list-item-title>
+                  <v-row>
+                    <v-col cols="6">SUNDAY:</v-col>
+                    <v-col cols="6">
+                      <v-text-field type="text" v-model="userData.hours.sunday">
+                        <label> {{ user.hours.sunday }} </label>
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-list-item-title>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn elevation="2" outlined rounded text @click="dialog = false">
+          <v-btn elevation="1" outlined rounded text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn elevation="2" outlined rounded text @click="updateSubmit">
+          <v-btn elevation="1" outlined rounded text @click="updateSubmit">
             Save
           </v-btn>
         </v-card-actions>
@@ -65,6 +194,7 @@ export default {
     return {
       userData: {
         password: 'password',
+        // password: '',
         name: '',
         info: '',
         email: '',
@@ -73,7 +203,7 @@ export default {
         website: '',
         address: {},
         pic: '',
-      }
+      },
     }
   },
   props: {
@@ -106,18 +236,28 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateAccountVenue: 'auth/updateAccountVenue',
+      updateVenue: 'auth/updateVenue',
     }),
     updateSubmit() {
-      console.log('in DialogPublicPlaceUpdate.vue: registrateSubmit has been called.')
-      console.log('here are the data that will be sent')
-      console.log(
-        this.userData
-      )
-      this.updateAccountVenue(
-        this.userData
-      )
+      this.updateVenue(this.userData).then(() => {
+        this.$toast.open('Your data has been updated!')
+        this.dialog = false
+      })
     },
   },
 }
 </script>
+
+<style scoped>
+.v-card__subtitle,
+.v-card__text {
+  line-height: 2rem;
+}
+.v-application .text-h6 {
+  margin-bottom: 10px;
+}
+.v-text-field {
+  padding-top: 0;
+  margin-top: 0;
+}
+</style>

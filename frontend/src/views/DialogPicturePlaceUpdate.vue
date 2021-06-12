@@ -3,38 +3,9 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">YOUR ACCOUNT</span>
+          <span class="text-h5">YOUR LOGO</span>
         </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="6">
-                <v-list-item-subtitle class="text-h6">E-MAIL</v-list-item-subtitle>
-
-                <v-text-field type="text" v-model="userData.email">
-                  <label> {{ user.email }} </label>
-                </v-text-field>
-              </v-col>
-              <v-col cols="6" sm="6" md="6">
-                <v-list-item-subtitle class="text-h6">MOBILE</v-list-item-subtitle>
-                <v-text-field type="text" v-model="userData.mobile">
-                  <label> {{ user.mobile }} </label>
-                </v-text-field>
-              </v-col>
-              <v-col cols="12">
-              <v-list-item-subtitle class="text-h6">PASSWORD</v-list-item-subtitle>
-                <v-text-field type="password" v-model="userData.password">
-                  <label> {{ user.password }} </label>
-                </v-text-field>            
-              </v-col>
-              <v-col cols="12">
-                <v-list-item-subtitle class="text-h6">CONFIRM PASSWORD</v-list-item-subtitle>
-                <v-text-field type="password" v-model="confirm_password">
-                </v-text-field> 
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn elevation="1" outlined rounded text @click="dialog = false">
@@ -66,7 +37,6 @@ export default {
         address: {},
         pic: '',
       },
-      confirm_password: '',
     }
   },
   props: {
@@ -112,15 +82,5 @@ export default {
 </script>
 
 <style scoped>
-.v-card__subtitle,
-.v-card__text {
-  line-height: 2rem;
-}
-.v-application .text-h6 {
-  margin-bottom: 10px;
-}
-.v-text-field {
-  padding-top: 0;
-  margin-top: 0;
-}
+
 </style>

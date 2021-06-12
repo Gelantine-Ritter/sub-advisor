@@ -69,7 +69,9 @@ export default {
       }
 
       try {
-        const response = await axios.get('/venues/' + userId, {"headers":{'Authorization': 'Bearer ' + jwt}})
+        const response = await axios.get('/venues/' + userId, {
+          headers: { Authorization: 'Bearer ' + jwt },
+        })
         commit('SET_USER', response.data)
       } catch (e) {
         commit('SET_TOKEN', null)
@@ -91,32 +93,29 @@ export default {
     },
 
     // DELETE ACCOUNT
-    async deleteProfile({commit, state}){
-      const response = await axios.delete(
-        '/venues/' + state.user.id, {"headers":{'Authorization': 'Bearer ' + state.token}})
+    async deleteProfile({ commit, state }) {
+      const response = await axios.delete('/venues/' + state.user.id, {
+        headers: { Authorization: 'Bearer ' + state.token },
+      })
       console.log(response)
-        commit('SET_TOKEN', null)
+      commit('SET_TOKEN', null)
       commit('SET_USER', null)
       commit('SET_ROLE', null)
     },
 
     // UPDATE ACCOUNT
-    async updateAccountVenue({ commit, state }, userData) {
-      console.log('in auth.js/updateAccountVenue. incoming data before sendind them to put/venue/id')
-      console.log(userData)
-      var newData = userData   
-      // const headers = {"Authorization": "Bearer " + state.token, "Content-Type":"application/json"}
-      /* 
-      const requestOptions = {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newData)
-      };
-      const response = await axios.put(
-        '/venues/' + state.user.id, requestOptions )
-       */
+    async updateVenue({ commit, state }, userData) {
+      var newData = userData
       var token = state.token
-      console.log(axios.put('/venues/' + state.user.id, newData, { headers: {"Authorization" : `Bearer ${token}`, "Content-Type": "application/json"}}))
-      const response = await axios.put('/venues/' + state.user.id, newData, { headers: {"Authorization" : `Bearer ${token}`, "Content-Type": "application/json"}})
+      const response = await axios.put('/venues/' + state.user.id, newData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      if (response.status === 200) {
+        commit('SET_USER', newData)
+      }
       console.log(response)
     },
   },
