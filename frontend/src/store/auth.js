@@ -28,6 +28,9 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
+    SET_USER_ID(state, userId){
+
+    }
   },
 
   actions: {
@@ -68,6 +71,11 @@ export default {
         return
       }
 
+      if (userId) {
+        commit('SET_USER_ID', userId)
+      }
+
+
       try {
         const response = await axios.get('/venues/' + userId)
         commit('SET_USER', response.data)
@@ -77,6 +85,17 @@ export default {
         commit('SET_ROLE', null)
       }
     },
+    async setToken({ commit, state}, token) {
+      if (token) {
+        commit('SET_TOKEN', token)
+      }
+    },
+    async setUser({commit, state}, user) {
+      if(user) {
+        commit('SET_USER', user)
+      }
+    },
+
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
