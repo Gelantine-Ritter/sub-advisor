@@ -271,24 +271,17 @@ export default {
         { icon: 'groups', title: 'About' },
       ],
       subEvents: [{ title: 'All Events', route: '/events' }],
-      subEventsLoggedInPlace: [
-        { title: 'Your Events', route: '/events' },
-        { title: 'Create Event', route: '/events' },
-        { title: 'All Events', route: '/events' },
-      ],
+      subEventsLoggedInPlace: [{ title: 'All Events', route: '/events' }],
       subEventsLoggedInMember: [
-        { title: 'Your Calendar', route: '/events' },
         { title: 'All Events', route: '/events' },
         { title: 'Popular Events', route: '/events' },
       ],
       subPlaces: [{ title: 'All Places', route: '/places' }],
       subPlacesLoggedInPlace: [
-        { title: 'Your Place', route: '/places' },
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
       ],
       subPlacesLoggedInMember: [
-        { title: 'Your Places', route: '/places' },
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
       ],
@@ -296,16 +289,15 @@ export default {
         { title: 'Contact 1', route: '/contact' },
         { title: 'Contact 2', route: '/contact' },
       ],
-      subAbout: [
-        { title: 'About 1', route: '/about' },
-        { title: 'myProfile', route: '/myProfile' },
-      ],
+      subAbout: [{ title: 'About 1', route: '/about' }],
       subProfile: [
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
       ],
       subProfileLoggedIn: [
-        { title: 'myProfile', route: '/myProfile' },
+        { title: 'Show Profile', route: '/myProfile' },
+        { title: 'My Events', route: '/events' },
+        { title: 'Create Event', route: '/CreateEvents' },
         { title: 'Logout', action: this.logout },
       ],
     }
