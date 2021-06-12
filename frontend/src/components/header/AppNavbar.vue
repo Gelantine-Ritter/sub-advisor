@@ -232,7 +232,7 @@
             v-for="item in subProfileLoggedIn"
             :key="item.title"
             :to="item.route"
-            @click="logoutSubmit"
+            @click="logoutSubmit(item.action)"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -304,7 +304,10 @@ export default {
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
       ],
-      subProfileLoggedIn: [{ title: 'Logout' }],
+      subProfileLoggedIn: [
+        { title: 'myProfile', route: '/myProfile' },
+        { title: 'Logout', action: this.logout },
+      ],
     }
   },
   computed: {
@@ -318,16 +321,21 @@ export default {
     ...mapActions({
       logout: 'auth/logout',
     }),
-    logoutSubmit() {
-      this.logout()
-        .then(() => {
-          this.$router.replace({
-            name: 'home',
+
+    logoutSubmit(action) {
+      if (action === this.logout) {
+        console.log('Bin in if logout')
+
+        this.logout()
+          .then(() => {
+            this.$router.replace({
+              name: 'home',
+            })
           })
-        })
-        .catch(() => {
-          console.log('failed')
-        })
+          .catch(() => {
+            console.log('failed')
+          })
+      }
     },
   },
 }
