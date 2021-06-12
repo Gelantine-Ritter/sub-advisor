@@ -30,5 +30,10 @@ store.subscribe((mutation) => {
         localStorage.removeItem('role')
       }
       break
+    case 'auth/SET_USER':
+      if(!mutation.payload) {
+        localStorage.removeItem('userId')
+      }
+      break
   }
 })

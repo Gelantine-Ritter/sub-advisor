@@ -261,9 +261,6 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Navbar',
   data() {
-
-    console.log("HIer WIRD NAV gebAUT");
-
     return {
       sideNav: false,
       menuItems: [
