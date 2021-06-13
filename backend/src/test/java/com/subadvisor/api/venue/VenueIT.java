@@ -132,16 +132,16 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/venues/" + VENUE.id())
+                        get("/venues/" + VENUE.getId())
                 )
                 .andExpect(
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
                                 jsonPath("$.id").exists(),
-                                jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.info").value(VENUE.info()),
-                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.name").value(VENUE.getName()),
+                                jsonPath("$.info").value(VENUE.getInfo()),
+                                jsonPath("$.email").value(VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").doesNotExist(),
                                 jsonPath("$.modifiedAt").doesNotExist(),
@@ -161,17 +161,17 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/venues/" + VENUE.id())
+                        get("/venues/" + VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                 )
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.username").value(VENUE.username()),
-                                jsonPath("$.id").value(VENUE.id()),
-                                jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.info").value(VENUE.info()),
-                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.username").value(VENUE.getUsername()),
+                                jsonPath("$.id").value(VENUE.getId()),
+                                jsonPath("$.name").value(VENUE.getName()),
+                                jsonPath("$.info").value(VENUE.getInfo()),
+                                jsonPath("$.email").value(VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
@@ -190,17 +190,17 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/venues/" + OTHER_VENUE.id())
+                        get("/venues/" + OTHER_VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                 )
                 .andExpect(
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
-                                jsonPath("$.id").value(OTHER_VENUE.id()),
-                                jsonPath("$.name").value(OTHER_VENUE.name()),
-                                jsonPath("$.info").value(OTHER_VENUE.info()),
-                                jsonPath("$.email").value(OTHER_VENUE.email()),
+                                jsonPath("$.id").value(OTHER_VENUE.getId()),
+                                jsonPath("$.name").value(OTHER_VENUE.getName()),
+                                jsonPath("$.info").value(OTHER_VENUE.getInfo()),
+                                jsonPath("$.email").value(OTHER_VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").doesNotExist(),
                                 jsonPath("$.modifiedAt").doesNotExist(),
@@ -218,7 +218,7 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        put("/venues/" + VENUE.id())
+                        put("/venues/" + VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
@@ -228,11 +228,11 @@ public class VenueIT extends Driver {
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.username").value(VENUE.username()),
-                                jsonPath("$.id").value(VENUE.id()),
-                                jsonPath("$.name").value(VENUE_UPDATED.name()),
-                                jsonPath("$.info").value(VENUE_UPDATED.info()),
-                                jsonPath("$.email").value(VENUE_UPDATED.email()),
+                                jsonPath("$.username").value(VENUE.getUsername()),
+                                jsonPath("$.id").value(VENUE.getId()),
+                                jsonPath("$.name").value(VENUE_UPDATED.getName()),
+                                jsonPath("$.info").value(VENUE_UPDATED.getInfo()),
+                                jsonPath("$.email").value(VENUE_UPDATED.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
@@ -252,7 +252,7 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        put("/venues/" + OTHER_VENUE.id())
+                        put("/venues/" + OTHER_VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
@@ -264,12 +264,11 @@ public class VenueIT extends Driver {
                         status().is(403)
                 );
 
-        VENUE.id();
 
-        Assertions.assertEquals(OTHER_VENUE.username(), venueRepository
-                .findById(OTHER_VENUE.id())
+        Assertions.assertEquals(OTHER_VENUE.getUsername(), venueRepository
+                .findById(OTHER_VENUE.getId())
                 .get()
-                .username());
+                .getUsername());
     }
 
     @Test
@@ -278,7 +277,7 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        delete("/venues/" + OTHER_VENUE.id())
+                        delete("/venues/" + OTHER_VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                 )
                 .andDo(print())
@@ -286,9 +285,9 @@ public class VenueIT extends Driver {
                         status().is(403)
                 );
 
-        VENUE.id();
+        VENUE.getId();
 
-        Assertions.assertNotNull(venueRepository.findById(OTHER_VENUE.id()));
+        Assertions.assertNotNull(venueRepository.findById(OTHER_VENUE.getId()));
     }
 
     @Test
@@ -297,7 +296,7 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        delete("/venues/" + VENUE.id())
+                        delete("/venues/" + VENUE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                 )
                 .andDo(print())
@@ -306,7 +305,7 @@ public class VenueIT extends Driver {
                 );
 
 
-        Assertions.assertEquals(Optional.empty(), venueRepository.findById(VENUE.id()));
+        Assertions.assertEquals(Optional.empty(), venueRepository.findById(VENUE.getId()));
     }
 
     @Test
@@ -315,7 +314,7 @@ public class VenueIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/venues/" + VENUE.id())
+                        get("/venues/" + VENUE.getId())
                 )
                 .andExpect(
                         status().is(401)

@@ -80,7 +80,12 @@ public class Member implements UserDetails, Serializable, IUserId, IRegistration
     }
 
     @Override
-    public Long userId() {
+    public Long getUserId() {
         return id;
+    }
+
+    @Override
+    public String getROLE() {
+        return ROLE;
     }
 }

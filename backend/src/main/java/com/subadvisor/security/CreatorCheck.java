@@ -27,9 +27,9 @@ public class CreatorCheck {
 
         return event
                 .venue()
-                .id()
+                .getId()
                 .equals(
-                        ((Venue) authentication.getPrincipal()).id()
+                        ((Venue) authentication.getPrincipal()).getId()
                 );
     }
 }

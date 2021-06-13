@@ -20,8 +20,8 @@ public class VenuePublicDto implements IVenueDto {
     private String name;
     private String email;
     private String info;
-    private Map<String, String> hours;
     private String website;
+    private Map<String, String> hours;
     private Map<String, String> address;
     private byte[] pic;
 

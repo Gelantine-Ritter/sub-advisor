@@ -98,7 +98,7 @@ public class EventIT extends Driver {
 
         EVENT_DTO = EventCreateDto.builder()
                 .title(EVENT_TITLE)
-                .venueId(VENUE_CRALLE.id().toString())
+                .venueId(VENUE_CRALLE.getId().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price(EVENT_PRICE)
@@ -108,7 +108,7 @@ public class EventIT extends Driver {
 
         EVENT_DTO_FALSE = EventFalseDto.builder()
                 .title(null)
-                .venueId(VENUE_CRALLE.id().toString())
+                .venueId(VENUE_CRALLE.getId().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price(EVENT_PRICE)
@@ -263,7 +263,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_CRALLE.id().toString())
+                        get("/events/").param("venue", VENUE_CRALLE.getId().toString())
                 )
                 .andExpect(
                         matchAll(
@@ -280,7 +280,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_OTHER.id().toString())
+                        get("/events/").param("venue", VENUE_OTHER.getId().toString())
                 )
                 .andExpect(
                         matchAll(
