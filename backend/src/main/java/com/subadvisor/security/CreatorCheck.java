@@ -26,7 +26,7 @@ public class CreatorCheck {
                 ));
 
         return event
-                .venue()
+                .getVenue()
                 .getId()
                 .equals(
                         ((Venue) authentication.getPrincipal()).getId()
