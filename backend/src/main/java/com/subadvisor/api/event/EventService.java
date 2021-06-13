@@ -21,7 +21,7 @@ public class EventService extends DataAccess implements IEventService {
     DataAccess DATA;
 
     @Autowired
-    CustomMapper mapper;
+    private CustomMapper mapper;
 
     @Override
     public List<Event> getAllEvents() {
@@ -61,12 +61,15 @@ public class EventService extends DataAccess implements IEventService {
     }
 
     @Override
-    public Event updateEventById(EventUpdateDto updateEvent, Long eventId) {
+    public EventDto updateEventById(EventUpdateDto eventUpdateDto, Long eventId) {
         return DATA.events()
                 .findById(eventId)
-                .map(
-                        event -> new EventMapper(DATA).updatingEventEntity(event, updateEvent)
-                )
+                .map(event -> {
+                    mapper.eventUpdateDtoToEvent(eventUpdateDto, event);
+                    return event;
+                })
+                .map(event -> DATA.events().save(event))
+                .map(event ->  mapper.eventToEventDto(event))
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 format("Event with id - %s, not found", eventId)

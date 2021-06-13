@@ -13,6 +13,6 @@ public interface IEventService {
     List<Event> getEventsByVenue(String name);
     Event createEvent(EventCreateDto event);
     EventDto getEventById(Long eventId);
-    Event updateEventById(EventUpdateDto newEvent, Long eventId);
+    EventDto updateEventById(EventUpdateDto newEvent, Long eventId);
     void deleteEventById(Long eventId);
 }
