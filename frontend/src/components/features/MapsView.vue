@@ -61,12 +61,16 @@ export default {
         'key=' +
         API_KEY_BING
 
-      //  console.log(finalUrl)
-
+      // remove auth header for get req to other url
+      delete axios.defaults.headers.common.Authorization
+      
       axios.get(finalUrl).then((response) => {
         const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
+
+        // reset auth header
+        axios.defaults.headers.common.Authorization = 'Baerer '+localStorage.getItem('token')
 
         // Instantiate (and display) a map object:
         var map = new H.Map(mapContainer, maptypes.vector.normal.map, {
@@ -77,9 +81,6 @@ export default {
         addEventListener('resize', () => map.getViewPort().resize())
 
         //  console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
-
-        // add UI
-        H.ui.UI.createDefault(map, maptypes)
 
         var berlinMarker = new H.map.Marker({
           lat: latLngValue[0],

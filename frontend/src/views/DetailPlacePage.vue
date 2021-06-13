@@ -29,13 +29,13 @@
               <v-card class="pa-2" flat tile> {{ venueObj.info }} </v-card>
             </v-col>
             <v-col align="center" class="d-none d-md-block" cols="6" md="4">
-              <v-card class="pa-2" flat tile>
+              <v-card class="pa-2" flat tile v-if="fetchedAdressData">
                 <MapsView :adress="venueObj.adress" />
               </v-card>
             </v-col>
             <!--small screens-->
             <v-col class="d-lg-none" cols="12" md="4">
-              <v-card class="pa-2" flat tile>
+              <v-card class="pa-2" flat tile v-if="fetchedAdressData">
                 <MapsView :adress="venueObj.adress" />
               </v-card>
             </v-col>
@@ -54,15 +54,16 @@ export default {
   data() {
     return {
       styleObject: { border: '2px solid #000000' },
+      fetchedAdressData: false,
       venueObj: {
-        name: 'SampleName',
-        email: 'SampleMail',
-        info: 'SampleInfo',
+        name: null,
+        email: null,
+        info: null,
         adress: {
-          street: 'Prenzlauer Allee',
-          number: '22',
-          plz: '10407',
-          city: 'Berlin',
+          street: null,
+          number: null,
+          plz: null,
+          city: null,
         },
       },
     }
@@ -72,17 +73,17 @@ export default {
     axios.get(`/venues/${param}`).then((response) => {
       this.venueObj.name = response.data.name
       this.venueObj.email = response.data.email
-      // this.venueObj.info = response.data.info
-      this.venueObj.info = this.getLorem()
+      this.venueObj.info = response.data.info
       this.venueObj.adress = response.data.address
+      // once adress is fetched -> render component
+      if (this.venueObj.adress.street && this.venueObj.adress.number && this.venueObj.adress.plz && this.venueObj.adress.city) {
+        this.fetchedAdressData = true
+      } 
     })
   },
   methods: {
     redirectBackwards() {
       history.back()
-    },
-    getLorem() {
-      return 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'
     },
   },
   components: {

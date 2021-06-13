@@ -12,7 +12,7 @@ store.subscribe((mutation) => {
         axios.defaults.headers.common.Authorization = `Baerer ${mutation.payload}`
         localStorage.setItem('token', mutation.payload)
       } else {
-        axios.defaults.headers.common.Authorization = null
+        delete axios.defaults.headers.common.Authorization
         localStorage.removeItem('token')
       }
       break
@@ -31,7 +31,7 @@ store.subscribe((mutation) => {
       }
       break
     case 'auth/SET_USER':
-      if(!mutation.payload) {
+      if (!mutation.payload) {
         localStorage.removeItem('userId')
       }
       break
