@@ -1,4 +1,4 @@
-package com.subadvisor.configuration.audit;
+package com.subadvisor.config.audit;
 
 import org.springframework.data.domain.AuditorAware;
 
