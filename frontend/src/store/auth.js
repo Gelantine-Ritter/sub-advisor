@@ -72,6 +72,7 @@ export default {
         const response = await axios.get('/venues/' + userId, {
           headers: { Authorization: 'Bearer ' + jwt },
         })
+        console.log(response.data)
         commit('SET_USER', response.data)
       } catch (e) {
         commit('SET_TOKEN', null)

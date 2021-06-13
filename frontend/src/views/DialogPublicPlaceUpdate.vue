@@ -38,8 +38,8 @@
                 >
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="3">STREET:</v-col>
-                    <v-col cols="9">
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">STREET:</v-col>
+                    <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field
                         type="text"
                         v-model="userData.address.street"
@@ -51,8 +51,8 @@
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="3">NUMBER:</v-col>
-                    <v-col cols="9">
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">NUMBER:</v-col>
+                    <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field
                         type="text"
                         v-model="userData.address.number"
@@ -64,8 +64,8 @@
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="3">CITY:</v-col>
-                    <v-col cols="9">
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">CITY:</v-col>
+                    <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field type="text" v-model="userData.address.city">
                         <label> {{ user.address.city }} </label>
                       </v-text-field>
@@ -74,8 +74,8 @@
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="3">PLZ:</v-col>
-                    <v-col cols="9">
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">PLZ:</v-col>
+                    <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field type="text" v-model="userData.address.plz">
                         <label> {{ user.address.plz }} </label>
                       </v-text-field>
@@ -203,6 +203,8 @@ export default {
         website: '',
         address: {},
         pic: '',
+        id: '',
+        role: '',
       },
     }
   },
@@ -232,6 +234,8 @@ export default {
     this.userData.website = this.user.website
     this.userData.address = this.user.address
     this.userData.pic = this.user.pic
+    this.userData.id = this.user.id
+    this.userData.role = this.user.role
     // this.userData.password = this.user.password //this.user.password returns undefined
   },
   methods: {
@@ -240,7 +244,7 @@ export default {
     }),
     updateSubmit() {
       this.updateVenue(this.userData).then(() => {
-        this.$toast.open('Your data has been updated!')
+        this.$toast.open('Your data have been updated!')
         this.dialog = false
       })
     },

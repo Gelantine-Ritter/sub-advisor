@@ -15,7 +15,7 @@
                   <label> {{ user.email }} </label>
                 </v-text-field>
               </v-col>
-              <v-col cols="6" sm="6" md="6">
+              <v-col cols="12" sm="6" md="6">
                 <v-list-item-subtitle class="text-h6">MOBILE</v-list-item-subtitle>
                 <v-text-field type="text" v-model="userData.mobile">
                   <label> {{ user.mobile }} </label>
@@ -27,11 +27,13 @@
                   <label> {{ user.password }} </label>
                 </v-text-field>            
               </v-col>
+              <!--
               <v-col cols="12">
                 <v-list-item-subtitle class="text-h6">CONFIRM PASSWORD</v-list-item-subtitle>
                 <v-text-field type="password" v-model="confirm_password">
                 </v-text-field> 
               </v-col>
+              -->
             </v-row>
           </v-container>
         </v-card-text>
@@ -65,6 +67,8 @@ export default {
         website: '',
         address: {},
         pic: '',
+        id: '',
+        role: '',
       },
       confirm_password: '',
     }
@@ -95,6 +99,8 @@ export default {
     this.userData.website = this.user.website
     this.userData.address = this.user.address
     this.userData.pic = this.user.pic
+    this.userData.id = this.user.id
+    this.userData.role = this.user.role
     // this.userData.password = this.user.password //this.user.password returns undefined
   },
   methods: {
@@ -103,7 +109,7 @@ export default {
     }),
     updateSubmit() {
       this.updateVenue(this.userData).then(() => {
-        this.$toast.open('Your data has been updated!')
+        this.$toast.open('Your data have been updated!')
         this.dialog = false
       })
     },
