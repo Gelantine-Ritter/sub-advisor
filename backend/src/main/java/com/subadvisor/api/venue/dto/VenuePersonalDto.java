@@ -1,20 +1,14 @@
 package com.subadvisor.api.venue.dto;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.subadvisor.api.auth.dto.RegistrationResponseDto;
-import com.subadvisor.api.event.Event;
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
