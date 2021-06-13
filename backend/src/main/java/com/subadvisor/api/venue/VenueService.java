@@ -1,21 +1,21 @@
 package com.subadvisor.api.venue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.subadvisor.CustomMapper;
+import com.subadvisor.DataAccess;
 import com.subadvisor.api.auth.dto.VenueRegistrateDto;
 import com.subadvisor.api.venue.dto.IVenueDto;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
+import com.subadvisor.api.venue.dto.VenueUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -24,7 +24,13 @@ import static java.lang.String.format;
 public class VenueService implements UserDetailsService, IVenueService {
 
     @Autowired
+    DataAccess DATA;
+
+    @Autowired
     VenueRepository repository;
+
+    @Autowired
+    private CustomMapper mapper;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -63,7 +69,7 @@ public class VenueService implements UserDetailsService, IVenueService {
                                 objectMapper.convertValue(
                                         venue,
                                         VenuePublicDto.class) :
-                                ((Venue) authentication.getPrincipal()).id() == venueId ?
+                                ((Venue) authentication.getPrincipal()).getId() == venueId ?
                                         objectMapper.convertValue(
                                                 venue,
                                                 VenuePersonalDto.class
@@ -84,30 +90,21 @@ public class VenueService implements UserDetailsService, IVenueService {
     }
 
     @Override
-    public IVenueDto updateVenueById(Venue newVenue, Long venueId) {
+    public VenuePersonalDto updateVenueById(VenueUpdateDto venueUpdateDto, Long venueId) {
 
-        return objectMapper.convertValue(
+        return
                 repository.findById(venueId)
-                        .map(venue ->
-                                repository.save(
-                                        venue
-                                                .password(newVenue.password())
-                                                .name(newVenue.name())
-                                                .email(newVenue.email())
-                                                .info(newVenue.info())
-                                                .hours(newVenue.hours())
-                                                .mobile(newVenue.mobile())
-                                                .website(newVenue.website())
-                                                .address(newVenue.address())
-                                                .pic(newVenue.pic())
+                        .map(venue -> {
+                            mapper.venueUpdateDtoToVenue(venueUpdateDto, venue);
+                            return venue;
+                        })
+                        .map(venue -> repository.save(venue))
+                        .map(venue -> mapper.venueToVenuePersonalDto(venue))
+                        .orElseThrow(
+                                () -> new UsernameNotFoundException(
+                                        format("User with id - %s, not found", venueId)
                                 )
-                        )
-                        .orElseGet(() ->
-                                repository.save(
-                                        newVenue.id(venueId)
-                                )
-                        ),
-                VenuePersonalDto.class);
+                        );
     }
 
     @Override
