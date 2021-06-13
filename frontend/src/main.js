@@ -18,6 +18,7 @@ import axios from 'axios'
 import Router from 'vue-router'
 
 import Events from './views/EventsPage.vue'
+import DetailEvent from './views/DetailEventPage.vue'
 import About from './views/AboutPage.vue'
 import Landing from './views/LandingPage.vue'
 import Contact from './views/ContactPage.vue'
@@ -87,6 +88,11 @@ const router = new Router({
       path: '/events',
       name: 'events',
       component: Events,
+    },
+    {
+      path: '/events/:id',
+      name: 'event',
+      component: DetailEvent,
     },
     {
       path: '/about',
