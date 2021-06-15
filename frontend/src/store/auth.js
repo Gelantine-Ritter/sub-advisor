@@ -143,11 +143,11 @@ export default {
           'Content-Type': 'application/json',
         },
       })
+      console.log("RESPONSE")
+      console.log(response)
       if (response.status === 200) {
         commit('SET_USER', response.data)
       }
-      console.log("RESPONSE")
-      console.log(response)
     },
   },
 }

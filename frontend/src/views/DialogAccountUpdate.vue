@@ -33,18 +33,23 @@
               </v-col>
               <v-col cols="12">
                 <v-list-item-subtitle class="text-h6"
-                  >WANT TO CHANGE YOUR PASSWORD?</v-list-item-subtitle
+                  >NEW PASSWORD</v-list-item-subtitle
                 >
-                <v-text-field type="password" v-model="userData.password" :rules="passwordRules">
+                <v-text-field
+                  type="password"
+                  v-model="userData.password"
+                  :rules="passwordRules"
+                >
                 </v-text-field>
               </v-col>
-              
+
               <v-col cols="12">
-                <v-list-item-subtitle class="text-h6">CONFIRM PASSWORD</v-list-item-subtitle>
+                <v-list-item-subtitle class="text-h6"
+                  >CONFIRM PASSWORD</v-list-item-subtitle
+                >
                 <v-text-field type="password" v-model="confirm_password">
-                </v-text-field> 
+                </v-text-field>
               </v-col>
-             
             </v-row>
           </v-container>
         </v-card-text>
@@ -109,17 +114,19 @@ export default {
       updateVenue: 'auth/updateVenue',
     }),
     updateSubmit() {
-      if (this.userData.password!=null && this.userData.password.length <=8){
+      if (
+        this.userData.password != null &&
+        this.userData.password.length <= 8
+      ) {
         this.$toast.open('Passwords must hast minimum 8 characters!')
         this.dialog = true
-      }
-      else if(this.confirm_password!==this.userData.password){
+      } else if (this.confirm_password !== this.userData.password) {
         this.$toast.open('Passwords do not match!')
         this.dialog = true
       } else {
         this.updateVenue(this.userData).then(() => {
-        this.$toast.open('Your data have been updated!')
-        this.dialog = false
+          this.$toast.open('Your account has been updated!')
+          this.dialog = false
         })
       }
     },

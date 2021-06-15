@@ -226,7 +226,7 @@ export default {
     }),
     updateSubmit() {
       this.updateVenue(this.userData).then(() => {
-        this.$toast.open('Your data have been updated!')
+        this.$toast.open('Your public page has been updated!')
         this.dialog = false
       })
     },

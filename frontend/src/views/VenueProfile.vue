@@ -20,24 +20,14 @@
                   <div class="noPicture"><h1>NO PICTURE</h1></div>
                 </template>
                 <template v-else>
-                  
+  
                   <v-img
-                    contain
+                    fill
                     class="myLogo"
-                    height="150"
-                    src="../../public/venue2.png"
-                    alt=""
-                  />
-                  
-                  <!--
-                  <v-img
-                    contain
-                    class="myLogo"
-                    height="150"
                     :src="picDataUrl()"
                     alt=""
                   />
-                  -->
+                
                 </template>
               </v-responsive>
             </v-card>
@@ -65,7 +55,9 @@
                     icon
                     class="ml-5"
                   >
-                    <v-icon class="text-right myEditButtonSmallScreen" color="black"
+                    <v-icon
+                      class="text-right myEditButtonSmallScreen"
+                      color="black"
                       >far fa-edit</v-icon
                     >
                     <ModalPrivate v-model="showDialogPrivate" />
@@ -139,47 +131,175 @@
 
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-subtitle class="mySubOpeningHours">OPENING HOURS</v-list-item-subtitle>
+              <v-list-item-subtitle class="mySubOpeningHours"
+                >OPENING HOURS</v-list-item-subtitle
+              >
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">MONDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.monday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >MONDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.monday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">TUESDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.tuesday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >TUESDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.tuesday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">WEDNESDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.wednesday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >WEDNESDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.wednesday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">THURSDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.thursday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >THURSDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.thursday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">FRIDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.friday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >FRIDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.friday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">SATURDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.saturday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >SATURDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.saturday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
               <v-list-item-title>
                 <v-row class="myRowInOpeningHours">
-                  <v-col cols="12" xs="12" sm="5" md="3" lg="3" xl="3" class="myDateColInOpeningHours">SUNDAY:</v-col>
-                  <v-col cols="12" xs="12" sm="7" md="9" lg="9" xl="9" class="myHoursColInOpeningHours">{{ user.hours.sunday }}</v-col>
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="5"
+                    md="3"
+                    lg="3"
+                    xl="3"
+                    class="myDateColInOpeningHours"
+                    >SUNDAY:</v-col
+                  >
+                  <v-col
+                    cols="12"
+                    xs="12"
+                    sm="7"
+                    md="9"
+                    lg="9"
+                    xl="9"
+                    class="myHoursColInOpeningHours"
+                    >{{ user.hours.sunday }}</v-col
+                  >
                 </v-row>
               </v-list-item-title>
             </v-list-item-content>
@@ -264,9 +384,6 @@ export default {
     ...mapGetters({
       user: 'auth/user',
     }),
-    picDataUrl() {
-      return this.user.pic
-    },
   },
   components: {
     ModalPrivate,
@@ -277,6 +394,9 @@ export default {
     ...mapActions({
       deleteProfile: 'auth/deleteProfile',
     }),
+    picDataUrl() {
+      return "data:image/png;base64, " + this.user.pic
+    },
     deleteProfileSubmit() {
       this.deleteProfile().then(() => {
         this.$router.replace({
@@ -304,7 +424,7 @@ export default {
 }
 
 .myLogo {
-  object-fit: scale-down;
+  height: 150px;
 }
 .myLogoCard {
   width: 30%;
@@ -322,32 +442,30 @@ export default {
   line-height: 150px;
   color: white;
 }
-.myRowInOpeningHours{
+.myRowInOpeningHours {
   margin-bottom: 5px;
 }
-.mySubOpeningHours{
-    margin-bottom: 20px !important;
+.mySubOpeningHours {
+  margin-bottom: 20px !important;
 }
-@media screen and (max-width: 600px){
-  .myDateColInOpeningHours{
+@media screen and (max-width: 600px) {
+  .myDateColInOpeningHours {
     padding-bottom: 0;
   }
-  .myHoursColInOpeningHours{
+  .myHoursColInOpeningHours {
     padding-top: 0;
   }
 
   .noPicture {
-  height: 100px;
-  background: black;
-  line-height: 100px;
+    height: 100px;
+    background: black;
+    line-height: 100px;
   }
   .noPicture h1 {
-  font-size: 70%;
-  text-align: center;
-  line-height: 100px;
-  color: white;
-}
-  
-  
+    font-size: 70%;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+  }
 }
 </style>

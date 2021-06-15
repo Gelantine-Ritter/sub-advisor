@@ -77,24 +77,22 @@ export default {
       console.log('PIC')
       console.log(this.userData.pic)
       this.updateVenue(this.userData).then(() => {
-        this.$toast.open('Your data have been updated!')
+        this.$toast.open('Your picture has been updated!')
         this.dialog = false
       })
     },
     async handleUploadSubmit() {
       try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(
-          this.file
-        )
-        fileContentsBytes = this.base64ToArrayBuffer(fileContentsBase64)
-        this.userData.pic = fileContentsBytes
+        const fileContentsBase64 = await this.readUploadedFileAsBase64(this.file)
+        this.userData.pic = fileContentsBase64.substr(fileContentsBase64.indexOf(',') + 1);
         console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
         console.log(this.userData.pic)
       } catch (e) {
         console.warn(e.message)
       }
     },
-    base64ToArrayBuffer(base64) {
+    /* 
+    _base64ToArrayBuffer(base64) {
       var binary_string = window.atob(base64)
       var len = binary_string.length
       var bytes = new Uint8Array(len)
@@ -103,6 +101,7 @@ export default {
       }
       return bytes.buffer
     },
+     */
     readUploadedFileAsBase64(inputFile) {
       const temporaryFileReader = new FileReader()
       return new Promise((resolve, reject) => {
