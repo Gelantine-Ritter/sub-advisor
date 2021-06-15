@@ -8,32 +8,43 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="6">
-                <v-list-item-subtitle class="text-h6">E-MAIL</v-list-item-subtitle>
+              <v-col cols="12">
+                <v-list-item-subtitle class="text-h6"
+                  >USERNAME</v-list-item-subtitle
+                >
 
-                <v-text-field type="text" v-model="userData.email">
-                  <label> {{ user.email }} </label>
+                <v-text-field type="text" v-model="userData.username">
                 </v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
-                <v-list-item-subtitle class="text-h6">MOBILE</v-list-item-subtitle>
+                <v-list-item-subtitle class="text-h6"
+                  >E-MAIL</v-list-item-subtitle
+                >
+
+                <v-text-field type="text" v-model="userData.email">
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-list-item-subtitle class="text-h6"
+                  >MOBILE</v-list-item-subtitle
+                >
                 <v-text-field type="text" v-model="userData.mobile">
-                  <label> {{ user.mobile }} </label>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-              <v-list-item-subtitle class="text-h6">PASSWORD</v-list-item-subtitle>
-                <v-text-field type="password" v-model="userData.password">
-                  <label> {{ user.password }} </label>
-                </v-text-field>            
+                <v-list-item-subtitle class="text-h6"
+                  >WANT TO CHANGE YOUR PASSWORD?</v-list-item-subtitle
+                >
+                <v-text-field type="password" v-model="userData.password" :rules="passwordRules">
+                </v-text-field>
               </v-col>
-              <!--
+              
               <v-col cols="12">
                 <v-list-item-subtitle class="text-h6">CONFIRM PASSWORD</v-list-item-subtitle>
                 <v-text-field type="password" v-model="confirm_password">
                 </v-text-field> 
               </v-col>
-              -->
+             
             </v-row>
           </v-container>
         </v-card-text>
@@ -57,20 +68,16 @@ export default {
   data() {
     return {
       userData: {
-        password: 'password',
-        // password: '',
-        name: '',
-        info: '',
-        email: '',
-        mobile: '',
-        hours: {},
-        website: '',
-        address: {},
-        pic: '',
-        id: '',
-        role: '',
+        username: null,
+        password: null,
+        email: null,
+        mobile: null,
       },
-      confirm_password: '',
+      confirm_password: null,
+      passwordRules: [
+        (v) => !v || v.length >= 8 || 'Min 8 characters',
+        // (v) => (v && !!v.trim()) || 'Seriously? just a blank password?',
+      ],
     }
   },
   props: {
@@ -90,28 +97,31 @@ export default {
       },
     },
   },
+
   mounted: function () {
-    this.userData.name = this.user.name
-    this.userData.info = this.user.info
+    this.userData.username = this.user.username
     this.userData.email = this.user.email
     this.userData.mobile = this.user.mobile
-    this.userData.hours = this.user.hours
-    this.userData.website = this.user.website
-    this.userData.address = this.user.address
-    this.userData.pic = this.user.pic
-    this.userData.id = this.user.id
-    this.userData.role = this.user.role
-    // this.userData.password = this.user.password //this.user.password returns undefined
   },
+
   methods: {
     ...mapActions({
       updateVenue: 'auth/updateVenue',
     }),
     updateSubmit() {
-      this.updateVenue(this.userData).then(() => {
+      if (this.userData.password!=null && this.userData.password.length <=8){
+        this.$toast.open('Passwords must hast minimum 8 characters!')
+        this.dialog = true
+      }
+      else if(this.confirm_password!==this.userData.password){
+        this.$toast.open('Passwords do not match!')
+        this.dialog = true
+      } else {
+        this.updateVenue(this.userData).then(() => {
         this.$toast.open('Your data have been updated!')
         this.dialog = false
-      })
+        })
+      }
     },
   },
 }

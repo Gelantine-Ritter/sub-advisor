@@ -12,9 +12,6 @@
             prepend-icon="mdi-camera"
             v-model="file"
           ></v-file-input>
-          <!-- <v-text-field >
-            <label> {{ user.pic }} </label>
-          </v-text-field> -->
           <v-btn
             large
             block
@@ -46,21 +43,10 @@ export default {
   data() {
     return {
       userData: {
-        password: 'password',
-        // password: '',
-        name: '',
-        info: '',
-        email: '',
-        mobile: '',
-        hours: {},
-        website: '',
-        address: {},
-        pic: '',
-        id: '',
-        role: '',
+        password: null,
+        pic: null,
       },
       file: [],
-      pic64: '',
     }
   },
   props: {
@@ -81,17 +67,7 @@ export default {
     },
   },
   mounted: function () {
-    this.userData.name = this.user.name
-    this.userData.info = this.user.info
-    this.userData.email = this.user.email
-    this.userData.mobile = this.user.mobile
-    this.userData.hours = this.user.hours
-    this.userData.website = this.user.website
-    this.userData.address = this.user.address
     this.userData.pic = this.user.pic
-    this.userData.id = this.user.id
-    this.userData.role = this.user.role
-    // this.userData.password = this.user.password //this.user.password returns undefined
   },
   methods: {
     ...mapActions({
@@ -105,21 +81,29 @@ export default {
         this.dialog = false
       })
     },
-    handleUploadSubmit() {
-      var userDataCopy = this.userData
-      console.log(this.file)
-      console.log(this.file.name)
-      var reader = new FileReader()
-      // reader.readAsBinaryString(this.file)
-      reader.readAsDataURL(this.file) // AS BASE64
-      reader.onload = function () {
-        console.log(reader.result)
-        console.log('userdatacopy before adding the picture to the object')
-        console.log(userDataCopy)
-        userDataCopy.pic = reader.result
-        console.log('userDataCopy.pic')
-        console.log(userDataCopy.pic)
+    async handleUploadSubmit() {
+      try {
+        const fileContents = await this.readUploadedFileAsBase64(this.file)
+        this.userData.pic = fileContents
+        // this.userData.pic = fileContents.substr(fileContents.indexOf(',') + 1);
+        console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
+        console.log(this.userData.pic)
+      } catch (e) {
+        console.warn(e.message)
       }
+    },
+    readUploadedFileAsBase64(inputFile) {
+      const temporaryFileReader = new FileReader()
+      return new Promise((resolve, reject) => {
+        temporaryFileReader.onerror = () => {
+          temporaryFileReader.abort()
+          reject(new DOMException('Problem parsing input file.'))
+        }
+        temporaryFileReader.onload = () => {
+          resolve(temporaryFileReader.result)
+        }
+        temporaryFileReader.readAsDataURL(inputFile)
+      })
     },
   },
 }

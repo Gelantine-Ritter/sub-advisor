@@ -130,6 +130,13 @@ export default {
     async updateVenue({ commit, state }, userData) {
       var newData = userData
       var token = state.token
+      console.log("REQUEST")
+      console.log(axios.put('/venues/' + state.user.id, newData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }))
       const response = await axios.put('/venues/' + state.user.id, newData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -137,8 +144,9 @@ export default {
         },
       })
       if (response.status === 200) {
-        commit('SET_USER', newData)
+        commit('SET_USER', response.data)
       }
+      console.log("RESPONSE")
       console.log(response)
     },
   },

@@ -82,14 +82,6 @@
           </v-list-item>
           <v-list-item two-line>
             <v-list-item-content>
-              <v-list-item-subtitle> PASSWORD </v-list-item-subtitle>
-              <v-list-item-title type="password">
-                {{ user.password }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item two-line>
-            <v-list-item-content>
               <v-list-item-subtitle>MAIL</v-list-item-subtitle>
               <v-list-item-title> {{ user.email }} </v-list-item-title>
             </v-list-item-content>
@@ -273,13 +265,8 @@ export default {
       user: 'auth/user',
     }),
     picDataUrl() {
-      /*
-        return 'data:image/jpeg;base64,' + btoa(
-            new Uint8Array(this.user.pic)
-            .reduce((data, byte) => data + String.fromCharCode(byte), '')
-        ); */
-      // WITH BASE64
-      return "data:image/png;base64, " + this.user.pic
+      return this.user.pic
+      // return "data:image/png;base64, " + this.user.pic
     },
   },
   components: {

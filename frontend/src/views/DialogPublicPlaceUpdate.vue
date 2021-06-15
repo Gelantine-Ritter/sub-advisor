@@ -13,7 +13,6 @@
                   >PLACE</v-list-item-subtitle
                 >
                 <v-text-field type="text" v-model="userData.name">
-                  <label> {{ user.name }} </label>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
@@ -21,7 +20,6 @@
                   >WEBSITE</v-list-item-subtitle
                 >
                 <v-text-field type="text" v-model="userData.website">
-                  <label> {{ user.website }} </label>
                 </v-text-field>
               </v-col>
               <v-col cols="12">
@@ -29,7 +27,6 @@
                   >DESCRIPTION</v-list-item-subtitle
                 >
                 <v-text-field type="text" v-model="userData.info">
-                  <label> {{ user.info }} </label>
                 </v-text-field>
               </v-col>
               <v-col cols="12" sm="7" md="7">
@@ -38,46 +35,50 @@
                 >
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">STREET:</v-col>
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3"
+                      >STREET:</v-col
+                    >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field
                         type="text"
                         v-model="userData.address.street"
                       >
-                        <label> {{ user.address.street }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">NUMBER:</v-col>
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3"
+                      >NUMBER:</v-col
+                    >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field
                         type="text"
                         v-model="userData.address.number"
                       >
-                        <label> {{ user.address.number }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">CITY:</v-col>
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3"
+                      >CITY:</v-col
+                    >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field type="text" v-model="userData.address.city">
-                        <label> {{ user.address.city }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
                 </v-list-item-title>
                 <v-list-item-title>
                   <v-row>
-                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3">PLZ:</v-col>
+                    <v-col cols="12" xs="4" sm="3" md="3" lg="3" xl="3"
+                      >PLZ:</v-col
+                    >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
                       <v-text-field type="text" v-model="userData.address.plz">
-                        <label> {{ user.address.plz }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -92,7 +93,6 @@
                     <v-col cols="6">MONDAY:</v-col>
                     <v-col cols="6">
                       <v-text-field type="text" v-model="userData.hours.monday">
-                        <label> {{ user.hours.monday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -105,7 +105,6 @@
                         type="text"
                         v-model="userData.hours.tuesday"
                       >
-                        <label> {{ user.hours.tuesday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -118,7 +117,6 @@
                         type="text"
                         v-model="userData.hours.wednesday"
                       >
-                        <label> {{ user.hours.wednesday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -131,7 +129,6 @@
                         type="text"
                         v-model="userData.hours.thursday"
                       >
-                        <label> {{ user.hours.thursday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -141,7 +138,6 @@
                     <v-col cols="6">FRIDAY:</v-col>
                     <v-col cols="6">
                       <v-text-field type="text" v-model="userData.hours.friday">
-                        <label> {{ user.hours.friday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -154,7 +150,6 @@
                         type="text"
                         v-model="userData.hours.saturday"
                       >
-                        <label> {{ user.hours.saturday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -164,7 +159,6 @@
                     <v-col cols="6">SUNDAY:</v-col>
                     <v-col cols="6">
                       <v-text-field type="text" v-model="userData.hours.sunday">
-                        <label> {{ user.hours.sunday }} </label>
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -193,18 +187,12 @@ export default {
   data() {
     return {
       userData: {
-        password: 'password',
-        // password: '',
-        name: '',
-        info: '',
-        email: '',
-        mobile: '',
+        password: null,
+        name: null,
+        info: null,
         hours: {},
-        website: '',
+        website: null,
         address: {},
-        pic: '',
-        id: '',
-        role: '',
       },
     }
   },
@@ -228,15 +216,9 @@ export default {
   mounted: function () {
     this.userData.name = this.user.name
     this.userData.info = this.user.info
-    this.userData.email = this.user.email
-    this.userData.mobile = this.user.mobile
     this.userData.hours = this.user.hours
     this.userData.website = this.user.website
     this.userData.address = this.user.address
-    this.userData.pic = this.user.pic
-    this.userData.id = this.user.id
-    this.userData.role = this.user.role
-    // this.userData.password = this.user.password //this.user.password returns undefined
   },
   methods: {
     ...mapActions({
