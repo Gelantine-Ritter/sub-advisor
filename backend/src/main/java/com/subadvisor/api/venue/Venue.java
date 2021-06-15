@@ -15,6 +15,7 @@ import lombok.experimental.Accessors;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -77,6 +78,7 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     private String ROLE = "VENUE";
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] pic;
 
     @JsonIgnore
