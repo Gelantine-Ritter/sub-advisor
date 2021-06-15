@@ -64,19 +64,13 @@ public class VenueService implements UserDetailsService, IVenueService {
     public IVenueDto getVenueById(Authentication authentication, Long venueId) {
 
         return repository.findById(venueId)
-                .map(venue ->
-                        authentication == null ?
-                                objectMapper.convertValue(
-                                        venue,
-                                        VenuePublicDto.class) :
-                                ((Venue) authentication.getPrincipal()).getId() == venueId ?
-                                        objectMapper.convertValue(
-                                                venue,
-                                                VenuePersonalDto.class
-                                        ) : objectMapper.convertValue(
-                                        venue,
-                                        VenuePublicDto.class)
-
+                .map(venue -> {
+                            if (((Venue) authentication.getPrincipal()).getId() == venueId) {
+                                return mapper.venueToVenuePersonalDto(venue);
+                            } else {
+                                return mapper.venueToVenuePublicDto(venue);
+                            }
+                        }
                 ).orElseThrow(
                         () -> new UsernameNotFoundException(
                                 format("Venue with it - %s, not found", venueId)
