@@ -1,24 +1,29 @@
 <template>
-  <v-container class="head_container">
-    <v-card
-      class="ml-10 rounded-xl md-layout md-gutter md-alignment-center main_card"
-    >
+  <v-container>
+    <v-container>
       <a @click="redirectBackwards" class="lastPage">&lt;&lt;</a>
       <h1 class="h1Style text-center display-3 font-weight-medium">
         {{ eventObj.title }}
       </h1>
-      <p>{{eventObj.info}}</p>
-      <p>{{eventObj.eventStart}}</p>
-      <p>{{eventObj.eventEnd}}</p>
-      <h3>Preis</h3>
-      <p>{{eventObj.price}}</p>
-      <p>{{eventObj.pic}}</p>
-      <h3>Künstler</h3>
-      <ul id="my-list">
-        <li v-for="artist in eventObj.artists" v-bind:key="artist">
-          {{artist}}
-        </li>
-      </ul>
+    </v-container>
+
+    <v-card
+      center
+      class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
+      :style="styleObject"
+    >
+      <v-row>
+        <v-col v-if="venueLoaded">
+          {{ eventObj.eventStart }}
+          {{ venueObj.name }}
+          {{ venueObj.adress }}
+        </v-col>
+        <v-col>{{ eventObj.price }}</v-col>
+      </v-row>
+      <v-row>
+        <v-col>{{ eventObj.info }}</v-col>
+        <v-col>{{ eventObj.pic }}</v-col>
+      </v-row>
     </v-card>
   </v-container>
 </template>
@@ -39,6 +44,14 @@ export default {
         pic: null,
         price: null,
       },
+      venueObj: {
+        name: null,
+        adress: null,
+        website:null
+      },
+
+      venueLoaded:false
+
     }
   },
   created() {
@@ -48,13 +61,22 @@ export default {
       this.eventObj.id = response.data.id
       this.eventObj.title = response.data.title
       this.eventObj.artists = response.data.artists
+      this.eventObj.venueId = response.data.venueId
       this.eventObj.eventStart = response.data.eventStart
       this.eventObj.eventEnd = response.data.eventEnd
       this.eventObj.info = response.data.info
-      this.eventObj.modifiedAt  = response.data.modifiedAt
-      this.eventObj.pic  = response.data.pic
-      this.eventObj.price  = response.data.price
-      
+      this.eventObj.modifiedAt = response.data.modifiedAt
+      this.eventObj.pic = response.data.pic
+      this.eventObj.price = response.data.price
+
+    })
+  },
+  mounted(){
+    axios.get(`/venues/${this.eventObj.venueId}`).then((response) => {
+      this.venueObj.name = response.data.name
+      this.venueObj.adress = response.data.adress
+      this.venueObj.website = response.data.website
+      this.venueLoaded = true
     })
   },
   methods: {
@@ -66,7 +88,13 @@ export default {
 </script>
 
 <style>
-.main_card {
+.main-card {
   border: '2px solid #000000';
+}
+.bg-color-1 {
+  background-color: grey;
+}
+.bg-color-2 {
+  background-color: lightblue;
 }
 </style>
