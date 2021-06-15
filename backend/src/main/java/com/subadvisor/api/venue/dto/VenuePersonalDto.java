@@ -1,31 +1,19 @@
 package com.subadvisor.api.venue.dto;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.subadvisor.api.auth.dto.RegistrationResponseDto;
-import com.subadvisor.api.event.Event;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Set;
 
 @Data
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Accessors(fluent = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class VenuePersonalDto implements IVenueDto, RegistrationResponseDto {
 
     private String id;
@@ -34,8 +22,8 @@ public class VenuePersonalDto implements IVenueDto, RegistrationResponseDto {
     private String email;
     private String info;
     private String mobile;
-    private Map<String, String> hours;
     private String website;
+    private Map<String, String> hours;
     private Map<String, String> address;
     private byte[] pic;
     private String ROLE;

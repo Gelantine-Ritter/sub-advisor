@@ -1,25 +1,24 @@
 package com.subadvisor.api.venue.dto;
 
-import com.subadvisor.api.event.Event;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import lombok.experimental.Accessors;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class VenuePublicDto implements IVenueDto {
+public class VenueUpdateDto {
 
-    private String id;
+    private String username;
+    private String password;
     private String name;
     private String email;
     private String info;
+    private String mobile;
     private String website;
     private Map<String, String> hours;
     private Map<String, String> address;

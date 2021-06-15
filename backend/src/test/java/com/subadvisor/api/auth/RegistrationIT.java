@@ -94,7 +94,7 @@ public class RegistrationIT extends Driver {
                 .getResponse();
 
         // Store ID of the Venue to use in later tests
-        ID_VENUE = DRIVER.venueRepository().findByName(NAME_VENUE).id();
+        ID_VENUE = DRIVER.venueRepository().findByName(NAME_VENUE).getId();
     }
 
     @Test

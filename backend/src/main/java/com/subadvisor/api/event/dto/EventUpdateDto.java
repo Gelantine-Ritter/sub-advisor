@@ -6,13 +6,11 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import javax.validation.constraints.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Accessors(fluent = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EventUpdateDto {
 
     @NotNull(message = "Please provide a title")

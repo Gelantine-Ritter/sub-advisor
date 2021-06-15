@@ -98,7 +98,7 @@ public class EventIT extends Driver {
 
         EVENT_DTO = EventCreateDto.builder()
                 .title(EVENT_TITLE)
-                .venueId(VENUE_CRALLE.id().toString())
+                .venueId(VENUE_CRALLE.getId().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price(EVENT_PRICE)
@@ -108,7 +108,7 @@ public class EventIT extends Driver {
 
         EVENT_DTO_FALSE = EventFalseDto.builder()
                 .title(null)
-                .venueId(VENUE_CRALLE.id().toString())
+                .venueId(VENUE_CRALLE.getId().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price(EVENT_PRICE)
@@ -237,7 +237,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/" + EVENT_CRALLE.id())
+                        get("/events/" + EVENT_CRALLE.getId())
                 )
                 .andDo(print())
                 .andExpect(
@@ -263,14 +263,14 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_CRALLE.id().toString())
+                        get("/events/").param("venue", VENUE_CRALLE.getId().toString())
                 )
                 .andExpect(
                         matchAll(
                                 matchAll(
                                         jsonPath("$").isArray(),
                                         jsonPath("$", hasSize(1)),
-                                        jsonPath("$[0].title", is(EVENT_CRALLE.title()))
+                                        jsonPath("$[0].title", is(EVENT_CRALLE.getTitle()))
                                 )
                         )
                 )
@@ -280,14 +280,14 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_OTHER.id().toString())
+                        get("/events/").param("venue", VENUE_OTHER.getId().toString())
                 )
                 .andExpect(
                         matchAll(
                                 matchAll(
                                         jsonPath("$").isArray(),
                                         jsonPath("$", hasSize(1)),
-                                        jsonPath("$[0].title", is(EVENT_OTHER.title()))
+                                        jsonPath("$[0].title", is(EVENT_OTHER.getTitle()))
                                 )
                         )
                 )
@@ -322,8 +322,8 @@ public class EventIT extends Driver {
                                 status().isOk(),
                                 jsonPath("$").isArray(),
                                 jsonPath("$", hasSize(3)),
-                                jsonPath("$[1].title", is(EVENT_OTHER.title())),
-                                jsonPath("$[2].title", is(EVENT_CRALLE.title()))
+                                jsonPath("$[1].title", is(EVENT_OTHER.getTitle())),
+                                jsonPath("$[2].title", is(EVENT_CRALLE.getTitle()))
 
                         )
                 )
@@ -337,7 +337,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        put("/events/" + EVENT_CRALLE.id())
+                        put("/events/" + EVENT_CRALLE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
@@ -350,7 +350,7 @@ public class EventIT extends Driver {
                                 jsonPath("$.title").value(EVENT_TITLE),
                                 jsonPath("$.info").value(EVENT_INFO),
                                 jsonPath("$.artists").exists(),
-                                jsonPath("$.price").value(Double.parseDouble(EVENT_UPDATE.price())),
+                                jsonPath("$.price").value(Double.parseDouble(EVENT_UPDATE.getPrice())),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
                                 jsonPath("$.eventStart").value(EVENT_START),
@@ -368,7 +368,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        put("/events/" + EVENT_CRALLE.id())
+                        put("/events/" + EVENT_CRALLE.getId())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
                                         EVENT_UPDATE
@@ -387,7 +387,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        put("/events/" + EVENT_CRALLE.id())
+                        put("/events/" + EVENT_CRALLE.getId())
                                 .header("authorization", "Bearer " + TOKEN_OTHER_VENUE)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(
@@ -408,7 +408,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        delete("/events/" + EVENT_CRALLE.id())
+                        delete("/events/" + EVENT_CRALLE.getId())
                                 .header("authorization", "Bearer " + TOKEN_OTHER_VENUE)
                 )
                 .andExpect(
@@ -417,7 +417,7 @@ public class EventIT extends Driver {
                 .andReturn()
                 .getResponse();
 
-        Assertions.assertNotNull(eventRepository.findById(EVENT_CRALLE.id()));
+        Assertions.assertNotNull(eventRepository.findById(EVENT_CRALLE.getId()));
     }
 
     @Test
@@ -426,13 +426,13 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        delete("/events/" + EVENT_CRALLE.id())
+                        delete("/events/" + EVENT_CRALLE.getId())
                                 .header("authorization", "Bearer " + TOKEN_VENUE)
                 )
                 .andDo(print())
                 .andReturn()
                 .getResponse();
 
-        Assertions.assertEquals(Optional.empty(), eventRepository.findById(EVENT_CRALLE.id()));
+        Assertions.assertEquals(Optional.empty(), eventRepository.findById(EVENT_CRALLE.getId()));
     }
 }

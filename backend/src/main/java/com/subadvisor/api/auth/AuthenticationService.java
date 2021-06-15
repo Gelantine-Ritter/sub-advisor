@@ -49,8 +49,8 @@ public class AuthenticationService {
                 .map(
                         account -> new AuthenticationResponse(
                                 jwtTokenUtil.generateToken(authReq.getUsername()),
-                                ((IUserId) account).userId().toString(),
-                                ((IUserId) account).ROLE()
+                                ((IUserId) account).getUserId().toString(),
+                                ((IUserId) account).getROLE()
                         )
                 );
     }

@@ -1,4 +1,4 @@
-package com.subadvisor.config;
+package com.subadvisor.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
