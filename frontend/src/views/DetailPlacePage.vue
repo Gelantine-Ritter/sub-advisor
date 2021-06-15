@@ -34,7 +34,7 @@
               </v-card>
             </v-col>
             <!--small screens-->
-            <v-col class="d-lg-none" cols="12" md="4">
+            <v-col class="d-venueObjlg-none" cols="12" md="4">
               <v-card class="pa-2" flat tile v-if="fetchedAdressData">
                 <MapsView :adress="venueObj.adress" />
               </v-card>
