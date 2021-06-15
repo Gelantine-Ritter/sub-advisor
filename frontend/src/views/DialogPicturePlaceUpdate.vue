@@ -12,13 +12,13 @@
             prepend-icon="mdi-camera"
             v-model="file"
           ></v-file-input>
+          <v-text-field class="d-none" v-model="userData.pic"></v-text-field>
           <v-btn
             large
             block
             outlined
             elevation="1"
             class="rounded-pill myEnterBtn text-center"
-            v-model="userData.pic"
             @click="handleUploadSubmit"
             >UPLOAD</v-btn
           >
@@ -83,14 +83,25 @@ export default {
     },
     async handleUploadSubmit() {
       try {
-        const fileContents = await this.readUploadedFileAsBase64(this.file)
-        this.userData.pic = fileContents
-        // this.userData.pic = fileContents.substr(fileContents.indexOf(',') + 1);
+        const fileContentsBase64 = await this.readUploadedFileAsBase64(
+          this.file
+        )
+        fileContentsBytes = this.base64ToArrayBuffer(fileContentsBase64)
+        this.userData.pic = fileContentsBytes
         console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
         console.log(this.userData.pic)
       } catch (e) {
         console.warn(e.message)
       }
+    },
+    base64ToArrayBuffer(base64) {
+      var binary_string = window.atob(base64)
+      var len = binary_string.length
+      var bytes = new Uint8Array(len)
+      for (var i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i)
+      }
+      return bytes.buffer
     },
     readUploadedFileAsBase64(inputFile) {
       const temporaryFileReader = new FileReader()

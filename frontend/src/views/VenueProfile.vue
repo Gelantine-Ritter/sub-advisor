@@ -266,7 +266,6 @@ export default {
     }),
     picDataUrl() {
       return this.user.pic
-      // return "data:image/png;base64, " + this.user.pic
     },
   },
   components: {
