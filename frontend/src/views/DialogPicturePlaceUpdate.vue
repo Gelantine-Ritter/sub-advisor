@@ -5,22 +5,23 @@
         <v-card-title>
           <span class="text-h5">YOUR LOGO</span>
         </v-card-title>
-        <div class="rounded-xl mycontainer" fluid>
-          <h1>FILE UPLOAD</h1>
+        <div class="rounded-xl mycontainer2" fluid>
+          <h1 class="h12">FILE UPLOAD</h1>
           <v-file-input
             label="File input"
             prepend-icon="mdi-camera"
             v-model="file"
           ></v-file-input>
-          <v-text-field v-model="userData.pic">
+          <!-- <v-text-field >
             <label> {{ user.pic }} </label>
-          </v-text-field>
+          </v-text-field> -->
           <v-btn
             large
             block
             outlined
             elevation="1"
             class="rounded-pill myEnterBtn text-center"
+            v-model="userData.pic"
             @click="handleUploadSubmit"
             >UPLOAD</v-btn
           >
@@ -109,8 +110,8 @@ export default {
       console.log(this.file)
       console.log(this.file.name)
       var reader = new FileReader()
-      reader.readAsBinaryString(this.file)
-      // reader.readAsDataURL(this.file) // AS BASE64
+      // reader.readAsBinaryString(this.file)
+      reader.readAsDataURL(this.file) // AS BASE64
       reader.onload = function () {
         console.log(reader.result)
         console.log('userdatacopy before adding the picture to the object')
@@ -125,18 +126,18 @@ export default {
 </script>
 
 <style scoped>
-.mycontainer {
+.mycontainer2 {
   border: solid 2px black;
   width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
+  margin-top: 5%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 5%;
   background: white;
-  padding: 5vw;
+  padding: 5%;
 }
-h1 {
-  font-size: 5.5vw;
+.h12 {
+  font-size: 4vw;
   color: black;
   text-align: center;
 }
