@@ -65,7 +65,7 @@ public class VenueService implements UserDetailsService, IVenueService {
 
         return repository.findById(venueId)
                 .map(venue -> {
-                            if (((Venue) authentication.getPrincipal()).getId() == venueId) {
+                            if ( authentication != null && ((Venue) authentication.getPrincipal()).getId() == venueId) {
                                 return mapper.venueToVenuePersonalDto(venue);
                             } else {
                                 return mapper.venueToVenuePublicDto(venue);
