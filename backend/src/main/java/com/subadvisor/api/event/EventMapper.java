@@ -38,15 +38,4 @@ public class EventMapper {
                 .eventEnd(LocalDateTime.parse(dto.eventEnd()))
                 .build();
     }
-
-    public Event updatingEventEntity(Event event, EventUpdateDto dto) {
-
-        return event
-                .title(dto.title())
-                .info(dto.info())
-                .artists(Set.of(dto.artists()))
-                .price(Double.parseDouble(dto.price()))
-                .eventStart(LocalDateTime.parse(dto.eventStart()))
-                .eventEnd(LocalDateTime.parse(dto.eventEnd()));
-    }
 }

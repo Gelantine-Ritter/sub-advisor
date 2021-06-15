@@ -26,7 +26,6 @@ import java.util.Set;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@Accessors(fluent = true, chain = true)
 @Table(name = "event")
 public class Event implements Serializable {
 

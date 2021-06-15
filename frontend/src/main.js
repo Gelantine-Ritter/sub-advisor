@@ -3,16 +3,19 @@ import 'mutationobserver-shim'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import 'bootstrap-css-only/css/bootstrap.min.css'
 import 'mdbvue/lib/css/mdb.min.css'
-import Vue from 'vue'
 import './plugins/bootstrap-vue'
-
-import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VueCompositionAPI from '@vue/composition-api'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-import Router from 'vue-router'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+import Vue from 'vue'
+import App from './App.vue'
+
 import axios from 'axios'
+
+import Router from 'vue-router'
 
 import Events from './views/EventsPage.vue'
 import About from './views/AboutPage.vue'
@@ -40,11 +43,19 @@ Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
 
+// Display Toast
 Vue.use(VueToast, {
   type: 'default',
   position: 'top',
   dismissible: true,
   duration: 2000,
+})
+
+// Maps Integration
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: process.env.VUE_APP_API_KEY,
+  },
 })
 
 Vue.config.productionTip = false
@@ -110,9 +121,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    console.log(auth.state.token)
     if (auth.state.token !== null) {
-      //  console.log('isAuth')
       next()
       return
     }

@@ -1,6 +1,9 @@
 package com.subadvisor.api.venue;
 
 
+import com.subadvisor.api.venue.dto.VenuePersonalDto;
+import com.subadvisor.api.venue.dto.VenuePublicDto;
+import com.subadvisor.api.venue.dto.VenueUpdateDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +22,7 @@ public class VenueController {
     VenueService venueService;
 
     @GetMapping("/venues")
-    public ResponseEntity<?> getAllVenues() {
+    public ResponseEntity<List<VenuePublicDto>> getAllVenues() {
         return new ResponseEntity<>(
                 venueService.getAllVenues(),
                 HttpStatus.OK
@@ -28,7 +31,7 @@ public class VenueController {
 
     @GetMapping("/venues/{id}")
     public ResponseEntity<?>  getVenueById(@PathVariable(value = "id") Long venueId,
-                                           Authentication authentication) {
+                                                                           Authentication authentication) {
         return new ResponseEntity<>(
                 venueService.getVenueById(authentication, venueId),
                 HttpStatus.OK
@@ -37,9 +40,9 @@ public class VenueController {
 
     @PutMapping("/venues/{id}")
     @PreAuthorize("authentication.principal.id == #id || hasRole('ADMIN')")
-    public ResponseEntity<?> updateVenueById(@RequestBody Venue newVenue, @PathVariable Long id) {
+    public ResponseEntity<VenuePersonalDto> updateVenueById(@RequestBody VenueUpdateDto venueUpdateDto, @PathVariable Long id) {
         return new ResponseEntity<>(
-                venueService.updateVenueById(newVenue, id),
+                venueService.updateVenueById(venueUpdateDto, id),
                 HttpStatus.OK
         );
     }

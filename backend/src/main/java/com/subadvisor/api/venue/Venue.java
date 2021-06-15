@@ -22,29 +22,30 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@Accessors(fluent = true, chain = true)
 @Table(name = "venue")
 public class Venue implements UserDetails, Serializable, IUserId, IRegistrationRequestDto, IVenueDto {
 
     @Id
     @GeneratedValue
     private Long id;
-    @NonNull
+    @NotNull
     @Column(unique = true)
     private String username;
-    @NonNull
+    @NotNull
     private String password;
 
     @CreatedDate
@@ -58,10 +59,8 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime modifiedAt;
 
-    @NonNull
-    @Getter
+    @NotNull
     private String name;
-    @Getter
     @Column(unique = true)
     private String email;
     private String info;
@@ -73,7 +72,7 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @ElementCollection
     private Map<String, String> address;
 
-    @NonNull
+    @NotNull
     @Builder.Default
     private String ROLE = "VENUE";
 
@@ -124,7 +123,7 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     }
 
     @Override
-    public Long userId() {
+    public Long getUserId() {
         return this.id;
     }
 }

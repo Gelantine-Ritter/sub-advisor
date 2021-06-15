@@ -26,10 +26,10 @@ public class CreatorCheck {
                 ));
 
         return event
-                .venue()
-                .id()
+                .getVenue()
+                .getId()
                 .equals(
-                        ((Venue) authentication.getPrincipal()).id()
+                        ((Venue) authentication.getPrincipal()).getId()
                 );
     }
 }

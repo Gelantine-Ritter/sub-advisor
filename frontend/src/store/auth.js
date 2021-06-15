@@ -28,6 +28,9 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
+    SET_USER_ID(state, userId){
+
+    }
   },
 
   actions: {
@@ -68,6 +71,11 @@ export default {
         return
       }
 
+      if (userId) {
+        commit('SET_USER_ID', userId)
+      }
+
+
       try {
         const response = await axios.get('/venues/' + userId, {
           headers: { Authorization: 'Bearer ' + jwt },
@@ -80,25 +88,39 @@ export default {
         commit('SET_ROLE', null)
       }
     },
+    async setToken({ commit, state}, token) {
+      if (token) {
+        commit('SET_TOKEN', token)
+      }
+    },
+    async setUser({commit, state}, user) {
+      if(user) {
+        commit('SET_USER', user)
+      }
+    },
+    async setRole({commit, state}, role) {
+      if(role) {
+        commit('SET_ROLE', role)
+      }
+    },
+
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
-      const response = await axios.post(
+      await axios.post(
         '/authenticate/registrate/',
         username,
         email,
         password,
         name
       )
-      console.log(response)
     },
 
     // DELETE ACCOUNT
     async deleteProfile({ commit, state }) {
-      const response = await axios.delete('/venues/' + state.user.id, {
+      await axios.delete('/venues/' + state.user.id, {
         headers: { Authorization: 'Bearer ' + state.token },
       })
-      console.log(response)
       commit('SET_TOKEN', null)
       commit('SET_USER', null)
       commit('SET_ROLE', null)

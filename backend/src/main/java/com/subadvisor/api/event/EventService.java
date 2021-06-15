@@ -1,7 +1,9 @@
 package com.subadvisor.api.event;
 
+import com.subadvisor.CustomMapper;
 import com.subadvisor.DataAccess;
 import com.subadvisor.api.event.dto.EventCreateDto;
+import com.subadvisor.api.event.dto.EventDto;
 import com.subadvisor.api.event.dto.EventUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class EventService extends DataAccess implements IEventService {
 
     @Autowired
     DataAccess DATA;
+
+    @Autowired
+    private CustomMapper mapper;
 
     @Override
     public List<Event> getAllEvents() {
@@ -44,9 +49,10 @@ public class EventService extends DataAccess implements IEventService {
     }
 
     @Override
-    public Event getEventById(Long eventId) {
+    public EventDto getEventById(Long eventId) {
         return DATA.events()
                 .findById(eventId)
+                .map(event -> mapper.eventToEventDto(event))
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 format("Event with id - %s, not found", eventId)
@@ -55,12 +61,15 @@ public class EventService extends DataAccess implements IEventService {
     }
 
     @Override
-    public Event updateEventById(EventUpdateDto updateEvent, Long eventId) {
+    public EventDto updateEventById(EventUpdateDto eventUpdateDto, Long eventId) {
         return DATA.events()
                 .findById(eventId)
-                .map(
-                        event -> new EventMapper(DATA).updatingEventEntity(event, updateEvent)
-                )
+                .map(event -> {
+                    mapper.eventUpdateDtoToEvent(eventUpdateDto, event);
+                    return event;
+                })
+                .map(event -> DATA.events().save(event))
+                .map(event ->  mapper.eventToEventDto(event))
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 format("Event with id - %s, not found", eventId)

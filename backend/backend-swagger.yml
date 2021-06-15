@@ -149,7 +149,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Event"
+                  $ref: "#/components/schemas/EventDto"
         400:
           description: "Bad Request"
         404:
@@ -173,7 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Event"
+                $ref: "#/components/schemas/EventDto"
         400:
           description: "Bad Request"
         404:
@@ -258,6 +258,12 @@ components:
     VenueUpdateDto:
       type: object
       properties:
+        username:
+          type: string
+          example: "myclub"
+        password:
+          type: string
+          example: "new secret password"
         name:
           type: string
           example: "The Club"
@@ -296,26 +302,8 @@ components:
             plz: "12053"
         pic:
           type: string
-          format: byte
+          format: base64
           example: 10101101110101010101010
-    Venue:
-      type: object
-      properties:
-        venueId:
-          type: string
-          example: 2
-        username:
-          type: string
-          example: "club_profile22"
-        email:
-          type: string
-          example: "foto-bande-nk@gmail.com"
-        name:
-          type: string
-          example: "Fotobande Neukölln"
-        info:
-          type: string
-          example: "Fotobande Neukölln ist eine Gruppe vom Personen..."
     VenuePublicDto:
       type: object
       properties:
@@ -411,7 +399,7 @@ components:
         role:
           type: string
           example: "VENUE"
-    Event:
+    EventDto:
       type: object
       properties:
         id:
@@ -435,6 +423,10 @@ components:
         price:
           type: string
           example: "10.00"
+        pic:
+          type: string
+          format: base64
+          example: 10101101110101010101010
         event_start:
           type: string
           example: "2021-09-04T20:00:00"
@@ -443,10 +435,14 @@ components:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
-        pic:
+        created:
           type: string
-          format: byte
-          example: 10101101110101010101010
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        modified_at:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
     EventCreateDto:
       type: object
       required:
