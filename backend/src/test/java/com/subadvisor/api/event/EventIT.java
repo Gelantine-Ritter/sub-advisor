@@ -22,10 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.hamcrest.Matchers.*;
 
 /**
@@ -321,10 +318,9 @@ public class EventIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$").isArray(),
-                                jsonPath("$", hasSize(3)),
-                                jsonPath("$[1].title", is(EVENT_OTHER.getTitle())),
-                                jsonPath("$[2].title", is(EVENT_CRALLE.getTitle()))
-
+                                jsonPath("$", hasSize(4)),
+                                jsonPath("$[2].title", is(EVENT_OTHER.getTitle())),
+                                jsonPath("$[3].title", is(EVENT_CRALLE.getTitle()))
                         )
                 )
                 .andReturn()
