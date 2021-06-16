@@ -25,7 +25,7 @@ public class VenuePersonalDto implements IVenueDto, RegistrationResponseDto {
     private String website;
     private Map<String, String> hours;
     private Map<String, String> address;
-    private byte[] pic;
+    private String pic;
     private String ROLE;
 
 
