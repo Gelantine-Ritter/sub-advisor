@@ -424,22 +424,23 @@ export default {
 }
 
 .myLogo {
-  height: 150px;
+  height: 100%;
 }
 .myLogoCard {
   width: 30%;
+  height: 30%;
   padding: 2%;
   margin-bottom: 8%;
 }
 .noPicture {
-  height: 150px;
+  height: 100%;
   background: black;
-  line-height: 150px;
+  line-height: 100%;
 }
 .noPicture h1 {
   font-size: 70%;
   text-align: center;
-  line-height: 150px;
+  line-height: 100%;
   color: white;
 }
 .myRowInOpeningHours {
@@ -458,6 +459,7 @@ export default {
 
   .noPicture {
     height: 100px;
+    width: 100px;
     background: black;
     line-height: 100px;
   }
