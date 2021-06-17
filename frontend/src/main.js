@@ -24,10 +24,11 @@ import Landing from './views/LandingPage.vue'
 import Contact from './views/ContactPage.vue'
 import Places from './views/PlacesPage.vue'
 import DetailPlace from './views/DetailPlacePage.vue'
-import Profile from './views/ProfilePage.vue'
 import Login from './views/LoginPage.vue'
 import Signup from './views/SignupPage.vue'
 import VenueProfile from './views/VenueProfile.vue'
+import VenueCreateEvent from './views/VenueCreateEvent.vue'
+
 import store from './store'
 import auth from './store/auth'
 import VueToast from 'vue-toast-notification'
@@ -64,11 +65,6 @@ Vue.config.productionTip = false
 const router = new Router({
   mode: 'history',
   routes: [
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile,
-    },
     {
       path: '/contact',
       name: 'contact',
@@ -118,6 +114,14 @@ const router = new Router({
       path: '/myProfile',
       name: 'myProfile',
       component: VenueProfile,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/createEvents',
+      name: 'createEvent',
+      component: VenueCreateEvent,
       meta: {
         requiresAuth: true,
       },

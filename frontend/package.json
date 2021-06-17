@@ -20,11 +20,17 @@
         "node-open-geocoder": "^4.0.1",
         "react-geocode": "^0.2.3",
         "simple-progress-webpack-plugin": "^2.0.0",
+        "vee-validate": "^4.4.5",
         "vue": "^2.6.11",
+<<<<<<< HEAD
         "vue-grid-responsive": "^0.2.2",
+=======
+        "vue-date-pick": "^1.4.1",
+>>>>>>> master
         "vue-router": "^3.5.1",
         "vue-toast-notification": "^0.6.2",
         "vue2-google-maps": "^0.10.7",
+        "vuelidate": "^0.7.6",
         "vuetify": "^2.4.0"
     },
     "devDependencies": {
