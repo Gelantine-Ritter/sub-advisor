@@ -18,30 +18,38 @@
               <v-row>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="eventData.title"
+                    v-model="title"
                     :counter="20"
                     :error-messages="titleErrors"
                     label="TITLE"
-                    @input="$v.eventData.title.$touch()"
-                    @blur="$v.eventData.title.$touch()"
+                    @input="$v.title.$touch()"
+                    @blur="$v.title.$touch()"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="eventData.artists"
+                    v-model="artists"
                     label="ARTISTS"
-                    @input="$v.eventData.artists.$touch()"
-                    @blur="$v.eventData.artists.$touch()"
+                    @input="$v.artists.$touch()"
+                    @blur="$v.artists.$touch()"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-text-field
+                    v-model="price"
+                    label="PRICE"
+                    @input="$v.price.$touch()"
+                    @blur="$v.price.$touch()"
                   ></v-text-field>
                 </v-col>
 
                 <v-col cols="12">
                   <v-textarea
-                    v-model="eventData.info"
+                    v-model="info"
                     :counter="500"
                     :error-messages="infoErrors"
-                    @input="$v.eventData.info.$touch()"
-                    @blur="$v.eventData.info.$touch()"
+                    @input="$v.info.$touch()"
+                    @blur="$v.info.$touch()"
                   >
                     <template v-slot:label>
                       <div>DESCRIPTION</div>
@@ -200,16 +208,15 @@
 import { mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import axios from 'axios'
 
 export default {
   mixins: [validationMixin],
   validations: {
-    eventData: {
-      title: { required, maxLength: maxLength(20) },
-      info: { required, maxLength: maxLength(500) },
-      artists: { required },
-    },
-
+    title: { required, maxLength: maxLength(20) },
+    info: { required, maxLength: maxLength(500) },
+    artists: { required },
+    price: { required },
     fromDateVal: { required },
     toDateVal: { required },
     fromTimeVal: { required },
@@ -223,27 +230,23 @@ export default {
   },
   data() {
     return {
-      eventData: {
-        title: '',
-        artists: [],
-        info: '',
-      },
+      //  textfields
+      title: '',
+      artists: [],
+      info: '',
+      price: '',
       //  date
       fromDateMenu: false,
       fromDateVal: null,
       toDateMenu: false,
       toDateVal: null,
-
       //  Time
       fromTimeVal: null,
       fromTimeMenu: false,
       toTimeVal: null,
       toTimeMenu: false,
 
-      //  textfields
-
       checkbox: false,
-
       styleObject: { border: '2px solid #cafb03' },
     }
   },
@@ -265,19 +268,18 @@ export default {
     },
     titleErrors() {
       const errors = []
-      if (!this.$v.eventData.title.$dirty) return errors
-      !this.$v.eventData.title.maxLength &&
+      if (!this.$v.title.$dirty) return errors
+      !this.$v.title.maxLength &&
         errors.push('Title must be at most 20 characters long')
-      !this.$v.eventData.title.required && errors.push('Title is required.')
+      !this.$v.title.required && errors.push('Title is required.')
       return errors
     },
     infoErrors() {
       const errors = []
-      if (!this.$v.eventData.info.$dirty) return errors
-      !this.$v.eventData.info.maxLength &&
+      if (!this.$v.info.$dirty) return errors
+      !this.$v.info.maxLength &&
         errors.push('Description must be at most 500 characters long')
-      !this.$v.eventData.info.required &&
-        errors.push('Description is required.')
+      !this.$v.info.required && errors.push('Description is required.')
       return errors
     },
     requiredErrors() {
@@ -292,37 +294,41 @@ export default {
   methods: {
     submit() {
       this.$v.$touch()
-      const eventstart = this.fromDateVal + 'T' + this.fromTimeVal + ':00'
-      const eventend = this.toDateVal + 'T' + this.toTimeVal + ':00'
+      //  const eventstart = this.fromDateVal + 'T' + this.fromTimeVal + ':00'
+      //  const eventend = this.toDateVal + 'T' + this.toTimeVal + ':00'
       //    const userID = this.user.id
       //    console.log(this.user.id)
-      console.log(this.eventData)
-      console.log('------------------------------------')
 
-      console.log(eventstart)
-      console.log(eventend)
+      //  console.log('------------------------------------')
+      //  console.log(eventstart)
+      //  console.log(eventend)
 
-      console.log(this.title)
-      console.log(this.artists)
-      console.log(this.info)
-      console.log(this.fromDateVal)
-      console.log(this.toDateVal)
-      console.log(this.fromTimeVal)
-      console.log(this.toTimeVal)
-
-      //    axios.post(`/events/`).then((response) => {
-      //       this.venueObj.name = response.data.name
-      //      this.venueObj.email = response.data.email
-      //       // this.venueObj.info = response.data.info
-      //       this.venueObj.info = this.getLorem()
-      //       this.venueObj.adress = response.data.address
-      //    })
+      axios
+        .post('/events', {
+          venue_id: this.user.id,
+          title: this.title,
+          info: this.info,
+          artists: this.artists,
+          price: this.price,
+          event_start: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+          event_end: this.toDateVal + 'T' + this.toTimeVal + ':00',
+          //  pic
+        })
+        .then((response) => {
+          console.log(response.data)
+        })
+        .catch((e) => {
+          this.e.push(e)
+        })
     },
+
     clear() {
       this.$v.$reset()
-      this.eventData.title = ''
-      this.eventData.artists = ''
-      this.eventData.info = null
+      this.title = ''
+      this.artists = ''
+      this.price = ''
+
+      this.info = null
       this.fromDateVal = null
       this.toDateVal = null
       this.fromTimeVal = null
