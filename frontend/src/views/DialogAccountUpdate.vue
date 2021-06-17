@@ -124,9 +124,13 @@ export default {
         this.$toast.open('Passwords do not match!')
         this.dialog = true
       } else {
-        this.updateVenue(this.userData).then(() => {
+        this.updateVenue(this.userData)
+        .then(() => {
           this.$toast.open('Your account has been updated!')
           this.dialog = false
+        })
+        .catch((e) => {
+          console.log(e)
         })
       }
     },

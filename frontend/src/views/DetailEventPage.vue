@@ -12,18 +12,37 @@
       class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
+    <!-- EVENT PICTURE START -->
+    <v-card
+              class="pa-2 rounded-xl myPictureCard"
+              flat
+              tile
+              
+            >
+              <v-responsive>
+                <template v-if="this.eventObj.pic == null || this.eventObj.pic == ''">
+                  <div class="noPicture"><h1>NO PICTURE</h1></div>
+                </template>
+                <template v-else>
+                  <v-img fill class="myPicture" :src="picDataUrl()" alt="" />
+                </template>
+              </v-responsive>
+            </v-card>
+    <!-- EVENT PICTURE END -->
     <!-- EDIT EVENT BUTTON START -->
-      <template v-if="user.id == eventObj.venueId">
+      <template v-if="user!= null && user.id == eventObj.venueId">
         <v-card class="pa-2" flat tile>
           <h4>
             <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
               <v-icon class="text-right myEditButtonSmallScreen" color="black"
                 >far fa-edit</v-icon
               >
-              <ModalEditEvent v-model="showDialogEditEvent" />
+              <ModalEditEvent v-model="showDialogEditEvent"/>
             </v-btn>
           </h4>
         </v-card>
+      </template>
+      <template v-else>
       </template>
     <!-- EDIT EVENT BUTTON END -->
       <row container gutter="{12}">
@@ -46,10 +65,10 @@
           </column>
           {{ venueObj.website }}
         </column>
-        <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.pic }} </column>
+        <!-- <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.pic }} </column> -->
       </row>
       <!-- DELETE EVENT BUTTON START -->
-    <template v-if="user.id == eventObj.venueId">
+    <template v-if="user!= null && user.id == eventObj.venueId">
       <v-row justify="center">
         <v-btn
           class="myDeleteButton"
@@ -77,6 +96,8 @@
           </v-card>
         </v-dialog>
       </v-row>
+    </template>
+    <template v-else>
     </template>
     <!-- DELETE EVENT BUTTON END -->
     </v-card>
@@ -175,6 +196,9 @@ export default {
         })
       })
     },
+    picDataUrl() {
+      return 'data:image/png;base64, ' + this.eventObj.pic
+    },
   },
 }
 </script>
@@ -207,5 +231,42 @@ export default {
 .lastPage:hover {
   color: #cafb03;
   text-decoration: none;
+}
+.myDeleteButton {
+  margin: 30px;
+}
+
+.myPicture {
+  height: 100%;
+}
+.myPictureCard {
+  padding: 2%;
+  margin-bottom: 8%;
+}
+.noPicture {
+  height: 100%;
+  background: black;
+  line-height: 100%;
+}
+.noPicture h1 {
+  font-size: 70%;
+  text-align: center;
+  line-height: 100%;
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .noPicture {
+    height: 100px;
+    width: 100px;
+    background: black;
+    line-height: 100px;
+  }
+  .noPicture h1 {
+    font-size: 70%;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+  }
 }
 </style>
