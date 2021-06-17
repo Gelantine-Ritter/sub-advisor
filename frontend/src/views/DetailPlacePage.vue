@@ -76,9 +76,14 @@ export default {
       this.venueObj.info = response.data.info
       this.venueObj.adress = response.data.address
       // once adress is fetched -> render component
-      if (this.venueObj.adress.street && this.venueObj.adress.number && this.venueObj.adress.plz && this.venueObj.adress.city) {
+      if (
+        this.venueObj.adress.street &&
+        this.venueObj.adress.number &&
+        this.venueObj.adress.plz &&
+        this.venueObj.adress.city
+      ) {
         this.fetchedAdressData = true
-      } 
+      }
     })
   },
   methods: {

@@ -6,11 +6,26 @@
         {{ eventObj.title }}
       </h1>
     </v-container>
+    
     <v-card
       center
       class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
+    <!-- EDIT EVENT BUTTON START -->
+      <template v-if="user.id == eventObj.venueId">
+        <v-card class="pa-2" flat tile>
+          <h4>
+            <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
+              <v-icon class="text-right myEditButtonSmallScreen" color="black"
+                >far fa-edit</v-icon
+              >
+              <ModalEditEvent v-model="showDialogEditEvent" />
+            </v-btn>
+          </h4>
+        </v-card>
+      </template>
+    <!-- EDIT EVENT BUTTON END -->
       <row container gutter="{12}">
         <column xs="{12}" md="{4}" lg="{3}" v-if="venueLoaded">
           <h2>{{ venueObj.name }}</h2>
@@ -33,15 +48,47 @@
         </column>
         <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.pic }} </column>
       </row>
+      <!-- DELETE EVENT BUTTON START -->
+    <template v-if="user.id == eventObj.venueId">
+      <v-row justify="center">
+        <v-btn
+          class="myDeleteButton"
+          outlined
+          rounded
+          text
+          @click.stop="deleteDialog = true"
+        >
+          DELETE THIS EVENT
+        </v-btn>
+        <v-dialog v-model="deleteDialog" max-width="500">
+          <v-card>
+            <v-card-title class="text-h4 justify-center">
+              Are you really sure you want to delete your account?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn elevation="0" color="light" @click="deleteDialog = false">
+                Let me think about it...
+              </v-btn>
+              <v-btn color="error" outlined @click="deleteEventSubmit">
+                Yes
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
+    <!-- DELETE EVENT BUTTON END -->
     </v-card>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
-
+import { mapGetters, mapActions } from 'vuex'
 import Vue from 'vue'
 import { Row, Column } from 'vue-grid-responsive'
+import ModalEditEvent from './DialogEditEvent.vue'
 
 Vue.component('row', Row)
 Vue.component('column', Column)
@@ -72,6 +119,8 @@ export default {
       },
 
       venueLoaded: false,
+      showDialogEditEvent: false,
+      deleteDialog: false,
 
       styleObject: { border: '2px solid #000000' },
     }
@@ -104,9 +153,27 @@ export default {
       })
     })
   },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
+  components: {
+    ModalEditEvent,
+  },
   methods: {
     redirectBackwards() {
       history.back()
+    },
+    ...mapActions({
+      deleteEvent: 'auth/deleteEvent',
+    }),
+    deleteEventSubmit() {
+      this.deleteEvent(this.eventObj.id).then(() => {
+        this.$router.replace({
+          name: 'home',
+        })
+      })
     },
   },
 }

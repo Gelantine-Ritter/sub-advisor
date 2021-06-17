@@ -83,8 +83,12 @@ export default {
     },
     async handleUploadSubmit() {
       try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(this.file)
-        this.userData.pic = fileContentsBase64.substr(fileContentsBase64.indexOf(',') + 1);
+        const fileContentsBase64 = await this.readUploadedFileAsBase64(
+          this.file
+        )
+        this.userData.pic = fileContentsBase64.substr(
+          fileContentsBase64.indexOf(',') + 1
+        )
         console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
         console.log(this.userData.pic)
       } catch (e) {

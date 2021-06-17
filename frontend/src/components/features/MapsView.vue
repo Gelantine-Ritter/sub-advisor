@@ -63,14 +63,15 @@ export default {
 
       // remove auth header for get req to other url
       delete axios.defaults.headers.common.Authorization
-      
+
       axios.get(finalUrl).then((response) => {
         const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
 
         // reset auth header
-        axios.defaults.headers.common.Authorization = 'Baerer '+localStorage.getItem('token')
+        axios.defaults.headers.common.Authorization =
+          'Baerer ' + localStorage.getItem('token')
 
         // Instantiate (and display) a map object:
         var map = new H.Map(mapContainer, maptypes.vector.normal.map, {
