@@ -180,17 +180,6 @@
                   </v-menu>
                 </v-col>
                 <!-- TIMEPICKER END -->
-
-                <v-col cols="12">
-                  <v-checkbox
-                    v-model="checkbox"
-                    :error-messages="checkboxErrors"
-                    label="ARE YOU SURE?"
-                    required
-                    @change="$v.checkbox.$touch()"
-                    @blur="$v.checkbox.$touch()"
-                  ></v-checkbox>
-                </v-col>
               </v-row>
             </v-container>
             <v-card-actions>
@@ -224,12 +213,6 @@ export default {
     toDateVal: { required },
     fromTimeVal: { required },
     toTimeVal: { required },
-
-    checkbox: {
-      checked(val) {
-        return val
-      },
-    },
   },
   data() {
     return {
@@ -263,12 +246,7 @@ export default {
     toDateDisp() {
       return this.toDateVal
     },
-    checkboxErrors() {
-      const errors = []
-      if (!this.$v.checkbox.$dirty) return errors
-      !this.$v.checkbox.checked && errors.push('You must agree to continue!')
-      return errors
-    },
+
     titleErrors() {
       const errors = []
       if (!this.$v.title.$dirty) return errors
@@ -325,6 +303,8 @@ export default {
         )
         .then((response) => {
           console.log(response.data)
+          this.clear()
+          this.$toast.open('YEAAAH Event created!')
         })
         .catch((e) => {
           console.log(e)
