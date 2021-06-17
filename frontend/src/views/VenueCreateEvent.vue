@@ -209,6 +209,7 @@ import { mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
+import auth from './../store/auth'
 
 export default {
   mixins: [validationMixin],
@@ -292,33 +293,50 @@ export default {
     },
   },
   methods: {
+    convertArtistToArray(artists) {
+      if (typeof artists === 'string') {
+        const artistsArr = artists.split(',')
+        //    map: trim jeden Artist aus Array
+        const artistsArr1 = artistsArr.map((artist) => {
+          return artist.trim()
+        })
+        console.log('TEST2', artistsArr1)
+        return artistsArr1
+      }
+    },
     submit() {
       this.$v.$touch()
+
       //  const eventstart = this.fromDateVal + 'T' + this.fromTimeVal + ':00'
       //  const eventend = this.toDateVal + 'T' + this.toTimeVal + ':00'
-      //    const userID = this.user.id
-      //    console.log(this.user.id)
+      console.log('-----------------------------')
+      const userID = this.user.id
+      console.log(userID)
+      console.log('-----------------------------')
 
-      //  console.log('------------------------------------')
       //  console.log(eventstart)
       //  console.log(eventend)
-
       axios
-        .post('/events', {
-          venue_id: this.user.id,
-          title: this.title,
-          info: this.info,
-          artists: this.artists,
-          price: this.price,
-          event_start: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-          event_end: this.toDateVal + 'T' + this.toTimeVal + ':00',
-          //  pic
-        })
+        .post(
+          '/events/',
+          {
+            venueId: this.user.id,
+            title: this.title,
+            info: this.info,
+            artists: this.convertArtistToArray(this.artists),
+            price: this.price,
+            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+            pic: null,
+          },
+          { headers: { Authorization: 'Bearer ' + auth.state.token } }
+        )
         .then((response) => {
           console.log(response.data)
         })
         .catch((e) => {
-          this.e.push(e)
+          //  this.e.push(e)
+          console.log(e)
         })
     },
 
@@ -327,7 +345,6 @@ export default {
       this.title = ''
       this.artists = ''
       this.price = ''
-
       this.info = null
       this.fromDateVal = null
       this.toDateVal = null
