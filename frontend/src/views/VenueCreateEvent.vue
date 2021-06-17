@@ -3,16 +3,6 @@
     <template v-if="user != null">
       <v-container>
         <div class="rounded-xl mycontainer" fluid>
-          <v-card center class="rounded-xl mb-7" :style="styleObject">
-            <v-responsive>
-              <v-img
-                class="ma-5 border border-dark"
-                height="250"
-                src="../../public/venue2.png"
-                alt=""
-              />
-            </v-responsive>
-          </v-card>
           <v-form>
             <v-container fluid>
               <v-row>
@@ -41,6 +31,17 @@
                     @input="$v.price.$touch()"
                     @blur="$v.price.$touch()"
                   ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-card flat>
+                    <div class="rounded-xl mycontainer2" fluid>
+                      <v-file-input
+                        label="UPLOAD PICTURE"
+                        prepend-icon="mdi-camera"
+                      ></v-file-input>
+                      <v-text-field class="d-none"></v-text-field>
+                    </div>
+                  </v-card>
                 </v-col>
 
                 <v-col cols="12">
@@ -183,10 +184,16 @@
               </v-row>
             </v-container>
             <v-card-actions>
-              <v-btn class="mr-4" @click="submit" :disabled="$v.$invalid">
+              <v-btn
+                outlined
+                rounded
+                class="mr-4"
+                @click="submit"
+                :disabled="$v.$invalid"
+              >
                 submit
               </v-btn>
-              <v-btn @click="clear"> clear </v-btn>
+              <v-btn outlined rounded @click="clear"> clear </v-btn>
             </v-card-actions>
           </v-form>
         </div>
