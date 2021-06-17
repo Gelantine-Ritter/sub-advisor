@@ -194,7 +194,9 @@
               </v-row>
             </v-container>
             <v-card-actions>
-              <v-btn class="mr-4" @click="submit"> submit </v-btn>
+              <v-btn class="mr-4" @click="submit" :disabled="$v.$invalid">
+                submit
+              </v-btn>
               <v-btn @click="clear"> clear </v-btn>
             </v-card-actions>
           </v-form>
@@ -306,16 +308,6 @@ export default {
     },
     submit() {
       this.$v.$touch()
-
-      //  const eventstart = this.fromDateVal + 'T' + this.fromTimeVal + ':00'
-      //  const eventend = this.toDateVal + 'T' + this.toTimeVal + ':00'
-      console.log('-----------------------------')
-      const userID = this.user.id
-      console.log(userID)
-      console.log('-----------------------------')
-
-      //  console.log(eventstart)
-      //  console.log(eventend)
       axios
         .post(
           '/events/',
@@ -335,7 +327,6 @@ export default {
           console.log(response.data)
         })
         .catch((e) => {
-          //  this.e.push(e)
           console.log(e)
         })
     },
