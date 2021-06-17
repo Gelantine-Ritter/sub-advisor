@@ -9,8 +9,8 @@ import com.subadvisor.api.venue.dto.IVenueDto;
 import java.util.List;
 
 public interface IEventService {
-    List<Event> getAllEvents();
-    List<Event> getEventsByVenue(String name);
+    List<EventDto> getAllEvents();
+    List<EventDto> getEventsByVenue(String name);
     Event createEvent(EventCreateDto event);
     EventDto getEventById(Long eventId);
     EventDto updateEventById(EventUpdateDto newEvent, Long eventId);

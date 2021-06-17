@@ -77,7 +77,10 @@ export default {
 
 
       try {
-        const response = await axios.get('/venues/' + userId)
+        const response = await axios.get('/venues/' + userId, {
+          headers: { Authorization: 'Bearer ' + jwt },
+        })
+        console.log(response.data)
         commit('SET_USER', response.data)
       } catch (e) {
         commit('SET_TOKEN', null)
@@ -121,6 +124,30 @@ export default {
       commit('SET_TOKEN', null)
       commit('SET_USER', null)
       commit('SET_ROLE', null)
+    },
+
+    // UPDATE ACCOUNT
+    async updateVenue({ commit, state }, userData) {
+      var newData = userData
+      var token = state.token
+      console.log("REQUEST")
+      console.log(axios.put('/venues/' + state.user.id, newData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      }))
+      const response = await axios.put('/venues/' + state.user.id, newData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log("RESPONSE")
+      console.log(response)
+      if (response.status === 200) {
+        commit('SET_USER', response.data)
+      }
     },
   },
 }

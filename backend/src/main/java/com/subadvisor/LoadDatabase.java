@@ -57,7 +57,7 @@ class LoadDatabase {
             // Load Venues
             log.info("Preloading " + trudeRuth);
 
-            Event eventTrudeRuth = eventRepository.save(
+            Event eventTrudeRuth01 = eventRepository.save(
                     Event.builder()
                     .title("Tischtennis am Mittwoch")
                     .venue(trudeRuth)
@@ -67,10 +67,22 @@ class LoadDatabase {
                     .build()
             );
 
+            Event eventTrudeRuth02 = eventRepository.save(
+                    Event.builder()
+                            .title("Salsa tanzen am Dienstag")
+                            .venue(trudeRuth)
+                            .info("schön Salsa tanzen am Dienstag")
+                            .artists(Set.of("DJ Salsa", "MC Salsa"))
+                            .price(0)
+                            .build()
+            );
+
 
 
             // Load Venues
-            log.info("Preloading " + eventTrudeRuth);
+            log.info("Preloading " + eventTrudeRuth01);
+
+            log.info("Preloading " + eventTrudeRuth02);
 
             // Load TestUser
             log.info("Preloading " + memberRepository.save(

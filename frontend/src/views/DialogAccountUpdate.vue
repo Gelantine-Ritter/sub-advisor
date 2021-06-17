@@ -8,57 +8,57 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>USERNAME</v-list-item-subtitle>
-
-                <v-text-field
-                  ><template v-slot:label>
-                    <div>
-                      {{ user.username }}
-                    </div>
-                  </template></v-text-field
+              <v-col cols="12">
+                <v-list-item-subtitle class="text-h6"
+                  >USERNAME</v-list-item-subtitle
                 >
+
+                <v-text-field type="text" v-model="userData.username">
+                </v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>MAIL</v-list-item-subtitle>
-
-                <v-text-field
-                  ><template v-slot:label>
-                    <div>
-                      {{ user.email }}
-                    </div>
-                  </template></v-text-field
+              <v-col cols="12" sm="6" md="6">
+                <v-list-item-subtitle class="text-h6"
+                  >E-MAIL</v-list-item-subtitle
                 >
+
+                <v-text-field type="text" v-model="userData.email">
+                </v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-list-item-subtitle>MOBILE</v-list-item-subtitle>
-
-                <v-text-field
-                  ><template v-slot:label>
-                    <div>
-                      {{ user.mobile }}
-                    </div>
-                  </template></v-text-field
+              <v-col cols="12" sm="6" md="6">
+                <v-list-item-subtitle class="text-h6"
+                  >MOBILE</v-list-item-subtitle
                 >
+                <v-text-field type="text" v-model="userData.mobile">
+                </v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="PASSWORD" type="password"></v-text-field>
-              </v-col>
-              <v-col cols="12">
+                <v-list-item-subtitle class="text-h6"
+                  >NEW PASSWORD</v-list-item-subtitle
+                >
                 <v-text-field
-                  label="CONFIRM PASSWORD"
                   type="password"
-                ></v-text-field>
+                  v-model="userData.password"
+                  :rules="passwordRules"
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12">
+                <v-list-item-subtitle class="text-h6"
+                  >CONFIRM PASSWORD</v-list-item-subtitle
+                >
+                <v-text-field type="password" v-model="confirm_password">
+                </v-text-field>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn elevation="2" outlined rounded text @click="dialog = false">
+          <v-btn elevation="1" outlined rounded text @click="dialog = false">
             Close
           </v-btn>
-          <v-btn elevation="2" outlined rounded text @click="dialog = false">
+          <v-btn elevation="1" outlined rounded text @click="updateSubmit">
             Save
           </v-btn>
         </v-card-actions>
@@ -68,10 +68,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      userData: {
+        username: null,
+        password: null,
+        email: null,
+        mobile: null,
+      },
+      confirm_password: null,
+      passwordRules: [
+        (v) => !v || v.length >= 8 || 'Min 8 characters',
+        // (v) => (v && !!v.trim()) || 'Seriously? just a blank password?',
+      ],
     }
   },
   props: {
@@ -81,17 +92,58 @@ export default {
     ...mapGetters({
       user: 'auth/user',
     }),
-
     dialog: {
       get() {
         return this.value
       },
       set(value) {
+        console.log(value)
         this.$emit('input', value)
       },
     },
   },
+
+  mounted: function () {
+    this.userData.username = this.user.username
+    this.userData.email = this.user.email
+    this.userData.mobile = this.user.mobile
+  },
+
   methods: {
+    ...mapActions({
+      updateVenue: 'auth/updateVenue',
+    }),
+    updateSubmit() {
+      if (
+        this.userData.password != null &&
+        this.userData.password.length <= 8
+      ) {
+        this.$toast.open('Passwords must hast minimum 8 characters!')
+        this.dialog = true
+      } else if (this.confirm_password !== this.userData.password) {
+        this.$toast.open('Passwords do not match!')
+        this.dialog = true
+      } else {
+        this.updateVenue(this.userData).then(() => {
+          this.$toast.open('Your account has been updated!')
+          this.dialog = false
+        })
+      }
+    },
   },
 }
 </script>
+
+<style scoped>
+.v-card__subtitle,
+.v-card__text {
+  line-height: 2rem;
+}
+.v-application .text-h6 {
+  margin-bottom: 10px;
+}
+.v-text-field {
+  padding-top: 0;
+  margin-top: 0;
+}
+</style>

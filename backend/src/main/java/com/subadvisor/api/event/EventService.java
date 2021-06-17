@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -24,20 +25,21 @@ public class EventService extends DataAccess implements IEventService {
     private CustomMapper mapper;
 
     @Override
-    public List<Event> getAllEvents() {
-        return DATA.events().findAll();
+    public List<EventDto> getAllEvents() {
+        return DATA.events()
+                .findAll()
+                .stream()
+                .map(event -> mapper.eventToEventDto(event))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Event> getEventsByVenue(String venueId) {
+    public List<EventDto> getEventsByVenue(String venueId) {
         return DATA.events()
                 .findByVenueId(Long.parseLong(venueId))
-                .filter(opt -> !opt.isEmpty())
-                .orElseThrow(
-                        () -> new EntityNotFoundException(
-                                format("No Events found for %s ", venueId)
-                        )
-                );
+                .stream()
+                .map(event -> mapper.eventToEventDto(event))
+                .collect(Collectors.toList());
     }
 
     @Override

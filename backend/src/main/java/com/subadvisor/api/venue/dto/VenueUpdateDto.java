@@ -22,6 +22,6 @@ public class VenueUpdateDto {
     private String website;
     private Map<String, String> hours;
     private Map<String, String> address;
-    private byte[] pic;
+    private String pic;
 
 }
