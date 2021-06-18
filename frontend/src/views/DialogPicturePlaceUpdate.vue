@@ -83,25 +83,19 @@ export default {
     },
     async handleUploadSubmit() {
       try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(this.file)
-        this.userData.pic = fileContentsBase64.substr(fileContentsBase64.indexOf(',') + 1);
+        const fileContentsBase64 = await this.readUploadedFileAsBase64(
+          this.file
+        )
+        this.userData.pic = fileContentsBase64.substr(
+          fileContentsBase64.indexOf(',') + 1
+        )
         console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
         console.log(this.userData.pic)
       } catch (e) {
         console.warn(e.message)
       }
     },
-    /* 
-    _base64ToArrayBuffer(base64) {
-      var binary_string = window.atob(base64)
-      var len = binary_string.length
-      var bytes = new Uint8Array(len)
-      for (var i = 0; i < len; i++) {
-        bytes[i] = binary_string.charCodeAt(i)
-      }
-      return bytes.buffer
-    },
-     */
+    
     readUploadedFileAsBase64(inputFile) {
       const temporaryFileReader = new FileReader()
       return new Promise((resolve, reject) => {

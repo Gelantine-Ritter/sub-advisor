@@ -20,14 +20,7 @@
                   <div class="noPicture"><h1>NO PICTURE</h1></div>
                 </template>
                 <template v-else>
-  
-                  <v-img
-                    fill
-                    class="myLogo"
-                    :src="picDataUrl()"
-                    alt=""
-                  />
-                
+                  <v-img fill class="myLogo" :src="picDataUrl()" alt="" />
                 </template>
               </v-responsive>
             </v-card>
@@ -395,7 +388,7 @@ export default {
       deleteProfile: 'auth/deleteProfile',
     }),
     picDataUrl() {
-      return "data:image/png;base64, " + this.user.pic
+      return 'data:image/png;base64, ' + this.user.pic
     },
     deleteProfileSubmit() {
       this.deleteProfile().then(() => {

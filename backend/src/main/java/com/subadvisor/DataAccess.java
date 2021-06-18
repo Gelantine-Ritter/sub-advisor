@@ -19,9 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class DataAccess {
 
         @Autowired
-        protected ObjectMapper objectMapper;
-
-        @Autowired
         protected VenueRepository venues;
 
         @Autowired

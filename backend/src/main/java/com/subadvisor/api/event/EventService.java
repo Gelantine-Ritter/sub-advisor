@@ -45,8 +45,8 @@ public class EventService extends DataAccess implements IEventService {
     @Override
     public Event createEvent(EventCreateDto dto) {
 
-        return DATA.events().save(
-                new EventMapper(DATA).mapToEventEntity(dto)
+        return DATA.events()
+                .save(new EventMapper(DATA).mapToEventEntity(dto)
         );
     }
 

@@ -38,8 +38,13 @@
                       <v-file-input
                         label="UPLOAD PICTURE"
                         prepend-icon="mdi-camera"
+                        v-model="file"
                       ></v-file-input>
-                      <v-text-field class="d-none"></v-text-field>
+                      <v-text-field
+                        class="d-none"
+                        v-model="pic"
+                        @input="handleUploadSubmit"
+                      ></v-text-field>
                     </div>
                   </v-card>
                 </v-col>
@@ -228,6 +233,8 @@ export default {
       artists: [],
       info: '',
       price: '',
+      pic: '',
+      file: [],
       //  date
       fromDateMenu: false,
       fromDateVal: null,
@@ -239,7 +246,6 @@ export default {
       toTimeVal: null,
       toTimeMenu: false,
 
-      checkbox: false,
       styleObject: { border: '2px solid #cafb03' },
     }
   },
@@ -287,35 +293,64 @@ export default {
         const artistsArr1 = artistsArr.map((artist) => {
           return artist.trim()
         })
-        console.log('TEST2', artistsArr1)
         return artistsArr1
       }
     },
+    async handleUploadSubmit() {
+      console.log('in handleUploadSubmit')
+      try {
+        const fileContentsBase64 = await this.readUploadedFileAsBase64(
+          this.file
+        )
+        this.pic = fileContentsBase64.substr(
+          fileContentsBase64.indexOf(',') + 1
+        )
+        console.log('CHECK IF THIS.PIC HAS BEEN UPDATED')
+        console.log(this.pic)
+      } catch (e) {
+        console.warn(e.message)
+      }
+    },
+    readUploadedFileAsBase64(inputFile) {
+      const temporaryFileReader = new FileReader()
+      return new Promise((resolve, reject) => {
+        temporaryFileReader.onerror = () => {
+          temporaryFileReader.abort()
+          reject(new DOMException('Problem parsing input file.'))
+        }
+        temporaryFileReader.onload = () => {
+          resolve(temporaryFileReader.result)
+        }
+        temporaryFileReader.readAsDataURL(inputFile)
+      })
+    },
     submit() {
       this.$v.$touch()
-      axios
-        .post(
-          '/events/',
-          {
-            venueId: this.user.id,
-            title: this.title,
-            info: this.info,
-            artists: this.convertArtistToArray(this.artists),
-            price: this.price,
-            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-            pic: null,
-          },
-          { headers: { Authorization: 'Bearer ' + auth.state.token } }
-        )
-        .then((response) => {
-          console.log(response.data)
-          this.clear()
-          this.$toast.open('YEAAAH Event created!')
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+      this.handleUploadSubmit().then(() => {
+        axios
+          .post(
+            '/events/',
+            {
+              venueId: this.user.id,
+              title: this.title,
+              info: this.info,
+              artists: this.convertArtistToArray(this.artists),
+              price: this.price,
+              eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+              eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+              pic: this.pic,
+            },
+            { headers: { Authorization: 'Bearer ' + auth.state.token } }
+          )
+          .then((response) => {
+            console.log(response.data)
+            this.clear()
+            this.$toast.open('YEAAAH Event created!')
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+      })
     },
 
     clear() {

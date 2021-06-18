@@ -1,5 +1,7 @@
 package com.subadvisor;
+import com.subadvisor.api.auth.dto.VenueRegistrateDto;
 import com.subadvisor.api.event.Event;
+import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.api.event.dto.EventDto;
 import com.subadvisor.api.event.dto.EventUpdateDto;
 import com.subadvisor.api.venue.Venue;
@@ -8,14 +10,16 @@ import com.subadvisor.api.venue.dto.VenuePublicDto;
 import com.subadvisor.api.venue.dto.VenueUpdateDto;
 import org.mapstruct.*;
 
-import java.util.Base64;
+import java.util.Optional;
 
 @Mapper(componentModel = "spring")
 public interface CustomMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source="pic", target="pic", qualifiedByName = "base64ToByte")
-    void venueUpdateDtoToVenue(VenueUpdateDto venueUpdateDto, @MappingTarget Venue venue);
+    Venue venueUpdateDtoToVenue(VenueUpdateDto venueUpdateDto, @MappingTarget Venue venue);
+
+    Venue venueRegistrateDtoToVenue(VenueRegistrateDto venueRegistrateDto);
 
     @Named("base64ToByte")
     default byte[] base64ToByte(String pic) {
@@ -37,4 +41,6 @@ public interface CustomMapper {
     EventDto eventToEventDto(Event event);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void eventUpdateDtoToEvent(EventUpdateDto eventUpdateDto, @MappingTarget Event event);
+
+    Event eventCreateDtoToEvent(EventCreateDto eventCreateDto);
 }

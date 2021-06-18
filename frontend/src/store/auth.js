@@ -28,9 +28,7 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
-    SET_USER_ID(state, userId){
-
-    }
+    SET_USER_ID(state, userId) {},
   },
 
   actions: {
@@ -75,7 +73,6 @@ export default {
         commit('SET_USER_ID', userId)
       }
 
-
       try {
         const response = await axios.get('/venues/' + userId, {
           headers: { Authorization: 'Bearer ' + jwt },
@@ -87,22 +84,21 @@ export default {
         commit('SET_ROLE', null)
       }
     },
-    async setToken({ commit, state}, token) {
+    async setToken({ commit, state }, token) {
       if (token) {
         commit('SET_TOKEN', token)
       }
     },
-    async setUser({commit, state}, user) {
-      if(user) {
+    async setUser({ commit, state }, user) {
+      if (user) {
         commit('SET_USER', user)
       }
     },
-    async setRole({commit, state}, role) {
-      if(role) {
+    async setRole({ commit, state }, role) {
+      if (role) {
         commit('SET_ROLE', role)
       }
     },
-
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
@@ -138,6 +134,14 @@ export default {
       if (response.status === 200) {
         commit('SET_USER', response.data)
       }
+    },
+
+    // DELETE EVENT
+    async deleteEvent({ state }, eventId) {
+      const response = await axios.delete('/events/' + eventId, {
+        headers: { Authorization: 'Bearer ' + state.token },
+      })
+      console.log(response)
     },
   },
 }

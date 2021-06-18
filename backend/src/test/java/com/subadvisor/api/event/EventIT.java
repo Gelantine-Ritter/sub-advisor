@@ -318,9 +318,9 @@ public class EventIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$").isArray(),
-                                jsonPath("$", hasSize(4)),
-                                jsonPath("$[2].title", is(EVENT_OTHER.getTitle())),
-                                jsonPath("$[3].title", is(EVENT_CRALLE.getTitle()))
+                                jsonPath("$", hasSize(6)),
+                                jsonPath("$[4].title", is(EVENT_OTHER.getTitle())),
+                                jsonPath("$[5].title", is(EVENT_CRALLE.getTitle()))
                         )
                 )
                 .andReturn()
