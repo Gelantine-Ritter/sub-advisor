@@ -1,50 +1,75 @@
 <template>
-  <v-container>
-    <v-container>
-      <a @click="redirectBackwards" class="lastPage">&lt;&lt;</a>
-      <h1 class="h1Style text-center display-3 font-weight-medium">
-        {{ eventObj.title }}
-      </h1>
-    </v-container>
+  <div>
+
+    <h1 class="h1Style text-center display-3 font-weight-medium" :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']">
+      {{ eventObj.title }}
+    </h1>
+
     <v-card
       center
-      class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
+      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
-      <row container gutter="{12}">
-        <column xs="{12}" md="{4}" lg="{3}" v-if="venueLoaded">
-          <h2>{{ venueObj.name }}</h2>
-          <column xs="{12}" md="{4}" lg="{3}">
-            {{ venueObj.adress.street }}
-            {{ venueObj.adress.number }}
-            {{ venueObj.adress.plz }}
-            {{ venueObj.adress.city }}
-          </column>
-        </column>
-        <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.price }} Euro </column>
-      </row>
+      <v-container center>
+        <v-row center>
+          <!-- venueName, adress, ... -->
+          <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+              <div>
+                {{venueObj.pic}}
+              </div>
+              <div>
+              <h2>{{ venueObj.name }}</h2>
+              <div>
+                <h5>
+                  {{ venueObj.adress.street }}
+                  {{ venueObj.adress.number }},
+                  {{ venueObj.adress.plz }}
+                  {{ venueObj.adress.city }}
+                </h5>
+              </div>
+              <v-div v-if="eventObj.eventStart">
+                starts around: {{ eventObj.eventStart }}
+              </v-div>
+              </div>
+          </v-col>
+          <!-- tags, price, ... -->
+          <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
+            Price: {{ eventObj.price }} Euro
+          </v-col>
+        </v-row>
 
-      <row container gutter="{12}">
-        <column xs="{12}" md="{4}" lg="{3}">
-          <column xs="{12}" md="{4}" lg="{3}">
-            {{ eventObj.info }}
-          </column>
-          {{ venueObj.website }}
-        </column>
-        <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.pic }} </column>
-      </row>
+        <v-row center>
+          <!-- description, venue website, ...-->
+          <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+            <div>
+              <!-- {{ eventObj.info }} -->
+              {{ this.getLorem() }}
+            </div>
+            <div></div>
+            {{ venueObj.website }}
+          </v-col>
+          <!-- image -->
+          <v-col v-if="eventObj.pic" cols="12" xs="12" sm="4" md="4" lg="4" xl="4" >
+            {{ eventObj.pic }}
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card>
-  </v-container>
+  </div>
 </template>
+      
+<!--
+
+v-if="venueLoaded"
+          <h2>{{ venueObj.name }}</h2>
+
+
+  -->
+
+
 
 <script>
 import axios from 'axios'
-
-import Vue from 'vue'
-import { Row, Column } from 'vue-grid-responsive'
-
-Vue.component('row', Row)
-Vue.component('column', Column)
 export default {
   data() {
     return {
@@ -92,7 +117,6 @@ export default {
 
       axios.get('/venues/' + this.eventObj.venueId).then((responseVenue) => {
         this.venueObj.name = responseVenue.data.name
-        console.log(responseVenue.data.address)
         this.venueObj.adress.city = responseVenue.data.address.city
         this.venueObj.adress.street = responseVenue.data.address.street
         this.venueObj.adress.number = responseVenue.data.address.number
@@ -108,6 +132,9 @@ export default {
     redirectBackwards() {
       history.back()
     },
+    getLorem(){
+      return "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et e"
+    }
   },
 }
 </script>
