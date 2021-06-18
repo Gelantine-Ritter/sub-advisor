@@ -405,7 +405,7 @@ components:
         id:
           type: string
           example: 12
-        venue_id:
+        venueId:
           type: string
           example: "12375"
           description: "venueId represents the creator and is needed as Foreign Key in Event Realtion"
@@ -427,11 +427,11 @@ components:
           type: string
           format: base64
           example: 10101101110101010101010
-        event_start:
+        eventStart:
           type: string
           example: "2021-09-04T20:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
-        event_end:
+        eventEnd:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
@@ -439,7 +439,7 @@ components:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
-        modified_at:
+        modifiedAt:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
@@ -449,7 +449,7 @@ components:
         - venueId
         - title
       properties:
-        venue_id:
+        venueId:
           type: string
           example: "12375"
           description: "venueId represents the creator and is needed as Foreign Key in Event Realtion"
@@ -467,11 +467,11 @@ components:
         price:
           type: string
           example: "10.00"
-        event_start:
+        eventStart:
           type: string
           example: "2021-09-04T20:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
-        event_end:
+        eventEnd:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
@@ -498,11 +498,11 @@ components:
         price:
           type: string
           example: "10.00"
-        event_start:
+        eventStart:
           type: string
           example: "2021-09-04T20:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
-        event_end:
+        eventEnd:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
