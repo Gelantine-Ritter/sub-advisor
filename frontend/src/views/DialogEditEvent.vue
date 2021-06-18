@@ -43,7 +43,11 @@
                       prepend-icon="mdi-camera"
                       v-model="file"
                     ></v-file-input>
-                    <v-text-field class="d-none" v-model="pic" @input="handleUploadSubmit"></v-text-field>
+                    <v-text-field
+                      class="d-none"
+                      v-model="pic"
+                      @input="handleUploadSubmit"
+                    ></v-text-field>
                   </div>
                 </v-card>
               </v-col>
@@ -214,8 +218,6 @@ export default {
   validations: {
     title: { maxLength: maxLength(20) },
     info: { maxLength: maxLength(500) },
-
-     
   },
   data() {
     return {
@@ -239,7 +241,6 @@ export default {
       file: [],
       id: '',
 
-      checkbox: false,
       styleObject: { border: '2px solid #cafb03' },
     }
   },
@@ -286,10 +287,10 @@ export default {
       // this.eventObj.venueId = response.data.venueId
       this.fromDateVal = response.data.eventStart.split('T')[0]
       const fromTime = response.data.eventStart.split('T')[1]
-      this.fromTimeVal = fromTime.substring(0, fromTime.length-3);
+      this.fromTimeVal = fromTime.substring(0, fromTime.length - 3)
       this.toDateVal = response.data.eventEnd.split('T')[0]
       const toTime = response.data.eventEnd.split('T')[1]
-      this.toTimeVal = toTime.substring(0, toTime.length-3);
+      this.toTimeVal = toTime.substring(0, toTime.length - 3)
       this.info = response.data.info
       this.pic = response.data.pic
       this.price = response.data.price
@@ -308,7 +309,7 @@ export default {
       }
     },
     async handleUploadSubmit() {
-        console.log('in handleUploadSubmit')
+      console.log('in handleUploadSubmit')
       try {
         const fileContentsBase64 = await this.readUploadedFileAsBase64(
           this.file
@@ -338,45 +339,46 @@ export default {
     submit() {
       this.$v.$touch()
       this.handleUploadSubmit().then(() => {
-      console.log('IN SUBMIT AFTER HANDLEUPLOADSUBMIT')
-      console.log(axios
-        .put(
-          '/events/' + this.id,
-          {
-            title: this.title,
-            info: this.info,
-            artists: this.convertArtistToArray(this.artists),
-            price: this.price,
-            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-            pic: this.pic,
-          },
-          { headers: { Authorization: 'Bearer ' + auth.state.token } }
-        ))
-      axios
-        .put(
-          '/events/' + this.id,
-          {
-            title: this.title,
-            info: this.info,
-            artists: this.convertArtistToArray(this.artists),
-            price: this.price,
-            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-            pic: this.pic,
-          },
-          { headers: { Authorization: 'Bearer ' + auth.state.token } }
+        console.log('IN SUBMIT AFTER HANDLEUPLOADSUBMIT')
+        console.log(
+          axios.put(
+            '/events/' + this.id,
+            {
+              title: this.title,
+              info: this.info,
+              artists: this.convertArtistToArray(this.artists),
+              price: this.price,
+              eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+              eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+              pic: this.pic,
+            },
+            { headers: { Authorization: 'Bearer ' + auth.state.token } }
+          )
         )
-        .then((response) => {
-          console.log(response.data)
-          this.$toast.open('Event updated!')
-          this.dialog = false
-          this.$router.go()
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-        })
+        axios
+          .put(
+            '/events/' + this.id,
+            {
+              title: this.title,
+              info: this.info,
+              artists: this.convertArtistToArray(this.artists),
+              price: this.price,
+              eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+              eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+              pic: this.pic,
+            },
+            { headers: { Authorization: 'Bearer ' + auth.state.token } }
+          )
+          .then((response) => {
+            console.log(response.data)
+            this.$toast.open('Event updated!')
+            this.dialog = false
+            this.$router.go()
+          })
+          .catch((e) => {
+            console.log(e)
+          })
+      })
     },
   },
 }
