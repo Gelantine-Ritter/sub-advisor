@@ -82,9 +82,9 @@ public class RegistrationIT extends Driver {
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.username").value(VENUE.username()),
-                                jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.username").value(VENUE.getUsername()),
+                                jsonPath("$.name").value(VENUE.getName()),
+                                jsonPath("$.email").value(VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 status().isOk()
                         )
@@ -120,8 +120,8 @@ public class RegistrationIT extends Driver {
                                 status().isOk(),
                                 jsonPath("$.username").doesNotExist(),
                                 jsonPath("$.id").exists(),
-                                jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.name").value(VENUE.getName()),
+                                jsonPath("$.email").value(VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").doesNotExist(),
                                 jsonPath("$.modifiedAt").doesNotExist(),
@@ -145,10 +145,10 @@ public class RegistrationIT extends Driver {
                 .andExpect(
                         matchAll(
                                 status().isOk(),
-                                jsonPath("$.username").value(VENUE.username()),
+                                jsonPath("$.username").value(VENUE.getUsername()),
                                 jsonPath("$.id").value(ID_VENUE),
-                                jsonPath("$.name").value(VENUE.name()),
-                                jsonPath("$.email").value(VENUE.email()),
+                                jsonPath("$.name").value(VENUE.getName()),
+                                jsonPath("$.email").value(VENUE.getEmail()),
                                 jsonPath("$.password").doesNotExist(),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),
