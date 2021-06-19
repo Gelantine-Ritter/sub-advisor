@@ -32,32 +32,22 @@ public class VenueService implements UserDetailsService, IVenueService {
     @Autowired
     private CustomMapper mapper;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Override
     public List<VenuePublicDto> getAllVenues() {
         return repository.findAll()
                 .stream()
-                .map(
-                        venue -> objectMapper.convertValue(
-                                venue,
-                                VenuePublicDto.class
-                        )
-                ).collect(Collectors.toList());
-
+                .map(venue -> mapper.venueToVenuePublicDto(venue))
+                .collect(Collectors.toList());
     }
 
     @Override
     public VenuePersonalDto createVenue(VenueRegistrateDto venueRegistrateDto) {
-        return objectMapper.convertValue(
-                repository.save(
-                        objectMapper.convertValue(
-                                venueRegistrateDto,
-                                Venue.class
-                        )),
-                VenuePersonalDto.class
-        );
+        return
+                mapper.venueToVenuePersonalDto(
+                        repository.save(
+                                mapper.venueRegistrateDtoToVenue(venueRegistrateDto)
+                        )
+                );
     }
 
     @Override
@@ -65,7 +55,7 @@ public class VenueService implements UserDetailsService, IVenueService {
 
         return repository.findById(venueId)
                 .map(venue -> {
-                            if ( authentication != null && ((Venue) authentication.getPrincipal()).getId() == venueId) {
+                            if (authentication != null && ((Venue) authentication.getPrincipal()).getId() == venueId) {
                                 return mapper.venueToVenuePersonalDto(venue);
                             } else {
                                 return mapper.venueToVenuePublicDto(venue);
@@ -88,10 +78,7 @@ public class VenueService implements UserDetailsService, IVenueService {
 
         return
                 repository.findById(venueId)
-                        .map(venue -> {
-                            mapper.venueUpdateDtoToVenue(venueUpdateDto, venue);
-                            return venue;
-                        })
+                        .map(venue -> mapper.venueUpdateDtoToVenue(venueUpdateDto, venue))
                         .map(venue -> repository.save(venue))
                         .map(venue -> mapper.venueToVenuePersonalDto(venue))
                         .orElseThrow(

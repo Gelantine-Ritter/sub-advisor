@@ -14,9 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Accessors(fluent = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class VenueRegistrateDto implements IRegistrationRequestDto{
     @NotNull
     private String username;

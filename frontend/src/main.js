@@ -34,6 +34,10 @@ import auth from './store/auth'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
+
+import {reloadStateFromLocalStorage} from './util/StoreReloader'
+
+
 require('@/store/subscriber')
 
 window.axios = axios
@@ -129,9 +133,19 @@ const router = new Router({
   ],
 })
 
+
+let reloadedState = false
+
 router.beforeEach((to, from, next) => {
+
+  if (!reloadedState && !auth.state.token){
+    reloadStateFromLocalStorage()
+    reloadedState = true
+  }
+  console.log('Musste nicht reloaden');
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (auth.state.token !== null) {
+    if (auth.state.token) {
       next()
       return
     }

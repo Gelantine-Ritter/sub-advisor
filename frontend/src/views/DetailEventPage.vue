@@ -1,37 +1,86 @@
 <template>
-  <v-container>
-    <v-container>
-      <a @click="redirectBackwards" class="lastPage">&lt;&lt;</a>
-      <h1 class="h1Style text-center display-3 font-weight-medium">
-        {{ eventObj.title }}
-      </h1>
-    </v-container>
-    
+  <div>
+    <h1
+      class="h1Style text-center display-3 font-weight-medium"
+      :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
+    >
+      {{ eventObj.title }}
+    </h1>
+
     <v-card
       center
-      class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
+      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
-    <!-- EVENT PICTURE START -->
-    <v-card
-              class="pa-2 rounded-xl myPictureCard"
-              flat
-              tile
-              
-            >
-              <v-responsive>
-                <template v-if="this.eventObj.pic == null || this.eventObj.pic == ''">
-                  <div class="noPicture"><h1>NO PICTURE</h1></div>
-                </template>
-                <template v-else>
-                  <v-img fill class="myPicture" :src="picDataUrl()" alt="" />
-                </template>
-              </v-responsive>
-            </v-card>
-    <!-- EVENT PICTURE END -->
-    <!-- EDIT EVENT BUTTON START -->
-      <template v-if="user!= null && user.id == eventObj.venueId">
-        <v-card class="pa-2" flat tile>
+    <v-container>
+      <v-row center>
+        <!-- venueName, adress, ... -->
+        <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+          <div>
+            {{ venueObj.pic }}
+          </div>
+          <div>
+            <h2>{{ venueObj.name }}</h2>
+            <div>
+              <h5>
+                {{ venueObj.adress.street }}
+                {{ venueObj.adress.number }},
+                {{ venueObj.adress.plz }}
+                {{ venueObj.adress.city }}
+              </h5>
+            </div>
+            <div v-if="eventObj.eventStart">
+              starts around: {{ eventObj.eventStart }}
+            </div>
+          </div>
+        </v-col>
+        <!-- tags, price, ... -->
+        <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
+          Price: {{ eventObj.price }} Euro
+        </v-col>
+      </v-row>
+
+      <v-row center>
+        <!-- description, venue website, ...-->
+        <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+          <div>
+            <!-- {{ eventObj.info }} -->
+            {{ eventObj.info }}
+          </div>
+          <div></div>
+          {{ venueObj.website }}
+        </v-col>
+        <!-- image -->
+        <v-col
+          v-if="eventObj.pic"
+          cols="12"
+          xs="12"
+          sm="4"
+          md="4"
+          lg="4"
+          xl="4"
+        >
+          <!-- EVENT PICTURE START -->
+          <v-card class="pa-2 rounded-xl myPictureCard" flat tile>
+            <v-responsive>
+              <template
+                v-if="this.eventObj.pic == null || this.eventObj.pic == ''"
+              >
+                <div class="noPicture"><h1>NO PICTURE</h1></div>
+              </template>
+              <template v-else>
+                <v-img fill class="myPicture" :src="picDataUrl()" alt="" />
+              </template>
+            </v-responsive>
+          </v-card>
+          <!-- EVENT PICTURE END -->
+        </v-col>
+      </v-row>
+
+      <div class="d-flex">
+        <!-- EDIT EVENT BUTTON START -->
+      <template class="flex-column" v-if="user!= null && user.id == eventObj.venueId" >
+        <v-card class="pa-2 flex-column" flat tile>
           <h4>
             <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
               <v-icon class="text-right myEditButtonSmallScreen" color="black"
@@ -44,75 +93,56 @@
       </template>
       <template v-else>
       </template>
-    <!-- EDIT EVENT BUTTON END -->
-      <row container gutter="{12}">
-        <column xs="{12}" md="{4}" lg="{3}" v-if="venueLoaded">
-          <h2>{{ venueObj.name }}</h2>
-          <column xs="{12}" md="{4}" lg="{3}">
-            {{ venueObj.adress.street }}
-            {{ venueObj.adress.number }}
-            {{ venueObj.adress.plz }}
-            {{ venueObj.adress.city }}
-          </column>
-        </column>
-        <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.price }} Euro </column>
-      </row>
+      <!-- EDIT EVENT BUTTON END -->
 
-      <row container gutter="{12}">
-        <column xs="{12}" md="{4}" lg="{3}">
-          <column xs="{12}" md="{4}" lg="{3}">
-            {{ eventObj.info }}
-          </column>
-          {{ venueObj.website }}
-        </column>
-        <!-- <column xs="{12}" md="{4}" lg="{3}"> {{ eventObj.pic }} </column> -->
-      </row>
       <!-- DELETE EVENT BUTTON START -->
-    <template v-if="user!= null && user.id == eventObj.venueId">
-      <v-row justify="center">
-        <v-btn
-          class="myDeleteButton"
-          outlined
-          rounded
-          text
-          @click.stop="deleteDialog = true"
-        >
-          DELETE THIS EVENT
-        </v-btn>
-        <v-dialog v-model="deleteDialog" max-width="500">
-          <v-card>
-            <v-card-title class="text-h4 justify-center">
-              Are you really sure you want to delete your account?
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn elevation="0" color="light" @click="deleteDialog = false">
-                Let me think about it...
-              </v-btn>
-              <v-btn color="error" outlined @click="deleteEventSubmit">
-                Yes
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
-    </template>
-    <template v-else>
-    </template>
-    <!-- DELETE EVENT BUTTON END -->
+      <template v-if="user != null && user.id == eventObj.venueId">
+        <v-row justify="center">
+          <v-btn
+            class="myDeleteButton"
+            outlined
+            rounded
+            text
+            @click.stop="deleteDialog = true"
+          >
+            DELETE THIS EVENT
+          </v-btn>
+          <v-dialog v-model="deleteDialog" max-width="500">
+            <v-card>
+              <v-card-title class="text-h4 justify-center">
+                Are you really sure you want to delete your account?
+              </v-card-title>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  elevation="0"
+                  color="light"
+                  @click="deleteDialog = false"
+                >
+                  Let me think about it...
+                </v-btn>
+                <v-btn color="error" outlined @click="deleteEventSubmit">
+                  Yes
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </template>
+      <template v-else> </template>
+      <!-- DELETE EVENT BUTTON END -->
+      </div>
+
+    </v-container>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapActions } from 'vuex'
-import Vue from 'vue'
-import { Row, Column } from 'vue-grid-responsive'
 import ModalEditEvent from './DialogEditEvent.vue'
+import { mapGetters, mapActions } from 'vuex'
 
-Vue.component('row', Row)
-Vue.component('column', Column)
 export default {
   data() {
     return {
@@ -162,7 +192,6 @@ export default {
 
       axios.get('/venues/' + this.eventObj.venueId).then((responseVenue) => {
         this.venueObj.name = responseVenue.data.name
-        console.log(responseVenue.data.address)
         this.venueObj.adress.city = responseVenue.data.address.city
         this.venueObj.adress.street = responseVenue.data.address.street
         this.venueObj.adress.number = responseVenue.data.address.number
