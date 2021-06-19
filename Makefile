@@ -73,6 +73,7 @@ d-run-frontend-prod:
 	docker run -e HEROKU_API_KEY=$(HEROKU_API_KEY) wingrunr21/alpine-heroku-cli:latest container:release web -a $(APP_NAME_FRONTEND)
 
 deploy-backend-prod: d-login-heroku d-build-backend-prod d-push-backend-prod d-run-backend-prod
+deploy-frontend-prod: d-login-heroku d-build-frontend-prod d-push-frontend-prod d-run-frontend-prod
 
 # ----- DEPRECATED ------ #
 # ----- using backend docker ----- #

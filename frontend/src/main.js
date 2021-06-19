@@ -41,7 +41,7 @@ import {reloadStateFromLocalStorage} from './util/StoreReloader'
 require('@/store/subscriber')
 
 window.axios = axios
-axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.baseURL = process.env.PROXY_API || "http://localhost:8080/"
 
 store.dispatch('auth/attempt', localStorage.getItem('token'))
 
