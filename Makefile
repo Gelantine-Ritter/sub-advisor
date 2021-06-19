@@ -1,5 +1,8 @@
 SUBADVISOR_IMAGE=subadvisor/backend
 SUBADVISOR_CONTAINER=subadvisor-backend
+HEROKU_API_KEY=c4378700-f98e-4027-a5e9-27fe4b1f0e3e
+APP_NAME_BACKEND=subadvisor-backend
+APP_NAME_FRONTEND=subadvisor-frontend
 
 p?=dev
 
@@ -53,30 +56,37 @@ run-be: mvn-clean-package run-be-with-profil
 stop-be:
 	cd backend && ./mvnw clean spring-boot:stop
 
+# ----- Docker for heroku production ---#
+d-login-heroku:
+	docker login -u _ -p $(HEROKU_API_KEY) registry.heroku.com
+d-build-backend-prod:
+	cd backend && docker build --file=Dockerfile --rm=true -t registry.heroku.com/$(APP_NAME_BACKEND)/web .
+d-push-backend-prod:
+	docker push registry.heroku.com/$(APP_NAME_BACKEND)/web
+d-run-backend-prod:
+	docker run -e HEROKU_API_KEY=$(HEROKU_API_KEY) wingrunr21/alpine-heroku-cli:latest container:release web -a $(APP_NAME_BACKEND)
+d-build-frontend-prod:
+	cd frontend && docker build --file=Dockerfile --rm=true -t registry.heroku.com/$(APP_NAME_FRONTEND)/web .
+d-push-frontend-prod:
+	docker push registry.heroku.com/$(APP_NAME_FRONTEND)/web
+d-run-frontend-prod:
+	docker run -e HEROKU_API_KEY=$(HEROKU_API_KEY) wingrunr21/alpine-heroku-cli:latest container:release web -a $(APP_NAME_FRONTEND)
+
+deploy-backend-prod: d-login-heroku d-build-backend-prod d-push-backend-prod d-run-backend-prod
+
 # ----- DEPRECATED ------ #
 # ----- using backend docker ----- #
 
 d-build:
 	cd backend && docker build -t $(SUBADVISOR_IMAGE) .
-
 d-run:
-	. scripts/docker-backend-helper.sh && docker_helper run
-
+	docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=local -e TEST=test-local --name $(SUBADVISOR_CONTAINER) $(SUBADVISOR_IMAGE)
+d-stop:
+	docker stop $(SUBADVISOR_CONTAINER)
 d-start:
 	. scripts/docker-backend-helper.sh && docker_helper start
-
-d-stop:
-	. scripts/docker-backend-helper.sh && docker_helper stop
-
 d-clean:
 	. scripts/docker-backend-helper.sh && docker_helper clean
 
 d-complete: d-clean d-build d-run
 d-restart: d-stop d-start
-
-
-
-
-
-
-

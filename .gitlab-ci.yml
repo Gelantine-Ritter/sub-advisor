@@ -71,7 +71,15 @@ UT-backend:
     - cd backend
     - ./mvnw surefire:test
 
-deploy:
-  stage: deploy
+
+deploay-backend:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  tags:
+    - docker-privileged
+  before_script:
+    - apk update && apk add make
   script:
-    - echo "deploy everything"
+    - make deploy-backend-prod
