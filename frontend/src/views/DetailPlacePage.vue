@@ -10,7 +10,7 @@
 
     <v-card
       center
-      class="ml-10 rounded-xl md-layout md-gutter md-alignment-center"
+      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
       :style="styleObject"
     >
       <v-list-item three-line>
@@ -43,12 +43,17 @@
         </v-container>
       </template>
     </v-card>
+    <h3>UPCOMMING EVENTS</h3>
+    <v-conatiner>
+      <EventsList class="mt-5" :venueId="this.$route.params.id" />
+    </v-conatiner>
   </v-container>
 </template>
 
 <script>
 import axios from 'axios'
 import MapsView from '../components/features/MapsView.vue'
+import EventsList from '../components/events/EventsListFor1Venue.vue'
 
 export default {
   data() {
@@ -93,6 +98,7 @@ export default {
   },
   components: {
     MapsView,
+    EventsList,
   },
 }
 </script>
