@@ -19,24 +19,11 @@
 import Footer from './components/AppFooter'
 import Navbar from './components/header/AppNavbar'
 
-import store from './store'
 
 export default {
   name: 'App',
 
   components: { Navbar, Footer },
-  beforeMount() {
-    this.reloadStateFromLocalStorage()
-  },
-  methods: {
-    async reloadStateFromLocalStorage() {
-      await store.dispatch('auth/attempt', {
-        jwt: localStorage.getItem('token'),
-        userId: localStorage.getItem('userId'),
-        role: localStorage.getItem('role'),
-      })
-    },
-  },
 }
 </script>
 
