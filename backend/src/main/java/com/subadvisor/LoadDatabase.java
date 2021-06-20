@@ -24,32 +24,33 @@ class LoadDatabase {
         return args -> {
 
             Venue trudeRuth = venueRepository.save(Venue.builder()
-                            .username("trude-ruth")
-                            .password("rudiruth")
-                            .name("Trude Ruth")
-                            .email("ruth@info.com")
-                            .info("nette tanzabende")
-                            .mobile("0189-28347619")
-                            .hours(
-                                    Map.of("monday", "closed",
-                                            "tuesday", "17:00 - 23:00",
-                                            "wednesday", "17:00 - 23:00",
-                                            "thursday", "17:00 - 23:00",
-                                            "friday", "17:00 - 02:00",
-                                            "saturday", "17:00 - 02:00",
-                                            "sunday", "17:00 - 02:00"
-                                    )
+                    .username("trude-ruth")
+                    .password("rudiruth")
+                    .name("Trude Ruth")
+                    .email("ruth@info.com")
+                    .info("nette tanzabende")
+                    .mobile("0189-28347619")
+                    .tags(Set.of("Neukölln", "Bar", "Lokales Bier", "Tischtennis", "Kollektiv"))
+                    .hours(
+                            Map.of("monday", "closed",
+                                    "tuesday", "17:00 - 23:00",
+                                    "wednesday", "17:00 - 23:00",
+                                    "thursday", "17:00 - 23:00",
+                                    "friday", "17:00 - 02:00",
+                                    "saturday", "17:00 - 02:00",
+                                    "sunday", "17:00 - 02:00"
                             )
-                            .address(
-                                    Map.of(
-                                            "street", "Flughafenstrasse",
-                                            "number", "38",
-                                            "city", "Berlin",
-                                            "plz", "12053"
-                                    )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Flughafenstrasse",
+                                    "number", "38",
+                                    "city", "Berlin",
+                                    "plz", "12053"
                             )
-                            .website("https://trude-ruth.com")
-                            .build()
+                    )
+                    .website("https://trude-ruth.com")
+                    .build()
             );
 
             Venue hochbeetGarten = venueRepository.save(
@@ -58,6 +59,7 @@ class LoadDatabase {
                             .password("hochhoch")
                             .name("Hochbeet Wedding")
                             .email("hochbeet@info.com")
+                            .tags(Set.of("Wedding", "Garten", "Open", "Essen", "Trinken", "Kinderfreundlich"))
                             .info("Ein schöner Garten direkt am Leopoldplatz. Hier kann man entspannen, on der Sonne sitzen" +
                                     "und leckere Salate direkt aus dem eigenen Garten essen.")
                             .mobile("030-198754")
@@ -90,14 +92,15 @@ class LoadDatabase {
 
             Event eventTrudeRuth01 = eventRepository.save(
                     Event.builder()
-                    .title("Tischtennis am Mittwoch")
-                    .venue(trudeRuth)
-                    .eventStart(LocalDateTime.parse("2021-09-04T17:00:00"))
-                    .eventEnd(LocalDateTime.parse("2021-09-04T19:00"))
-                    .info("nettes indoor-tischtennis im Hinterraum")
-                    .artists(Set.of("Timo Boll"))
-                    .price(10)
-                    .build()
+                            .title("Tischtennis am Mittwoch")
+                            .tags(Set.of("Sport", "Tischtennis"))
+                            .venue(trudeRuth)
+                            .eventStart(LocalDateTime.parse("2021-09-04T17:00:00"))
+                            .eventEnd(LocalDateTime.parse("2021-09-04T19:00"))
+                            .info("nettes indoor-tischtennis im Hinterraum")
+                            .artists(Set.of("Timo Boll"))
+                            .price(10)
+                            .build()
             );
 
             Event eventTrudeRuth02 = eventRepository.save(
@@ -105,6 +108,7 @@ class LoadDatabase {
                             .title("Salsa tanzen am Dienstag")
                             .venue(trudeRuth)
                             .info("schön Salsa tanzen am Dienstag")
+                            .tags(Set.of("Sport", "Tanzen", "Gratis"))
                             .artists(Set.of("DJ Salsa", "MC Salsa"))
                             .eventStart(LocalDateTime.parse("2021-09-07T17:00:00"))
                             .eventEnd(LocalDateTime.parse("2021-09-07T19:00"))
@@ -120,6 +124,7 @@ class LoadDatabase {
                             .eventEnd(LocalDateTime.parse("2021-08-07T19:00"))
                             .info("alle haben mal klein angefangen! Unsere profi-gaertner*innen Samuel und Nayla zeigen wie ihr" +
                                     "auch in eurer Wohnung schoene Kartoffeln anbauen koennt")
+                            .tags(Set.of("Workshop", "Draußen", "Pflanzen"))
                             .artists(Set.of("Nalya Hammerschlag", "Samuel Rosenwald"))
                             .price(5)
                             .build()
@@ -131,13 +136,13 @@ class LoadDatabase {
                             .venue(hochbeetGarten)
                             .info("In Unserer Offenen Kueche macht Haribert immer einmal in der Woche Salatchips. " +
                                     "Kommt gerne rum")
+                            .tags(Set.of("Workshop", "Kochen", "Pflanzen"))
                             .eventStart(LocalDateTime.parse("2021-06-07T17:00:00"))
                             .eventEnd(LocalDateTime.parse("2021-06-07T19:00"))
                             .artists(Set.of("Chief of cuisine - Haribert"))
                             .price(0)
                             .build()
             );
-
 
 
             // Load Venues
