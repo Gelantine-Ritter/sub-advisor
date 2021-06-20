@@ -10,6 +10,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,11 +22,11 @@ import java.util.Set;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @Table(name = "event")
 public class Event implements Serializable {
 
@@ -57,13 +58,17 @@ public class Event implements Serializable {
     @Setter
     private Set<String> artists;
 
+    @ElementCollection
+    @Getter
+    @Setter
+    private Set<String> tags;
+
     @Getter
     @Setter
     private double price;
 
     @Lob
-    @Getter
-    @Setter
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] pic;
 
     @CreatedDate

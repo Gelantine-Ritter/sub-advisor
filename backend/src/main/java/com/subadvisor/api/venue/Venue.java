@@ -73,6 +73,11 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     @ElementCollection
     private Map<String, String> address;
 
+    @ElementCollection
+    @Getter
+    @Setter
+    private Set<String> tags;
+
     @NotNull
     @Builder.Default
     private String ROLE = "VENUE";

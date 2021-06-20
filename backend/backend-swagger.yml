@@ -300,6 +300,11 @@ components:
             number: "38"
             city: "Berlin"
             plz: "12053"
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Techno", "Außenbereich", "Corona-Teststation" ]
         pic:
           type: string
           format: base64
@@ -343,6 +348,11 @@ components:
             number: "38"
             city: "Berlin"
             plz: "12053"
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Techno", "Außenbereich", "Corona-Teststation" ]
         pic:
           type: string
           format: byte
@@ -392,6 +402,11 @@ components:
             number: "38"
             city: "Berlin"
             plz: "12053"
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Techno", "Außenbereich", "Corona-Teststation" ]
         pic:
           type: string
           format: byte
@@ -420,6 +435,11 @@ components:
           items:
             type: string
           example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Tanzen", "Party", "Yoga" ]
         price:
           type: string
           example: "10.00"
@@ -464,6 +484,11 @@ components:
           items:
             type: string
           example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Tanzen", "Party", "Yoga" ]
         price:
           type: string
           example: "10.00"
@@ -495,6 +520,11 @@ components:
           items:
             type: string
           example: [ "Krimewatch", "The Distillers", "Bikini Kill" ]
+        tags:
+          type: array
+          items:
+            type: string
+          example: [ "Tanzen", "Party", "Yoga" ]
         price:
           type: string
           example: "10.00"
