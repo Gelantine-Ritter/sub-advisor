@@ -38,9 +38,17 @@ public interface CustomMapper {
     }
 
     @Mapping(target = "venueId", source = "event.venue.id")
+    @Mapping(source="pic", target="pic", qualifiedByName = "byteToBase64" )
     EventDto eventToEventDto(Event event);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source="pic", target="pic", qualifiedByName = "base64ToByte")
     void eventUpdateDtoToEvent(EventUpdateDto eventUpdateDto, @MappingTarget Event event);
 
-    Event eventCreateDtoToEvent(EventCreateDto eventCreateDto);
+    @Mapping(source="eventCreateDto.pic", target="pic", qualifiedByName = "base64ToByte")
+    @Mapping(source="venue", target="venue" )
+    @Mapping(source="eventCreateDto.info", target="info")
+    @Mapping(source="eventCreateDto.tags", target="tags")
+    @Mapping(target="id", ignore = true)
+    Event eventCreateDtoToEvent(EventCreateDto eventCreateDto, Venue venue);
 }

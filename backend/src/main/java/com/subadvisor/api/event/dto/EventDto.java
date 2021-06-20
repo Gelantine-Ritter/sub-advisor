@@ -8,17 +8,19 @@ import java.util.Set;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EventDto {
 
-    private Long id;
+    private String id;
     private String venueId;
     private String title;
     private String info;
-    private Set<String> artists;
-    private double price;
-    private byte[] pic;
+    private String[] artists;
+    private String[] tags;
+    private String price;
+    private String pic;
     private LocalDateTime created;
     private LocalDateTime modifiedAt;
     private LocalDateTime eventStart;

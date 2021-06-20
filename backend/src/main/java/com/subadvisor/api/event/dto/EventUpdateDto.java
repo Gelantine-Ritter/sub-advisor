@@ -21,5 +21,5 @@ public class EventUpdateDto {
     private String price;
     private String eventStart;
     private String eventEnd;
-    private byte[] pic;
+    private String pic;
 }

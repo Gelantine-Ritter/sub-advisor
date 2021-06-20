@@ -11,7 +11,7 @@ import java.util.List;
 public interface IEventService {
     List<EventDto> getAllEvents();
     List<EventDto> getEventsByVenue(String name);
-    Event createEvent(EventCreateDto event);
+    EventDto createEvent(EventCreateDto event);
     EventDto getEventById(Long eventId);
     EventDto updateEventById(EventUpdateDto newEvent, Long eventId);
     void deleteEventById(Long eventId);
