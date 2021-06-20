@@ -21,13 +21,11 @@ public class BackendApplication {
 										// $HOME is system-env-varibale. Will print something like /Users/matti
 										@Value("${spring.profiles.active}") String profile,
 										@Value("${message-from-application}") String message,
-										@Value("${spring.datasource.url}") String dburl,
-										@Value("${test}") String test
+										@Value("${spring.datasource.url}") String dburl
 										) {
 		return args -> {
 			// using @Value is better than env
 			log.info("Welcome from Application-Runner. Your active profile is " + profile);
-			log.info(test);
 			log.info(message);
 			log.info("db-url is " + dburl);
 		};

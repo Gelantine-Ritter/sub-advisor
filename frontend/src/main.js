@@ -41,7 +41,7 @@ import {reloadStateFromLocalStorage} from './util/StoreReloader'
 require('@/store/subscriber')
 
 window.axios = axios
-axios.defaults.baseURL = process.env.PROXY_API || "http://localhost:8080/"
+axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL || "http://localhost:8080/"
 
 store.dispatch('auth/attempt', localStorage.getItem('token'))
 
@@ -95,7 +95,7 @@ const router = new Router({
       component: DetailEvent,
     },
     {
-      path: '/about',
+      path: `/about${process.env.TEST}`,
       name: 'about',
       component: About,
     },
