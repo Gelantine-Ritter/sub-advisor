@@ -83,6 +83,9 @@ deploy-backend:
     - apk update && apk add make
   script:
     - make deploy-backend-prod
+  only:
+    refs:
+      - tags
 
 deploy-frontend:
   stage: deploy
@@ -95,3 +98,6 @@ deploy-frontend:
     - apk update && apk add make
   script:
     - make deploy-frontend-prod
+  only:
+    refs:
+      - tags

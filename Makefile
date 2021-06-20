@@ -2,7 +2,8 @@ SUBADVISOR_IMAGE=subadvisor/backend
 SUBADVISOR_CONTAINER=subadvisor-backend
 HEROKU_API_KEY=c4378700-f98e-4027-a5e9-27fe4b1f0e3e
 APP_NAME_BACKEND=subadvisor-backend
-APP_NAME_FRONTEND=subadvisor-frontend
+APP_NAME_FRONTEND=subadvisor
+BACKEND_URL=https://subadvisor-backend.herokuapp.com/
 
 p?=dev
 
@@ -66,7 +67,7 @@ d-push-backend-prod:
 d-run-backend-prod:
 	docker run -e HEROKU_API_KEY=$(HEROKU_API_KEY) wingrunr21/alpine-heroku-cli:latest container:release web -a $(APP_NAME_BACKEND)
 d-build-frontend-prod:
-	cd frontend && docker build --file=Dockerfile --rm=true -t registry.heroku.com/$(APP_NAME_FRONTEND)/web .
+	cd frontend && docker build --file=frontend-prod.dockerfile --build-arg VUE_APP_BACKEND_URL=$(BACKEND_URL) --rm=true -t registry.heroku.com/$(APP_NAME_FRONTEND)/web .
 d-push-frontend-prod:
 	docker push registry.heroku.com/$(APP_NAME_FRONTEND)/web
 d-run-frontend-prod:
