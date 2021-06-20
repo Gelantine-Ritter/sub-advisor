@@ -142,7 +142,6 @@ router.beforeEach((to, from, next) => {
     reloadStateFromLocalStorage()
     reloadedState = true
   }
-  console.log('Musste nicht reloaden');
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (auth.state.token) {

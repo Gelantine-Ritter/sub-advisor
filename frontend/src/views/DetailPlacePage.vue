@@ -43,7 +43,6 @@
         </v-container>
       </template>
     </v-card>
-    <h3>UPCOMMING EVENTS</h3>
     <v-container>
       <EventsList class="mt-5" :venueId="this.$route.params.id" />
     </v-container>
