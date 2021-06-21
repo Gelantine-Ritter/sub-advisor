@@ -13,15 +13,6 @@
             v-model="file"
           ></v-file-input>
           <v-text-field class="d-none" v-model="userData.pic"></v-text-field>
-          <v-btn
-            large
-            block
-            outlined
-            elevation="1"
-            class="rounded-pill myEnterBtn text-center"
-            @click="handleUploadSubmit"
-            >UPLOAD</v-btn
-          >
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -39,6 +30,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import * as fileUpload from '../util/FileUpload'
 export default {
   data() {
     return {
@@ -73,40 +65,12 @@ export default {
     ...mapActions({
       updateVenue: 'auth/updateVenue',
     }),
-    updateSubmit() {
-      console.log('PIC')
-      console.log(this.userData.pic)
-      this.updateVenue(this.userData).then(() => {
+    async updateSubmit() {
+      this.userData.pic = await fileUpload.handleUploadSubmit(this.file)
+      await this.updateVenue(this.userData)
+      .then(() => {
         this.$toast.open('Your picture has been updated!')
         this.dialog = false
-      })
-    },
-    async handleUploadSubmit() {
-      try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(
-          this.file
-        )
-        this.userData.pic = fileContentsBase64.substr(
-          fileContentsBase64.indexOf(',') + 1
-        )
-        console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
-        console.log(this.userData.pic)
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    
-    readUploadedFileAsBase64(inputFile) {
-      const temporaryFileReader = new FileReader()
-      return new Promise((resolve, reject) => {
-        temporaryFileReader.onerror = () => {
-          temporaryFileReader.abort()
-          reject(new DOMException('Problem parsing input file.'))
-        }
-        temporaryFileReader.onload = () => {
-          resolve(temporaryFileReader.result)
-        }
-        temporaryFileReader.readAsDataURL(inputFile)
       })
     },
   },
