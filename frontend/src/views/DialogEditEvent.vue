@@ -323,7 +323,7 @@ export default {
           .then(() => {
             this.$toast.open('Event updated!')
             this.dialog = false
-            this.$router.go()
+            // this.$router.go()
           })
           .catch((e) => {
             console.log(e)

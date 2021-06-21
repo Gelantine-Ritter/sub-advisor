@@ -1,5 +1,5 @@
 <template>
-  <div v-if="venueObj!=null">
+  <div v-if="venueObj !== null">
     <h1
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
@@ -15,54 +15,49 @@
       <v-container>
         <v-row>
           <!-- header info -->
-          <v-col  xs="12" sm="4" md="4" lg="4" xl="3">
+          <v-col xs="12" sm="4" md="4" lg="4" xl="3">
             <div>
-            {{ venueObj.website }}
+              {{ venueObj.website }}
             </div>
             <div>
-            {{ venueObj.address.street }}
-            {{ venueObj.address.number }},
-            {{ venueObj.address.plz }}
-            {{ venueObj.address.city }}
-       </div>
-   </v-col>
-          <v-col  xs="12" sm="4" md="4" lg="4" xl="3">
-   </v-col>
-          <v-col  xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
-
-                <MapsView :adress="venueObj.address" />
+              {{ venueObj.address.street }}
+              {{ venueObj.address.number }},
+              {{ venueObj.address.plz }}
+              {{ venueObj.address.city }}
+            </div>
           </v-col>
-   
+          <v-col xs="12" sm="4" md="4" lg="4" xl="3"> </v-col>
+          <v-col xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
+            <MapsView :adress="venueObj.address" />
+          </v-col>
         </v-row>
 
         <v-row>
           <!-- description -->
           <v-col xs="12" sm="6" md="8" lg="8" xl="8">
             {{ venueObj.info }}
-
           </v-col>
           <!-- venue img, map button -->
           <v-col xs="12" sm="6" md="4" lg="4" xl="4">
-            <v-row class=" ml-10 mr-10 pls_center_it">
+            <v-row class="ml-10 mr-10 pls_center_it">
               <v-avatar size="150" v-if="venueObj.pic !== null">
                 <PictureView :picData="venueObj.pic" />
               </v-avatar>
             </v-row>
-            <v-row class=" ml-10 mr-10 mt-5"> 
-            </v-row>
+            <v-row class="ml-10 mr-10 mt-5"> </v-row>
           </v-col>
         </v-row>
       </v-container>
-          <EventsList class="mt-5" :venueId="this.$route.params.id" />
+      <EventsList class="mt-5" :venueId="this.$route.params.id" />
     </v-card>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import MapsView from '../components/features/MapsView.vue'
 import PictureView from '../components/features/PictureView.vue'
 import EventsList from '../components/events/EventsListFor1Venue.vue'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   data() {
@@ -73,14 +68,11 @@ export default {
     }
   },
   mounted() {
-    const param = this.$route.params.id
-    axios.get(`/venues/${param}`).then((response) => {
-      this.venueObj = response.data
-      // once adress is fetched -> render component
-      if (this.venueObj.adress) {
-        this.fetchedAdressData = true
-      }
-    })
+    const venueId = this.$route.params.id
+    requestProvider.getVenue(venueId)
+      .then((response) => {
+        this.venueObj = response.data
+      })
   },
   methods: {
     redirectBackwards() {
@@ -93,7 +85,7 @@ export default {
   components: {
     MapsView,
     EventsList,
-    PictureView
+    PictureView,
   },
 }
 </script>
@@ -132,8 +124,8 @@ export default {
 }
 
 .pls_center_it {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

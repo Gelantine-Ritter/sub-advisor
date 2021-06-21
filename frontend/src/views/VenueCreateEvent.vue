@@ -214,7 +214,7 @@ export default {
   mixins: [validationMixin],
   validations: {
     title: { required, maxLength: maxLength(20) },
-    info: { required, maxLength: maxLength(500) },
+    info: { required, maxLength: maxLength(255) },
     artists: { required },
     price: { required },
     fromDateVal: { required },
@@ -268,7 +268,7 @@ export default {
       const errors = []
       if (!this.$v.info.$dirty) return errors
       !this.$v.info.maxLength &&
-        errors.push('Description must be at most 500 characters long')
+        errors.push('Description must be at most 255 characters long')
       !this.$v.info.required && errors.push('Description is required.')
       return errors
     },
