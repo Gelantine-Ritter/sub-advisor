@@ -1,14 +1,23 @@
 <template>
   <div>
-    <div id="map">
-      <!--In the following div the HERE Map will render-->
-      <v-avatar border size="250">
-        <div
-          id="mapContainer"
-          style="height: 40vh; width: 100%"
-          ref="hereMap"
-        ></div
-      ></v-avatar>
+    <div class="text-center">
+      <v-dialog v-model="dialog" width="80vw">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="d-none d-sm-flex  rounded-pill border border-dark" v-bind="attrs" v-on="on">
+            Show on Map
+          </v-btn>
+        </template>
+
+        <v-card>
+          <div id="map">
+            <div
+              id="mapContainer"
+              style="height: 60vh; width: 80vw"
+              ref="hereMap"
+            ></div>
+          </div>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -22,19 +31,20 @@ export default {
   },
   data() {
     return {
+      dialog: null,
       platform: null,
       apikey: process.env.VUE_APP_API_KEY_HERE,
     }
   },
-  async mounted() {
-    const platform = new window.H.service.Platform({
+  updated() {
+        const platform = new window.H.service.Platform({
       apikey: this.apikey,
     })
     this.platform = platform
-    this.initializeHereMap()
+    this.initMap()
   },
   methods: {
-    initializeHereMap() {
+    initMap() {
       const mapContainer = this.$refs.hereMap
       const H = window.H
       // Obtain the default map types from the platform object
@@ -57,7 +67,7 @@ export default {
         street +
         '%20' +
         num +
-        '205?' +
+        '?' +
         'key=' +
         API_KEY_BING
 
@@ -81,17 +91,23 @@ export default {
 
         addEventListener('resize', () => map.getViewPort().resize())
 
-        //  console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
+        // Add control - log muss leider drin bleiben :/
+        console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
 
-        var berlinMarker = new H.map.Marker({
+        var marker = new H.map.Marker({
           lat: latLngValue[0],
           lng: latLngValue[1],
         })
-        map.addObject(berlinMarker)
+
+        map.addObject(marker)
       })
     },
   },
 }
 </script>
 
-<style></style>
+<style>
+  #mapContainer {
+    overflow-y: hidden;
+  }
+</style>

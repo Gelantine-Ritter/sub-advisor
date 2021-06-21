@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="eventObjs.length > 0" >
-    <h1 class="h1Style text-center display-3 font-weight-medium">UPCOMMING EVENTS</h1>
+    <h1 class="h1Style text-center display-1 font-weight-medium">UPCOMING EVENTS</h1>
     <v-expansion-panels>
         <v-expansion-panel 
           class="shrink ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
