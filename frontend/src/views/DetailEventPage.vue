@@ -1,18 +1,12 @@
 <template>
-  <div>
+  <v-container my-5>
     <h1
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
     >
       {{ eventObj.title }}
     </h1>
-
-    <v-card
-      center
-      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
-      :style="styleObject"
-    >
-    <v-container>
+    <div class="rounded-xl mycontainer" fluid>
       <v-row center>
         <!-- venueName, adress, ... -->
         <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
@@ -77,65 +71,68 @@
         </v-col>
       </v-row>
 
-      <div class="d-flex">
+      <v-row justify="center">
         <!-- EDIT EVENT BUTTON START -->
-      <template class="flex-column" v-if="user!= null && user.id == eventObj.venueId" >
-        <v-card class="pa-2 flex-column" flat tile>
-          <h4>
-            <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
-              <v-icon class="text-right myEditButtonSmallScreen" color="black"
-                >far fa-edit</v-icon
-              >
-              <ModalEditEvent v-model="showDialogEditEvent"/>
-            </v-btn>
-          </h4>
-        </v-card>
-      </template>
-      <template v-else>
-      </template>
-      <!-- EDIT EVENT BUTTON END -->
-
-      <!-- DELETE EVENT BUTTON START -->
-      <template v-if="user != null && user.id == eventObj.venueId">
-        <v-row justify="center">
-          <v-btn
-            class="myDeleteButton"
-            outlined
-            rounded
-            text
-            @click.stop="deleteDialog = true"
-          >
-            DELETE THIS EVENT
-          </v-btn>
-          <v-dialog v-model="deleteDialog" max-width="500">
-            <v-card>
-              <v-card-title class="text-h4 justify-center">
-                Are you really sure you want to delete your account?
-              </v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  elevation="0"
-                  color="light"
-                  @click="deleteDialog = false"
+        <template
+          class="flex-column"
+          v-if="user != null && user.id == eventObj.venueId"
+        >
+          <v-card class="pa-2 flex-column" flat tile>
+            <h4>
+              <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
+                <v-icon class="text-right myEditButtonSmallScreen" color="black"
+                  >far fa-edit</v-icon
                 >
-                  Let me think about it...
-                </v-btn>
-                <v-btn color="error" outlined @click="deleteEventSubmit">
-                  Yes
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-row>
-      </template>
-      <template v-else> </template>
-      <!-- DELETE EVENT BUTTON END -->
-      </div>
+                <ModalEditEvent v-model="showDialogEditEvent" />
+              </v-btn>
+            </h4>
+          </v-card>
+        </template>
+        <template v-else> </template>
+        <!-- EDIT EVENT BUTTON END -->
+      </v-row>
 
-    </v-container>
-    </v-card>
-  </div>
+      <v-row>
+        <!-- DELETE EVENT BUTTON START -->
+        <template v-if="user != null && user.id == eventObj.venueId">
+          <v-row justify="center">
+            <v-btn
+              class="myDeleteButton"
+              outlined
+              rounded
+              text
+              @click.stop="deleteDialog = true"
+            >
+              DELETE THIS EVENT
+            </v-btn>
+            <v-dialog v-model="deleteDialog" max-width="500">
+              <v-card>
+                <v-card-title class="text-h4 justify-center">
+                  Are you really sure you want to delete your account?
+                </v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    elevation="0"
+                    color="light"
+                    @click="deleteDialog = false"
+                  >
+                    Let me think about it...
+                  </v-btn>
+                  <v-btn color="error" outlined @click="deleteEventSubmit">
+                    Yes
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </template>
+
+        <template v-else> </template>
+        <!-- DELETE EVENT BUTTON END -->
+      </v-row>
+    </div>
+  </v-container>
 </template>
 
 <script>
@@ -232,7 +229,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main-card {
   border: '2px solid #000000';
 }
@@ -241,30 +238,6 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.h1Style {
-  color: #cafb03;
-  text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
-    -1px -1px 1px black;
-}
-.lastPage {
-  text-decoration: none;
-  font-size: 1.5em;
-  color: black;
-}
-
-.lastPage:visited {
-  color: black;
-  text-decoration: none;
-}
-
-.lastPage:hover {
-  color: #cafb03;
-  text-decoration: none;
-}
-.myDeleteButton {
-  margin: 30px;
-}
-
 .myPicture {
   height: 100%;
 }
@@ -283,7 +256,6 @@ export default {
   line-height: 100%;
   color: white;
 }
-
 @media screen and (max-width: 600px) {
   .noPicture {
     height: 100px;

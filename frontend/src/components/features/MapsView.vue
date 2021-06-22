@@ -3,7 +3,11 @@
     <div class="text-center">
       <v-dialog v-model="dialog" width="80vw">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="d-none d-sm-flex  rounded-pill border border-dark" v-bind="attrs" v-on="on">
+          <v-btn
+            color="d-none d-sm-flex  rounded-pill border border-dark"
+            v-bind="attrs"
+            v-on="on"
+          >
             Show on Map
           </v-btn>
         </template>
@@ -37,7 +41,7 @@ export default {
     }
   },
   updated() {
-        const platform = new window.H.service.Platform({
+    const platform = new window.H.service.Platform({
       apikey: this.apikey,
     })
     this.platform = platform
@@ -106,8 +110,8 @@ export default {
 }
 </script>
 
-<style>
-  #mapContainer {
-    overflow-y: hidden;
-  }
+<style scoped>
+#mapContainer {
+  overflow-y: hidden;
+}
 </style>

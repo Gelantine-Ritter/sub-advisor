@@ -335,15 +335,4 @@ export default {
 }
 </script>
 
-<style>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 3vw;
-}
-</style>
+<style></style>

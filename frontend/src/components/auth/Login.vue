@@ -35,6 +35,7 @@
           outlined
           elevation="1"
           class="rounded-pill myEnterBtn"
+          style="font-size: 125%"
           type="submit"
           >ENTER</v-btn
         >
@@ -88,26 +89,12 @@ export default {
 </script>
 
 <style scoped>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 5vw;
-}
 h1 {
   font-size: 5.5vw;
   color: black;
   text-align: center;
 }
-.myEnterBtn {
-  background: black;
-  color: white;
-  font-size: 125%;
-}
+
 .centered-input-username >>> input {
   text-align: center;
   font-size: 180%;
