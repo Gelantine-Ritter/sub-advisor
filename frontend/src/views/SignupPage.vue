@@ -18,4 +18,14 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@media screen and (min-width: 1400px) {
+  .v-parallax {
+    height: calc(140vh - 64px) !important;
+  }
+  .v-parallax__image-container {
+    position: absolute;
+    top: -calc(140vh - 64px) !important;
+  }
+}
+</style>
