@@ -26,14 +26,39 @@
 
 <script>
 import emailjs from 'emailjs-com'
+import { required, minLength, email } from 'vuelidate/lib/validators'
 
 export default {
   data() {
     return {
       from_name: '',
-      mail: '',
+      reply_to: '',
       message: '',
     }
+  },
+  validations: {
+    from_name: {
+      required,
+      minLength: minLength(3),
+    },
+    reply_to: {
+      required,
+      email,
+    },
+    message: {
+      required,
+      minLength: minLength(50),
+    },
+  },
+
+  computed: {
+    emailErrors() {
+      const errors = []
+      if (!this.$v.reply_to.$dirty) return errors
+      !this.$v.reply_to.email && errors.push('Must be valid e-mail')
+      !this.$v.reply_to.required && errors.push('E-mail is required')
+      return errors
+    },
   },
 
   methods: {
