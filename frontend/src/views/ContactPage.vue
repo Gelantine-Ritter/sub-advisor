@@ -1,8 +1,10 @@
 <template>
   <v-container class="rounded-xl mycontainer" fluid>
-    <h1 class="h1Style text-center display-3 font-weight-medium">CONTACT US</h1>
+    <h1 class="marginHeading h1Style text-center display-3 font-weight-medium">
+      CONTACT US
+    </h1>
     <div>
-      <form class="contact-form" @submit.prevent="sendEmail">
+      <form ref="contactform" @submit.prevent="sendEmail">
         <v-row>
           <v-col cols="12" sm="6">
             <v-text-field
@@ -38,7 +40,15 @@
             </v-textarea>
           </v-col>
         </v-row>
-        <input type="submit" value="Send" />
+        <v-btn
+          type="submit"
+          outlined
+          rounded
+          class="mr-4"
+          :disabled="$v.$invalid"
+        >
+          submit
+        </v-btn>
       </form>
     </div>
   </v-container>
@@ -57,6 +67,7 @@ export default {
       message: '',
     }
   },
+
   mixins: [validationMixin],
   validations: {
     from_name: {
@@ -108,31 +119,22 @@ export default {
           e.target,
           'user_i2XDe74FgVZ1VEc62xset'
         )
-        .then(this.clear())
         .then(
           (result) => {
             console.log('SUCCESS!', result.status, result.text)
+            location.reload()
           },
           (error) => {
             console.log('FAILED...', error)
           }
         )
     },
-    clear() {
-      this.$v.$reset()
-      this.from_name = ''
-      this.message = ''
-      this.reply_to = ''
-    },
   },
 }
 </script>
 
-<style>
-.h1Style {
-  color: #cafb03;
-  text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
-    -1px -1px 1px black;
+<style scoped>
+.marginHeading {
   margin-bottom: 10vh;
 }
 </style>
