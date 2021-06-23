@@ -52,6 +52,7 @@ public class EventIT extends Driver {
     private static final String EVENT_TITLE = "Away From Everything";
     private static final String EVENT_INFO = "Real authentic female hardcore am Samstag";
     private static final String[] EVENT_ARTISTS = {"Krimewatch", "The Distillers", "Bikini Kill"};
+    private static final String[] EVENT_TAGS = {"Punkrock", "Konzert"};
     private static final String EVENT_PRICE = "10.00";
     private static final String EVENT_START = "2021-09-04T20:00:00";
     private static final String EVENT_END = "2021-09-04T23:00:00";
@@ -98,6 +99,7 @@ public class EventIT extends Driver {
                 .venueId(VENUE_CRALLE.getId().toString())
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
+                .tags(EVENT_TAGS)
                 .price(EVENT_PRICE)
                 .eventStart(EVENT_START)
                 .eventEnd(EVENT_END)
@@ -213,6 +215,7 @@ public class EventIT extends Driver {
                                 jsonPath("$.title").value(EVENT_TITLE),
                                 jsonPath("$.info").value(EVENT_INFO),
                                 jsonPath("$.artists").exists(),
+                                jsonPath("$.tags").exists(),
                                 jsonPath("$.price").value(Double.parseDouble(EVENT_PRICE)),
                                 jsonPath("$.created").exists(),
                                 jsonPath("$.modifiedAt").exists(),

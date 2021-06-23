@@ -125,13 +125,13 @@ export default {
         this.dialog = true
       } else {
         this.updateVenue(this.userData)
-        .then(() => {
-          this.$toast.open('Your account has been updated!')
-          this.dialog = false
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+          .then(() => {
+            this.$toast.open('Your account has been updated!')
+            this.dialog = false
+          })
+          .catch((e) => {
+            console.log(e)
+          })
       }
     },
   },

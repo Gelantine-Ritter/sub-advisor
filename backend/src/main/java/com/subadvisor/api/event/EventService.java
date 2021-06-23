@@ -35,19 +35,28 @@ public class EventService extends DataAccess implements IEventService {
 
     @Override
     public List<EventDto> getEventsByVenue(String venueId) {
-        return DATA.events()
+        List<EventDto> events =   DATA.events()
                 .findByVenueId(Long.parseLong(venueId))
                 .stream()
                 .map(event -> mapper.eventToEventDto(event))
                 .collect(Collectors.toList());
+
+        return events;
     }
 
     @Override
-    public Event createEvent(EventCreateDto dto) {
+    public EventDto createEvent(EventCreateDto dto) {
 
-        return DATA.events()
-                .save(new EventMapper(DATA).mapToEventEntity(dto)
-        );
+        return DATA.venues()
+                .findById(Long.parseLong(dto.getVenueId()))
+                .map(venue -> mapper.eventCreateDtoToEvent(dto, venue))
+                .map(event -> DATA.events().save(event))
+                .map(event -> mapper.eventToEventDto(event))
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                format("Could not create Event for venue with id ", dto.getVenueId())
+                        )
+                );
     }
 
     @Override
@@ -71,7 +80,7 @@ public class EventService extends DataAccess implements IEventService {
                     return event;
                 })
                 .map(event -> DATA.events().save(event))
-                .map(event ->  mapper.eventToEventDto(event))
+                .map(event -> mapper.eventToEventDto(event))
                 .orElseThrow(
                         () -> new EntityNotFoundException(
                                 format("Event with id - %s, not found", eventId)

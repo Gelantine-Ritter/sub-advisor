@@ -19,18 +19,13 @@ export default {
 </script>
 
 <style scoped>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 5vw;
-}
-h1 {
-  font-size: 8vw;
-  color: black;
+@media screen and (min-width: 1400px) {
+  .v-parallax {
+    height: calc(140vh - 64px) !important;
+  }
+  .v-parallax__image-container {
+    position: absolute;
+    top: -calc(140vh - 64px) !important;
+  }
 }
 </style>

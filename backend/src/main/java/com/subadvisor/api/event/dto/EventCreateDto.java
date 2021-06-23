@@ -6,13 +6,11 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import javax.validation.constraints.*;
 
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Accessors(fluent = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class EventCreateDto {
 
     @NotNull(message = "Please provide a venueId")
@@ -26,5 +24,6 @@ public class EventCreateDto {
     private String price;
     private String eventStart;
     private String eventEnd;
-    private byte[] pic;
+    private String pic;
+    private String[] tags;
 }

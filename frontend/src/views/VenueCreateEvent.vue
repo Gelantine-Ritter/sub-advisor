@@ -40,11 +40,6 @@
                         prepend-icon="mdi-camera"
                         v-model="file"
                       ></v-file-input>
-                      <v-text-field
-                        class="d-none"
-                        v-model="pic"
-                        @input="handleUploadSubmit"
-                      ></v-text-field>
                     </div>
                   </v-card>
                 </v-col>
@@ -213,6 +208,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
 import auth from './../store/auth'
+import * as fileUpload from '../util/FileUpload'
 
 export default {
   mixins: [validationMixin],
@@ -296,61 +292,31 @@ export default {
         return artistsArr1
       }
     },
-    async handleUploadSubmit() {
-      console.log('in handleUploadSubmit')
-      try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(
-          this.file
-        )
-        this.pic = fileContentsBase64.substr(
-          fileContentsBase64.indexOf(',') + 1
-        )
-        console.log('CHECK IF THIS.PIC HAS BEEN UPDATED')
-        console.log(this.pic)
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    readUploadedFileAsBase64(inputFile) {
-      const temporaryFileReader = new FileReader()
-      return new Promise((resolve, reject) => {
-        temporaryFileReader.onerror = () => {
-          temporaryFileReader.abort()
-          reject(new DOMException('Problem parsing input file.'))
-        }
-        temporaryFileReader.onload = () => {
-          resolve(temporaryFileReader.result)
-        }
-        temporaryFileReader.readAsDataURL(inputFile)
-      })
-    },
-    submit() {
+    async submit() {
       this.$v.$touch()
-      this.handleUploadSubmit().then(() => {
-        axios
-          .post(
-            '/events/',
-            {
-              venueId: this.user.id,
-              title: this.title,
-              info: this.info,
-              artists: this.convertArtistToArray(this.artists),
-              price: this.price,
-              eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-              eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-              pic: this.pic,
-            },
-            { headers: { Authorization: 'Bearer ' + auth.state.token } }
-          )
-          .then((response) => {
-            console.log(response.data)
-            this.clear()
-            this.$toast.open('YEAAAH Event created!')
-          })
-          .catch((e) => {
-            console.log(e)
-          })
-      })
+      this.pic = await fileUpload.handleUploadSubmit(this.file)
+      axios
+        .post(
+          '/events/',
+          {
+            venueId: this.user.id,
+            title: this.title,
+            info: this.info,
+            artists: this.convertArtistToArray(this.artists),
+            price: this.price,
+            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+            pic: this.pic,
+          },
+          { headers: { Authorization: 'Bearer ' + auth.state.token } }
+        )
+        .then(() => {
+          this.clear()
+          this.$toast.open('YEAAAH Event created!')
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
 
     clear() {
@@ -369,15 +335,4 @@ export default {
 }
 </script>
 
-<style>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 3vw;
-}
-</style>
+<style></style>

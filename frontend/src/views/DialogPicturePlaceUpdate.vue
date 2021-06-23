@@ -3,25 +3,16 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">YOUR LOGO</span>
+          <span class="text-h5"></span>
         </v-card-title>
         <div class="rounded-xl mycontainer2" fluid>
-          <h1 class="h12">FILE UPLOAD</h1>
+          <h1 class="uploadTitle">YOUR LOGO</h1>
           <v-file-input
-            label="File input"
+            label=""
             prepend-icon="mdi-camera"
             v-model="file"
           ></v-file-input>
           <v-text-field class="d-none" v-model="userData.pic"></v-text-field>
-          <v-btn
-            large
-            block
-            outlined
-            elevation="1"
-            class="rounded-pill myEnterBtn text-center"
-            @click="handleUploadSubmit"
-            >UPLOAD</v-btn
-          >
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -39,6 +30,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import * as fileUpload from '../util/FileUpload'
 export default {
   data() {
     return {
@@ -73,40 +65,11 @@ export default {
     ...mapActions({
       updateVenue: 'auth/updateVenue',
     }),
-    updateSubmit() {
-      console.log('PIC')
-      console.log(this.userData.pic)
-      this.updateVenue(this.userData).then(() => {
+    async updateSubmit() {
+      this.userData.pic = await fileUpload.handleUploadSubmit(this.file)
+      await this.updateVenue(this.userData).then(() => {
         this.$toast.open('Your picture has been updated!')
         this.dialog = false
-      })
-    },
-    async handleUploadSubmit() {
-      try {
-        const fileContentsBase64 = await this.readUploadedFileAsBase64(
-          this.file
-        )
-        this.userData.pic = fileContentsBase64.substr(
-          fileContentsBase64.indexOf(',') + 1
-        )
-        console.log('CHECK IF THIS.USERDATA.PIC HAS BEEN UPDATED')
-        console.log(this.userData.pic)
-      } catch (e) {
-        console.warn(e.message)
-      }
-    },
-    
-    readUploadedFileAsBase64(inputFile) {
-      const temporaryFileReader = new FileReader()
-      return new Promise((resolve, reject) => {
-        temporaryFileReader.onerror = () => {
-          temporaryFileReader.abort()
-          reject(new DOMException('Problem parsing input file.'))
-        }
-        temporaryFileReader.onload = () => {
-          resolve(temporaryFileReader.result)
-        }
-        temporaryFileReader.readAsDataURL(inputFile)
       })
     },
   },
@@ -124,14 +87,9 @@ export default {
   background: white;
   padding: 5%;
 }
-.h12 {
+.uploadTitle {
   font-size: 4vw;
   color: black;
   text-align: center;
-}
-.myEnterBtn {
-  background: black;
-  color: white;
-  font-size: 125%;
 }
 </style>

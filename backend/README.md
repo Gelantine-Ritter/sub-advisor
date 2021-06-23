@@ -43,6 +43,10 @@ Since Dev-mode is also supported for Spring-backend (changes are mirrored automa
 
 Read the [README](../README.md "BACKEND REAMDE") of the whole project for further instructions.
 
+## Deployment with Heroku
+
+SPRING_PROFILES_ACTIVE=prod is set via heroku config:set and not passed as env-variable in docker run.
+
 ## @Deprecated ~~Usage with Docker~~ 
 
 You can run the backendservice as a docker-container on port 8080.
