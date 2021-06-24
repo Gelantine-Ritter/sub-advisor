@@ -297,7 +297,7 @@ export default {
       if (!this.$v.userData.name.$dirty) return errors
       !this.$v.userData.name.required && errors.push('Name is required.')
       !this.$v.userData.name.minLength &&
-        errors.push('Name must be at least 2 characters long')
+        errors.push('Name must have at least 2 letters ')
       return errors
     },
     websiteErrors() {
@@ -311,7 +311,7 @@ export default {
       const errors = []
       if (!this.$v.userData.info.$dirty) return errors
       !this.$v.userData.info.maxLength &&
-        errors.push('Description must be at most 500 characters long')
+        errors.push('Description must have at most 500 letters ')
       !this.$v.userData.info.required && errors.push('Description is required.')
       !this.$v.userData.info.minLength &&
         errors.push('Tell your guests a little bit more about your place ;]')
@@ -333,9 +333,9 @@ export default {
       const errors = []
       if (!this.$v.userData.address.street.$dirty) return errors
       !this.$v.userData.address.street.maxLength &&
-        errors.push('Streetname must be at most 30 characters long')
+        errors.push('Streetname must have at most 30 letters ')
       !this.$v.userData.address.street.minLength &&
-        errors.push('Streetname must be at least 4 characters long')
+        errors.push('Streetname must have at least 4 letters ')
       !this.$v.userData.address.street.required &&
         errors.push('Street is required.')
       !this.$v.userData.address.city.alpha && errors.push('No numbers allowed')

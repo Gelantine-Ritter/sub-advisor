@@ -13,7 +13,13 @@
                   >USERNAME</v-list-item-subtitle
                 >
 
-                <v-text-field type="text" v-model="userData.username">
+                <v-text-field
+                  type="text"
+                  v-model="userData.username"
+                  :error-messages="usernameErrors"
+                  @input="$v.userData.username.$touch()"
+                  @blur="$v.userData.username.$touch()"
+                >
                 </v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
@@ -21,7 +27,13 @@
                   >E-MAIL</v-list-item-subtitle
                 >
 
-                <v-text-field type="text" v-model="userData.email">
+                <v-text-field
+                  type="text"
+                  v-model="userData.email"
+                  :error-messages="emailErrors"
+                  @input="$v.userData.email.$touch()"
+                  @blur="$v.userData.email.$touch()"
+                >
                 </v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6">
@@ -38,7 +50,9 @@
                 <v-text-field
                   type="password"
                   v-model="userData.password"
-                  :rules="passwordRules"
+                  :error-messages="passwordErrors"
+                  @input="$v.userData.password.$touch()"
+                  @blur="$v.userData.password.$touch()"
                 >
                 </v-text-field>
               </v-col>
@@ -47,7 +61,13 @@
                 <v-list-item-subtitle class="text-h6"
                   >CONFIRM PASSWORD</v-list-item-subtitle
                 >
-                <v-text-field type="password" v-model="confirm_password">
+                <v-text-field
+                  type="password"
+                  v-model="confirm_password"
+                  :error-messages="confirmPasswordErrors"
+                  @input="$v.confirm_password.$touch()"
+                  @blur="$v.confirm_password.$touch()"
+                >
                 </v-text-field>
               </v-col>
             </v-row>
@@ -56,9 +76,16 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn elevation="1" outlined rounded text @click="dialog = false">
-            Close
+            Cancel
           </v-btn>
-          <v-btn elevation="1" outlined rounded text @click="updateSubmit">
+          <v-btn
+            elevation="1"
+            outlined
+            rounded
+            text
+            @click="updateSubmit"
+            :disabled="$v.$invalid"
+          >
             Save
           </v-btn>
         </v-card-actions>
@@ -69,6 +96,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import {
+  required,
+  minLength,
+  sameAs,
+  maxLength,
+  email,
+} from 'vuelidate/lib/validators'
 export default {
   data() {
     return {
@@ -79,11 +113,20 @@ export default {
         mobile: null,
       },
       confirm_password: null,
-      passwordRules: [
-        (v) => !v || v.length >= 8 || 'Min 8 characters',
-        // (v) => (v && !!v.trim()) || 'Seriously? just a blank password?',
-      ],
     }
+  },
+  validations: {
+    userData: {
+      username: { required, minLength: minLength(4), maxLength: maxLength(20) },
+      email: { required, email },
+      password: { required, minLength: minLength(8) },
+    },
+    confirm_password: {
+      required,
+      sameAsPassword: sameAs(function () {
+        return this.userData.password
+      }),
+    },
   },
   props: {
     value: Boolean,
@@ -97,9 +140,44 @@ export default {
         return this.value
       },
       set(value) {
-        console.log(value)
         this.$emit('input', value)
       },
+    },
+    usernameErrors() {
+      const errors = []
+      if (!this.$v.userData.username.$dirty) return errors
+      !this.$v.userData.username.required &&
+        errors.push('Username is required.')
+      !this.$v.userData.username.minLength &&
+        errors.push('Name must be at least 4 letters')
+      !this.$v.userData.username.maxLength &&
+        errors.push('Name must have at most 20 letters')
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.userData.email.$dirty) return errors
+      !this.$v.userData.email.required && errors.push('Email is required.')
+      !this.$v.userData.email.email &&
+        errors.push('Email must be a valid Email, e.g. meine.email@mail.org')
+      return errors
+    },
+    passwordErrors() {
+      const errors = []
+      if (!this.$v.userData.password.$dirty) return errors
+      !this.$v.userData.password.required &&
+        errors.push('Password is required.')
+      !this.$v.userData.password.minLength &&
+        errors.push('Password must have at least 8 characters')
+      return errors
+    },
+    confirmPasswordErrors() {
+      const errors = []
+      if (!this.$v.confirm_password.$dirty) return errors
+      !this.$v.confirm_password.required && errors.push('Password is required.')
+      !this.$v.confirm_password.sameAsPassword &&
+        errors.push('Passwords must be identical ')
+      return errors
     },
   },
 
@@ -114,25 +192,14 @@ export default {
       updateVenue: 'auth/updateVenue',
     }),
     updateSubmit() {
-      if (
-        this.userData.password != null &&
-        this.userData.password.length <= 8
-      ) {
-        this.$toast.open('Passwords must hast minimum 8 characters!')
-        this.dialog = true
-      } else if (this.confirm_password !== this.userData.password) {
-        this.$toast.open('Passwords do not match!')
-        this.dialog = true
-      } else {
-        this.updateVenue(this.userData)
-          .then(() => {
-            this.$toast.open('Your account has been updated!')
-            this.dialog = false
-          })
-          .catch((e) => {
-            console.log(e)
-          })
-      }
+      this.updateVenue(this.userData)
+        .then(() => {
+          this.$toast.open('Your account has been updated!')
+          this.dialog = false
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
   },
 }
