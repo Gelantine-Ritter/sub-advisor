@@ -106,7 +106,8 @@ deploy-backend:
   only:
     refs:
       - tags
-      - master
+  except:
+    - branches
 
 deploy-frontend:
   stage: deploy
@@ -122,4 +123,5 @@ deploy-frontend:
   only:
     refs:
       - tags
-      - master
+  except:
+    - branches
