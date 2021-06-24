@@ -3,6 +3,8 @@ FROM node:12.2.0-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 ARG VUE_APP_BACKEND_URL
+ARG VUE_APP_RELEASE_VERSION
+ENV VUE_APP_RELEASE_VERSION=$VUE_APP_RELEASE_VERSION
 ENV VUE_APP_BACKEND_URL=$VUE_APP_BACKEND_URL
 COPY package.json /app/package.json
 RUN npm install --silent

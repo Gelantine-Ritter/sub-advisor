@@ -16,7 +16,8 @@
         cols="12"
       >
         {{ new Date().getFullYear() }} —
-        <strong>subadvisor</strong>
+        <strong>subadvisor</strong> -
+        {{ release }}
       </v-col>
     </v-row>
   </v-container>
@@ -26,6 +27,7 @@
 export default {
   data: () => ({
     links: ['Contact', 'Impressum'],
+    release: process.env.VUE_APP_RELEASE_VERSION != null ? process.env.VUE_APP_RELEASE_VERSION : "dev_mode"
   }),
 }
 </script>

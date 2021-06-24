@@ -1,6 +1,10 @@
 [![pipeline status](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/badges/master/pipeline.svg)](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/commits/master)
 
-# Subadvisor - v0.0.1
+# Subadvisor - v1.0.0
+
+# Changelog
+
+[v1.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v1.0.0)
 
 ### Starting with Docker-Compose
 
