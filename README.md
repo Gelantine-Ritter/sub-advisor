@@ -2,6 +2,10 @@
 
 # Subadvisor - v0.0.1
 
+# Changelog
+
+[v1.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v1.0.0)
+
 ### Starting with Docker-Compose
 
 We recommend to start our project as a docker-cluster with docker-compose.
