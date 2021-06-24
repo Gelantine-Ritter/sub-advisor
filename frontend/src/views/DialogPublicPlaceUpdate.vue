@@ -12,22 +12,40 @@
                 <v-list-item-subtitle class="text-h6"
                   >PLACE</v-list-item-subtitle
                 >
-                <v-text-field type="text" v-model="userData.name">
+                <v-text-field
+                  type="text"
+                  v-model="userData.name"
+                  :error-messages="nameErrors"
+                  @input="$v.userData.name.$touch()"
+                  @blur="$v.userData.name.$touch()"
+                >
                 </v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-list-item-subtitle class="text-h6"
                   >WEBSITE</v-list-item-subtitle
                 >
-                <v-text-field type="text" v-model="userData.website">
+                <v-text-field
+                  type="text"
+                  v-model="userData.website"
+                  :error-messages="websiteErrors"
+                  @input="$v.userData.website.$touch()"
+                  @blur="$v.userData.website.$touch()"
+                >
                 </v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-list-item-subtitle class="text-h6"
-                  >DESCRIPTION</v-list-item-subtitle
+                <v-textarea
+                  type="text"
+                  v-model="userData.info"
+                  :error-messages="infoErrors"
+                  @input="$v.userData.info.$touch()"
+                  @blur="$v.userData.info.$touch()"
                 >
-                <v-text-field type="text" v-model="userData.info">
-                </v-text-field>
+                  <template v-slot:label>
+                    <div>DESCRIPTION</div>
+                  </template>
+                </v-textarea>
               </v-col>
               <v-col cols="12" sm="7" md="7">
                 <v-list-item-subtitle class="text-h6"
@@ -42,6 +60,9 @@
                       <v-text-field
                         type="text"
                         v-model="userData.address.street"
+                        :error-messages="streetErrors"
+                        @input="$v.userData.address.street.$touch()"
+                        @blur="$v.userData.address.street.$touch()"
                       >
                       </v-text-field>
                     </v-col>
@@ -56,6 +77,9 @@
                       <v-text-field
                         type="text"
                         v-model="userData.address.number"
+                        :error-messages="numberErrors"
+                        @input="$v.userData.address.number.$touch()"
+                        @blur="$v.userData.address.number.$touch()"
                       >
                       </v-text-field>
                     </v-col>
@@ -67,7 +91,13 @@
                       >CITY:</v-col
                     >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
-                      <v-text-field type="text" v-model="userData.address.city">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.address.city"
+                        :error-messages="cityErrors"
+                        @input="$v.userData.address.city.$touch()"
+                        @blur="$v.userData.address.city.$touch()"
+                      >
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -78,7 +108,13 @@
                       >PLZ:</v-col
                     >
                     <v-col cols="12" xs="8" sm="9" md="9" lg="9" xl="9">
-                      <v-text-field type="text" v-model="userData.address.plz">
+                      <v-text-field
+                        type="text"
+                        v-model="userData.address.plz"
+                        :error-messages="plzErrors"
+                        @input="$v.userData.address.plz.$touch()"
+                        @blur="$v.userData.address.plz.$touch()"
+                      >
                       </v-text-field>
                     </v-col>
                   </v-row>
@@ -92,8 +128,7 @@
                   <v-row>
                     <v-col cols="6">MONDAY:</v-col>
                     <v-col cols="6">
-                      <v-text-field type="text" v-model="userData.hours.monday">
-                      </v-text-field>
+                      <v-text-field type="text"> </v-text-field>
                     </v-col>
                   </v-row>
                 </v-list-item-title>
@@ -170,9 +205,16 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn elevation="1" outlined rounded text @click="dialog = false">
-            Close
+            Cancel
           </v-btn>
-          <v-btn elevation="1" outlined rounded text @click="updateSubmit">
+          <v-btn
+            elevation="1"
+            outlined
+            rounded
+            text
+            :disabled="$v.$invalid"
+            @click="updateSubmit"
+          >
             Save
           </v-btn>
         </v-card-actions>
@@ -182,6 +224,16 @@
 </template>
 
 <script>
+import {
+  required,
+  minLength,
+  maxLength,
+  url,
+  numeric,
+  between,
+  alpha,
+} from 'vuelidate/lib/validators'
+
 import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
@@ -195,6 +247,34 @@ export default {
         address: {},
       },
     }
+  },
+  validations: {
+    userData: {
+      name: { required, minLength: minLength(2) },
+      website: { required, url },
+      info: {
+        required,
+        maxLength: maxLength(500),
+        alpha,
+        minLength: minLength(200),
+      },
+      address: {
+        street: {
+          required,
+          minLength: minLength(4),
+          maxLength: maxLength(30),
+          alpha,
+        },
+        number: { required, numeric, between: between(1, 300) },
+        city: {
+          required,
+          maxLength: maxLength(58),
+          minLength: minLength(3),
+          alpha,
+        },
+        plz: { required, numeric, between: between(10000, 99999) },
+      },
+    },
   },
   props: {
     value: Boolean,
@@ -212,6 +292,79 @@ export default {
         this.$emit('input', value)
       },
     },
+    nameErrors() {
+      const errors = []
+      if (!this.$v.userData.name.$dirty) return errors
+      !this.$v.userData.name.required && errors.push('Name is required.')
+      !this.$v.userData.name.minLength &&
+        errors.push('Name must be at least 2 characters long')
+      return errors
+    },
+    websiteErrors() {
+      const errors = []
+      if (!this.$v.userData.name.$dirty) return errors
+      !this.$v.userData.website.url &&
+        errors.push('Website must be a valid URL, e.g. https://mysite.com')
+      return errors
+    },
+    infoErrors() {
+      const errors = []
+      if (!this.$v.userData.info.$dirty) return errors
+      !this.$v.userData.info.maxLength &&
+        errors.push('Description must be at most 500 characters long')
+      !this.$v.userData.info.required && errors.push('Description is required.')
+      !this.$v.userData.info.minLength &&
+        errors.push('Tell your guests a little bit more about your place ;]')
+
+      return errors
+    },
+    numberErrors() {
+      const errors = []
+      if (!this.$v.userData.address.number.$dirty) return errors
+      !this.$v.userData.address.number.numeric &&
+        errors.push('Number should be a number - obviously')
+      !this.$v.userData.address.number.required &&
+        errors.push('Number is required.')
+      !this.$v.userData.address.number.between &&
+        errors.push('Not a real house number ....')
+      return errors
+    },
+    streetErrors() {
+      const errors = []
+      if (!this.$v.userData.address.street.$dirty) return errors
+      !this.$v.userData.address.street.maxLength &&
+        errors.push('Streetname must be at most 30 characters long')
+      !this.$v.userData.address.street.minLength &&
+        errors.push('Streetname must be at least 4 characters long')
+      !this.$v.userData.address.street.required &&
+        errors.push('Street is required.')
+      !this.$v.userData.address.city.alpha && errors.push('No numbers allowed')
+      return errors
+    },
+    cityErrors() {
+      const errors = []
+      if (!this.$v.userData.address.city.$dirty) return errors
+      !this.$v.userData.address.city.maxLength &&
+        errors.push(
+          'There is no city name longer then Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch'
+        )
+      !this.$v.userData.address.city.minLength &&
+        errors.push('City must have at least 4 letters.')
+      !this.$v.userData.address.city.required &&
+        errors.push('City is required.')
+      !this.$v.userData.address.city.alpha && errors.push('No numbers allowed')
+      return errors
+    },
+    plzErrors() {
+      const errors = []
+      if (!this.$v.userData.address.plz.$dirty) return errors
+      !this.$v.userData.address.plz.between &&
+        errors.push('This is not a real PLZ')
+      !this.$v.userData.address.plz.numeric &&
+        errors.push('PLZ should be a number')
+      !this.$v.userData.address.plz.required && errors.push('PLZ is required.')
+      return errors
+    },
   },
   mounted: function () {
     this.userData.name = this.user.name
@@ -225,6 +378,7 @@ export default {
       updateVenue: 'auth/updateVenue',
     }),
     updateSubmit() {
+      this.$v.$touch()
       this.updateVenue(this.userData).then(() => {
         this.$toast.open('Your public page has been updated!')
         this.dialog = false

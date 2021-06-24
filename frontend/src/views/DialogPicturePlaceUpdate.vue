@@ -17,7 +17,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn elevation="1" outlined rounded text @click="dialog = false">
-            Close
+            Cancel
           </v-btn>
           <v-btn elevation="1" outlined rounded text @click="updateSubmit">
             Save

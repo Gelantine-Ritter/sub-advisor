@@ -204,14 +204,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { validationMixin } from 'vuelidate'
+
 import { required, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
 
 export default {
-  mixins: [validationMixin],
   validations: {
     title: { required, maxLength: maxLength(20) },
     info: { required, maxLength: maxLength(500) },

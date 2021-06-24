@@ -34,20 +34,21 @@ import auth from './store/auth'
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
-
-import {reloadStateFromLocalStorage} from './util/StoreReloader'
-
+import { reloadStateFromLocalStorage } from './util/StoreReloader'
+import Vuelidate from 'vuelidate'
 
 require('@/store/subscriber')
 
 window.axios = axios
-axios.defaults.baseURL = process.env.VUE_APP_BACKEND_URL || "http://localhost:8080/"
+axios.defaults.baseURL =
+  process.env.VUE_APP_BACKEND_URL || 'http://localhost:8080/'
 
 store.dispatch('auth/attempt', localStorage.getItem('token'))
 
 Vue.use(axios)
 Vue.use(VueCompositionAPI)
 Vue.use(Router)
+Vue.use(Vuelidate)
 
 // Display Toast
 Vue.use(VueToast, {
@@ -133,12 +134,10 @@ const router = new Router({
   ],
 })
 
-
 let reloadedState = false
 
 router.beforeEach((to, from, next) => {
-
-  if (!reloadedState && !auth.state.token){
+  if (!reloadedState && !auth.state.token) {
     reloadStateFromLocalStorage()
     reloadedState = true
   }
