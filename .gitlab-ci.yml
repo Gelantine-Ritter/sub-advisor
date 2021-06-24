@@ -21,6 +21,9 @@ build-project:
   stage: build
   script:
     - echo "build project"
+  except:
+    refs:
+      - tags
 
 build-backend:
   stage: build
@@ -29,6 +32,9 @@ build-backend:
   artifacts:
     paths:
       - backend/target/
+  except:
+    refs:
+      - tags
 
 build-frontend:
   image: node:lts-alpine
@@ -41,6 +47,9 @@ build-frontend:
     paths:
       - frontend/dist
       - frontend/node_modules
+  except:
+    refs:
+      - tags
 
 build-docker-compose:
   stage: build
@@ -53,24 +62,35 @@ build-docker-compose:
     - apk update && apk add make
   script:
     - make dc-complete ARGS=-d
+  except:
+    refs:
+      - tags
 
 lint:
   stage: quality_assurance
   script:
     - echo "linting code structure"
+  except:
+    refs:
+      - tags
 
 IT-backend:
   stage: tests
   script:
     - cd ./backend
     - ./mvnw failsafe:integration-test failsafe:verify
+  except:
+    refs:
+      - tags
 
 UT-backend:
   stage: tests
   script:
     - cd backend
     - ./mvnw surefire:test
-
+  except:
+    refs:
+      - tags
 
 deploy-backend:
   stage: deploy

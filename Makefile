@@ -67,7 +67,7 @@ d-push-backend-prod:
 d-run-backend-prod:
 	docker run -e HEROKU_API_KEY=$(HEROKU_API_KEY) wingrunr21/alpine-heroku-cli:latest container:release web -a $(APP_NAME_BACKEND)
 d-build-frontend-prod:
-	cd frontend && docker build --file=frontend-prod.dockerfile --build-arg VUE_APP_BACKEND_URL=$(BACKEND_URL) VUE_APP_RELEASE_VERSION=$(CI_COMMIT_TAG) --rm=true -t registry.heroku.com/$(APP_NAME_FRONTEND)/web .
+	cd frontend && docker build --file=frontend-prod.dockerfile --build-arg VUE_APP_BACKEND_URL=$(BACKEND_URL) --build-arg VUE_APP_RELEASE_VERSION=$(CI_COMMIT_TAG) --rm=true -t registry.heroku.com/$(APP_NAME_FRONTEND)/web .
 d-push-frontend-prod:
 	docker push registry.heroku.com/$(APP_NAME_FRONTEND)/web
 d-run-frontend-prod:
