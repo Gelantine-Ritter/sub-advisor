@@ -20,14 +20,16 @@
                   <v-text-field
                     v-model="artists"
                     label="ARTISTS"
-                    @input="$v.artists.$touch()"
+                    :error-messages="artistErrors"
                     @blur="$v.artists.$touch()"
+                    @input="$v.artists.$touch()"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6">
                   <v-text-field
                     v-model="price"
                     label="PRICE"
+                    :error-messages="priceErrors"
                     @input="$v.price.$touch()"
                     @blur="$v.price.$touch()"
                   ></v-text-field>
@@ -64,7 +66,6 @@
                     v-model="fromDateMenu"
                     :close-on-content-click="false"
                     :nudge-right="40"
-                    :error-messages="requiredErrors"
                     transition="scale-transition"
                     offset-y
                     max-width="290px"
@@ -205,7 +206,13 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { required, maxLength } from 'vuelidate/lib/validators'
+import {
+  required,
+  maxLength,
+  numeric,
+  minLength,
+  between,
+} from 'vuelidate/lib/validators'
 import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
@@ -213,13 +220,14 @@ import * as fileUpload from '../util/FileUpload'
 export default {
   validations: {
     title: { required, maxLength: maxLength(20) },
-    info: { required, maxLength: maxLength(500) },
+    info: { required, maxLength: maxLength(500), minLength: minLength(100) },
+    price: { required, numeric, between: between(0, 100) },
+    //  pic:{},
     artists: { required },
-    price: { required },
+    fromDateMenu: { required },
     fromDateVal: { required },
+    toDateMenu: { required },
     toDateVal: { required },
-    fromTimeVal: { required },
-    toTimeVal: { required },
   },
   data() {
     return {
@@ -259,24 +267,34 @@ export default {
       const errors = []
       if (!this.$v.title.$dirty) return errors
       !this.$v.title.maxLength &&
-        errors.push('Title must be at most 20 characters long')
+        errors.push('Title must have at most 20 letters')
       !this.$v.title.required && errors.push('Title is required.')
+
       return errors
     },
     infoErrors() {
       const errors = []
       if (!this.$v.info.$dirty) return errors
       !this.$v.info.maxLength &&
-        errors.push('Description must be at most 500 characters long')
+        errors.push('Description must have at most 500 letters. ')
+      !this.$v.info.minLength &&
+        errors.push('Tell your guests a bit more about your event ;]')
       !this.$v.info.required && errors.push('Description is required.')
       return errors
     },
-    requiredErrors() {
+    priceErrors() {
       const errors = []
-      if (!this.$v.fromTimeVal.$dirty || !this.$v.fromTimeVal.$dirty)
-        return errors
-      !this.$v.toDateVal.required ||
-        (!this.$v.fromDateVal.required && errors.push('Fiel is required.'))
+      if (!this.$v.price.$dirty) return errors
+      !this.$v.price.between &&
+        errors.push('That is pretty expensive, stay fair!')
+      !this.$v.price.numeric && errors.push('Price should be a number')
+      !this.$v.price.required && errors.push('Price is required.')
+      return errors
+    },
+    artistErrors() {
+      const errors = []
+      if (!this.$v.artists.$dirty) return errors
+      !this.$v.artists.required && errors.push('Artists are required.')
       return errors
     },
   },
