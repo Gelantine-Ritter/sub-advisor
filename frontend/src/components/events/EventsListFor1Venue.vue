@@ -62,7 +62,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { requestProvider } from '../../util/requestProvider'
+
 export default {
   props: {
     venueId: String,
@@ -77,9 +78,10 @@ export default {
 
   mounted() {
     const venueId = this.$route.params.id
-    axios.get(`/events/?venue=${venueId}`).then((response) => {
-      this.eventObjs = response.data
-    })
+    requestProvider.getEventsForVenue(venueId)
+      .then((response) => {
+        this.eventObjs = response.data
+      })
   },
   methods: {
     convertDate(date) {

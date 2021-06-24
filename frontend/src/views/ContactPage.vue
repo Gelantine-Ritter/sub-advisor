@@ -122,7 +122,7 @@ export default {
         .then(
           (result) => {
             console.log('SUCCESS!', result.status, result.text)
-            location.reload()
+            location.replace('/')
           },
           (error) => {
             console.log('FAILED...', error)

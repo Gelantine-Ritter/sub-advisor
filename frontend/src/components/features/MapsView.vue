@@ -27,9 +27,11 @@
 </template>
 
 <script>
-import axios from 'axios'
+
+import requestProvider from '../../util/requestProvider'
 
 export default {
+
   props: {
     adress: Object,
   },
@@ -75,17 +77,11 @@ export default {
         'key=' +
         API_KEY_BING
 
-      // remove auth header for get req to other url
-      delete axios.defaults.headers.common.Authorization
-
-      axios.get(finalUrl).then((response) => {
-        const latLngValue =
+      requestProvider.getMapData(finalUrl)
+        .then((response) => {
+                  const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
-
-        // reset auth header
-        axios.defaults.headers.common.Authorization =
-          'Baerer ' + localStorage.getItem('token')
 
         // Instantiate (and display) a map object:
         var map = new H.Map(mapContainer, maptypes.vector.normal.map, {
@@ -95,7 +91,7 @@ export default {
 
         addEventListener('resize', () => map.getViewPort().resize())
 
-        // Add control - log muss leider drin bleiben :/
+        // Add control - log muss leider drin bleiben, sorry @GG :/
         console.log(new H.mapevents.Behavior(new H.mapevents.MapEvents(map)))
 
         var marker = new H.map.Marker({

@@ -1,75 +1,44 @@
 <template>
-  <v-container my-5>
+  <div v-if="dataFinishedLoading()">
     <h1
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
     >
       {{ eventObj.title }}
     </h1>
-    <div class="rounded-xl mycontainer" fluid>
-      <v-row center>
-        <!-- venueName, adress, ... -->
-        <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
-          <div>
-            {{ venueObj.pic }}
-          </div>
-          <div>
-            <h2>{{ venueObj.name }}</h2>
-            <div>
-              <h5>
-                {{ venueObj.adress.street }}
-                {{ venueObj.adress.number }},
-                {{ venueObj.adress.plz }}
-                {{ venueObj.adress.city }}
-              </h5>
-            </div>
-            <div v-if="eventObj.eventStart">
-              starts around: {{ eventObj.eventStart }}
-            </div>
-          </div>
-        </v-col>
-        <!-- tags, price, ... -->
-        <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
-          Price: {{ eventObj.price }} Euro
-        </v-col>
-      </v-row>
 
-      <v-row center>
-        <!-- description, venue website, ...-->
-        <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
-          <div>
-            <!-- {{ eventObj.info }} -->
-            {{ eventObj.info }}
-          </div>
-          <div></div>
-          {{ venueObj.website }}
-        </v-col>
-        <!-- image -->
-        <v-col
-          v-if="eventObj.pic"
-          cols="12"
-          xs="12"
-          sm="4"
-          md="4"
-          lg="4"
-          xl="4"
-        >
-          <!-- EVENT PICTURE START -->
-          <v-card class="pa-2 rounded-xl myPictureCard" flat tile>
-            <v-responsive>
-              <template
-                v-if="this.eventObj.pic == null || this.eventObj.pic == ''"
-              >
-                <div class="noPicture"><h1>NO PICTURE</h1></div>
-              </template>
-              <template v-else>
-                <v-img fill class="myPicture" :src="picDataUrl()" alt="" />
-              </template>
-            </v-responsive>
-          </v-card>
-          <!-- EVENT PICTURE END -->
-        </v-col>
-      </v-row>
+    <v-card
+      center
+      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
+      :style="styleObject"
+    >
+      <v-container>
+        <v-row center>
+          <!-- venueName, adress, ... -->
+          <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+            <div>
+              {{ venueObj.pic }}
+            </div>
+            <div>
+              <h2>{{ venueObj.name }}</h2>
+              <div>
+                <h5>
+                  {{ venueObj.address.street }}
+                  {{ venueObj.address.number }},
+                  {{ venueObj.address.plz }}
+                  {{ venueObj.address.city }}
+                </h5>
+              </div>
+              <div v-if="eventObj.eventStart">
+                starts around: {{ eventObj.eventStart }}
+              </div>
+            </div>
+          </v-col>
+          <!-- tags, price, ... -->
+          <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
+            Price: {{ eventObj.price }} Euro
+          </v-col>
+        </v-row>
 
       <v-row justify="center">
         <!-- EDIT EVENT BUTTON START -->
@@ -131,72 +100,34 @@
         <template v-else> </template>
         <!-- DELETE EVENT BUTTON END -->
       </v-row>
+      </v-container>
+    </v-card>
     </div>
-  </v-container>
 </template>
 
 <script>
-import axios from 'axios'
 import ModalEditEvent from './DialogEditEvent.vue'
 import { mapGetters, mapActions } from 'vuex'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   data() {
     return {
-      eventObj: {
-        id: null,
-        title: null,
-        artists: null,
-        eventStart: null,
-        eventEnd: null,
-        info: null,
-        modifiedAt: null,
-        pic: null,
-        price: null,
-      },
-      venueObj: {
-        name: null,
-        adress: {
-          city: null,
-          number: null,
-          plz: null,
-          street: null,
-        },
-        website: null,
-        email: null,
-      },
-
-      venueLoaded: false,
+      eventObj: null,
+      venueObj: null,
       showDialogEditEvent: false,
       deleteDialog: false,
 
       styleObject: { border: '2px solid #000000' },
     }
   },
-  mounted() {
+  beforeCreate() {
     const eventId = this.$route.params.id
-    axios.get(`/events/${eventId}`).then((response) => {
-      this.eventObj.id = response.data.id
-      this.eventObj.title = response.data.title
-      this.eventObj.artists = response.data.artists
-      this.eventObj.venueId = response.data.venueId
-      this.eventObj.eventStart = response.data.eventStart
-      this.eventObj.eventEnd = response.data.eventEnd
-      this.eventObj.info = response.data.info
-      this.eventObj.modifiedAt = response.data.modifiedAt
-      this.eventObj.pic = response.data.pic
-      this.eventObj.price = response.data.price
+    requestProvider.getEvent(eventId).then((response) => {
+      this.eventObj = response.data
 
-      axios.get('/venues/' + this.eventObj.venueId).then((responseVenue) => {
-        this.venueObj.name = responseVenue.data.name
-        this.venueObj.adress.city = responseVenue.data.address.city
-        this.venueObj.adress.street = responseVenue.data.address.street
-        this.venueObj.adress.number = responseVenue.data.address.number
-        this.venueObj.adress.plz = responseVenue.data.address.plz
-        this.venueObj.website = responseVenue.data.website
-        this.venueObj.email = responseVenue.data.email
-        this.venueLoaded = true
-        console.log('Updated')
+      requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
+        this.venueObj = responseVenue.data
       })
     })
   },
@@ -211,6 +142,10 @@ export default {
   methods: {
     redirectBackwards() {
       history.back()
+    },
+    dataFinishedLoading() {
+      if (this.eventObj !== null && this.venueObj !== null) return true
+      return false
     },
     ...mapActions({
       deleteEvent: 'auth/deleteEvent',

@@ -3,7 +3,7 @@
     <h1 class="h1Style text-center display-3 font-weight-medium">PLACES</h1>
 
     <v-layout row wrap>
-      <v-flex xs12 sm6 md4 lg3 v-for="venue in venues1" :key="venue.name">
+      <v-flex xs12 sm6 md4 lg3 v-for="venue in venues" :key="venue.name">
         <div>
           <v-card
             center
@@ -35,21 +35,22 @@
     </v-layout>
   </v-container>
 </template>
-
+../util/RequestProvider
 <script>
-import axios from 'axios'
+import {requestProvider} from '../util/requestProvider'
 
 export default {
   data() {
     return {
       styleObject: { border: '2px solid #cafb03' },
-      venues1: [],
+      venues: null,
     }
   },
   mounted() {
-    axios.get('/venues/').then((response) => {
-      this.venues1 = response.data
-    })
+    requestProvider.getVenues()
+      .then((response) => {
+        this.venues = response.data
+      })
   },
   methods: {
     redirectToPlaceDetail(placeId) {

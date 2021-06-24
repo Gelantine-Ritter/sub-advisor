@@ -216,6 +216,7 @@ import {
 import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   validations: {
@@ -312,9 +313,8 @@ export default {
     async submit() {
       this.$v.$touch()
       this.pic = await fileUpload.handleUploadSubmit(this.file)
-      axios
-        .post(
-          '/events/',
+      requestProvider
+        .postEvent(
           {
             venueId: this.user.id,
             title: this.title,
@@ -329,7 +329,9 @@ export default {
         )
         .then(() => {
           this.clear()
-          this.$toast.open('YEAAAH Event created!')
+          this.$toast.open('Your Event was created!')
+          // TODO: change to my events
+          location.replace('/events')
         })
         .catch((e) => {
           console.log(e)

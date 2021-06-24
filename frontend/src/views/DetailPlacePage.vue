@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MapsView from '../components/features/MapsView.vue'
 import PictureView from '../components/features/PictureView.vue'
 import EventsList from '../components/events/EventsListFor1Venue.vue'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   data() {
@@ -70,14 +70,11 @@ export default {
     }
   },
   mounted() {
-    const param = this.$route.params.id
-    axios.get(`/venues/${param}`).then((response) => {
-      this.venueObj = response.data
-      // once adress is fetched -> render component
-      if (this.venueObj.adress) {
-        this.fetchedAdressData = true
-      }
-    })
+    const venueId = this.$route.params.id
+    requestProvider.getVenue(venueId)
+      .then((response) => {
+        this.venueObj = response.data
+      })
   },
   methods: {
     redirectBackwards() {
