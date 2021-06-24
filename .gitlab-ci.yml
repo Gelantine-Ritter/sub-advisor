@@ -97,7 +97,7 @@ deploy-frontend:
   before_script:
     - apk update && apk add make
   script:
-    - make deploy-frontend-prod
+    - make deploy-frontend-prod RELEASE_VERSION=$CI_COMMIT_TAG
   only:
     refs:
       - tags
