@@ -204,9 +204,9 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { maxLength } from 'vuelidate/lib/validators'
-import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
+import {requestProvider} from '../util/requestProvider'
 
 export default {
   // props: 'eventId',
@@ -277,19 +277,21 @@ export default {
   mounted() {
     const eventId = this.$route.params.id
     this.id = eventId
-    axios.get('/events/' + eventId).then((response) => {
-      this.title = response.data.title
-      this.artists = response.data.artists
-      this.fromDateVal = response.data.eventStart.split('T')[0]
-      const fromTime = response.data.eventStart.split('T')[1]
-      this.fromTimeVal = fromTime.substring(0, fromTime.length - 3)
-      this.toDateVal = response.data.eventEnd.split('T')[0]
-      const toTime = response.data.eventEnd.split('T')[1]
-      this.toTimeVal = toTime.substring(0, toTime.length - 3)
-      this.info = response.data.info
-      this.pic = response.data.pic
-      this.price = response.data.price
-    })
+    requestProvider.getEvent(eventId)
+      .then((response) => {
+        this.title = response.data.title
+        this.artists = response.data.artists
+        this.info = response.data.info
+        this.pic = response.data.pic
+        this.price = response.data.price
+        // ------------------------------------------ 
+        this.fromDateVal = response.data.eventStart.split('T')[0]
+        const fromTime = response.data.eventStart.split('T')[1]
+        this.fromTimeVal = fromTime.substring(0, fromTime.length - 3)
+        this.toDateVal = response.data.eventEnd.split('T')[0]
+        const toTime = response.data.eventEnd.split('T')[1]
+        this.toTimeVal = toTime.substring(0, toTime.length - 3)
+      })
   },
   methods: {
     convertArtistToArray(artists) {
@@ -304,31 +306,29 @@ export default {
       }
     },
     async submit() {
+      console.log( this.$v);
       this.$v.$touch()
       this.pic = await fileUpload.handleUploadSubmit(this.file)
-      axios
-          .put(
-            '/events/' + this.id,
-            {
-              title: this.title,
-              info: this.info,
-              artists: this.convertArtistToArray(this.artists),
-              price: this.price,
-              eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-              eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-              pic: this.pic,
-            },
-            { headers: { Authorization: 'Bearer ' + auth.state.token } }
-          )
-          .then(() => {
-            this.$toast.open('Event updated!')
-            this.dialog = false
-            // this.$router.go()
-          })
-          .catch((e) => {
-            console.log(e)
-          })
-      
+      requestProvider.updateEvent(this.id,
+        {
+          title: this.title,
+          info: this.info,
+          price: this.price,
+          artists: this.convertArtistToArray(this.artists),
+          eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+          eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+          pic: this.pic,
+        },
+        { headers: { Authorization: 'Bearer ' + auth.state.token } }
+      )
+        .then(() => {
+          this.$toast.open('Event updated!')
+          this.dialog = false
+          this.$router.go()
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
   },
 }

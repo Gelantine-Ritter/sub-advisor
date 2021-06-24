@@ -3,12 +3,12 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="text-h5">YOUR LOGO</span>
+          <span class="text-h5"></span>
         </v-card-title>
         <div class="rounded-xl mycontainer2" fluid>
-          <h1 class="h12">FILE UPLOAD</h1>
+          <h1 class="uploadTitle">YOUR LOGO</h1>
           <v-file-input
-            label="File input"
+            label=""
             prepend-icon="mdi-camera"
             v-model="file"
           ></v-file-input>
@@ -67,8 +67,7 @@ export default {
     }),
     async updateSubmit() {
       this.userData.pic = await fileUpload.handleUploadSubmit(this.file)
-      await this.updateVenue(this.userData)
-      .then(() => {
+      await this.updateVenue(this.userData).then(() => {
         this.$toast.open('Your picture has been updated!')
         this.dialog = false
       })
@@ -88,14 +87,9 @@ export default {
   background: white;
   padding: 5%;
 }
-.h12 {
+.uploadTitle {
   font-size: 4vw;
   color: black;
   text-align: center;
-}
-.myEnterBtn {
-  background: black;
-  color: white;
-  font-size: 125%;
 }
 </style>

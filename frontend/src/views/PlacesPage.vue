@@ -8,12 +8,14 @@
           <v-card
             center
             class="rounded-xl text-center ma-7"
+            min-width="250"
             :style="styleObject"
           >
-            <v-responsive class="pt-4">
+            <v-responsive>
               <v-img
+                contain
                 class="ma-5 border border-dark"
-                height="250"
+                height="200"
                 src="../../public/venue2.png"
                 alt=""
               />
@@ -33,7 +35,7 @@
     </v-layout>
   </v-container>
 </template>
-
+../util/RequestProvider
 <script>
 import {requestProvider} from '../util/requestProvider'
 
@@ -60,10 +62,4 @@ export default {
 }
 </script>
 
-<style>
-.h1Style {
-  color: #cafb03;
-  text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
-    -1px -1px 1px black;
-}
-</style>
+<style scoped></style>

@@ -9,16 +9,6 @@ store.subscribe((mutation) => {
   switch (mutation.type) {
     case 'auth/SET_TOKEN':
 
-    /*
-      if (mutation.payload) {
-        axios.interceptors.request.use(function (config) {
-          config.headers.Authorization = `Baerer ${mutation.payload}`
-        });
-      } else {
-        delete config.headers.Authorization
-      }
-    */
-     
       if (mutation.payload) {
         axios.defaults.headers.common.Authorization = `Baerer ${mutation.payload}`
         localStorage.setItem('token', mutation.payload)

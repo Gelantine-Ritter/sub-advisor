@@ -97,6 +97,7 @@
           outlined
           elevation="1"
           class="rounded-pill myEnterBtn"
+          style="font-size: 125%"
           type="submit"
           >REGISTER</v-btn
         >
@@ -175,26 +176,12 @@ export default {
 </script>
 
 <style scoped>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 5vw;
-}
 h2 {
   font-size: 2vw;
   color: black;
   text-align: center;
 }
-.myEnterBtn {
-  background: black;
-  color: white;
-  font-size: 125%;
-}
+
 .centered-input >>> input {
   text-align: center;
   font-size: 180%;
@@ -210,10 +197,15 @@ h2 {
   text-align: center;
   font-size: 180%;
 }
-
 ::v-deep .v-label {
   font-size: 180% !important;
   margin-right: 0;
+}
+::v-deep .v-label:nth-child(1) {
+  font-size: 16px !important;
+}
+::v-deep .v-label:nth-child(2) {
+  font-size: 16px !important;
 }
 ::v-deep label {
   margin-bottom: 0;
@@ -222,7 +214,14 @@ h2 {
   width: auto;
   text-align: center;
 }
+
 ::v-deep .v-input__slot {
   justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: 5vw;
+  }
 }
 </style>

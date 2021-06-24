@@ -1,6 +1,5 @@
 <template>
   <v-responsive v-if="this.picData == null || this.picData == ''">
-    
     <div class="noPicture"><h1>NO PICTURE</h1></div>
   </v-responsive>
   <v-responsive v-else>
@@ -20,7 +19,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .myPicture {
   height: 100%;
 }

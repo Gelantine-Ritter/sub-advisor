@@ -206,9 +206,9 @@
 import { mapGetters } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
-import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   mixins: [validationMixin],
@@ -295,9 +295,7 @@ export default {
     async submit() {
       this.$v.$touch()
       this.pic = await fileUpload.handleUploadSubmit(this.file)
-      axios
-        .post(
-          '/events/',
+      requestProvider.postEvent(
           {
             venueId: this.user.id,
             title: this.title,
@@ -312,7 +310,9 @@ export default {
         )
         .then(() => {
           this.clear()
-          this.$toast.open('YEAAAH Event created!')
+          this.$toast.open('Your Event was created!')
+          // TODO: change to my events
+          location.replace('/events')
         })
         .catch((e) => {
           console.log(e)
@@ -335,15 +335,4 @@ export default {
 }
 </script>
 
-<style>
-.mycontainer {
-  border: solid 2px black;
-  width: auto;
-  margin-top: 5vw;
-  margin-left: 15vw;
-  margin-right: 15vw;
-  margin-bottom: 5vw;
-  background: white;
-  padding: 3vw;
-}
-</style>
+<style></style>

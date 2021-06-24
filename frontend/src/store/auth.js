@@ -1,4 +1,4 @@
-import axios from 'axios'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   namespaced: true,
@@ -38,13 +38,15 @@ export default {
       commit('SET_ROLE', null)
     },
     async login({ dispatch }, credentials) {
-      const response = await axios.post('/authenticate/', credentials)
-      const responseDataObject = {
-        jwt: response.data.jwt,
-        userId: response.data.userId,
-        role: response.data.role,
-      }
-      dispatch('attempt', responseDataObject)
+      requestProvider.loginUser(credentials)
+        .then((response) => {
+          const responseDataObject = {
+            jwt: response.data.jwt,
+            userId: response.data.userId,
+            role: response.data.role,
+          }
+          dispatch('attempt', responseDataObject)
+        })
     },
     async attempt({ commit, state }, responseDataObject) {
       if (responseDataObject == null) {
@@ -74,10 +76,13 @@ export default {
       }
 
       try {
-        const response = await axios.get('/venues/' + userId, {
+        requestProvider.getVenue(userId, {
           headers: { Authorization: 'Bearer ' + jwt },
         })
-        commit('SET_USER', response.data)
+          .then((response) => {
+            console.log('Setted user');
+            commit('SET_USER', response.data)
+          })
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
@@ -102,18 +107,12 @@ export default {
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
-      await axios.post(
-        '/authenticate/registrate/',
-        username,
-        email,
-        password,
-        name
-      )
+      requestProvider.postVenue(username, name, password, email)
     },
 
     // DELETE ACCOUNT
     async deleteProfile({ commit, state }) {
-      await axios.delete('/venues/' + state.user.id, {
+      requestProvider.deleteVenue(state.user.id, {
         headers: { Authorization: 'Bearer ' + state.token },
       })
       commit('SET_TOKEN', null)
@@ -125,23 +124,24 @@ export default {
     async updateVenue({ commit, state }, userData) {
       var newData = userData
       var token = state.token
-      const response = await axios.put('/venues/' + state.user.id, newData, {
+      requestProvider.updateVenue(state.user.id, newData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       })
-      if (response.status === 200) {
-        commit('SET_USER', response.data)
-      }
+        .then((response) => {
+          if (response.status === 200) {
+            commit('SET_USER', response.data)
+          }
+        })
     },
 
     // DELETE EVENT
     async deleteEvent({ state }, eventId) {
-      const response = await axios.delete('/events/' + eventId, {
+      requestProvider.deleteEvent(eventId, {
         headers: { Authorization: 'Bearer ' + state.token },
       })
-      console.log(response)
     },
   },
 }

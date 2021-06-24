@@ -95,7 +95,7 @@ const router = new Router({
       component: DetailEvent,
     },
     {
-      path: `/about${process.env.TEST}`,
+      path: '/about',
       name: 'about',
       component: About,
     },

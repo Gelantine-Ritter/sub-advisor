@@ -3,29 +3,138 @@
     <!-- navigation drawer-->
     <v-app-bar-nav-icon
       @click.stop="sideNav = !sideNav"
-      class="d-flex d-sm-none"
+      class="d-flex d-sm-none ml-5"
     ></v-app-bar-nav-icon>
-    <v-navigation-drawer v-model="sideNav" absolute side temporary app>
+    <v-navigation-drawer
+      v-model="sideNav"
+      absolute
+      side
+      temporary
+      app
+      class="myNavDrawer"
+    >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title"> subadvisor </v-list-item-title>
+          <v-list-item-title class="title"
+            ><img
+              src="../../assets/logo_small.png"
+              width="100%"
+              alt="subadvisor logo"
+          /></v-list-item-title>
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <v-list dense nav>
-        <v-list-item v-for="item in menuItems" :key="item.title" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <!-- NAV DRAWER FOR VENUE -->
+      <template v-if="role == 'VENUE'">
+        <v-list>
+          <v-list-group
+            v-for="item in menuItemsAsVenue"
+            :key="item.title"
+            v-model="item.active"
+            :to="item.route"
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="item.title"
+                  :key="item.title"
+                  :to="item.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="child in item.items"
+              :key="child.title"
+              :to="child.route"
+            >
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="child.title"
+                  :key="child.title"
+                  :to="child.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </template>
+      <!-- --------------------- -->
+      <!-- NAV DRAWER FOR MEMBER -->
+      <template v-else-if="role == 'MEMBER'">
+        <v-list>
+          <v-list-group
+            v-for="item in menuItemsAsMember"
+            :key="item.title"
+            v-model="item.active"
+            :to="item.route"
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="item.title"
+                  :key="item.title"
+                  :to="item.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="child in item.items"
+              :key="child.title"
+              :to="child.route"
+            >
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="child.title"
+                  :key="child.title"
+                  :to="child.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </template>
+      <!-- --------------------- -->
+      <!-- NAV DRAWER FOR UNLOGGED -->
+      <template v-else>
+        <v-list>
+          <v-list-group
+            v-for="item in menuItems"
+            :key="item.title"
+            v-model="item.active"
+            :to="item.route"
+          >
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="item.title"
+                  :key="item.title"
+                  :to="item.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              v-for="child in item.items"
+              :key="child.title"
+              :to="child.route"
+            >
+              <v-list-item-content>
+                <v-list-item-title
+                  v-text="child.title"
+                  :key="child.title"
+                  :to="child.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </template>
+      <!-- --------------------- -->
     </v-navigation-drawer>
     <!-- navigation drawer-->
     <!-- left aligned items-->
-
     <!--EVENT-->
     <template v-if="role == 'VENUE'">
       <v-menu offset-y>
@@ -221,8 +330,8 @@
     <!--PROFILE-->
     <v-menu offset-y class="d-none d-sm-flex">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon class="ml-5" v-bind="attrs" v-on="on">
-          <v-icon large class="ml-5 d-none d-sm-flex"> account_circle </v-icon>
+        <v-btn icon class="mr-5 ml-5" v-bind="attrs" v-on="on">
+          <v-icon large class="d-sm-flex"> account_circle </v-icon>
         </v-btn>
       </template>
       <!-- START AUTHENTICATION CONTROL -->
@@ -264,20 +373,118 @@ export default {
     return {
       sideNav: false,
       menuItems: [
-        { icon: 'account_circle', title: 'My Profile' },
-        { icon: 'celebration', title: 'Events' },
-        { icon: 'place', title: 'Places' },
-        { icon: 'contact_support', title: 'Contact' },
-        { icon: 'groups', title: 'About' },
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'All Events', route: '/events' },
+            { title: 'Popular Events', route: '/events' },
+          ],
+          title: 'Events',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'All Places', route: '/places' },
+            { title: 'Pic of the week', route: '/places' },
+          ],
+          title: 'Places',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'Contact', route: '/contact' }],
+          title: 'Contact',
+          route: '/contact',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'About', route: '/about' }],
+          title: 'About',
+          route: '/about',
+        },
       ],
-      subEvents: [{ title: 'All Events', route: '/events' }],
-      subEventsLoggedInPlace: [{ title: 'All Events', route: '/events' }],
-      subEventsLoggedInMember: [
+      menuItemsAsVenue: [
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'Your Events', route: '/events' },
+            { title: 'All Events', route: '/events' },
+            { title: 'Popular Events', route: '/events' },
+          ],
+          title: 'Events',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'Your Place', route: '/places/' },
+            { title: 'All Places', route: '/places' },
+            { title: 'Pic of the week', route: '/places' },
+          ],
+          title: 'Places',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'Contact', route: '/contact' }],
+          title: 'Contact',
+          route: '/contact',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'About', route: '/about' }],
+          title: 'About',
+          route: '/about',
+        },
+      ],
+      menuItemsAsMember: [
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'Your Calendar', route: '/events' },
+            { title: 'All Events', route: '/events' },
+            { title: 'Popular Events', route: '/events' },
+          ],
+          title: 'Events',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'All Places', route: '/places' },
+            { title: 'Pic of the week', route: '/places' },
+          ],
+          title: 'Places',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'Contact', route: '/contact' }],
+          title: 'Contact',
+          route: '/contact',
+        },
+        {
+          action: 'mdi-ticket',
+          items: [{ title: 'About', route: '/about' }],
+          title: 'About',
+          route: '/about',
+        },
+      ],
+      subEvents: [
         { title: 'All Events', route: '/events' },
         { title: 'Popular Events', route: '/events' },
       ],
-      subPlaces: [{ title: 'All Places', route: '/places' }],
+      subEventsLoggedInPlace: [
+        { title: 'Your Events', route: '/events' },
+        { title: 'All Events', route: '/events' },
+        { title: 'Popular Events', route: '/events' },
+      ],
+      subEventsLoggedInMember: [
+        { title: 'Your Calendar', route: '/events' },
+        { title: 'All Events', route: '/events' },
+        { title: 'Popular Events', route: '/events' },
+      ],
+      subPlaces: [
+        { title: 'All Places', route: '/places' },
+        { title: 'Pic of the week', route: '/places' },
+      ],
       subPlacesLoggedInPlace: [
+        { title: 'Your Place', route: '/places/' },
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
       ],
@@ -285,11 +492,8 @@ export default {
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
       ],
-      subContact: [
-        { title: 'Contact 1', route: '/contact' },
-        { title: 'Contact 2', route: '/contact' },
-      ],
-      subAbout: [{ title: 'About 1', route: '/about' }],
+      subContact: [{ title: 'Contact', route: '/contact' }],
+      subAbout: [{ title: 'About', route: '/about' }],
       subProfile: [
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
@@ -331,8 +535,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 i.v-icon.v-icon {
   color: black;
+}
+.myNavDrawer {
 }
 </style>

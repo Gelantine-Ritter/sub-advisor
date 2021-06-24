@@ -1,5 +1,6 @@
 <template>
-  <div v-if="venueObj !== null">
+  <div v-if="venueObj != null">
+    <v-container my-5>
     <h1
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
@@ -50,6 +51,7 @@
       </v-container>
       <EventsList class="mt-5" :venueId="this.$route.params.id" />
     </v-card>
+    </v-container>
   </div>
 </template>
 
@@ -96,33 +98,9 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-
-.h1Style {
-  color: #cafb03;
-  text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
-    -1px -1px 1px black;
-}
-
-.lastPage {
-  text-decoration: none;
-  font-size: 1.5em;
-  color: black;
-}
-
-.lastPage:visited {
-  color: black;
-  text-decoration: none;
-}
-
-.lastPage:hover {
-  color: #cafb03;
-  text-decoration: none;
-}
-
 .childElem {
   margin: 2vw;
 }
-
 .pls_center_it {
   display: flex;
   align-items: center;

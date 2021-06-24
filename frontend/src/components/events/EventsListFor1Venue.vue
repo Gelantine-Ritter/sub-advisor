@@ -1,17 +1,11 @@
 <template>
-  <v-container v-if="eventObjs !== null">
+  <v-container v-if="eventObjs.length > 0">
     <h1 class="h1Style text-center display-1 font-weight-medium">
       UPCOMING EVENTS
     </h1>
     <v-expansion-panels>
       <v-expansion-panel
-        class="
-          shrink
-          ml-10
-          mr-10
-          rounded-xl
-          md-layout md-gutter md-alignment-center
-        "
+        class="shrink ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
         :style="styleObject"
         v-for="event in eventObjs"
         :key="event.id"
