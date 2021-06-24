@@ -94,6 +94,9 @@ UT-backend:
 
 deploy-backend:
   stage: deploy
+  environment:
+    name: production
+    url: https://subadvisor-backend.herokuapp.com/
   image: docker:latest
   services:
     - docker:dind
@@ -111,6 +114,9 @@ deploy-backend:
 
 deploy-frontend:
   stage: deploy
+  environment:
+    name: production
+    url: https://subadvisor.herokuapp.com/
   image: docker:latest
   services:
     - docker:dind
