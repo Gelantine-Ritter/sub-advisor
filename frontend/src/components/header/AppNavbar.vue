@@ -330,8 +330,17 @@
     <!--PROFILE-->
     <v-menu offset-y class="d-none d-sm-flex">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon class="mr-5 ml-5" v-bind="attrs" v-on="on">
+        <v-btn
+          v-if="!authenticated"
+          icon
+          class="mr-5 ml-5"
+          v-bind="attrs"
+          v-on="on"
+        >
           <v-icon large class="d-sm-flex"> account_circle </v-icon>
+        </v-btn>
+        <v-btn v-else icon class="mr-5 ml-5" v-bind="attrs" v-on="on">
+          <v-avatar size="40"> <PictureView :picData="user.pic" /></v-avatar>
         </v-btn>
       </template>
       <!-- START AUTHENTICATION CONTROL -->
@@ -366,8 +375,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import PictureView from '../features/PictureView.vue'
 
 export default {
+  components: { PictureView },
   name: 'Navbar',
   data() {
     return {

@@ -382,7 +382,7 @@ export default {
             artists: this.convertArtistToArray(this.artists),
             tags: this.whereTags
               .concat(this.eventTypeTags)
-              .concat(this.genreTags), 
+              .concat(this.genreTags),
             price: this.price,
             eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
             eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
