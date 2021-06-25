@@ -64,7 +64,7 @@ public class Venue implements UserDetails, Serializable, IUserId, IRegistrationR
     private String name;
     @Column(unique = true)
     private String email;
-    @Lob
+    @Column(length=1000)
     private String info;
     private String mobile;
     @ElementCollection

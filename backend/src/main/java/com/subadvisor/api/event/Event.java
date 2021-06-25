@@ -51,7 +51,7 @@ public class Event implements Serializable {
     private String title;
     @Getter
     @Setter
-    @Lob
+    @Column(length=1000)
     private String info;
     // TODO: Artist could be an own entity -> feature request
     @ElementCollection
