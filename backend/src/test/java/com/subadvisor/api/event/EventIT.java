@@ -53,6 +53,7 @@ public class EventIT extends Driver {
     private static final String EVENT_INFO = "Real authentic female hardcore am Samstag";
     private static final String[] EVENT_ARTISTS = {"Krimewatch", "The Distillers", "Bikini Kill"};
     private static final String[] EVENT_TAGS = {"Punkrock", "Konzert"};
+    private static final String[] EVENT_TAGS_UPDATE = {"Hardcore", "Konzert"};
     private static final String EVENT_PRICE = "10.00";
     private static final String EVENT_START = "2021-09-04T20:00:00";
     private static final String EVENT_END = "2021-09-04T23:00:00";
@@ -120,6 +121,7 @@ public class EventIT extends Driver {
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price("15.00")
+                .tags(EVENT_TAGS_UPDATE)
                 .eventStart(EVENT_START)
                 .eventEnd(EVENT_END)
                 .build();
@@ -343,6 +345,7 @@ public class EventIT extends Driver {
                                         EVENT_UPDATE
                                 ))
                 )
+                .andDo(print())
                 .andExpect(
                         matchAll(
                                 jsonPath("$.id").exists(),
@@ -354,6 +357,8 @@ public class EventIT extends Driver {
                                 jsonPath("$.modifiedAt").exists(),
                                 jsonPath("$.eventStart").value(EVENT_START),
                                 jsonPath("$.eventEnd").value(EVENT_END),
+                                jsonPath("$.tags[0]").value(EVENT_TAGS_UPDATE[0]),
+                                jsonPath("$.tags[1]").value(EVENT_TAGS_UPDATE[1]),
                                 status().isOk()
                         )
                 )
