@@ -46,7 +46,36 @@
                   </div>
                 </v-card>
               </v-col>
-
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="whereTags"
+                  :items="whereTagsItems"
+                  attach
+                  chips
+                  label="LOCATION"
+                  multiple
+                ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="eventTypeTags"
+                  :items="eventTypeTagsItems"
+                  attach
+                  chips
+                  label="EVENT TYPE"
+                  multiple
+                ></v-select>
+              </v-col>
+              <v-col cols="12" sm="6">
+                <v-select
+                  v-model="genreTags"
+                  :items="genreTagsItems"
+                  attach
+                  chips
+                  label="GENRE"
+                  multiple
+                ></v-select>
+              </v-col>
               <v-col cols="12">
                 <v-textarea
                   v-model="info"
@@ -203,10 +232,10 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { maxLength } from 'vuelidate/lib/validators'
+import { required, maxLength } from 'vuelidate/lib/validators'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
-import {requestProvider} from '../util/requestProvider'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   // props: 'eventId',
@@ -214,6 +243,9 @@ export default {
   validations: {
     title: { maxLength: maxLength(20) },
     info: { maxLength: maxLength(500) },
+    whereTags: { required },
+    eventTypeTags: { required },
+    genreTags: { required },
   },
   data() {
     return {
@@ -233,10 +265,34 @@ export default {
       toTimeVal: null,
       toTimeMenu: false,
       pic: '',
-
+      // Tags
+      whereTagsItems: ['inside', 'outside', 'online'],
+      whereTags: [],
+      eventTypeTagsItems: [
+        'dj',
+        'concert',
+        'jam',
+        'exhibition',
+        'performance',
+        'conversation',
+      ],
+      eventTypeTags: [],
+      genreTagsItems: [
+        'techno',
+        'house',
+        'acid',
+        'rock',
+        'punk',
+        'hip hop',
+        'classic',
+        'contemporary',
+        'new wave',
+        'political',
+      ],
+      genreTags: [],
+      //
       file: [],
       id: '',
-
       styleObject: { border: '2px solid #cafb03' },
     }
   },
@@ -249,7 +305,6 @@ export default {
         return this.value
       },
       set(value) {
-        console.log(value)
         this.$emit('input', value)
       },
     },
@@ -277,21 +332,24 @@ export default {
   mounted() {
     const eventId = this.$route.params.id
     this.id = eventId
-    requestProvider.getEvent(eventId)
-      .then((response) => {
-        this.title = response.data.title
-        this.artists = response.data.artists
-        this.info = response.data.info
-        this.pic = response.data.pic
-        this.price = response.data.price
-        // ------------------------------------------ 
-        this.fromDateVal = response.data.eventStart.split('T')[0]
-        const fromTime = response.data.eventStart.split('T')[1]
-        this.fromTimeVal = fromTime.substring(0, fromTime.length - 3)
-        this.toDateVal = response.data.eventEnd.split('T')[0]
-        const toTime = response.data.eventEnd.split('T')[1]
-        this.toTimeVal = toTime.substring(0, toTime.length - 3)
-      })
+    requestProvider.getEvent(eventId).then((response) => {
+      this.title = response.data.title
+      this.artists = response.data.artists
+      this.info = response.data.info
+      this.pic = response.data.pic
+      this.price = response.data.price
+      // ------------------------------------------
+      this.fromDateVal = response.data.eventStart.split('T')[0]
+      const fromTime = response.data.eventStart.split('T')[1]
+      this.fromTimeVal = fromTime.substring(0, fromTime.length - 3)
+      this.toDateVal = response.data.eventEnd.split('T')[0]
+      const toTime = response.data.eventEnd.split('T')[1]
+      this.toTimeVal = toTime.substring(0, toTime.length - 3)
+      // ------------------------------------------
+       this.whereTags = this.getOriginalWhereTags(response.data.tags)
+       this.eventTypeTags = this.getOriginalEventTypeTags(response.data.tags)
+       this.genreTags = this.getOriginalGenreTags(response.data.tags)
+    })
   },
   methods: {
     convertArtistToArray(artists) {
@@ -301,26 +359,53 @@ export default {
         const artistsArr1 = artistsArr.map((artist) => {
           return artist.trim()
         })
-        console.log('TEST2', artistsArr1)
         return artistsArr1
       }
     },
+    getOriginalWhereTags(originalTags) {
+      originalTags.forEach((tag) => {
+        if (this.whereTagsItems.includes(tag)) {
+          this.whereTags.push(tag)
+        }
+      })
+      return this.whereTagsItems
+    },
+    getOriginalEventTypeTags(originalTags) {
+      originalTags.forEach((tag) => {
+        if (this.eventTypeTagsItems.includes(tag)) {
+          this.eventTypeTags.push(tag)
+        }
+      })
+      return this.eventTypeTags
+    },
+    getOriginalGenreTags(originalTags) {
+      originalTags.forEach((tag) => {
+        if (this.genreTagsItems.includes(tag)) {
+          this.genreTags.push(tag)
+        }
+      })
+      return this.genreTags
+    },
     async submit() {
-      console.log( this.$v);
       this.$v.$touch()
       this.pic = await fileUpload.handleUploadSubmit(this.file)
-      requestProvider.updateEvent(this.id,
-        {
-          title: this.title,
-          info: this.info,
-          price: this.price,
-          artists: this.convertArtistToArray(this.artists),
-          eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
-          eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
-          pic: this.pic,
-        },
-        { headers: { Authorization: 'Bearer ' + auth.state.token } }
-      )
+      requestProvider
+        .updateEvent(
+          this.id,
+          {
+            title: this.title,
+            info: this.info,
+            price: this.price,
+            artists: this.convertArtistToArray(this.artists),
+            tags: this.whereTags
+              .concat(this.eventTypeTags)
+              .concat(this.genreTags),
+            eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
+            eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
+            pic: this.pic,
+          },
+          { headers: { Authorization: 'Bearer ' + auth.state.token } }
+        )
         .then(() => {
           this.$toast.open('Event updated!')
           this.dialog = false

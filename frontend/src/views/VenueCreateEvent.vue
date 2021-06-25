@@ -46,10 +46,41 @@
                   </v-card>
                 </v-col>
 
+                <v-col cols="12" sm="6">
+                  <v-select
+                    v-model="whereTags"
+                    :items="whereTagsItems"
+                    attach
+                    chips
+                    label="LOCATION"
+                    multiple
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-select
+                    v-model="eventTypeTags"
+                    :items="eventTypeTagsItems"
+                    attach
+                    chips
+                    label="EVENT TYPE"
+                    multiple
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="6">
+                  <v-select
+                    v-model="genreTags"
+                    :items="genreTagsItems"
+                    attach
+                    chips
+                    label="GENRE"
+                    multiple
+                  ></v-select>
+                </v-col>
+
                 <v-col cols="12">
                   <v-textarea
                     v-model="info"
-                    :counter="500"
+                    :counter="1500"
                     :error-messages="infoErrors"
                     @input="$v.info.$touch()"
                     @blur="$v.info.$touch()"
@@ -228,6 +259,11 @@ export default {
     fromDateVal: { required },
     toDateMenu: { required },
     toDateVal: { required },
+    fromTimeVal: { required },
+    toTimeVal: { required },
+    whereTags: { required },
+    eventTypeTags: { required },
+    genreTags: { required },
   },
   data() {
     return {
@@ -248,7 +284,32 @@ export default {
       fromTimeMenu: false,
       toTimeVal: null,
       toTimeMenu: false,
-
+      // Tags
+      whereTagsItems: ['inside', 'outside', 'online'],
+      whereTags: [],
+      eventTypeTagsItems: [
+        'dj',
+        'concert',
+        'jam',
+        'exhibition',
+        'performance',
+        'conversation',
+      ],
+      eventTypeTags: [],
+      genreTagsItems: [
+        'techno',
+        'house',
+        'acid',
+        'rock',
+        'punk',
+        'hip hop',
+        'classic',
+        'contemporary',
+        'new wave',
+        'political',
+      ],
+      genreTags: [],
+      //
       styleObject: { border: '2px solid #cafb03' },
     }
   },
@@ -319,6 +380,9 @@ export default {
             title: this.title,
             info: this.info,
             artists: this.convertArtistToArray(this.artists),
+            tags: this.whereTags
+              .concat(this.eventTypeTags)
+              .concat(this.genreTags), 
             price: this.price,
             eventStart: this.fromDateVal + 'T' + this.fromTimeVal + ':00',
             eventEnd: this.toDateVal + 'T' + this.toTimeVal + ':00',
@@ -342,6 +406,7 @@ export default {
       this.title = ''
       this.artists = ''
       this.price = ''
+      this.tags = null
       this.info = null
       this.fromDateVal = null
       this.toDateVal = null
