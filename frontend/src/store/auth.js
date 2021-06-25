@@ -38,15 +38,14 @@ export default {
       commit('SET_ROLE', null)
     },
     async login({ dispatch }, credentials) {
-      requestProvider.loginUser(credentials)
-        .then((response) => {
-          const responseDataObject = {
-            jwt: response.data.jwt,
-            userId: response.data.userId,
-            role: response.data.role,
-          }
-          dispatch('attempt', responseDataObject)
-        })
+      requestProvider.loginUser(credentials).then((response) => {
+        const responseDataObject = {
+          jwt: response.data.jwt,
+          userId: response.data.userId,
+          role: response.data.role,
+        }
+        dispatch('attempt', responseDataObject)
+      })
     },
     async attempt({ commit, state }, responseDataObject) {
       if (responseDataObject == null) {
@@ -76,11 +75,11 @@ export default {
       }
 
       try {
-        requestProvider.getVenue(userId, {
-          headers: { Authorization: 'Bearer ' + jwt },
-        })
+        requestProvider
+          .getVenue(userId, {
+            headers: { Authorization: 'Bearer ' + jwt },
+          })
           .then((response) => {
-            console.log('Setted user');
             commit('SET_USER', response.data)
           })
       } catch (e) {
@@ -124,12 +123,13 @@ export default {
     async updateVenue({ commit, state }, userData) {
       var newData = userData
       var token = state.token
-      requestProvider.updateVenue(state.user.id, newData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      })
+      requestProvider
+        .updateVenue(state.user.id, newData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
         .then((response) => {
           if (response.status === 200) {
             commit('SET_USER', response.data)

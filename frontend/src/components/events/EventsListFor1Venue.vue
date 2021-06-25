@@ -26,14 +26,14 @@
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <v-card class="pa-2" tile elevation="0">
+                <v-chip class="ma-3" outlined>{{ event.price }}€</v-chip>
                 <v-chip
-                  v-for="event in eventObjs"
-                  :key="event.id"
+                  v-for="tag in event.tags"
+                  :key="tag"
                   class="ma-3"
                   outlined
-                  >{{ event.price }}€</v-chip
+                  >{{ tag }}</v-chip
                 >
-                <v-chip class="ma-3" outlined>{{ event.tags }}</v-chip>
               </v-card>
             </v-col>
           </v-row>
@@ -85,6 +85,7 @@ export default {
     const venueId = this.$route.params.id
     requestProvider.getEventsForVenue(venueId).then((response) => {
       this.eventObjs = response.data
+      console.log(this.eventObjs)
     })
   },
   methods: {
