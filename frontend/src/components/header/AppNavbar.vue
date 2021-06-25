@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar flat class="border-bottom border-dark">
+  <v-toolbar elevation="0" class="border-bottom border-dark">
     <!-- navigation drawer-->
     <v-app-bar-nav-icon
       @click.stop="sideNav = !sideNav"
@@ -24,44 +24,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <!-- NAV DRAWER FOR VENUE -->
-      <template v-if="role == 'VENUE'">
-        <v-list>
-          <v-list-group
-            v-for="item in menuItemsAsVenue"
-            :key="item.title"
-            v-model="item.active"
-            :to="item.route"
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="item.title"
-                  :key="item.title"
-                  :to="item.route"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              v-for="child in item.items"
-              :key="child.title"
-              :to="child.route"
-            >
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="child.title"
-                  :key="child.title"
-                  :to="child.route"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </v-list>
-      </template>
-      <!-- --------------------- -->
-      <!-- NAV DRAWER FOR MEMBER -->
-      <template v-else-if="role == 'MEMBER'">
+      <!--NAV DRAWER FOR MEMBER -->
+      <template v-if="role == 'MEMBER'">
         <v-list>
           <v-list-group
             v-for="item in menuItemsAsMember"
@@ -136,30 +100,7 @@
     <!-- navigation drawer-->
     <!-- left aligned items-->
     <!--EVENT-->
-    <template v-if="role == 'VENUE'">
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-            text
-            v-bind="attrs"
-            v-on="on"
-          >
-            Event
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="item in subEventsLoggedInPlace"
-            :key="item.title"
-            :to="item.route"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </template>
-    <template v-else-if="role == 'MEMBER'">
+    <template v-if="role == 'MEMBER'">
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -206,73 +147,21 @@
       </v-menu>
     </template>
     <!--PLACES-->
-    <template v-if="role == 'VENUE'">
+    <template>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-            text
-            v-bind="attrs"
-            v-on="on"
-          >
-            Places
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="item in subPlacesLoggedInPlace"
-            :key="item.title"
-            :to="item.route"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </template>
-    <template v-else-if="role == 'MEMBER'">
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-            text
-            v-bind="attrs"
-            v-on="on"
-          >
-            Places
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
-            v-for="item in subPlacesLoggedInMember"
-            :key="item.title"
-            :to="item.route"
-          >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </template>
-    <template v-else>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
-            text
-            v-bind="attrs"
-            v-on="on"
-          >
-            Places
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item
             v-for="item in subPlaces"
             :key="item.title"
             :to="item.route"
+            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            text
+            v-bind="attrs"
+            v-on="on"
           >
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
+            Places
+          </v-btn>
+        </template>
       </v-menu>
     </template>
     <!-- left aligned items-->
@@ -290,19 +179,13 @@
           text
           v-bind="attrs"
           v-on="on"
-        >
-          Contact
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
           v-for="item in subContact"
           :key="item.title"
           :to="item.route"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+          Contact
+        </v-btn>
+      </template>
     </v-menu>
     <!--ABOUT-->
     <v-menu offset-y>
@@ -312,20 +195,13 @@
           text
           v-bind="attrs"
           v-on="on"
-        >
-          About
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item
-          link
           v-for="item in subAbout"
           :key="item.title"
           :to="item.route"
         >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+          About
+        </v-btn>
+      </template>
     </v-menu>
     <!--PROFILE-->
     <v-menu offset-y class="d-none d-sm-flex">
@@ -479,26 +355,10 @@ export default {
       subEvents: [
         { title: 'All Events', route: '/events' },
         { title: 'Popular Events', route: '/events' },
-      ],
-      subEventsLoggedInPlace: [
-        { title: 'Your Events', route: '/events' },
-        { title: 'All Events', route: '/events' },
-        { title: 'Popular Events', route: '/events' },
-      ],
-      subEventsLoggedInMember: [
-        { title: 'Your Calendar', route: '/events' },
-        { title: 'All Events', route: '/events' },
-        { title: 'Popular Events', route: '/events' },
-      ],
-      subPlaces: [
-        { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
       ],
-      subPlacesLoggedInPlace: [
-        { title: 'Your Place', route: '/places/' },
-        { title: 'All Places', route: '/places' },
-        { title: 'Pic of the week', route: '/places' },
-      ],
+      subPlaces: [{ title: 'All Places', route: '/places' }],
+      subPlacesLoggedInPlace: [{ title: 'All Places', route: '/places' }],
       subPlacesLoggedInMember: [
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },
@@ -510,7 +370,7 @@ export default {
         { title: 'Signup', route: '/signup' },
       ],
       subProfileLoggedIn: [
-        { title: 'Show Profile', route: '/myProfile' },
+        { title: 'Profile', route: '/myProfile' },
         { title: 'My Events', route: '/events' },
         { title: 'Create Event', route: '/CreateEvents' },
         { title: 'Logout', action: this.logout },
