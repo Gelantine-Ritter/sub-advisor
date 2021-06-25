@@ -34,7 +34,7 @@
             :to="item.route"
           >
             <template v-slot:activator>
-              <v-list-item-content>
+              <v-list-item-content class="text-decoration-none">
                 <v-list-item-title
                   v-text="item.title"
                   :key="item.title"
@@ -44,6 +44,7 @@
             </template>
 
             <v-list-item
+              class="text-decoration-none"
               v-for="child in item.items"
               :key="child.title"
               :to="child.route"
@@ -69,7 +70,7 @@
             v-model="item.active"
             :to="item.route"
           >
-            <template v-slot:activator>
+            <template v-slot:activator class="v-list-item--active">
               <v-list-item-content>
                 <v-list-item-title
                   v-text="item.title"
@@ -80,6 +81,7 @@
             </template>
 
             <v-list-item
+              class="v-list-item--active text-decoration-none"
               v-for="child in item.items"
               :key="child.title"
               :to="child.route"
@@ -95,6 +97,7 @@
           </v-list-group>
           <template>
             <v-list-item
+              class="text-decoration-none"
               v-for="item in subContact"
               :key="item.title"
               :to="item.route"
@@ -105,6 +108,7 @@
             </v-list-item>
           </template>
           <v-list-item
+            class="text-decoration-none"
             v-for="item in subAbout"
             :key="item.title"
             :to="item.route"
@@ -124,7 +128,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            class="noGreyHover noGrey d-none text-decoration-none d-sm-flex ml-5 rounded-pill border border-dark"
             text
             v-bind="attrs"
             v-on="on"
@@ -147,7 +151,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            class="noGreyHover noGrey d-none d-sm-flex ml-5 rounded-pill border border-dark"
             text
             v-bind="attrs"
             v-on="on"
@@ -174,7 +178,7 @@
             v-for="item in subPlaces"
             :key="item.title"
             :to="item.route"
-            class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            class="noGreyHover noGrey d-none d-sm-flex ml-5 text-decoration-none rounded-pill border border-dark"
             text
             v-bind="attrs"
             v-on="on"
@@ -195,7 +199,7 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          class="noGreyHover noGrey d-none text-decoration-none d-sm-flex ml-5 rounded-pill border border-dark"
           text
           v-bind="attrs"
           v-on="on"
@@ -211,7 +215,7 @@
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          class="d-none d-sm-flex ml-5 rounded-pill border border-dark"
+          class="noGreyHover noGrey d-none d-sm-flex ml-5 text-decoration-none rounded-pill border border-dark"
           text
           v-bind="attrs"
           v-on="on"
@@ -235,7 +239,13 @@
         >
           <v-icon large class="d-sm-flex"> account_circle </v-icon>
         </v-btn>
-        <v-btn v-else icon class="mr-5 ml-5" v-bind="attrs" v-on="on">
+        <v-btn
+          v-else
+          icon
+          class="noGreyHover noGrey mr-5 ml-5"
+          v-bind="attrs"
+          v-on="on"
+        >
           <v-avatar size="40"> <PictureView :picData="user.pic" /></v-avatar>
         </v-btn>
       </template>
@@ -414,6 +424,14 @@ export default {
 i.v-icon.v-icon {
   color: black;
 }
-.myNavDrawer {
+.noGrey:focus::before {
+  opacity: 0 !important;
+}
+.noGreyHover:hover::before {
+  opacity: 0 !important;
+}
+.v-list-item--active {
+  background-color: white;
+  color: white;
 }
 </style>

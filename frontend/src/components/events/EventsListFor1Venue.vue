@@ -44,6 +44,13 @@
               <v-card flat tile class="pa-4">
                 {{ event.info }}
               </v-card>
+              <v-btn
+                outlined
+                elevation="1"
+                class="rounded-pill text-decoration-none"
+                @click="redirectToEvent(event.id)"
+                >Go to Event</v-btn
+              >
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
               <!-- EVENT PICTURE START -->
@@ -58,6 +65,7 @@
                 </v-responsive>
               </v-card>
               <!-- EVENT PICTURE END -->
+              <v-row> </v-row>
             </v-col>
           </v-row>
         </v-expansion-panel-content>
@@ -85,7 +93,6 @@ export default {
     const venueId = this.$route.params.id
     requestProvider.getEventsForVenue(venueId).then((response) => {
       this.eventObjs = response.data
-      console.log(this.eventObjs)
     })
   },
   methods: {
@@ -100,6 +107,9 @@ export default {
     },
     picDataUrl() {
       return 'data:image/png;base64, ' + this.eventObjs.pic
+    },
+    redirectToEvent(id) {
+      location.replace(`/events/${id}`)
     },
   },
 }
