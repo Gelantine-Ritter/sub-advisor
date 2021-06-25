@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="eventObjs.length > 0">
+  <v-container v-if="eventObjs">
     <h1 class="h1Style text-center display-1 font-weight-medium">
       UPCOMING EVENTS
     </h1>
@@ -25,10 +25,15 @@
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
-              <v-card class="pa-2" tile flat>
-                <v-chip class="ma-3" outlined>concert</v-chip>
-                <v-chip class="ma-3" outlined>{{ event.price }}€</v-chip>
-                <v-chip class="ma-3" outlined>outside</v-chip>
+              <v-card class="pa-2" tile elevation="0">
+                <v-chip
+                  v-for="event in eventObjs"
+                  :key="event.id"
+                  class="ma-3"
+                  outlined
+                  >{{ event.price }}€</v-chip
+                >
+                <v-chip class="ma-3" outlined>{{ event.tags }}</v-chip>
               </v-card>
             </v-col>
           </v-row>
@@ -78,10 +83,9 @@ export default {
 
   mounted() {
     const venueId = this.$route.params.id
-    requestProvider.getEventsForVenue(venueId)
-      .then((response) => {
-        this.eventObjs = response.data
-      })
+    requestProvider.getEventsForVenue(venueId).then((response) => {
+      this.eventObjs = response.data
+    })
   },
   methods: {
     convertDate(date) {

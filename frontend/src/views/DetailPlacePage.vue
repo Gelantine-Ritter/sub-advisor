@@ -1,56 +1,56 @@
 <template>
   <div v-if="venueObj != null">
     <v-container my-5>
-    <h1
-      class="h1Style text-center display-3 font-weight-medium"
-      :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
-    >
-      {{ venueObj.name }}
-    </h1>
+      <h1
+        class="h1Style text-center display-3 font-weight-medium"
+        :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
+      >
+        {{ venueObj.name }}
+      </h1>
 
-    <v-card
-      center
-      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
-      :style="styleObject"
-    >
-      <v-container>
-        <v-row>
-          <!-- header info -->
-          <v-col xs="12" sm="4" md="4" lg="4" xl="3">
-            <div>
-              {{ venueObj.website }}
-            </div>
-            <div>
-              {{ venueObj.address.street }}
-              {{ venueObj.address.number }},
-              {{ venueObj.address.plz }}
-              {{ venueObj.address.city }}
-            </div>
-          </v-col>
-          <v-col xs="12" sm="4" md="4" lg="4" xl="3"> </v-col>
-          <v-col xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
-            <MapsView :adress="venueObj.address" />
-          </v-col>
-        </v-row>
+      <v-card
+        center
+        class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
+        :style="styleObject"
+      >
+        <v-container>
+          <v-row>
+            <!-- header info -->
+            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+              <div>
+                {{ venueObj.website }}
+              </div>
+              <div>
+                {{ venueObj.address.street }}
+                {{ venueObj.address.number }},
+                {{ venueObj.address.plz }}
+                {{ venueObj.address.city }}
+              </div>
+            </v-col>
+            <v-col xs="12" sm="4" md="4" lg="4" xl="3"> </v-col>
+            <v-col xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
+              <MapsView :adress="venueObj.address" />
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <!-- description -->
-          <v-col xs="12" sm="6" md="8" lg="8" xl="8">
-            {{ venueObj.info }}
-          </v-col>
-          <!-- venue img, map button -->
-          <v-col xs="12" sm="6" md="4" lg="4" xl="4">
-            <v-row class="ml-10 mr-10 pls_center_it">
-              <v-avatar size="150" v-if="venueObj.pic !== null">
-                <PictureView :picData="venueObj.pic" />
-              </v-avatar>
-            </v-row>
-            <v-row class="ml-10 mr-10 mt-5"> </v-row>
-          </v-col>
-        </v-row>
-      </v-container>
+          <v-row>
+            <!-- description -->
+            <v-col xs="12" sm="6" md="8" lg="8" xl="8">
+              {{ venueObj.info }}
+            </v-col>
+            <!-- venue img, map button -->
+            <v-col xs="12" sm="6" md="4" lg="4" xl="4">
+              <v-row class="ml-10 mr-10 pls_center_it">
+                <v-avatar size="150" v-if="venueObj.pic !== null">
+                  <PictureView :picData="venueObj.pic" />
+                </v-avatar>
+              </v-row>
+              <v-row class="ml-10 mr-10 mt-5"> </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
       <EventsList class="mt-5" :venueId="this.$route.params.id" />
-    </v-card>
     </v-container>
   </div>
 </template>
@@ -71,10 +71,9 @@ export default {
   },
   mounted() {
     const venueId = this.$route.params.id
-    requestProvider.getVenue(venueId)
-      .then((response) => {
-        this.venueObj = response.data
-      })
+    requestProvider.getVenue(venueId).then((response) => {
+      this.venueObj = response.data
+    })
   },
   methods: {
     redirectBackwards() {
