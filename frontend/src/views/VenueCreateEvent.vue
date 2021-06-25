@@ -213,7 +213,6 @@ import {
   minLength,
   between,
 } from 'vuelidate/lib/validators'
-import axios from 'axios'
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
 import { requestProvider } from '../util/requestProvider'
@@ -221,7 +220,7 @@ import { requestProvider } from '../util/requestProvider'
 export default {
   validations: {
     title: { required, maxLength: maxLength(20) },
-    info: { required, maxLength: maxLength(500), minLength: minLength(100) },
+    info: { required, maxLength: maxLength(1500), minLength: minLength(100) },
     price: { required, numeric, between: between(0, 100) },
     //  pic:{},
     artists: { required },
@@ -277,7 +276,7 @@ export default {
       const errors = []
       if (!this.$v.info.$dirty) return errors
       !this.$v.info.maxLength &&
-        errors.push('Description must have at most 500 letters. ')
+        errors.push('Description must have at most 1500 letters. ')
       !this.$v.info.minLength &&
         errors.push('Tell your guests a bit more about your event ;]')
       !this.$v.info.required && errors.push('Description is required.')
