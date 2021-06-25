@@ -93,6 +93,26 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
+          <template>
+            <v-list-item
+              v-for="item in subContact"
+              :key="item.title"
+              :to="item.route"
+            >
+              <v-list-content>
+                <v-list-title>Contact </v-list-title></v-list-content
+              >
+            </v-list-item>
+          </template>
+          <v-list-item
+            v-for="item in subAbout"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-content>
+              <v-list-title>About </v-list-title></v-list-content
+            >
+          </v-list-item>
         </v-list>
       </template>
       <!-- --------------------- -->
@@ -265,28 +285,14 @@ export default {
           items: [
             { title: 'All Events', route: '/events' },
             { title: 'Popular Events', route: '/events' },
+            { title: 'Pic of the week', route: '/events' },
           ],
           title: 'Events',
         },
         {
           action: 'mdi-ticket',
-          items: [
-            { title: 'All Places', route: '/places' },
-            { title: 'Pic of the week', route: '/places' },
-          ],
+          items: [{ title: 'All Places', route: '/places' }],
           title: 'Places',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'Contact', route: '/contact' }],
-          title: 'Contact',
-          route: '/contact',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'About', route: '/about' }],
-          title: 'About',
-          route: '/about',
         },
       ],
       menuItemsAsVenue: [
@@ -316,7 +322,7 @@ export default {
         },
         {
           action: 'mdi-ticket',
-          items: [{ title: 'About', route: '/about' }],
+          items: [{ title: 'About' }],
           title: 'About',
           route: '/about',
         },
@@ -349,7 +355,6 @@ export default {
           action: 'mdi-ticket',
           items: [{ title: 'About', route: '/about' }],
           title: 'About',
-          route: '/about',
         },
       ],
       subEvents: [
@@ -358,7 +363,6 @@ export default {
         { title: 'Pic of the week', route: '/places' },
       ],
       subPlaces: [{ title: 'All Places', route: '/places' }],
-      subPlacesLoggedInPlace: [{ title: 'All Places', route: '/places' }],
       subPlacesLoggedInMember: [
         { title: 'All Places', route: '/places' },
         { title: 'Pic of the week', route: '/places' },

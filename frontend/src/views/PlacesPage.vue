@@ -24,7 +24,7 @@
               <v-btn
                 @click="redirectToPlaceDetail(venue.id)"
                 width="100%"
-                flat
+                elevation="0"
                 color="rounded-pill black white--text"
                 >{{ venue.name }}
               </v-btn>
@@ -37,7 +37,7 @@
 </template>
 ../util/RequestProvider
 <script>
-import {requestProvider} from '../util/requestProvider'
+import { requestProvider } from '../util/requestProvider'
 
 export default {
   data() {
@@ -47,10 +47,9 @@ export default {
     }
   },
   mounted() {
-    requestProvider.getVenues()
-      .then((response) => {
-        this.venues = response.data
-      })
+    requestProvider.getVenues().then((response) => {
+      this.venues = response.data
+    })
   },
   methods: {
     redirectToPlaceDetail(placeId) {
