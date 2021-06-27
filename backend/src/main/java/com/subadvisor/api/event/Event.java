@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.subadvisor.api.venue.Venue;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
@@ -17,6 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -79,6 +79,10 @@ public class Event implements Serializable {
     @Getter
     @Setter
     private LocalDateTime created;
+
+    @Getter
+    @Setter
+    private LocalDate date;
 
     @LastModifiedDate
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

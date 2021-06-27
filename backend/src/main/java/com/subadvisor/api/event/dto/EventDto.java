@@ -3,6 +3,7 @@ package com.subadvisor.api.event.dto;
 import com.subadvisor.api.venue.Venue;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -25,5 +26,5 @@ public class EventDto {
     private LocalDateTime modifiedAt;
     private LocalDateTime eventStart;
     private LocalDateTime eventEnd;
-
+    private LocalDate date;
 }
