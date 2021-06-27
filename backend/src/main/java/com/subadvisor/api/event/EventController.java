@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class EventController {
@@ -27,9 +28,23 @@ public class EventController {
     public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue, @RequestParam(required = false) String date) {
 
         List<EventDto> events =
-                venue != null ? eventService.getEventsByVenue(venue) :
-                        date != null ? eventService.getEventsByDate(date) :
-                                eventService.getAllEvents();
+                eventService
+                        .getAllEvents()
+                        .stream()
+                        .filter(venue != null ? e ->
+                                !eventService.getEventsByVenue(venue)
+                                        .stream()
+                                        .filter(other -> other.getId().equals(e.getId()))
+                                        .collect(Collectors.toList())
+                                        .isEmpty()
+                                : e -> true)
+                        .filter(date != null ? e ->
+                                !eventService.getEventsByDate(date)
+                                        .stream()
+                                        .filter(other -> other.getId().equals(e.getId()))
+                                        .collect(Collectors.toList())
+                                        .isEmpty() : e -> true)
+                        .collect(Collectors.toList());
 
         return new ResponseEntity<>(
                 events,
