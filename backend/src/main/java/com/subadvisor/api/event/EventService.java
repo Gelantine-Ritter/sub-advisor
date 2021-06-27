@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,16 @@ public class EventService extends DataAccess implements IEventService {
                 .map(event -> mapper.eventToEventDto(event))
                 .collect(Collectors.toList());
 
+        return events;
+    }
+
+    @Override
+    public List<EventDto> getEventsByDate(String date) {
+       List<EventDto> events =   DATA.events()
+                .findByDate(LocalDate.parse(date))
+                .stream()
+                .map(event -> mapper.eventToEventDto(event))
+                .collect(Collectors.toList());
         return events;
     }
 

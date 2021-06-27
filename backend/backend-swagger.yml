@@ -141,6 +141,12 @@ paths:
             type: string
           required: false
           description: use venueId as a param to get all Events of a single Venue
+        - in: query
+          name: date
+          schema:
+            type: string
+          required: false
+          description: use date to get all events of a specific date
       responses:
         200:
           description: "Ok"
@@ -459,6 +465,10 @@ components:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
+        date:
+          type: string
+          example: "2021-11-23"
+          description: "LocalDate-Format which was mapped by eventStart-property"
         modifiedAt:
           type: string
           example: "2021-09-04T23:00:00"

@@ -23,12 +23,13 @@ public class EventController {
     @Autowired
     CreatorCheck creatorCheck;
 
-    @GetMapping("/events/")
-    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue) {
+    @GetMapping("/events")
+    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue, @RequestParam(required = false) String date) {
 
-        List<EventDto> events = venue != null ?
-                eventService.getEventsByVenue(venue) :
-                eventService.getAllEvents();
+        List<EventDto> events =
+                venue != null ? eventService.getEventsByVenue(venue) :
+                        date != null ? eventService.getEventsByDate(date) :
+                                eventService.getAllEvents();
 
         return new ResponseEntity<>(
                 events,
@@ -36,7 +37,7 @@ public class EventController {
         );
     }
 
-    @PostMapping("/events/")
+    @PostMapping("/events")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventCreateDto newEvent) {
         return new ResponseEntity<>(
                 eventService.createEvent(newEvent),
