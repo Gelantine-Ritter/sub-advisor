@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -52,6 +53,18 @@ public class EventService extends DataAccess implements IEventService {
                 .stream()
                 .map(event -> mapper.eventToEventDto(event))
                 .collect(Collectors.toList());
+        return events;
+    }
+
+    @Override
+    public List<EventDto> getEventsByTag(String tag) {
+
+        List<EventDto> events = DATA.events()
+                .findByTag(tag)
+                .stream()
+                .map(event -> mapper.eventToEventDto(event))
+                .collect(Collectors.toList());
+
         return events;
     }
 

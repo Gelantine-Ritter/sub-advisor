@@ -147,6 +147,12 @@ paths:
             type: string
           required: false
           description: use date to get all events of a specific date
+        - in: query
+          name: tag
+          schema:
+            type: string
+          required: false
+          description: use it to filter events by tag
       responses:
         200:
           description: "Ok"
