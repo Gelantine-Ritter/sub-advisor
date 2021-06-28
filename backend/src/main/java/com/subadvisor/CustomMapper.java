@@ -5,6 +5,9 @@ import com.subadvisor.api.event.Event;
 import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.api.event.dto.EventDto;
 import com.subadvisor.api.event.dto.EventUpdateDto;
+import com.subadvisor.api.member.Member;
+import com.subadvisor.api.member.dto.MemberDto;
+import com.subadvisor.api.member.dto.MemberRegistrateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
@@ -62,5 +65,14 @@ public interface CustomMapper {
     default LocalDate localDateTimeToLocalDate(LocalDateTime eventStart) {
         return eventStart != null ? eventStart.toLocalDate() : null;
     }
+
+
+    /** Member **/
+
+    Member memberRegistrateDtoToMember(MemberRegistrateDto memberRegistrateDto);
+
+    @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
+    MemberDto memberToMemberDto(Member member);
+
 
 }

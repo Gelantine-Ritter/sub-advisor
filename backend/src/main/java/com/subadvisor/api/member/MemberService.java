@@ -1,5 +1,9 @@
 package com.subadvisor.api.member;
 
+import com.subadvisor.CustomMapper;
+import com.subadvisor.DataAccess;
+import com.subadvisor.api.member.dto.MemberDto;
+import com.subadvisor.api.member.dto.MemberRegistrateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +20,14 @@ import static java.lang.String.format;
 public class MemberService implements UserDetailsService, IMemberService {
 
     @Autowired
-    MemberRepository memberRepository;
+    DataAccess DATA;
+
+    @Autowired
+    private CustomMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return memberRepository
+        return DATA.members()
                 .findByUsername(username)
                 .orElseThrow(
                         () -> new UsernameNotFoundException(
@@ -28,6 +35,17 @@ public class MemberService implements UserDetailsService, IMemberService {
                         )
                 );
     }
+
+    @Override
+    public MemberDto registrateMember(MemberRegistrateDto memberRegistrateDto) {
+        return mapper.memberToMemberDto(
+                DATA.members().save(
+                        mapper.memberRegistrateDtoToMember(memberRegistrateDto)
+                )
+        );
+    }
+
+
 }
 
 
