@@ -29,86 +29,105 @@
                   {{ venueObj.address.city }}
                 </h5>
               </div>
-              <div v-if="eventObj.eventStart">
-                starts around: {{ eventObj.eventStart }}
+              <div>
+                Doors: {{ eventObj.eventStart }}
+              </div>
+              <div>
+                Date: {{ eventObj.date }}
               </div>
             </div>
           </v-col>
           <!-- tags, price, ... -->
           <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
+            <MapsView :adress="venueObj.address" />
             Price: {{ eventObj.price }} Euro
+
           </v-col>
         </v-row>
 
-      <v-row justify="center">
-        <!-- EDIT EVENT BUTTON START -->
-        <template
-          class="flex-column"
-          v-if="user != null && user.id == eventObj.venueId"
-        >
-          <v-card class="pa-2 flex-column" flat tile>
-            <h4>
-              <v-btn @click.stop="showDialogEditEvent = true" icon class="ml-5">
-                <v-icon class="text-right myEditButtonSmallScreen" color="black"
-                  >far fa-edit</v-icon
+        <v-row>
+          <v-col>
+            <p>{{ eventObj.info }}</p>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center">
+          <!-- EDIT EVENT BUTTON START -->
+          <template
+            class="flex-column"
+            v-if="user != null && user.id == eventObj.venueId"
+          >
+            <v-card class="pa-2 flex-column" flat tile>
+              <h4>
+                <v-btn
+                  @click.stop="showDialogEditEvent = true"
+                  icon
+                  class="ml-5"
                 >
-                <ModalEditEvent v-model="showDialogEditEvent" />
-              </v-btn>
-            </h4>
-          </v-card>
-        </template>
-        <template v-else> </template>
-        <!-- EDIT EVENT BUTTON END -->
-      </v-row>
-
-      <v-row>
-        <!-- DELETE EVENT BUTTON START -->
-        <template v-if="user != null && user.id == eventObj.venueId">
-          <v-row justify="center">
-            <v-btn
-              class="myDeleteButton"
-              outlined
-              rounded
-              text
-              @click.stop="deleteDialog = true"
-            >
-              DELETE THIS EVENT
-            </v-btn>
-            <v-dialog v-model="deleteDialog" max-width="500">
-              <v-card>
-                <v-card-title class="text-h4 justify-center">
-                  Are you really sure you want to delete your account?
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    elevation="0"
-                    color="light"
-                    @click="deleteDialog = false"
+                  <v-icon
+                    class="text-right myEditButtonSmallScreen"
+                    color="black"
+                    >far fa-edit</v-icon
                   >
-                    Let me think about it...
-                  </v-btn>
-                  <v-btn color="error" outlined @click="deleteEventSubmit">
-                    Yes
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </v-row>
-        </template>
+                  <ModalEditEvent v-model="showDialogEditEvent" />
+                </v-btn>
+              </h4>
+            </v-card>
+          </template>
+          <template v-else> </template>
+          <!-- EDIT EVENT BUTTON END -->
+        </v-row>
 
-        <template v-else> </template>
-        <!-- DELETE EVENT BUTTON END -->
-      </v-row>
+        <v-row>
+          <!-- DELETE EVENT BUTTON START -->
+          <template v-if="user != null && user.id == eventObj.venueId">
+            <v-row justify="center">
+              <v-btn
+                class="myDeleteButton"
+                outlined
+                rounded
+                text
+                @click.stop="deleteDialog = true"
+              >
+                DELETE THIS EVENT
+              </v-btn>
+              <v-dialog v-model="deleteDialog" max-width="500">
+                <v-card>
+                  <v-card-title class="text-h4 justify-center">
+                    Are you really sure you want to delete your account?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      elevation="0"
+                      color="light"
+                      @click="deleteDialog = false"
+                    >
+                      Let me think about it...
+                    </v-btn>
+                    <v-btn color="error" outlined @click="deleteEventSubmit">
+                      Yes
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </v-row>
+          </template>
+
+          <template v-else> </template>
+          <!-- DELETE EVENT BUTTON END -->
+        </v-row>
       </v-container>
     </v-card>
-    </div>
+  </div>
 </template>
 
 <script>
 import ModalEditEvent from './DialogEditEvent.vue'
 import { mapGetters, mapActions } from 'vuex'
 import { requestProvider } from '../util/requestProvider'
+import { DateConverter } from '../util/DateConverter'
+import MapsView from '../components/features/MapsView.vue'
 
 export default {
   data() {
@@ -124,7 +143,12 @@ export default {
   beforeCreate() {
     const eventId = this.$route.params.id
     requestProvider.getEvent(eventId).then((response) => {
-      this.eventObj = response.data
+      this.eventObj = {
+          ...response.data,
+          eventStart: DateConverter.getTime(response.data.eventStart),
+          eventEnd: DateConverter.getTime(response.data.eventEnd),
+          date: DateConverter.getDate(response.data.date)
+ }
 
       requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
         this.venueObj = responseVenue.data
@@ -138,6 +162,7 @@ export default {
   },
   components: {
     ModalEditEvent,
+    MapsView,
   },
   methods: {
     redirectBackwards() {

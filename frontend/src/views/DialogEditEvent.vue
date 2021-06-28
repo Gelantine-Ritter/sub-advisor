@@ -12,7 +12,7 @@
               <v-col cols="12" sm="6">
                 <v-text-field
                   v-model="title"
-                  :counter="20"
+                  :counter="30"
                   :error-messages="titleErrors"
                   label="TITLE"
                   @input="$v.title.$touch()"
@@ -241,7 +241,7 @@ export default {
   // props: 'eventId',
   mixins: [validationMixin],
   validations: {
-    title: { maxLength: maxLength(20) },
+    title: { maxLength: maxLength(30) },
     info: { maxLength: maxLength(500) },
     whereTags: { required },
     eventTypeTags: { required },
@@ -318,7 +318,7 @@ export default {
       const errors = []
       if (!this.$v.title.$dirty) return errors
       !this.$v.title.maxLength &&
-        errors.push('Title must be at most 20 characters long')
+        errors.push('Title must be at most 30 characters long')
       return errors
     },
     infoErrors() {
