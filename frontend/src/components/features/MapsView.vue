@@ -28,7 +28,7 @@
 
 <script>
 
-import requestProvider from '../../util/requestProvider'
+import {requestProvider} from '../../util/requestProvider'
 
 export default {
 

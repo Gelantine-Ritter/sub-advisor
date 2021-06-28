@@ -24,7 +24,6 @@
               <v-btn
                 @click="redirectToPlaceDetail(venue.id)"
                 width="100%"
-                flat
                 color="rounded-pill black white--text"
                 >{{ venue.name }}
               </v-btn>

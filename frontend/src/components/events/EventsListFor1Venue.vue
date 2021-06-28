@@ -85,7 +85,6 @@ export default {
     const venueId = this.$route.params.id
     requestProvider.getEventsForVenue(venueId).then((response) => {
       this.eventObjs = response.data
-      console.log(this.eventObjs)
     })
   },
   methods: {
