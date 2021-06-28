@@ -33,24 +33,15 @@ public class EventController {
                         .getAllEvents()
                         .stream()
                         .filter(venue != null ? e ->
-                                !eventService.getEventsByVenue(venue)
-                                        .stream()
-                                        .filter(other -> other.getId().equals(e.getId()))
-                                        .collect(Collectors.toList())
-                                        .isEmpty()
+                                eventService.getEventsByVenue(venue)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId()))
                                 : e -> true)
                         .filter(date != null ? e ->
-                                !eventService.getEventsByDate(date)
-                                        .stream()
-                                        .filter(other -> other.getId().equals(e.getId()))
-                                        .collect(Collectors.toList())
-                                        .isEmpty() : e -> true)
+                                eventService.getEventsByDate(date)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId())) : e -> true)
                         .filter(tag != null ? e ->
-                                !eventService.getEventsByTag(tag)
-                                        .stream()
-                                        .filter(other -> other.getId().equals(e.getId()))
-                                        .collect(Collectors.toList())
-                                        .isEmpty() : e -> true)
+                                eventService.getEventsByTag(tag)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId())) : e -> true)
                         .collect(Collectors.toList());
 
         return new ResponseEntity<>(
