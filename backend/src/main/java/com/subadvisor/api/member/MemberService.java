@@ -4,6 +4,7 @@ import com.subadvisor.CustomMapper;
 import com.subadvisor.DataAccess;
 import com.subadvisor.api.member.dto.MemberDto;
 import com.subadvisor.api.member.dto.MemberRegistrateDto;
+import com.subadvisor.api.member.dto.MemberUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,6 +46,18 @@ public class MemberService implements UserDetailsService, IMemberService {
         );
     }
 
+    @Override
+    public MemberDto updateMemberById(MemberUpdateDto memberUpdateDto, Long memberId) {
+        return DATA.members().findById(memberId)
+                .map(member -> mapper.memberUpdateDtoToMember(memberUpdateDto, member))
+                .map(member -> DATA.members().save(member))
+                .map(member -> mapper.memberToMemberDto(member))
+                .orElseThrow(
+                        () -> new UsernameNotFoundException(
+                                format("User with id - %s, not found", memberId)
+                        )
+                );
+    }
 
 }
 

@@ -16,6 +16,6 @@ public class MemberUpdateDto {
     private String email;
     private String firstName;
     private String lastName;
-    private byte[] pic;
+    private String pic;
 
 }

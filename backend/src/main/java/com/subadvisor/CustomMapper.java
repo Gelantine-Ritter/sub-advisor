@@ -8,6 +8,7 @@ import com.subadvisor.api.event.dto.EventUpdateDto;
 import com.subadvisor.api.member.Member;
 import com.subadvisor.api.member.dto.MemberDto;
 import com.subadvisor.api.member.dto.MemberRegistrateDto;
+import com.subadvisor.api.member.dto.MemberUpdateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
@@ -73,6 +74,10 @@ public interface CustomMapper {
 
     @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
     MemberDto memberToMemberDto(Member member);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "pic", target = "pic", qualifiedByName = "base64ToByte")
+    Member memberUpdateDtoToMember(MemberUpdateDto memberUpdateDto, @MappingTarget Member member);
 
 
 }
