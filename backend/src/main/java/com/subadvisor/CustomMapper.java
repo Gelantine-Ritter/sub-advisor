@@ -46,7 +46,26 @@ public interface CustomMapper {
 
     @Mapping(target = "venueId", source = "event.venue.id")
     @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
+    @Mapping(source = "members", target = "amountOfGuests", qualifiedByName = "mapMembersToAmount")
+    @Mapping(source = "members", target = "guests", qualifiedByName = "mapMembersToHashMap")
     EventDto eventToEventDto(Event event);
+
+    @Named("mapMembersToHashMap")
+    default String[] mapMembersToHashMap(Set<Member> members) {
+        if (members == null) return null;
+        List<String> listOfGuests = new ArrayList<>();
+        members.forEach(
+                member ->
+                        listOfGuests.add(member.getUsername())
+        );
+        return listOfGuests.toArray(new String[0]);
+    }
+
+    @Named("mapMembersToAmount")
+    default int mapMembersToAmount(Set<Member> members) {
+        if (members == null) return 0;
+        return members.size();
+    }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "pic", target = "pic", qualifiedByName = "base64ToByte")

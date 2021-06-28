@@ -552,6 +552,16 @@ components:
           type: string
           example: "2021-09-04T23:00:00"
           description: "localDateTime-timestamp should match the example-pattern"
+        amountOfGuests:
+          type: integer
+          example: 23
+          description: amnount of members joining the event
+        guests:
+          type: array
+          items:
+            type: string
+          example: [ "SamSam", "Nayla-hammerschlag", "umpidumpi24" ]
+          description: Array of Memerbs by username
     EventCreateDto:
       type: object
       required:

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 @Getter
@@ -27,4 +28,6 @@ public class EventDto {
     private LocalDateTime eventStart;
     private LocalDateTime eventEnd;
     private LocalDate date;
+    private int amountOfGuests;
+    private String[] guests;
 }
