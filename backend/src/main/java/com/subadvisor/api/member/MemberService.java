@@ -69,6 +69,10 @@ public class MemberService implements UserDetailsService, IMemberService {
                 );
     }
 
+    @Override
+    public void deleteMemberById(Long memberId) {
+        DATA.members().deleteById(memberId);
+    }
 }
 
 

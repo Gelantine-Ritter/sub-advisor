@@ -10,4 +10,5 @@ public interface IMemberService {
     MemberDto registrateMember(MemberRegistrateDto memberRegistrateDto);
     MemberDto getMemberById(Long memberId);
     MemberDto updateMemberById(MemberUpdateDto memberUpdateDto, Long memberId);
+    void deleteMemberById(Long memberId);
 }

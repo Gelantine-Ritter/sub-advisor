@@ -48,5 +48,9 @@ public class MemberController {
         );
     }
 
-
+    @DeleteMapping("/members/{id}")
+    @PreAuthorize("authentication.principal.id == #id || hasRole('ADMIN')")
+    public void deleteVenueById(@PathVariable Long id) {
+        memberService.deleteMemberById(id);
+    }
 }

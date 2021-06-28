@@ -1,6 +1,5 @@
 package com.subadvisor.api.member;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.subadvisor.api.Driver;
 import com.subadvisor.api.member.dto.MemberDto;
 import com.subadvisor.api.member.dto.MemberRegistrateDto;
@@ -12,15 +11,15 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasSize;
+import java.util.Optional;
+
 import static org.springframework.test.web.servlet.ResultMatcher.matchAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.hamcrest.Matchers.*;
+
 
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -150,5 +149,34 @@ public class MemberIT extends Driver {
 
     }
 
+    @Test
+    @Order(5)
+    void otherGuestCannotDeleteThisProfile() throws Exception {
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/members/" + memberDto_nayla.getId().toString())
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is4xxClientError()
 
+                );
+
+    }
+
+    @Test
+    @Order(6)
+    void guestCannotDeleteOwnProfile() throws Exception {
+        DRIVER.mockMvc()
+                .perform(
+                        delete("/members/" + memberDto_nayla.getId().toString())
+                                .header("authorization", "Bearer " + TOKEN_MEMBER_NAYLA)
+                )
+                .andDo(print())
+                .andExpect(
+                        status().isOk()
+                );
+
+        Assertions.assertEquals(Optional.empty(), memberRepository().findById(memberDto_nayla.getId()));
+    }
 }
