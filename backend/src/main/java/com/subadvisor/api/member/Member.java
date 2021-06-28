@@ -5,6 +5,7 @@ import com.subadvisor.api.auth.IUserId;
 import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,13 +20,11 @@ import java.util.Collection;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@Accessors(fluent = true, chain = true)
-
 public class Member implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
@@ -33,6 +32,9 @@ public class Member implements UserDetails, Serializable, IUserId, IRegistration
     private Long id;
     private String username;
     private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -41,6 +43,9 @@ public class Member implements UserDetails, Serializable, IUserId, IRegistration
     @Builder.Default
     private String ROLE = "MEMBER";
 
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] pic;
 
     private boolean enabled = true;
 
