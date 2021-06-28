@@ -31,8 +31,6 @@ public class MemberController {
     @GetMapping("/members/{id}")
     @PreAuthorize("authentication.principal.id == #id || hasRole('ADMIN')")
     public ResponseEntity<?> getMemberById(@PathVariable(value = "id") Long id) {
-
-        System.out.println("hello");
         return new ResponseEntity<>(
                 memberService.getMemberById(id),
                 HttpStatus.OK

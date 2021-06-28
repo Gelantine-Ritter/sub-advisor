@@ -217,6 +217,79 @@ paths:
           description: "Invalid id supplied"
         404:
           description: "Event not found"
+  /members/:
+    post:
+      tags:
+        - "Members"
+      description: "Registrate as a Member"
+      operationId: "createMember"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/MemberRegistrateDto'
+      responses:
+        200:
+          description: "Ok"
+        400:
+          description: "Bad Request"
+  /members/{memberId}/:
+    get:
+      tags:
+        - "Members"
+      description: "Get an Member by Id"
+      operationId: "getMember"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MemberDto"
+        400:
+          description: "Bad Request"
+        404:
+          description: "Not Found"
+    put:
+      tags:
+        - "Members"
+      description: "update an event"
+      operationId: "updateEvent"
+      parameters:
+        - in: query
+          name: joinEvent
+          schema:
+            type: string
+          required: false
+          description: use joinEvent with eventId as value to join as a member an event. You dont have to pass MemerUpdateDto as RequestBody
+        - in: query
+          name: leaveEvent
+          schema:
+            type: string
+          required: false
+          description: use leaveEvent with eventId as value to leave as a member an event.You dont have to pass MemerUpdateDto as RequestBody
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MemberUpdateDto"
+      responses:
+        200:
+          description: "Ok"
+        400:
+          description: "Bad request"
+    delete:
+      tags:
+        - "Members"
+      description: "delete an Member by id"
+      operationId: "deleteMember"
+      responses:
+        202:
+          description: "Accepted"
+        400:
+          description: "Invalid id supplied"
+        404:
+          description: "Member not found"
 components:
   schemas:
     AuthRequest:
@@ -556,3 +629,84 @@ components:
           type: string
           format: byte
           example: 10101101110101010101010
+    MemberDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 12
+        username:
+          type: string
+          example: "nayla_hammerschlag"
+        email:
+          type: string
+          example: "nayla@hammerschlag.com"
+        firstName:
+          type: string
+          example: "Nayla"
+        lastName:
+          type: string
+          example: "Hammerschlag"
+        events:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            1: "Salatchips machen mit Haribert"
+            2: "Salsa tanzen am Mittwoch"
+          description: "key represents id of event and value title"
+        ROLE:
+          type: string
+          example: "MEMBER"
+        pic:
+          type: string
+          format: base64
+          example: 10101101110101010101010
+        created:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+        modifiedAt:
+          type: string
+          example: "2021-09-04T23:00:00"
+          description: "localDateTime-timestamp should match the example-pattern"
+    MemberRegistrateDto:
+      type: object
+      required:
+        - username
+        - name
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          example: "nayla_hammerschlag"
+        email:
+          type: string
+          example: "nayla_blank@hammerschlag.de"
+        password:
+          type: string
+          example: "nayla_super_secret"
+    MemberUpdateDto:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "nayla_hammerschlag"
+        password:
+          type: string
+          example: "super_secret"
+        email:
+          type: string
+          example: "nayla@hammerschlag.com"
+        firstName:
+          type: string
+          example: "Nayla"
+        lastName:
+          type: string
+          example: "Hammerschlag"
+        pic:
+          type: string
+          format: base64
+          example: 10101101110101010101010
+
