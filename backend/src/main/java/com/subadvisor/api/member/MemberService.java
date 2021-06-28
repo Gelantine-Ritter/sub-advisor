@@ -47,6 +47,16 @@ public class MemberService implements UserDetailsService, IMemberService {
     }
 
     @Override
+    public MemberDto getMemberById(Long memberId) {
+        return DATA.members().findById(memberId)
+                .map(member -> mapper.memberToMemberDto(member))
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        format("Member with id - %s, not found", memberId)
+                ));
+    }
+
+
+    @Override
     public MemberDto updateMemberById(MemberUpdateDto memberUpdateDto, Long memberId) {
         return DATA.members().findById(memberId)
                 .map(member -> mapper.memberUpdateDtoToMember(memberUpdateDto, member))

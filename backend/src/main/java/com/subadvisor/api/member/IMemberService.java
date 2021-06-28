@@ -8,5 +8,6 @@ import com.subadvisor.api.venue.dto.VenueUpdateDto;
 
 public interface IMemberService {
     MemberDto registrateMember(MemberRegistrateDto memberRegistrateDto);
+    MemberDto getMemberById(Long memberId);
     MemberDto updateMemberById(MemberUpdateDto memberUpdateDto, Long memberId);
 }

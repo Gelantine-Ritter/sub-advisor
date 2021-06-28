@@ -119,19 +119,34 @@ public class MemberIT extends Driver {
         DRIVER.mockMvc()
                 .perform(
                         get("/members/" + memberDto_nayla.getId().toString())
+                                .header("authorization", "Bearer " + TOKEN_MEMBER_NAYLA)
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse();
-
-
+                .andExpect(
+                        matchAll(
+                                jsonPath("$.id").value(memberDto_nayla.getId()),
+                                jsonPath("$.username").value(MEMBER_NAYLA_USERNAME),
+                                jsonPath("$.email").value(MEMBER_NAYLA_EMAIL),
+                                jsonPath("$.firstName").value(MEMBER_NAYLA_FIRSTNAME),
+                                jsonPath("$.lastName").value(MEMBER_NAYLA_SECONDNAME),
+                                jsonPath("$.role").value("MEMBER"),
+                                status().isOk()
+                        )
+                );
     }
 
     @Test
     @Order(4)
     void otherGuestCannotGetThisProfile() throws Exception {
+        DRIVER.mockMvc()
+                .perform(
+                        get("/members/" + memberDto_nayla.getId().toString())
+                )
+                .andDo(print())
+                .andExpect(
+                        status().is4xxClientError()
 
+                );
 
     }
 
