@@ -10,5 +10,7 @@ public interface IMemberService {
     MemberDto registrateMember(MemberRegistrateDto memberRegistrateDto);
     MemberDto getMemberById(Long memberId);
     MemberDto updateMemberById(MemberUpdateDto memberUpdateDto, Long memberId);
+    MemberDto updateMemberByIdToJoinEvent(Long memberId, String eventId);
+    MemberDto updateMemberByIdToLeaveEvent(Long memberId, String eventId);
     void deleteMemberById(Long memberId);
 }

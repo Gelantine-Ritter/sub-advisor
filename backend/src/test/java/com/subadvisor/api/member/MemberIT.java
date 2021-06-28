@@ -5,6 +5,7 @@ import com.subadvisor.api.member.dto.MemberDto;
 import com.subadvisor.api.member.dto.MemberRegistrateDto;
 import com.subadvisor.api.member.dto.MemberUpdateDto;
 import com.subadvisor.operators.LoginOperator;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.MediaType;
@@ -113,6 +114,64 @@ public class MemberIT extends Driver {
 
     @Test
     @Order(3)
+    void memberCanJoinAnEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/members/" + memberDto_nayla.getId().toString())
+                                .param("joinEvent", "1")
+                                .header("authorization", "Bearer " + TOKEN_MEMBER_NAYLA)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(memberUpdateDto_nayla))
+                )
+                .andDo(print())
+                .andExpect(
+                        matchAll(
+                                jsonPath("$.id").value(memberDto_nayla.getId()),
+                                jsonPath("$.username").value(MEMBER_NAYLA_USERNAME),
+                                jsonPath("$.email").value(MEMBER_NAYLA_EMAIL),
+                                jsonPath("$.firstName").value(MEMBER_NAYLA_FIRSTNAME),
+                                jsonPath("$.lastName").value(MEMBER_NAYLA_SECONDNAME),
+                                jsonPath("$.role").value("MEMBER"),
+                                jsonPath("$.events").isMap(),
+                                jsonPath("$.events", Matchers.hasKey("1")),
+                                status().isOk()
+                        )
+                );
+    }
+
+    @Test
+    @Order(4)
+    void memberCanLeaveEvent() throws Exception {
+
+        DRIVER.mockMvc()
+                .perform(
+                        put("/members/" + memberDto_nayla.getId().toString())
+                                .param("leaveEvent", "1")
+                                .header("authorization", "Bearer " + TOKEN_MEMBER_NAYLA)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(memberUpdateDto_nayla))
+                )
+                .andDo(print())
+                .andExpect(
+                        matchAll(
+                                jsonPath("$.id").value(memberDto_nayla.getId()),
+                                jsonPath("$.username").value(MEMBER_NAYLA_USERNAME),
+                                jsonPath("$.email").value(MEMBER_NAYLA_EMAIL),
+                                jsonPath("$.firstName").value(MEMBER_NAYLA_FIRSTNAME),
+                                jsonPath("$.lastName").value(MEMBER_NAYLA_SECONDNAME),
+                                jsonPath("$.role").value("MEMBER"),
+                                jsonPath("$.events").value(""),
+                                status().isOk()
+                        )
+                );
+
+    }
+
+
+
+    @Test
+    @Order(5)
     void guestCanGetOwnProfile() throws Exception {
 
         DRIVER.mockMvc()
@@ -135,7 +194,7 @@ public class MemberIT extends Driver {
     }
 
     @Test
-    @Order(4)
+    @Order(6)
     void otherGuestCannotGetThisProfile() throws Exception {
         DRIVER.mockMvc()
                 .perform(
@@ -149,8 +208,9 @@ public class MemberIT extends Driver {
 
     }
 
+
     @Test
-    @Order(5)
+    @Order(7)
     void otherGuestCannotDeleteThisProfile() throws Exception {
         DRIVER.mockMvc()
                 .perform(
@@ -161,12 +221,12 @@ public class MemberIT extends Driver {
                         status().is4xxClientError()
 
                 );
-
     }
 
+
     @Test
-    @Order(6)
-    void guestCannotDeleteOwnProfile() throws Exception {
+    @Order(8)
+    void guestCanDeleteOwnProfile() throws Exception {
         DRIVER.mockMvc()
                 .perform(
                         delete("/members/" + memberDto_nayla.getId().toString())
@@ -176,7 +236,6 @@ public class MemberIT extends Driver {
                 .andExpect(
                         status().isOk()
                 );
-
         Assertions.assertEquals(Optional.empty(), memberRepository().findById(memberDto_nayla.getId()));
     }
 }

@@ -17,8 +17,7 @@ import org.mapstruct.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Mapper(componentModel = "spring")
 public interface CustomMapper {
@@ -68,16 +67,31 @@ public interface CustomMapper {
     }
 
 
-    /** Member **/
+    /**
+     * Member
+     **/
 
     Member memberRegistrateDtoToMember(MemberRegistrateDto memberRegistrateDto);
 
     @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
+    @Mapping(source = "events", target = "events", qualifiedByName = "eventToEventMap")
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     MemberDto memberToMemberDto(Member member);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "pic", target = "pic", qualifiedByName = "base64ToByte")
     Member memberUpdateDtoToMember(MemberUpdateDto memberUpdateDto, @MappingTarget Member member);
 
-
+    @Named("eventToEventMap")
+    default Map<String, String> eventToEventMap(Set<Event> events) {
+        if (events == null) return null;
+        Map<String, String> eventMap = new HashMap<>();
+        events.forEach(
+                event -> eventMap.put(
+                        event.getId().toString(),
+                        event.getTitle()
+                )
+        );
+        return eventMap;
+    }
 }

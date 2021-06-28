@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Data
 @Builder(toBuilder = true)
@@ -22,6 +23,7 @@ public class MemberDto {
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+    private Map<String, String> events;
 
     private String ROLE;
 
