@@ -36,6 +36,26 @@ export const requestProvider = {
     getEventsForVenue: async (venueId) => {
         return await axios.get(`/events/?venue=${venueId}`)
     },
+    getEventsForVenueAndDate: async (venueId, date) => {
+        return await axios.get(`/events/?venue=${venueId}&date=${date}`)
+    },
+    getEventsForDate: async (date) => {
+        return await axios.get(`/events/?date=${date}`)
+    },
+    getEventsForDateVenueTag: async (venueId, date, tag) => {
+        console.log('--------------------- getEventsForDateVenueTag got called');
+        if (date && venueId && tag) {
+            return await axios.get(`/events/?venue=${venueId}&date=${date}&tag=${tag}`)
+        }else if (date && venueId) {
+            return await axios.get(`/events/?venue=${venueId}&date=${date}`)
+        }else if (date && tag) {
+            return await axios.get(`/events/?date=${date}&tag=${tag}`)
+        }else if (tag) {
+            return await axios.get(`/events/?tag=${tag}`)
+        }else{
+            return await axios.get(`/events/`)
+        }
+    },
     deleteEvent: async (eventId, auth) => {
         return await axios.delete('/events/' + eventId, auth)
     },

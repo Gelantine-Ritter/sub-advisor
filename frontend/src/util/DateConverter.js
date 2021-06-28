@@ -8,10 +8,18 @@ export const DateConverter = {
 
     getDate: (date) => {
         const editDate = date.split('-')
-        return (`${editDate[2]}.${editDate[1]}.${editDate[2]}`)
+        return (`${editDate[2]}.${editDate[1]}.${editDate[0]}`)
     },
 
     getDateTimeComplete: (date) => {
         console.log(date);
+    },
+
+    getTodayDate: () => {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0')
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var yyyy = today.getFullYear()
+        return (`${yyyy}-${mm}-${dd}`)
     }
 }

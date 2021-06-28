@@ -247,6 +247,7 @@ import {
 import auth from './../store/auth'
 import * as fileUpload from '../util/FileUpload'
 import { requestProvider } from '../util/requestProvider'
+import { TagProvider } from '../util/TagProvider'
 
 export default {
   validations: {
@@ -285,29 +286,11 @@ export default {
       toTimeVal: null,
       toTimeMenu: false,
       // Tags
-      whereTagsItems: ['inside', 'outside', 'online'],
+      whereTagsItems: TagProvider.whereTags,
       whereTags: [],
-      eventTypeTagsItems: [
-        'dj',
-        'concert',
-        'jam',
-        'exhibition',
-        'performance',
-        'conversation',
-      ],
+      eventTypeTagsItems: TagProvider.eventTypeTags,
       eventTypeTags: [],
-      genreTagsItems: [
-        'techno',
-        'house',
-        'acid',
-        'rock',
-        'punk',
-        'hip hop',
-        'classic',
-        'contemporary',
-        'new wave',
-        'political',
-      ],
+      genreTagsItems: TagProvider.genreTags,
       genreTags: [],
       //
       styleObject: { border: '2px solid #cafb03' },
