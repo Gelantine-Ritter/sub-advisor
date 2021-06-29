@@ -42,13 +42,13 @@
             </v-card>
             <v-card class="pa-2" flat tile>
               <h4>
-                <v-btn @click.stop="showDialogPrivate = true" icon class="ml-5">
+                <v-btn @click.stop="showDialogAccount = true" icon class="ml-5">
                   <v-icon
                     class="text-right myEditButtonSmallScreen"
                     color="black"
                     >far fa-edit</v-icon
                   >
-                  <ModalPrivate v-model="showDialogPrivate" />
+                  <ModalAccount v-model="showDialogAccount" />
                 </v-btn>
               </h4>
             </v-card>
@@ -70,13 +70,13 @@
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-subtitle> FIRSTNAME </v-list-item-subtitle>
-            <v-list-item-title> {{ user.firstname }} </v-list-item-title>
+            <v-list-item-title> {{ user.firstName }} </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item two-line>
           <v-list-item-content>
             <v-list-item-subtitle>LASTNAME</v-list-item-subtitle>
-            <v-list-item-title> {{ user.lastname }} </v-list-item-title>
+            <v-list-item-title> {{ user.lastName }} </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -125,14 +125,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import ModalPrivate from './DialogAccountUpdate.vue'
-import ModalPicture from './DialogPicturePlaceUpdate.vue'
+import ModalAccount from './DialogAccountMemberUpdate.vue'
+import ModalPicture from './DialogPictureMemberUpdate.vue'
 
 export default {
   data() {
     return {
       styleObject: { border: '2px solid #cafb03' },
-      showDialogPrivate: false,
+      showDialogAccount: false,
       showDialogPicture: false,
       deleteDialog: false,
     }
@@ -143,7 +143,7 @@ export default {
     }),
   },
   components: {
-    ModalPrivate,
+    ModalAccount,
     ModalPicture,
   },
   methods: {
