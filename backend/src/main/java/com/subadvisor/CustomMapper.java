@@ -5,6 +5,10 @@ import com.subadvisor.api.event.Event;
 import com.subadvisor.api.event.dto.EventCreateDto;
 import com.subadvisor.api.event.dto.EventDto;
 import com.subadvisor.api.event.dto.EventUpdateDto;
+import com.subadvisor.api.member.Member;
+import com.subadvisor.api.member.dto.MemberDto;
+import com.subadvisor.api.member.dto.MemberRegistrateDto;
+import com.subadvisor.api.member.dto.MemberUpdateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.api.venue.dto.VenuePersonalDto;
 import com.subadvisor.api.venue.dto.VenuePublicDto;
@@ -13,8 +17,7 @@ import org.mapstruct.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @Mapper(componentModel = "spring")
 public interface CustomMapper {
@@ -43,7 +46,26 @@ public interface CustomMapper {
 
     @Mapping(target = "venueId", source = "event.venue.id")
     @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
+    @Mapping(source = "members", target = "amountOfGuests", qualifiedByName = "mapMembersToAmount")
+    @Mapping(source = "members", target = "guests", qualifiedByName = "mapMembersToHashMap")
     EventDto eventToEventDto(Event event);
+
+    @Named("mapMembersToHashMap")
+    default String[] mapMembersToHashMap(Set<Member> members) {
+        if (members == null) return null;
+        List<String> listOfGuests = new ArrayList<>();
+        members.forEach(
+                member ->
+                        listOfGuests.add(member.getUsername())
+        );
+        return listOfGuests.toArray(new String[0]);
+    }
+
+    @Named("mapMembersToAmount")
+    default int mapMembersToAmount(Set<Member> members) {
+        if (members == null) return 0;
+        return members.size();
+    }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "pic", target = "pic", qualifiedByName = "base64ToByte")
@@ -63,4 +85,32 @@ public interface CustomMapper {
         return eventStart != null ? eventStart.toLocalDate() : null;
     }
 
+
+    /**
+     * Member
+     **/
+
+    Member memberRegistrateDtoToMember(MemberRegistrateDto memberRegistrateDto);
+
+    @Mapping(source = "pic", target = "pic", qualifiedByName = "byteToBase64")
+    @Mapping(source = "events", target = "events", qualifiedByName = "eventToEventMap")
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    MemberDto memberToMemberDto(Member member);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "pic", target = "pic", qualifiedByName = "base64ToByte")
+    Member memberUpdateDtoToMember(MemberUpdateDto memberUpdateDto, @MappingTarget Member member);
+
+    @Named("eventToEventMap")
+    default Map<String, String> eventToEventMap(Set<Event> events) {
+        if (events == null) return null;
+        Map<String, String> eventMap = new HashMap<>();
+        events.forEach(
+                event -> eventMap.put(
+                        event.getId().toString(),
+                        event.getTitle()
+                )
+        );
+        return eventMap;
+    }
 }

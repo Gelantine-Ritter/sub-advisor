@@ -181,14 +181,16 @@ class LoadDatabase {
                             .username("Jimmy-Bleu")
                             .password("supercool")
                             .enabled(true)
-
                             .build())
             );
 
             log.info("Preloading " + memberRepository.save(
                     Member.builder()
-                            .username("Nayla Thalhammer")
-                            .password("hammerschlag")
+                            .username("samsam-supergeheim")
+                            .firstName("Sams")
+                            .lastName("Goldschmied")
+                            .password("goldi")
+                            .events(Set.of(hochbeet01, eventTrudeRuth02))
                             .build())
             );
         };

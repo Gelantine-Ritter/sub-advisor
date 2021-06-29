@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.subadvisor.api.member.Member;
 import com.subadvisor.api.venue.Venue;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -18,6 +19,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -71,6 +73,9 @@ public class Event implements Serializable {
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] pic;
+
+    @ManyToMany(mappedBy = "events")
+    private Set<Member> members;
 
     @CreatedDate
     @Column(updatable = false)
