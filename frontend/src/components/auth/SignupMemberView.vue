@@ -6,36 +6,6 @@
       v-model="valid"
       lazy-validation
     >
-        <!--
-      <h2>FIRSTNAME</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input"
-        id="firstname"
-        name="firstname"
-        label=""
-        type="text"
-        required
-        v-model="firstname"
-        :rules="nameRules"
-      ></v-text-field>
-      <h2>LASTNAME</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input"
-        id="lastname"
-        name="lastname"
-        label=""
-        type="text"
-        required
-        v-model="lastname"
-        :rules="nameRules"
-      ></v-text-field>
-      -->
       <h2>E-MAIL</h2>
       <v-text-field
         large
