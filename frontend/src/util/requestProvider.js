@@ -91,4 +91,7 @@ export const requestProvider = {
   getMember: async (memberId, auth) => {
     return await axios.get(`/members/${memberId}`, auth)
   },
+  deleteMember: async (memberId, auth) => {
+    return await axios.delete(`/members/${memberId}`, auth)
+  },
 }

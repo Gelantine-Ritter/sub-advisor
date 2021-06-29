@@ -148,13 +148,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      deleteProfile: 'auth/deleteProfile',
+      deleteMemberProfile: 'auth/deleteMemberProfile',
     }),
     picDataUrl() {
       return 'data:image/png;base64, ' + this.user.pic
     },
     deleteProfileSubmit() {
-      this.deleteProfile().then(() => {
+      this.deleteMemberProfile().then(() => {
         this.$router.replace({
           name: 'home',
         })

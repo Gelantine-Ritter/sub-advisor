@@ -137,6 +137,15 @@ export default {
       commit('SET_ROLE', null)
     },
 
+    async deleteMemberProfile({ commit, state }) {
+      requestProvider.deleteMember(state.user.id, {
+        headers: { Authorization: 'Bearer ' + state.token },
+      })
+      commit('SET_TOKEN', null)
+      commit('SET_USER', null)
+      commit('SET_ROLE', null)
+    },
+
     // UPDATE ACCOUNT
     async updateVenue({ commit, state }, userData) {
       var newData = userData
