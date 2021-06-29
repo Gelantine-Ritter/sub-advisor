@@ -336,9 +336,10 @@
       </template>
       <!-- START AUTHENTICATION CONTROL -->
       <template v-if="authenticated">
+      <template v-if="role == 'VENUE'"> 
         <v-list>
           <v-list-item
-            v-for="item in subProfileLoggedIn"
+            v-for="item in subProfileLoggedInVenue"
             :key="item.title"
             :to="item.route"
             @click="logoutSubmit(item.action)"
@@ -346,6 +347,19 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
+      </template>
+      <template v-else-if="role == 'MEMBER'"> 
+        <v-list>
+          <v-list-item
+            v-for="item in subProfileLoggedInMember"
+            :key="item.title"
+            :to="item.route"
+            @click="logoutSubmit(item.action)"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </template>
       </template>
       <template v-else>
         <v-list>
@@ -498,10 +512,15 @@ export default {
         { title: 'Login', route: '/login' },
         { title: 'Signup', route: '/signup' },
       ],
-      subProfileLoggedIn: [
-        { title: 'Show Profile', route: '/myProfile' },
+      subProfileLoggedInVenue: [
+        { title: 'Show Profile', route: '/myVenueProfile' },
         { title: 'My Events', route: '/events' },
         { title: 'Create Event', route: '/CreateEvents' },
+        { title: 'Logout', action: this.logout },
+      ],
+      subProfileLoggedInMember: [
+        { title: 'Show Profile', route: '/myMemberProfile' },
+        { title: 'My Calendar', route: '/events' },
         { title: 'Logout', action: this.logout },
       ],
     }
