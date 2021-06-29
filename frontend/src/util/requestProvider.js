@@ -43,7 +43,6 @@ export const requestProvider = {
         return await axios.get(`/events/?date=${date}`)
     },
     getEventsForDateVenueTag: async (venueId, date, tag) => {
-        console.log('--------------------- getEventsForDateVenueTag got called');
         if (date && venueId && tag) {
             return await axios.get(`/events/?venue=${venueId}&date=${date}&tag=${tag}`)
         }else if (date && venueId) {
