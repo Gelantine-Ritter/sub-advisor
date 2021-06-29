@@ -1,6 +1,7 @@
 <template>
   <v-parallax
     class="myparallax"
+    style="height: 100%"
     src="../assets/tv-noise.jpeg"
     alt="Welcome to SUB"
   >

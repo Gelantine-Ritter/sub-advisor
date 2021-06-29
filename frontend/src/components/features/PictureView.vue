@@ -23,10 +23,7 @@ export default {
 .myPicture {
   height: 100%;
 }
-.myPictureCard {
-  padding: 2%;
-  margin-bottom: 8%;
-}
+
 .noPicture {
   height: 100%;
   background: black;

@@ -28,7 +28,10 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
-    SET_USER_ID(state, userId) {},
+    /* 
+    SET_USER_ID(state, userId) {
+    },
+    */
   },
 
   actions: {
@@ -69,19 +72,31 @@ export default {
       if (!state.role) {
         return
       }
-
+      /*
       if (userId) {
         commit('SET_USER_ID', userId)
       }
-
+      */
       try {
-        requestProvider
+        if (role === 'VENUE'){
+          requestProvider
           .getVenue(userId, {
             headers: { Authorization: 'Bearer ' + jwt },
           })
           .then((response) => {
             commit('SET_USER', response.data)
           })
+        }
+        else if (role === 'MEMBER'){
+          requestProvider
+          .getMember(userId, {
+            headers: { Authorization: 'Bearer ' + jwt },
+          })
+          .then((response) => {
+            commit('SET_USER', response.data)
+          })
+        }
+        
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
@@ -106,7 +121,10 @@ export default {
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
-      requestProvider.postVenue(username, name, password, email)
+        requestProvider.postVenue(username, name, password, email)
+    },
+    async signupMember({ commit }, username, password, email){
+        requestProvider.postMember(username, password, email)
     },
 
     // DELETE ACCOUNT

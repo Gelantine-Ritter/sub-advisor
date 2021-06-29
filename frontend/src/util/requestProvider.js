@@ -1,34 +1,33 @@
 import axios from 'axios'
 
 export const requestProvider = {
-    
-    // VENUES
+  // VENUES
 
-    getVenues: async () => {
-        return await axios.get('/venues/')
-    },
-    getVenue: async (venueId) => {
-        return await axios.get(`/venues/${venueId}`)
-    },
+  getVenues: async () => {
+    return await axios.get('/venues/')
+  },
+  getVenue: async (venueId) => {
+    return await axios.get(`/venues/${venueId}`)
+  },
 
-    postVenue: async (username, name, password, email ) => {
-        return await axios.post(
-            '/authenticate/registrate/',
-            username,
-            email,
-            password,
-            name
-          )
-    },
-    updateVenue: async (venueId, body, auth) => {
-        return await axios.put(`/venues/${venueId}`, body, auth)
-    },
+  postVenue: async (username, name, password, email) => {
+    return await axios.post(
+      '/authenticate/registrate/',
+      username,
+      email,
+      password,
+      name
+    )
+  },
+  updateVenue: async (venueId, body, auth) => {
+    return await axios.put(`/venues/${venueId}`, body, auth)
+  },
 
-    deleteVenue: async (venueId, auth) => {
-        return await axios.delete(`/venues/${venueId}`, auth)
-    },
+  deleteVenue: async (venueId, auth) => {
+    return await axios.delete(`/venues/${venueId}`, auth)
+  },
 
-    // EVENTS
+  // EVENTS
 
     getEvent: async (eventId) => {
         return await axios.get(`/events/${eventId}`)
@@ -65,22 +64,31 @@ export const requestProvider = {
         return await axios.post(`/events/`, body, auth)
     },
 
-    // LOGIN / REGISTRATE
+  // LOGIN / REGISTRATE
 
-    loginUser: async (credentials) => {
-        return await axios.post('/authenticate/', credentials)
-    },
+  loginUser: async (credentials) => {
+    return await axios.post('/authenticate/', credentials)
+  },
 
-    // MAPS
+  // MAPS
 
-    getMapData: async (finalUrl) => {
-        delete axios.defaults.headers.common.Authorization
+  getMapData: async (finalUrl) => {
+    delete axios.defaults.headers.common.Authorization
 
-        const mapData = await axios.get(finalUrl)
+    const mapData = await axios.get(finalUrl)
 
-        axios.defaults.headers.common.Authorization =
-        'Baerer ' + localStorage.getItem('token')
-        
-        return mapData
-    },
+    axios.defaults.headers.common.Authorization =
+      'Baerer ' + localStorage.getItem('token')
+
+    return mapData
+  },
+
+  // MEMBERS
+
+  postMember: async (username, password, email) => {
+    return await axios.post('/members', username, email, password)
+  },
+  getMember: async (memberId, auth) => {
+    return await axios.get(`/members/${memberId}`, auth)
+  },
 }
