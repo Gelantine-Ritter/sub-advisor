@@ -120,10 +120,10 @@ export default {
     },
 
     // REGISTRATE
-    async signupVenue(username, name, password, email) {
+    async signupVenue({ commit }, username, name, password, email) {
         requestProvider.postVenue(username, name, password, email)
     },
-    async signupMember(username, password, email){
+    async signupMember({ commit }, username, password, email){
         requestProvider.postMember(username, password, email)
     },
 
@@ -152,23 +152,6 @@ export default {
       var token = state.token
       requestProvider
         .updateVenue(state.user.id, newData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            commit('SET_USER', response.data)
-          }
-        })
-    },
-
-    async updateMember({ commit, state }, userData) {
-      var newData = userData
-      var token = state.token
-      requestProvider
-        .updateMember(state.user.id, newData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
