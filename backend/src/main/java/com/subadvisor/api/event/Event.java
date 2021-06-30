@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.subadvisor.api.member.Member;
 import com.subadvisor.api.venue.Venue;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
@@ -17,7 +17,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -51,6 +53,7 @@ public class Event implements Serializable {
     private String title;
     @Getter
     @Setter
+    @Column(length=1000)
     private String info;
     // TODO: Artist could be an own entity -> feature request
     @ElementCollection
@@ -71,6 +74,9 @@ public class Event implements Serializable {
     @Type(type = "org.hibernate.type.ImageType")
     private byte[] pic;
 
+    @ManyToMany(mappedBy = "events")
+    private Set<Member> members;
+
     @CreatedDate
     @Column(updatable = false)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -78,6 +84,10 @@ public class Event implements Serializable {
     @Getter
     @Setter
     private LocalDateTime created;
+
+    @Getter
+    @Setter
+    private LocalDate date;
 
     @LastModifiedDate
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)

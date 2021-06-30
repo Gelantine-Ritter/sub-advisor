@@ -22,4 +22,5 @@ public class EventUpdateDto {
     private String eventStart;
     private String eventEnd;
     private String pic;
+    private String[] tags;
 }

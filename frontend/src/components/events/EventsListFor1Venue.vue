@@ -16,11 +16,14 @@
               <v-card class="pa-4" tile flat>
                 <h6>{{ event.title }}</h6>
                 <v-list-item-subtitle>
-                  FROM {{ convertDate(event.eventStart) }} TO
-                  {{ convertDate(event.eventEnd) }}</v-list-item-subtitle
+                  Time: {{ event.eventStart }} -
+                  {{ event.eventEnd }}</v-list-item-subtitle
                 >
                 <v-list-item-subtitle>
-                  WITH {{ convertArtists(event.artists) }}
+                  Date: {{ event.date }}
+                </v-list-item-subtitle>
+                <v-list-item-subtitle>
+                  Acts: {{ event.artists }}
                 </v-list-item-subtitle>
               </v-card>
             </v-col>
@@ -76,6 +79,7 @@
 
 <script>
 import { requestProvider } from '../../util/requestProvider'
+import { DateConverter } from '../../util/DateConverter'
 
 export default {
   props: {
@@ -92,18 +96,22 @@ export default {
   mounted() {
     const venueId = this.$route.params.id
     requestProvider.getEventsForVenue(venueId).then((response) => {
-      this.eventObjs = response.data
+      const eventList = response.data
+      for (let i = 0; i < eventList.length; i++) {
+        eventList[i] = {
+          ...eventList[i],
+          eventStart: DateConverter.getTime(eventList[i].eventStart),
+          eventEnd: DateConverter.getTime(eventList[i].eventEnd),
+          date: DateConverter.getDate(eventList[i].date),
+          artists: this.convertArtists(eventList[i].artists),
+        }
+      }
+      this.eventObjs = eventList
     })
   },
   methods: {
-    convertDate(date) {
-      const parts = date.split('T')
-      const convertMyDate = parts[0] + ' ' + parts[1]
-
-      return convertMyDate
-    },
     convertArtists(artistsArr) {
-      return artistsArr.join(' | ')
+      return artistsArr.join(', ')
     },
     picDataUrl() {
       return 'data:image/png;base64, ' + this.eventObjs.pic

@@ -48,10 +48,10 @@ export default {
   color: white !important;
   font-size: 125%;
 }
-
+ 
 .v-parallax {
-  height: calc(100vh - 64px) !important;
-}
+  height: 100%;
+} 
 .v-parallax__image-container {
   position: absolute;
   top: -calc(100vh - 64px) !important;

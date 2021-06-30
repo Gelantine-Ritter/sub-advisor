@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class EventController {
@@ -23,12 +24,25 @@ public class EventController {
     @Autowired
     CreatorCheck creatorCheck;
 
-    @GetMapping("/events/")
-    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue) {
+    @GetMapping("/events")
+    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue, @RequestParam(required = false) String date,
+                                          @RequestParam(required = false) String tag) {
 
-        List<EventDto> events = venue != null ?
-                eventService.getEventsByVenue(venue) :
-                eventService.getAllEvents();
+        List<EventDto> events =
+                eventService
+                        .getAllEvents()
+                        .stream()
+                        .filter(venue != null ? e ->
+                                eventService.getEventsByVenue(venue)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId()))
+                                : e -> true)
+                        .filter(date != null ? e ->
+                                eventService.getEventsByDate(date)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId())) : e -> true)
+                        .filter(tag != null ? e ->
+                                eventService.getEventsByTag(tag)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId())) : e -> true)
+                        .collect(Collectors.toList());
 
         return new ResponseEntity<>(
                 events,
@@ -36,7 +50,7 @@ public class EventController {
         );
     }
 
-    @PostMapping("/events/")
+    @PostMapping("/events")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventCreateDto newEvent) {
         return new ResponseEntity<>(
                 eventService.createEvent(newEvent),

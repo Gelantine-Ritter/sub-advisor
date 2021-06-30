@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Set;
@@ -96,7 +97,8 @@ class LoadDatabase {
                             .tags(Set.of("Sport", "Tischtennis"))
                             .venue(trudeRuth)
                             .eventStart(LocalDateTime.parse("2021-09-04T17:00:00"))
-                            .eventEnd(LocalDateTime.parse("2021-09-04T19:00"))
+                            .eventEnd(LocalDateTime.parse("2021-09-17T19:00"))
+                            .date(LocalDateTime.parse("2021-09-17T19:00").toLocalDate())
                             .info("nettes indoor-tischtennis im Hinterraum")
                             .artists(Set.of("Timo Boll"))
                             .price(10)
@@ -112,6 +114,21 @@ class LoadDatabase {
                             .artists(Set.of("DJ Salsa", "MC Salsa"))
                             .eventStart(LocalDateTime.parse("2021-09-07T17:00:00"))
                             .eventEnd(LocalDateTime.parse("2021-09-07T19:00"))
+                            .date(LocalDateTime.parse("2021-09-07T19:00").toLocalDate())
+                            .price(0)
+                            .build()
+            );
+
+            Event eventTrudeRuth03 = eventRepository.save(
+                    Event.builder()
+                            .title("Küfa von Blutgruppe Mayo")
+                            .venue(trudeRuth)
+                            .info("Jeden Abend gibt es bei uns leckere Hotdogs von der gruppe Blutgruppe Mayo")
+                            .tags(Set.of("Essen", "Küfa", "Fastfood"))
+                            .artists(Set.of("Blutgruppe Mayo"))
+                            .eventStart(LocalDateTime.now())
+                            .eventEnd(LocalDateTime.now())
+                            .date(LocalDate.now())
                             .price(0)
                             .build()
             );
@@ -122,6 +139,7 @@ class LoadDatabase {
                             .venue(hochbeetGarten)
                             .eventStart(LocalDateTime.parse("2021-08-07T17:00:00"))
                             .eventEnd(LocalDateTime.parse("2021-08-07T19:00"))
+                            .date(LocalDateTime.parse("2021-08-07T19:00").toLocalDate())
                             .info("alle haben mal klein angefangen! Unsere profi-gaertner*innen Samuel und Nayla zeigen wie ihr" +
                                     "auch in eurer Wohnung schoene Kartoffeln anbauen koennt")
                             .tags(Set.of("Workshop", "Draußen", "Pflanzen"))
@@ -139,6 +157,7 @@ class LoadDatabase {
                             .tags(Set.of("Workshop", "Kochen", "Pflanzen"))
                             .eventStart(LocalDateTime.parse("2021-06-07T17:00:00"))
                             .eventEnd(LocalDateTime.parse("2021-06-07T19:00"))
+                            .date(LocalDateTime.parse("2021-06-07T19:00").toLocalDate())
                             .artists(Set.of("Chief of cuisine - Haribert"))
                             .price(0)
                             .build()
@@ -150,6 +169,8 @@ class LoadDatabase {
 
             log.info("Preloading " + eventTrudeRuth02);
 
+            log.info("Preloading " + eventTrudeRuth03);
+
             log.info("Preloading " + hochbeet01);
 
             log.info("Preloading " + hochbeet02);
@@ -160,14 +181,16 @@ class LoadDatabase {
                             .username("Jimmy-Bleu")
                             .password("supercool")
                             .enabled(true)
-
                             .build())
             );
 
             log.info("Preloading " + memberRepository.save(
                     Member.builder()
-                            .username("Nayla Thalhammer")
-                            .password("hammerschlag")
+                            .username("samsam-supergeheim")
+                            .firstName("Sams")
+                            .lastName("Goldschmied")
+                            .password("goldi")
+                            .events(Set.of(hochbeet01, eventTrudeRuth02))
                             .build())
             );
         };

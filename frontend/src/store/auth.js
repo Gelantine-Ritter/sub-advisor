@@ -28,7 +28,10 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
-    SET_USER_ID(state, userId) {},
+    /* 
+    SET_USER_ID(state, userId) {
+    },
+    */
   },
 
   actions: {
@@ -69,19 +72,31 @@ export default {
       if (!state.role) {
         return
       }
-
+      /*
       if (userId) {
         commit('SET_USER_ID', userId)
       }
-
+      */
       try {
-        requestProvider
+        if (role === 'VENUE'){
+          requestProvider
           .getVenue(userId, {
             headers: { Authorization: 'Bearer ' + jwt },
           })
           .then((response) => {
             commit('SET_USER', response.data)
           })
+        }
+        else if (role === 'MEMBER'){
+          requestProvider
+          .getMember(userId, {
+            headers: { Authorization: 'Bearer ' + jwt },
+          })
+          .then((response) => {
+            commit('SET_USER', response.data)
+          })
+        }
+        
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
@@ -105,13 +120,25 @@ export default {
     },
 
     // REGISTRATE
-    async signupVenue({ commit }, username, name, password, email) {
-      requestProvider.postVenue(username, name, password, email)
+    async signupVenue(username, name, password, email) {
+        requestProvider.postVenue(username, name, password, email)
+    },
+    async signupMember(username, password, email){
+        requestProvider.postMember(username, password, email)
     },
 
     // DELETE ACCOUNT
     async deleteProfile({ commit, state }) {
       requestProvider.deleteVenue(state.user.id, {
+        headers: { Authorization: 'Bearer ' + state.token },
+      })
+      commit('SET_TOKEN', null)
+      commit('SET_USER', null)
+      commit('SET_ROLE', null)
+    },
+
+    async deleteMemberProfile({ commit, state }) {
+      requestProvider.deleteMember(state.user.id, {
         headers: { Authorization: 'Bearer ' + state.token },
       })
       commit('SET_TOKEN', null)
@@ -125,6 +152,23 @@ export default {
       var token = state.token
       requestProvider
         .updateVenue(state.user.id, newData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            commit('SET_USER', response.data)
+          }
+        })
+    },
+
+    async updateMember({ commit, state }, userData) {
+      var newData = userData
+      var token = state.token
+      requestProvider
+        .updateMember(state.user.id, newData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

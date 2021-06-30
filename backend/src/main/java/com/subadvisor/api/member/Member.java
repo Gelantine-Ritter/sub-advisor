@@ -1,10 +1,10 @@
 package com.subadvisor.api.member;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.subadvisor.api.auth.IUserId;
 import com.subadvisor.api.auth.dto.IRegistrationRequestDto;
+import com.subadvisor.api.event.Event;
 import lombok.*;
-import lombok.experimental.Accessors;
+import org.hibernate.annotations.Type;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,17 +15,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-@Accessors(fluent = true, chain = true)
-
 public class Member implements UserDetails, Serializable, IUserId, IRegistrationRequestDto {
 
     @Id
@@ -33,6 +32,9 @@ public class Member implements UserDetails, Serializable, IUserId, IRegistration
     private Long id;
     private String username;
     private String password;
+    private String email;
+    private String firstName;
+    private String lastName;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -41,6 +43,17 @@ public class Member implements UserDetails, Serializable, IUserId, IRegistration
     @Builder.Default
     private String ROLE = "MEMBER";
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_member",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
+    private Set<Event> events;
+
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] pic;
 
     private boolean enabled = true;
 

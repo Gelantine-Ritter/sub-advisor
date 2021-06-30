@@ -8,168 +8,66 @@
     >
       <h2>YOU WANT TO REGISTRER AS A</h2>
 
-      <v-radio-group v-model="radios" mandatory>
+      <v-radio-group v-model="radios">
         <v-row>
           <v-col class="myCol" cols="12" sm="6" md="6">
-            <v-radio label="VENUE" color="black" value="VENUE"></v-radio>
+            <v-radio
+              label="VENUE"
+              color="black"
+              value="VENUE"
+              @click.stop="handleSignUpVenue"
+            ></v-radio>
           </v-col>
           <v-col cols="12" sm="6" md="6">
-            <v-radio label="MEMBER" color="black" value="MEMBER"></v-radio>
+            <v-radio
+              label="MEMBER"
+              color="black"
+              value="MEMBER"
+              @click.stop="handleSignUpMember"
+            ></v-radio>
           </v-col>
         </v-row>
       </v-radio-group>
       <br />
-      <h2>NAME</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input"
-        id="name"
-        name="name"
-        label=""
-        type="text"
-        required
-        v-model="name"
-        :rules="nameRules"
-      ></v-text-field>
-      <h2>E-MAIL</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input"
-        id="email"
-        name="email"
-        label=""
-        type="text"
-        required
-        v-model="email"
-        :rules="emailRules"
-      ></v-text-field>
-
-      <h2>USERNAME</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input"
-        id="username"
-        name="username"
-        label=""
-        type="text"
-        required
-        v-model="username"
-        :rules="usernameRules"
-      ></v-text-field>
-      <h2>PASSWORD</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input centered-input-password"
-        id="password"
-        name="password"
-        label=""
-        type="password"
-        required
-        v-model="password"
-        :rules="passwordRules"
-      ></v-text-field>
-      <h2>CONFIRM PASSWORD</h2>
-      <v-text-field
-        large
-        block
-        outlined
-        class="rounded-pill centered-input centered-input-password"
-        id="password_confirm"
-        name="password_confirm"
-        label=""
-        type="password"
-        required
-        v-model="password_confirm"
-        :rules="passwordMatchRules"
-      ></v-text-field>
-      <div class="text-center">
-        <v-btn
-          large
-          block
-          outlined
-          elevation="1"
-          class="rounded-pill myEnterBtn"
-          style="font-size: 125%"
-          type="submit"
-          >REGISTER</v-btn
-        >
-      </div>
+      <template v-if="showSignUpVenue">
+        <SignupVenue v-model="showSignUpVenue" />
+      </template>
+      <template v-else-if="showSignUpMember">
+        <SignupMember v-model="showSignUpMember" />
+      </template>
     </v-form>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import SignupVenue from './SignupVenue.vue'
+import SignupMember from './SignupMemberView.vue'
 export default {
   name: 'Signup',
   data() {
     return {
       valid: true,
       radios: null,
-      name: '',
-      nameRules: [
-        (v) => !!v || 'Name is required',
-        (v) => (v && !!v.trim()) || 'Name cannot be blank',
-        (v) => /^[^\s]/.test(v) || 'You can not start with a space',
-      ],
-      email: '',
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      username: '',
-      usernameRules: [
-        (v) => !!v || 'Username is required',
-        (v) => (v && !!v.trim()) || 'Username cannot be blank',
-        (v) => /^[^\s]/.test(v) || 'You can not start with a space',
-      ],
-      password: '',
-      passwordRules: [
-        (v) => !!v || 'Password is required',
-        (v) => v.length >= 8 || 'Min 8 characters',
-        (v) => (v && !!v.trim()) || 'Seriously? just a blank password?',
-      ],
-      password_confirm: '',
-      passwordMatchRules: [
-        (v) => !!v || 'Password is required',
-        (v) => v === this.password || 'Password must match',
-      ],
+      showSignUpVenue: false,
+      showSignUpMember: false,
     }
+  },
+  components: {
+    SignupVenue,
+    SignupMember,
   },
   methods: {
     ...mapActions({
       signupVenue: 'auth/signupVenue',
     }),
-    registrateSubmit() {
-      if (this.$refs.form.validate()) {
-        if (this.radios === 'VENUE') {
-          this.signupVenue(this.$data)
-            .then(() => {
-              this.$toast.open(
-                'You have been successfully registered and can log in now!'
-              )
-              this.$router.replace({
-                name: 'login',
-              })
-            })
-            .catch(() => {
-              this.$toast.open('You are already registered!')
-              this.$router.go()
-            })
-        } else {
-          //  TODO MEMBER
-          this.$toast.open('You can currently only register as a venue')
-          this.$router.go()
-        }
-      }
+    handleSignUpVenue() {
+      this.showSignUpMember = false
+      this.showSignUpVenue = true
+    },
+    handleSignUpMember() {
+      this.showSignUpVenue = false
+      this.showSignUpMember = true
     },
   },
 }
@@ -182,21 +80,6 @@ h2 {
   text-align: center;
 }
 
-.centered-input >>> input {
-  text-align: center;
-  font-size: 180%;
-}
-.centered-input-password >>> input {
-  text-align: center;
-  font-size: 300%;
-}
-
-::v-deep textarea {
-  padding-left: 50px;
-  padding-right: 50px !important;
-  text-align: center;
-  font-size: 180%;
-}
 ::v-deep .v-label {
   font-size: 180% !important;
   margin-right: 0;

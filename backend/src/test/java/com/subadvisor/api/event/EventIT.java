@@ -6,6 +6,7 @@ import com.subadvisor.api.event.dto.EventFalseDto;
 import com.subadvisor.api.event.dto.EventUpdateDto;
 import com.subadvisor.api.venue.Venue;
 import com.subadvisor.operators.LoginOperator;
+import org.checkerframework.common.value.qual.StaticallyExecutable;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.hasItem;
@@ -53,6 +55,7 @@ public class EventIT extends Driver {
     private static final String EVENT_INFO = "Real authentic female hardcore am Samstag";
     private static final String[] EVENT_ARTISTS = {"Krimewatch", "The Distillers", "Bikini Kill"};
     private static final String[] EVENT_TAGS = {"Punkrock", "Konzert"};
+    private static final String[] EVENT_TAGS_UPDATE = {"Hardcore", "Konzert"};
     private static final String EVENT_PRICE = "10.00";
     private static final String EVENT_START = "2021-09-04T20:00:00";
     private static final String EVENT_END = "2021-09-04T23:00:00";
@@ -60,14 +63,17 @@ public class EventIT extends Driver {
     private static String TOKEN_VENUE;
     private static String TOKEN_OTHER_VENUE;
 
-
     private Driver DRIVER = driver();
+
+    private int originSizeOfEventsInDb;
 
 
     @BeforeAll
     void setup() throws Exception {
 
         // create Venue in Database
+
+        originSizeOfEventsInDb = eventRepository.findAll().size();
 
         VENUE_CRALLE = venueRepository.save(
                 Venue.builder()
@@ -120,6 +126,7 @@ public class EventIT extends Driver {
                 .info(EVENT_INFO)
                 .artists(EVENT_ARTISTS)
                 .price("15.00")
+                .tags(EVENT_TAGS_UPDATE)
                 .eventStart(EVENT_START)
                 .eventEnd(EVENT_END)
                 .build();
@@ -221,6 +228,7 @@ public class EventIT extends Driver {
                                 jsonPath("$.modifiedAt").exists(),
                                 jsonPath("$.eventStart").value(EVENT_START),
                                 jsonPath("$.eventEnd").value(EVENT_END),
+                                jsonPath("$.date").value(LocalDateTime.parse(EVENT_START).toLocalDate().toString()),
                                 status().isOk()
                         )
                 )
@@ -321,11 +329,32 @@ public class EventIT extends Driver {
                         matchAll(
                                 status().isOk(),
                                 jsonPath("$").isArray(),
-                                jsonPath("$", hasSize(6)),
-                                jsonPath("$[4].title", is(EVENT_OTHER.getTitle())),
-                                jsonPath("$[5].title", is(EVENT_CRALLE.getTitle()))
+                                jsonPath("$", hasSize(originSizeOfEventsInDb + 2)),
+                                jsonPath("$[" + originSizeOfEventsInDb++ + "].title", is(EVENT_OTHER.getTitle())),
+                                jsonPath("$[" + originSizeOfEventsInDb++ +"].title", is(EVENT_CRALLE.getTitle()))
                         )
                 )
+                .andReturn()
+                .getResponse();
+    }
+
+    @Test
+    @Order(8)
+    void guestCanGetEventsByDate() throws Exception {
+        DRIVER.mockMvc()
+                .perform(
+                        get("/events/").param("date", EVENT_CRALLE.getEventStart().toLocalDate().toString())
+                )
+                .andExpect(
+                        matchAll(
+                                matchAll(
+                                        jsonPath("$").isArray(),
+                                        jsonPath("$", hasSize(1)),
+                                        jsonPath("$[0].title", is(EVENT_CRALLE.getTitle()))
+                                )
+                        )
+                )
+                .andDo(print())
                 .andReturn()
                 .getResponse();
     }
@@ -343,6 +372,7 @@ public class EventIT extends Driver {
                                         EVENT_UPDATE
                                 ))
                 )
+                .andDo(print())
                 .andExpect(
                         matchAll(
                                 jsonPath("$.id").exists(),
@@ -354,6 +384,8 @@ public class EventIT extends Driver {
                                 jsonPath("$.modifiedAt").exists(),
                                 jsonPath("$.eventStart").value(EVENT_START),
                                 jsonPath("$.eventEnd").value(EVENT_END),
+                                jsonPath("$.tags[0]").value(EVENT_TAGS_UPDATE[0]),
+                                jsonPath("$.tags[1]").value(EVENT_TAGS_UPDATE[1]),
                                 status().isOk()
                         )
                 )
