@@ -30,6 +30,8 @@ import VenueProfile from './views/VenueProfile.vue'
 import VenueCreateEvent from './views/VenueCreateEvent.vue'
 import MemberProfile from './views/MemberProfile.vue'
 import EventsFor1Venue from './views/EventsFor1Venue.vue'
+import PicOfTheWeek from './views/PicOfTheWeekPage.vue'
+import PopularEvents from './views/PopularEventsPage.vue'
 
 import store from './store'
 import auth from './store/auth'
@@ -148,6 +150,16 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       },
+    },
+    {
+      path: '/picOfTheWeek',
+      name: 'picOfTheWeek',
+      component: PicOfTheWeek,
+    },
+    {
+      path: '/popularEvents',
+      name: 'popularEvents',
+      component: PopularEvents,
     },
   ],
 })

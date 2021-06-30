@@ -64,14 +64,16 @@
       <template v-else>
         <v-list>
           <v-list-group
+            color="white"
             v-for="item in menuItems"
             :key="item.title"
             v-model="item.active"
             :to="item.route"
           >
-            <template v-slot:activator class="v-list-item--active">
+            <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title
+                  class="black--text"
                   v-text="item.title"
                   :key="item.title"
                   :to="item.route"
@@ -80,7 +82,7 @@
             </template>
 
             <v-list-item
-              class="v-list-item--active text-decoration-none"
+              class="black--text v-list-item--active text-decoration-none"
               v-for="child in item.items"
               :key="child.title"
               :to="child.route"
@@ -318,8 +320,8 @@ export default {
           action: 'mdi-ticket',
           items: [
             { title: 'ALL EVENTS', route: '/events' },
-            { title: 'POPULAR EVENTS', route: '/events' },
-            { title: 'PIC OF THE WEEK', route: '/events' },
+            { title: 'POPULAR EVENTS', route: '/popularEvents' },
+            { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
           ],
           title: 'EVENTS',
         },
@@ -357,8 +359,8 @@ export default {
       ],
       subEvents: [
         { title: 'ALL EVENTS', route: '/events' },
-        { title: 'POPULAR EVENTS', route: '/events' },
-        { title: 'PIC OF THE WEEK', route: '/places' },
+        { title: 'POPULAR EVENTS', route: '/popularEvents' },
+        { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
       ],
       subPlacesLoggedInMember: [
         { title: 'ALL PLACES', route: '/places' },
@@ -423,9 +425,5 @@ i.v-icon.v-icon {
 }
 .noGreyHover:hover::before {
   opacity: 0 !important;
-}
-.v-list-item--active {
-  background-color: white;
-  color: white;
 }
 </style>
