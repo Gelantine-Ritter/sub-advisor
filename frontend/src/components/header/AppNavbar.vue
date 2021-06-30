@@ -61,7 +61,7 @@
         </v-list>
       </template>
       <!-- --------------------- -->
-      <!-- NAV DRAWER FOR UNLOGGED -->
+      <!-- NAV DRAWER FOR UNLOGGED AND VENUES -->
       <template v-else>
         <v-list>
           <v-list-group
@@ -95,6 +95,16 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
+          <v-list-item
+            class="text-decoration-none"
+            v-for="item in subPlaces"
+            :key="item.title"
+            :to="item.route"
+          >
+            <v-list-content>
+              <v-list-title>PLACES </v-list-title></v-list-content
+            >
+          </v-list-item>
           <template>
             <v-list-item
               class="text-decoration-none"
@@ -103,7 +113,7 @@
               :to="item.route"
             >
               <v-list-content>
-                <v-list-title>Contact </v-list-title></v-list-content
+                <v-list-title>CONTACT </v-list-title></v-list-content
               >
             </v-list-item>
           </template>
@@ -114,7 +124,7 @@
             :to="item.route"
           >
             <v-list-content>
-              <v-list-title>About </v-list-title></v-list-content
+              <v-list-title>ABOUT </v-list-title></v-list-content
             >
           </v-list-item>
         </v-list>
@@ -307,106 +317,71 @@ export default {
         {
           action: 'mdi-ticket',
           items: [
-            { title: 'All Events', route: '/events' },
-            { title: 'Popular Events', route: '/events' },
-            { title: 'Pic of the week', route: '/events' },
+            { title: 'ALL EVENTS', route: '/events' },
+            { title: 'POPULAR EVENTS', route: '/events' },
+            { title: 'PIC OF THE WEEK', route: '/events' },
           ],
-          title: 'Events',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'All Places', route: '/places' }],
-          title: 'Places',
+          title: 'EVENTS',
         },
       ],
-      menuItemsAsVenue: [
-        {
-          action: 'mdi-ticket',
-          items: [
-            { title: 'Your Events', route: '/events' },
-            { title: 'All Events', route: '/events' },
-            { title: 'Popular Events', route: '/events' },
-          ],
-          title: 'Events',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [
-            { title: 'Your Place', route: '/places/' },
-            { title: 'All Places', route: '/places' },
-            { title: 'Pic of the week', route: '/places' },
-          ],
-          title: 'Places',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'Contact', route: '/contact' }],
-          title: 'Contact',
-          route: '/contact',
-        },
-        {
-          action: 'mdi-ticket',
-          items: [{ title: 'About' }],
-          title: 'About',
-          route: '/about',
-        },
-      ],
+
       menuItemsAsMember: [
         {
           action: 'mdi-ticket',
           items: [
-            { title: 'Your Calendar', route: '/events' },
-            { title: 'All Events', route: '/events' },
-            { title: 'Popular Events', route: '/events' },
+            { title: 'YOUR CALENDER', route: '/events' },
+            { title: 'ALL EVENTS', route: '/events' },
+            { title: 'POPULAR EVENTS', route: '/events' },
           ],
-          title: 'Events',
+          title: 'EVENTS',
         },
         {
           action: 'mdi-ticket',
           items: [
-            { title: 'All Places', route: '/places' },
-            { title: 'Pic of the week', route: '/places' },
+            { title: 'ALL PLACES', route: '/places' },
+            { title: 'PIC OF THE WEEK', route: '/places' },
           ],
-          title: 'Places',
+          title: 'PLACES',
         },
         {
           action: 'mdi-ticket',
           items: [{ title: 'Contact', route: '/contact' }],
-          title: 'Contact',
+          title: 'CONTACT',
           route: '/contact',
         },
         {
           action: 'mdi-ticket',
-          items: [{ title: 'About', route: '/about' }],
+          items: [{ title: 'ABOUT', route: '/about' }],
           title: 'About',
         },
       ],
       subEvents: [
-        { title: 'All Events', route: '/events' },
-        { title: 'Popular Events', route: '/events' },
-        { title: 'Pic of the week', route: '/places' },
+        { title: 'ALL EVENTS', route: '/events' },
+        { title: 'POPULAR EVENTS', route: '/events' },
+        { title: 'PIC OF THE WEEK', route: '/places' },
       ],
-      subPlaces: [{ title: 'All Places', route: '/places' }],
       subPlacesLoggedInMember: [
-        { title: 'All Places', route: '/places' },
-        { title: 'Pic of the week', route: '/places' },
+        { title: 'ALL PLACES', route: '/places' },
+        { title: 'PIC OF THE WEEK', route: '/places' },
       ],
-      subContact: [{ title: 'Contact', route: '/contact' }],
-      subAbout: [{ title: 'About', route: '/about' }],
+      subContact: [{ title: 'CONTACT', route: '/contact' }],
+      subAbout: [{ title: 'ABOUT', route: '/about' }],
+      subPlaces: [{ title: 'ALL PLACES', route: '/places' }],
+
       subProfile: [
-        { title: 'Login', route: '/login' },
-        { title: 'Signup', route: '/signup' },
+        { title: 'LOGIN', route: '/login' },
+        { title: 'SIGNUP', route: '/signup' },
       ],
       subProfileLoggedInVenue: [
-        { title: 'Show Profile', route: '/myVenueProfile' },
-        { title: 'My Events', route: '/events' },
-        { title: 'Create Event', route: '/CreateEvents' },
-        { title: 'Logout', action: this.logout },
+        { title: 'YOUR PROFILE', route: '/myVenueProfile' },
+        { title: 'YOUR EVENTS', route: '/myEvents' },
+        { title: 'CREATE EVENT', route: '/CreateEvents' },
+        { title: 'LOGOUT', action: this.logout },
       ],
       subProfileLoggedInMember: [
-        { title: 'Show Profile', route: '/myMemberProfile' },
-        { title: 'My Calendar', route: '/events' },
-        { title: 'Logout', action: this.logout },
+        { title: 'YOUR PROFILE', route: '/myMemberProfile' },
+        { title: 'YOUR CALENDER', route: '/events' },
+        { title: 'LOGOUT', action: this.logout },
       ],
     }
   },

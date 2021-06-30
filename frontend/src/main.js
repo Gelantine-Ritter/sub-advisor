@@ -29,6 +29,7 @@ import Signup from './views/SignupPage.vue'
 import VenueProfile from './views/VenueProfile.vue'
 import VenueCreateEvent from './views/VenueCreateEvent.vue'
 import MemberProfile from './views/MemberProfile.vue'
+import EventsFor1Venue from './views/EventsFor1Venue.vue'
 
 import store from './store'
 import auth from './store/auth'
@@ -136,6 +137,14 @@ const router = new Router({
       path: '/createEvents',
       name: 'createEvent',
       component: VenueCreateEvent,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/myEvents',
+      name: 'myEevents',
+      component: EventsFor1Venue,
       meta: {
         requiresAuth: true,
       },
