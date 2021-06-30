@@ -1,22 +1,21 @@
 <template>
-  <div class="rounded-xl mycontainer" fluid>
-    <!-- Tags -->
-    <v-row v-if="tagCollection">
-      
-      <v-col>
-        <v-text-field v-model="searchWord" label="search">
-        </v-text-field>
-      </v-col>
-      
-      <v-col>
-        <v-select
-          placeholder="tags"
-          :items="tagCollection"
-          v-model="selectedValue"
-        />
-      </v-col>
+  <div>
+    <v-container my-5>
+      <!-- Tags -->
+      <v-row v-if="tagCollection">
+        <v-col>
+          <v-text-field v-model="searchWord" label="search"> </v-text-field>
+        </v-col>
 
-      <!--
+        <v-col>
+          <v-select
+            placeholder="tags"
+            :items="tagCollection"
+            v-model="selectedValue"
+          />
+        </v-col>
+
+        <!--
 
       <v-col>
         <b-form-select
@@ -25,53 +24,56 @@
         ></b-form-select>
       </v-col>
  -->
-      <v-col>
-        <v-text-field v-model="selectedPrice" label="max. price"></v-text-field>
-      </v-col>
+        <v-col>
+          <v-text-field
+            v-model="selectedPrice"
+            label="max. price"
+          ></v-text-field>
+        </v-col>
 
-      <!-- DATEPICKER -->
-      <v-col>
-        <v-menu
-          v-model="menu2"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              v-model="dates"
-              label="date"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-              clearable
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="dates" clearable range>
-            
-          </v-date-picker>
-        </v-menu>
-      </v-col>
-      <!--DATEPICKER ENDE-->
+        <!-- DATEPICKER -->
+        <v-col>
+          <v-menu
+            v-model="menu2"
+            :close-on-content-click="false"
+            :nudge-right="40"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="dates"
+                label="date"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                clearable
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="dates" clearable range> </v-date-picker>
+          </v-menu>
+        </v-col>
+        <!--DATEPICKER ENDE-->
 
-      <v-col>
-        <v-btn outlined rounded v-on:click="reloadFilterResults">
-          Refresh
-        </v-btn>
-      </v-col>
-    </v-row>
-    <!-- Heading Date -->
-    <v-row>
-      <!-- EventList -->
+        <v-col>
+          <v-btn outlined rounded v-on:click="reloadFilterResults">
+            Refresh
+          </v-btn>
+        </v-col>
+      </v-row>
+      <!-- Heading Date -->
+      <v-row>
+        <!-- EventList -->
+      </v-row>
+
       <div v-if="eventObjects">
         <EventList
           :key="keyToRerenderComponent"
           :eventObjsList="eventObjects"
         />
       </div>
-    </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -132,7 +134,7 @@ export default {
       }
       await requestProvider
         .getEventsForDateVenueTag(null, null, tagValue)
-        .then( async (response) => {
+        .then(async (response) => {
           let myData = response.data
 
           // Filter by price
@@ -164,15 +166,23 @@ export default {
           })
           // Filter by searchword
           myData = await myData.filter((myEvent) => {
-            console.log('SEARCHWORDFILTER');
+            console.log('SEARCHWORDFILTER')
             if (this.searchWord === null) return myEvent
-            if (myEvent.title.toLowerCase().includes(this.searchWord.toLowerCase())) return myEvent
-            
+            if (
+              myEvent.title
+                .toLowerCase()
+                .includes(this.searchWord.toLowerCase())
+            )
+              return myEvent
+
             // filter by artistarr
             let eventToReturn = null
-            myEvent.artists.forEach(artist=> {
-              if (artist.toLowerCase().includes(this.searchWord.toLowerCase())) {
-                eventToReturn = myEvent}
+            myEvent.artists.forEach((artist) => {
+              if (
+                artist.toLowerCase().includes(this.searchWord.toLowerCase())
+              ) {
+                eventToReturn = myEvent
+              }
             })
             return eventToReturn
           })
