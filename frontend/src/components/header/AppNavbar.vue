@@ -1,6 +1,6 @@
 <template>
   <v-toolbar elevation="0" class="border-bottom border-dark">
-    <!-- navigation drawer-->
+    <!-- MOBILE: NAVIGATION DRAWER START-->
     <v-app-bar-nav-icon
       @click.stop="sideNav = !sideNav"
       class="d-flex d-sm-none ml-5"
@@ -24,7 +24,7 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <!--NAV DRAWER FOR MEMBER -->
+      <!-- DRAWER FOR MEMBER -->
       <template v-if="role == 'MEMBER'">
         <v-list>
           <v-list-group
@@ -60,8 +60,7 @@
           </v-list-group>
         </v-list>
       </template>
-      <!-- --------------------- -->
-      <!-- NAV DRAWER FOR UNLOGGED AND VENUES -->
+      <!--  DRAWER FOR UNLOGGED AND VENUES -->
       <template v-else>
         <v-list>
           <v-list-group
@@ -131,8 +130,8 @@
       </template>
       <!-- --------------------- -->
     </v-navigation-drawer>
-    <!-- navigation drawer-->
-    <!-- left aligned items-->
+    <!--  MOBILE: NAVIGATION DRAWER END-->
+    <!-- DESKTOP: LEFT ALIGNED ITEMS-->
     <!--EVENT-->
     <template v-if="role == 'MEMBER'">
       <v-menu offset-y>
@@ -157,6 +156,7 @@
         </v-list>
       </v-menu>
     </template>
+    <!-- ELSE OTHER USERS -->
     <template v-else>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -198,13 +198,13 @@
         </template>
       </v-menu>
     </template>
-    <!-- left aligned items-->
+    <!-- DESKTOP: LEFT ALIGNED ITEMS END-->
     <v-spacer></v-spacer>
     <v-toolbar-title class="d-none d-sm-flex white--text"
       ><img src="../../assets/logo.png" width="360px" alt="subadvisor logo"
     /></v-toolbar-title>
     <v-spacer></v-spacer>
-    <!-- right aligned items-->
+    <!-- DESKTOP: RIGHT ALIGNED ITEMS START-->
     <!--CONTACT-->
     <v-menu offset-y>
       <template v-slot:activator="{ on, attrs }">
@@ -241,7 +241,7 @@
     <v-menu offset-y class="d-none d-sm-flex">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          v-if="!authenticated"
+          v-if="!authenticated || user.pic === null"
           icon
           class="mr-5 ml-5"
           v-bind="attrs"
@@ -299,7 +299,7 @@
       </template>
       <!-- END AUTHENTICATION CONTROL -->
     </v-menu>
-    <!-- right aligned items-->
+    <!-- DESKTOP: RIGHT ALIGNED ITEMS END-->
   </v-toolbar>
 </template>
 
