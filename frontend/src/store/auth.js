@@ -28,10 +28,9 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
-    /* 
     SET_USER_ID(state, userId) {
+
     },
-    */
   },
 
   actions: {
@@ -72,11 +71,11 @@ export default {
       if (!state.role) {
         return
       }
-      /*
+      
       if (userId) {
         commit('SET_USER_ID', userId)
       }
-      */
+      
       try {
         if (role === 'VENUE'){
           requestProvider
