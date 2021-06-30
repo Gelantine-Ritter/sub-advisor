@@ -164,9 +164,17 @@ export default {
           })
           // Filter by searchword
           myData = await myData.filter((myEvent) => {
+            console.log('SEARCHWORDFILTER');
             if (this.searchWord === null) return myEvent
             if (myEvent.title.toLowerCase().includes(this.searchWord.toLowerCase())) return myEvent
-            return null
+            
+            // filter by artistarr
+            let eventToReturn = null
+            myEvent.artists.forEach(artist=> {
+              if (artist.toLowerCase().includes(this.searchWord.toLowerCase())) {
+                eventToReturn = myEvent}
+            })
+            return eventToReturn
           })
           this.eventObjects = myData
           // force the component to rerender
