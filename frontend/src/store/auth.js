@@ -28,10 +28,9 @@ export default {
     SET_ROLE(state, role) {
       state.role = role
     },
-    /* 
     SET_USER_ID(state, userId) {
+
     },
-    */
   },
 
   actions: {
@@ -72,11 +71,11 @@ export default {
       if (!state.role) {
         return
       }
-      /*
+      
       if (userId) {
         commit('SET_USER_ID', userId)
       }
-      */
+      
       try {
         if (role === 'VENUE'){
           requestProvider
@@ -152,6 +151,23 @@ export default {
       var token = state.token
       requestProvider
         .updateVenue(state.user.id, newData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            commit('SET_USER', response.data)
+          }
+        })
+    },
+
+    async updateMember({ commit, state }, userData) {
+      var newData = userData
+      var token = state.token
+      requestProvider
+        .updateMember(state.user.id, newData, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

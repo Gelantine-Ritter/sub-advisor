@@ -94,4 +94,7 @@ export const requestProvider = {
   deleteMember: async (memberId, auth) => {
     return await axios.delete(`/members/${memberId}`, auth)
   },
+  updateMember: async (memberId, body, auth) => {
+    return await axios.put(`/members/${memberId}`, body, auth)
+  },
 }
