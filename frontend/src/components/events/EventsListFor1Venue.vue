@@ -54,6 +54,13 @@
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
+              <v-btn
+                outlined
+                elevation="1"
+                class="rounded-pill text-decoration-none"
+                v-if="role == 'MEMBER'"
+                >JOIN EVENT</v-btn
+              >
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
               <!-- EVENT PICTURE START -->
@@ -80,6 +87,7 @@
 <script>
 import { requestProvider } from '../../util/requestProvider'
 import { DateConverter } from '../../util/DateConverter'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -119,6 +127,12 @@ export default {
     redirectToEvent(id) {
       location.replace(`/events/${id}`)
     },
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+      role: 'auth/role',
+    }),
   },
 }
 </script>
