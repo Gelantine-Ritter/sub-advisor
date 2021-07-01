@@ -57,7 +57,7 @@
               <v-btn
                 outlined
                 elevation="1"
-                class="rounded-pill text-decoration-none"
+                class="ma-2 rounded-pill text-decoration-none"
                 v-if="role == 'MEMBER'"
                 >JOIN EVENT</v-btn
               >

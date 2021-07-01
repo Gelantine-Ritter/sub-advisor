@@ -29,19 +29,14 @@
                   {{ venueObj.address.city }}
                 </h5>
               </div>
-              <div>
-                Doors: {{ eventObj.eventStart }}
-              </div>
-              <div>
-                Date: {{ eventObj.date }}
-              </div>
+              <div>Doors: {{ eventObj.eventStart }}</div>
+              <div>Date: {{ eventObj.date }}</div>
             </div>
           </v-col>
           <!-- tags, price, ... -->
           <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
             <MapsView :adress="venueObj.address" />
             Price: {{ eventObj.price }} Euro
-
           </v-col>
         </v-row>
 
@@ -116,6 +111,13 @@
 
           <template v-else> </template>
           <!-- DELETE EVENT BUTTON END -->
+          <v-btn
+            outlined
+            elevation="1"
+            class="ma-2 rounded-pill text-decoration-none"
+            v-if="role == 'MEMBER'"
+            >JOIN EVENT</v-btn
+          >
         </v-row>
       </v-container>
     </v-card>
@@ -144,11 +146,11 @@ export default {
     const eventId = this.$route.params.id
     requestProvider.getEvent(eventId).then((response) => {
       this.eventObj = {
-          ...response.data,
-          eventStart: DateConverter.getTime(response.data.eventStart),
-          eventEnd: DateConverter.getTime(response.data.eventEnd),
-          date: DateConverter.getDate(response.data.date)
- }
+        ...response.data,
+        eventStart: DateConverter.getTime(response.data.eventStart),
+        eventEnd: DateConverter.getTime(response.data.eventEnd),
+        date: DateConverter.getDate(response.data.date),
+      }
 
       requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
         this.venueObj = responseVenue.data
@@ -158,6 +160,7 @@ export default {
   computed: {
     ...mapGetters({
       user: 'auth/user',
+      role: 'auth/role',
     }),
   },
   components: {
