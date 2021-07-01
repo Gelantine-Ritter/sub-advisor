@@ -163,6 +163,23 @@ export default {
         })
     },
 
+    async updateMember({ commit, state }, userData) {
+      var newData = userData
+      var token = state.token
+      requestProvider
+        .updateMember(state.user.id, newData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            commit('SET_USER', response.data)
+          }
+        })
+    },
+
     // DELETE EVENT
     async deleteEvent({ state }, eventId) {
       requestProvider.deleteEvent(eventId, {
