@@ -33,7 +33,7 @@ public class EventController {
                         .getAllEvents()
                         .stream()
                         .filter(venue != null ? e ->
-                                eventService.getEventsByVenue(venue)
+                                eventService.getEventsByVenueName(venue)
                                         .stream().anyMatch(other -> other.getId().equals(e.getId()))
                                 : e -> true)
                         .filter(date != null ? e ->
@@ -81,5 +81,4 @@ public class EventController {
     public void deleteEventById(@PathVariable(value = "id") Long eventId) {
         eventService.deleteEventById(eventId);
     }
-
 }

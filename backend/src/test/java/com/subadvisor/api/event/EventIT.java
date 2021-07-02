@@ -271,7 +271,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_CRALLE.getId().toString())
+                        get("/events/").param("venue", VENUE_CRALLE.getName())
                 )
                 .andExpect(
                         matchAll(
@@ -288,7 +288,7 @@ public class EventIT extends Driver {
 
         DRIVER.mockMvc()
                 .perform(
-                        get("/events/").param("venue", VENUE_OTHER.getId().toString())
+                        get("/events/").param("venue", VENUE_OTHER.getName())
                 )
                 .andExpect(
                         matchAll(

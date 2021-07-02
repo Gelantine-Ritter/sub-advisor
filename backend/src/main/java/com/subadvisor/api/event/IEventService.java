@@ -11,7 +11,9 @@ import java.util.List;
 public interface IEventService {
     List<EventDto> getAllEvents();
 
-    List<EventDto> getEventsByVenue(String name);
+    List<EventDto> getEventsByVenueId(String id);
+
+    List<EventDto> getEventsByVenueName(String name);
 
     List<EventDto> getEventsByDate(String date);
 
