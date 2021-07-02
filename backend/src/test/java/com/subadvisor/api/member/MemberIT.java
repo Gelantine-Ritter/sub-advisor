@@ -121,8 +121,6 @@ public class MemberIT extends Driver {
                         put("/members/" + memberDto_nayla.getId().toString())
                                 .param("joinEvent", "1")
                                 .header("authorization", "Bearer " + TOKEN_MEMBER_NAYLA)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(memberUpdateDto_nayla))
                 )
                 .andDo(print())
                 .andExpect(
