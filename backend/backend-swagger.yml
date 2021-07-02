@@ -140,6 +140,12 @@ paths:
           schema:
             type: string
           required: false
+          description: use the venueId of a venue as a param to get all Events of a single Venue
+        - in: query
+          name: venueName
+          schema:
+            type: string
+          required: false
           description: use the name of a venue as a param to get all Events of a single Venue
         - in: query
           name: date
