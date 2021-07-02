@@ -1,5 +1,6 @@
 <template>
   <div v-if="dataFinishedLoading()">
+    <v-container my-5>
     <h1
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
@@ -7,19 +8,11 @@
       {{ eventObj.title }}
     </h1>
 
-    <v-card
-      center
-      class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
-      :style="styleObject"
-    >
+    <div class="rounded-xl mycontainer" fluid>
       <v-container>
         <v-row center>
           <!-- venueName, adress, ... -->
-          <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
-            <div>
-              {{ venueObj.pic }}
-            </div>
-            <div>
+          <v-col cols="12" xs="12" sm="12" md="8" lg="8" xl="8">
               <h2>{{ venueObj.name }}</h2>
               <div>
                 <h5>
@@ -29,24 +22,51 @@
                   {{ venueObj.address.city }}
                 </h5>
               </div>
-              <div>Doors: {{ eventObj.eventStart }}</div>
-              <div>Date: {{ eventObj.date }}</div>
-            </div>
+          </v-col>
+          <v-col cols="12" xs="12" sm="12" md="4" lg="4" xl="4">
+                    <MapsView :adress="venueObj.address" />
+
+          </v-col>
+        </v-row>
+        <v-row center>
+              <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
+              <div>
+                Doors: {{ eventObj.eventStart }}
+              </div>
+              <div>
+                Date: {{ eventObj.date }}
+              </div>
+              </v-col>
+              <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4" class="text-center">
+            Price: {{ eventObj.price }} Euro
+              </v-col>
+      </v-row>
+        <v-row center>  
+                        <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
+            <div>
+            <!-- <p>{{ eventObj.info }}</p> -->
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed euismod nisi porta lorem mollis. Ipsum nunc aliquet bibendum enim facilisis gravida neque. Sed augue lacus viverra vitae congue eu consequat. Proin sed libero enim sed faucibus turpis in eu. Diam maecenas ultricies mi eget mauris pharetra et ultrices neque. Scelerisque fermentum dui faucibus in. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus. Elementum facilisis leo vel fringilla est ullamcorper. Donec ac odio tempor orci dapibus ultrices in iaculis. Sit amet risus nullam eget felis eget nunc. Ac turpis egestas integer eget aliquet nibh. Et tortor at risus viverra adipiscing at in tellus. Et tortor consequat id porta nibh venenatis. Sem nulla pharetra diam sit amet. Quis vel eros donec ac odio tempor orci dapibus. Consequat ac felis donec et odio pellentesque.
+            <br /><br />
+            Libero id faucibus nisl tincidunt eget nullam non. Est pellentesque elit ullamcorper dignissim cras tincidunt. Consectetur purus ut faucibus pulvinar elementum. Est velit egestas dui id ornare arcu. Egestas purus viverra accumsan in nisl nisi scelerisque. Nec ultrices dui sapien eget mi proin. Risus viverra adipiscing at in. Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Nunc sed velit dignissim sodales ut eu. Volutpat commodo sed egestas egestas fringilla phasellus. Elementum sagittis vitae et leo duis ut diam quam. Odio facilisis mauris sit amet massa vitae tortor.
+          </div>
           </v-col>
           <!-- tags, price, ... -->
-          <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4">
-            <MapsView :adress="venueObj.address" />
-            Price: {{ eventObj.price }} Euro
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <p>{{ eventObj.info }}</p>
-          </v-col>
-        </v-row>
-
-        <v-row justify="center">
+          <v-col cols="12" xs="12" sm="12" md="12" lg="4" xl="4" class="text-center">
+            
+            <v-card
+            class="pa-2 rounded-xl myLogoCard"
+            flat
+            tile
+          >
+            <v-responsive class="myResponsivePictureContainer">
+              <template v-if="eventObj.pic == null || eventObj.pic == ''">
+              </template>
+              <template v-else>
+                <v-img fill class="myLogo" :src="picDataUrl(eventObj.pic)" alt="" />
+              </template>
+            </v-responsive>
+          </v-card>
+            <v-row justify="center">
           <!-- EDIT EVENT BUTTON START -->
           <template
             class="flex-column"
@@ -119,8 +139,15 @@
             >JOIN EVENT</v-btn
           >
         </v-row>
+          </v-col>
+        </v-row>
+
+       
+
+        
       </v-container>
-    </v-card>
+    </div>
+    </v-container>
   </div>
 </template>
 
@@ -168,6 +195,9 @@ export default {
     MapsView,
   },
   methods: {
+    picDataUrl(pic) {
+      return 'data:image/png;base64, ' + pic
+    },
     redirectBackwards() {
       history.back()
     },
@@ -185,9 +215,6 @@ export default {
         })
       })
     },
-    picDataUrl() {
-      return 'data:image/png;base64, ' + this.eventObj.pic
-    },
   },
 }
 </script>
@@ -201,36 +228,39 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
-.myPicture {
-  height: 100%;
-}
-.myPictureCard {
+.myLogoCard {
+  width: 100%;
+  height: auto;
   padding: 2%;
   margin-bottom: 8%;
 }
+.myResponsivePictureContainer {
+  height: 100%;
+  width: 100%;
+}
 .noPicture {
   height: 100%;
+  width: 100%;
   background: black;
   line-height: 100%;
 }
 .noPicture h1 {
-  font-size: 70%;
+  font-size: 100%;
   text-align: center;
-  line-height: 100%;
+  line-height: 250px;
   color: white;
 }
+.myLogo {
+  height: 100%;
+}
+
 @media screen and (max-width: 600px) {
-  .noPicture {
-    height: 100px;
-    width: 100px;
-    background: black;
-    line-height: 100px;
+  .myLogoCard {
+    width: 100%;
+    height: auto;
   }
   .noPicture h1 {
-    font-size: 70%;
-    text-align: center;
-    line-height: 100px;
-    color: white;
+    line-height: 150px;
   }
 }
 </style>

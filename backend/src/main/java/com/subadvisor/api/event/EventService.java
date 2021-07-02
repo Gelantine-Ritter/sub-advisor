@@ -36,9 +36,20 @@ public class EventService extends DataAccess implements IEventService {
     }
 
     @Override
-    public List<EventDto> getEventsByVenue(String venueId) {
+    public List<EventDto> getEventsByVenueId(String venueId) {
         List<EventDto> events =   DATA.events()
                 .findByVenueId(Long.parseLong(venueId))
+                .stream()
+                .map(event -> mapper.eventToEventDto(event))
+                .collect(Collectors.toList());
+
+        return events;
+    }
+
+    @Override
+    public List<EventDto> getEventsByVenueName(String name) {
+        List<EventDto> events =   DATA.events()
+                .findByVenueNameIgnoreCase(name)
                 .stream()
                 .map(event -> mapper.eventToEventDto(event))
                 .collect(Collectors.toList());

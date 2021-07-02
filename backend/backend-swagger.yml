@@ -140,7 +140,7 @@ paths:
           schema:
             type: string
           required: false
-          description: use venueId as a param to get all Events of a single Venue
+          description: use the name of a venue as a param to get all Events of a single Venue
         - in: query
           name: date
           schema:
@@ -253,8 +253,8 @@ paths:
     put:
       tags:
         - "Members"
-      description: "update an event"
-      operationId: "updateEvent"
+      description: "update an member"
+      operationId: "updateMember"
       parameters:
         - in: query
           name: joinEvent
