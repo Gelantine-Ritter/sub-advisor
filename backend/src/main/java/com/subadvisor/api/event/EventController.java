@@ -25,7 +25,7 @@ public class EventController {
     CreatorCheck creatorCheck;
 
     @GetMapping("/events")
-    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue, @RequestParam(required = false) String date,
+    public ResponseEntity<?> getAllEvents(@RequestParam(required = false) String venue, @RequestParam(required = false) String venueName,@RequestParam(required = false) String date,
                                           @RequestParam(required = false) String tag) {
 
         List<EventDto> events =
@@ -33,7 +33,11 @@ public class EventController {
                         .getAllEvents()
                         .stream()
                         .filter(venue != null ? e ->
-                                eventService.getEventsByVenueName(venue)
+                                eventService.getEventsByVenueId(venue)
+                                        .stream().anyMatch(other -> other.getId().equals(e.getId()))
+                                : e -> true)
+                        .filter(venueName != null ? e ->
+                                eventService.getEventsByVenueName(venueName)
                                         .stream().anyMatch(other -> other.getId().equals(e.getId()))
                                 : e -> true)
                         .filter(date != null ? e ->

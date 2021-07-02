@@ -39,7 +39,7 @@ public class MemberController {
 
     @PutMapping("/members/{id}")
     @PreAuthorize("authentication.principal.id == #id || hasRole('ADMIN')")
-    public ResponseEntity<?> updateMemberById(@RequestBody MemberUpdateDto memberUpdateDto, @PathVariable Long id,
+    public ResponseEntity<?> updateMemberById(@RequestBody(required=false) MemberUpdateDto memberUpdateDto, @PathVariable Long id,
                                               @RequestParam(value = "joinEvent", required = false) String joinEvent,
                                               @RequestParam(value = "leaveEvent", required = false) String leaveEvent) {
         return new ResponseEntity<>(
