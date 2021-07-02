@@ -191,6 +191,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      authenticated: 'auth/authenticated',
       user: 'auth/user',
       role: 'auth/role',
     }),
@@ -221,15 +222,21 @@ export default {
       })
     },
     toggle() {
+      const eventId = this.eventObj.id
+      const memberId = this.user.id
       if (!this.isActive) {
          this.isActive = true;
          console.log("LEAVE EVENT", this.isActive);
-         console.log("EVENTID", this.eventObj.id);
-                  console.log("MEMBER", user.name);
+         console.log('MEMBERID ',memberId,'EVENTID ',eventId);
+         requestProvider.joinEvent(memberId, eventId).then((response)=>{
+          console.log(response);
+         })
+        
 
       } else {
         this.isActive = false;
         console.log("JOIN EVENT", this.isActive);
+        
       }
     },
   

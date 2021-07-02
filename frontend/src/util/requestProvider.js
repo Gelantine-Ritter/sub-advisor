@@ -1,6 +1,18 @@
 import axios from 'axios'
 
 export const requestProvider = {
+  auth:{
+    headers: {
+        "Authorization": localStorage.token,
+    }
+},
+authAndContent: {
+    headers: {
+        "Authorization": localStorage.token,
+        "Content-Type": "application/json"
+    }
+},
+
   // VENUES
 
   getVenues: async () => {
@@ -97,4 +109,10 @@ export const requestProvider = {
   updateMember: async (memberId, body, auth) => {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
+  joinEvent: async (memberId, eventId) => {
+    return await axios.put(`/members/${memberId}?joinEvent=${eventId}`,   { headers: {
+      "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXI5MCIsImV4cCI6MTYyNTI2NzM4MSwiaWF0IjoxNjI1MjMxMzgxfQ.B-GsB3Gv40UcAOOVHlZHvcp95SjtpMqd9ySze8rLP8g",
+  }})
+  },
+ 
 }
