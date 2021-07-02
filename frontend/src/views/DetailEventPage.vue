@@ -136,7 +136,9 @@
             elevation="1"
             class="ma-2 rounded-pill text-decoration-none"
             v-if="role == 'MEMBER'"
-            >JOIN EVENT</v-btn
+            @click="toggle"
+            :class="{active:isActive}"
+            >{{isActive ? 'LEAVE EVENT' : 'JOIN EVENT'}}</v-btn
           >
         </v-row>
           </v-col>
@@ -167,6 +169,9 @@ export default {
       deleteDialog: false,
 
       styleObject: { border: '2px solid #000000' },
+      
+      isActive: false
+
     }
   },
   beforeCreate() {
@@ -215,6 +220,20 @@ export default {
         })
       })
     },
+    toggle() {
+      if (!this.isActive) {
+         this.isActive = true;
+         console.log("LEAVE EVENT", this.isActive);
+         console.log("EVENTID", this.eventObj.id);
+                  console.log("MEMBER", user.name);
+
+      } else {
+        this.isActive = false;
+        console.log("JOIN EVENT", this.isActive);
+      }
+    },
+  
+
   },
 }
 </script>
