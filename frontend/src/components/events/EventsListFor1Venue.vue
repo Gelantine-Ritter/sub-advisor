@@ -92,8 +92,13 @@ export default {
     }
   },
 
-  mounted() {
-    const venueId = this.$route.params.id
+   mounted() {
+    let venueId
+    venueId = this.$route.params.id
+    if (!venueId) {
+      venueId = this.venueId
+    }
+    console.log('VENUE ID IN ANDERER COENT', venueId)
     requestProvider.getEventsForVenue(venueId).then((response) => {
       const eventList = response.data
       for (let i = 0; i < eventList.length; i++) {
