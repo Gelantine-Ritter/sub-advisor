@@ -110,8 +110,9 @@ authAndContent: {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
   joinEvent: async (memberId, eventId) => {
-    return await axios.put(`/members/${memberId}?joinEvent=${eventId}`,   { headers: {
-      "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXI5MCIsImV4cCI6MTYyNTI2NzM4MSwiaWF0IjoxNjI1MjMxMzgxfQ.B-GsB3Gv40UcAOOVHlZHvcp95SjtpMqd9ySze8rLP8g",
+    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`,   { headers: {
+      "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXI5MCIsImV4cCI6MTYyNTI3MTMzOSwiaWF0IjoxNjI1MjM1MzM5fQ.XEkhG3ykCVOzUTzkV6uLwlQXWvEvlr7wuNub-0zUgS8",
+
   }})
   },
  

@@ -51,7 +51,7 @@
                 clearable
               ></v-text-field>
             </template>
-            <v-date-picker v-model="dates" clearable range> </v-date-picker>
+            <v-date-picker v-model="dates" no-title clearable range> </v-date-picker>
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
