@@ -1,9 +1,31 @@
 <template>
-  <h1>HIER GIBTS BALD NE LISTE VON EVENTS DIE ICH ERSTELLT HABE</h1>
+  <v-container>
+    <div>
+      <EventsList class="mt-5" :venueId="this.user.id" />
+    </div>
+  </v-container>
 </template>
 
 <script>
-export default {}
+import EventsList from '../components/events/EventsListFor1Venue.vue'
+import { mapGetters } from 'vuex'
+
+export default {
+  data() {
+    return {
+      test: null,
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'auth/user',
+    }),
+  },
+
+  components: {
+    EventsList,
+  },
+}
 </script>
 
 <style></style>
