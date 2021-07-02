@@ -4,7 +4,7 @@
       <v-dialog v-model="dialog" width="80vw">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="d-none d-sm-flex  rounded-pill border border-dark"
+            color="rounded-pill border border-dark"
             v-bind="attrs"
             v-on="on"
           >

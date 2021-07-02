@@ -8,15 +8,14 @@
         {{ venueObj.name }}
       </h1>
 
-      <v-card
+      <div
         center
-        class="ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
-        :style="styleObject"
+        class="rounded-xl mycontainer" fluid
       >
         <v-container>
           <v-row>
             <!-- header info -->
-            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
               <div>
                 {{ venueObj.website }}
               </div>
@@ -27,7 +26,7 @@
                 {{ venueObj.address.city }}
               </div>
             </v-col>
-            <v-col xs="12" sm="4" md="4" lg="4" xl="3"> </v-col>
+
             <v-col xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
               <MapsView :adress="venueObj.address" />
             </v-col>
@@ -35,21 +34,40 @@
 
           <v-row>
             <!-- description -->
-            <v-col xs="12" sm="6" md="8" lg="8" xl="8">
-              {{ venueObj.info }}
+            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
+              <!-- {{ venueObj.info }} -->
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </v-col>
             <!-- venue img, map button -->
-            <v-col xs="12" sm="6" md="4" lg="4" xl="4">
-              <v-row class="ml-10 mr-10 pls_center_it">
-                <v-avatar size="150" v-if="venueObj.pic !== null">
-                  <PictureView :picData="venueObj.pic" />
-                </v-avatar>
+            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+              <v-row class="pls_center_it">
+                <template v-if="venueObj.pic == null || venueObj.pic == ''">
+                      <div></div>
+                    </template>
+                    <template v-else>
+                <v-card
+                  class="pa-2 rounded-xl myLogoCard"
+                  flat
+                  tile
+                >
+                  <v-responsive class="myResponsivePictureContainer">
+                    
+                      <v-img
+                        fill
+                        class="myLogo"
+                        :src="picDataUrl(venueObj.pic)"
+                        alt=""
+                      />
+                    
+                  </v-responsive>
+                </v-card>
+                </template>
               </v-row>
               <v-row class="ml-10 mr-10 mt-5"> </v-row>
             </v-col>
           </v-row>
         </v-container>
-      </v-card>
+      </div>
       <EventsList class="mt-5" :venueId="this.$route.params.id" />
     </v-container>
   </div>
@@ -57,7 +75,7 @@
 
 <script>
 import MapsView from '../components/features/MapsView.vue'
-import PictureView from '../components/features/PictureView.vue'
+// import PictureView from '../components/features/PictureView.vue'
 import EventsList from '../components/events/EventsListFor1Venue.vue'
 import { requestProvider } from '../util/requestProvider'
 
@@ -79,14 +97,18 @@ export default {
     redirectBackwards() {
       history.back()
     },
+    picDataUrl(pic) {
+      return 'data:image/png;base64, ' + pic
+    },
+    /* 
     picDataUrl() {
       return 'data:image/png;base64, ' + this.eventObj.pic
-    },
+    }, */
   },
   components: {
     MapsView,
     EventsList,
-    PictureView,
+    // PictureView,
   },
 }
 </script>
@@ -104,5 +126,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: auto;
 }
+.myLogoCard {
+  width: 150px;
+  height: 150px;
+  padding: 2%;
+  margin-bottom: 8%;
+  border: 0;
+}
+.myResponsivePictureContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.myLogo {
+  height: 100%;
+}
+
 </style>
