@@ -15,6 +15,7 @@
           elevation="1"
           class="rounded-pill"
           style="font-size: 125%"
+          @click="redirectToEvents()"
           >ENTER</v-btn
         >
       </div>
@@ -28,6 +29,13 @@ export default {
   props: {
     text: String,
   },
+  methods: {
+    redirectToEvents(){
+      this.$router.replace({
+        name: 'events',
+      })
+    }
+  }
 }
 </script>
 
