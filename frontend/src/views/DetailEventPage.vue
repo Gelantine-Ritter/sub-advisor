@@ -132,17 +132,68 @@
           <template v-else> </template>
           <!-- DELETE EVENT BUTTON END -->
           <!-- JOIN EVENT BUTTON START -->
-          <v-btn
-            outlined
-            elevation="1"
-            class="ma-2 rounded-pill text-decoration-none"
-            v-if="role == 'MEMBER'"
-            @click="toggle"
-            :class="{active:isActive}"
-            >{{isActive ? 'LEAVE EVENT' : 'JOIN EVENT'}}</v-btn
-          >
-          <!-- JOIN EVENT BUTTON END -->
-
+          <v-row>
+           <v-col>
+                  <v-row justify="center">
+                            <template>
+                              <v-row justify="center">
+                                <v-dialog
+                                  v-model="dialog"
+                                  scrollable
+                                  max-width="300px"
+                                >
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                     outlined
+                                    elevation="0"
+                                    class="ma-5 rounded-pill text-decoration-none"
+                                      v-bind="attrs"
+                                      v-on="on"
+                                    >
+                                      Show Participants
+                                    </v-btn>
+                                  </template>
+                                  <v-card>
+                                    <v-card-title>PARTICIPANTS</v-card-title>
+                                    <v-divider></v-divider>
+                                    <v-card-text style="height: 300px;">
+                                      <v-list-item 
+                                         >
+                                        <v-list-item-content>
+                                          <v-list-item-title v-for="guest in eventObj.guests" :key="guest.guests">{{eventObj.guests}}</v-list-item-title>
+                                        </v-list-item-content>
+                                      </v-list-item>
+                                    </v-card-text>
+                                    <v-divider></v-divider>
+                                    <v-card-actions>
+                                      <v-btn
+                                        elevation="0"
+                                        outlined
+                                        rounded
+                                        text
+                                        @click="dialog = false"
+                                      >
+                                        Close
+                                      </v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </v-dialog>
+                              </v-row>
+                            </template>
+                    </v-row>
+              <v-row v v-if="role==='MEMBER'" justify="center">
+                <v-btn
+                outlined
+                elevation="1"
+                class="ma-5 rounded-pill text-decoration-none"
+                v-if="role == 'MEMBER'"
+                @click="toggle"
+                :class="{active:isActive}"
+                >{{isActive ? 'LEAVE EVENT' : 'JOIN EVENT'}}</v-btn>
+              <!-- JOIN EVENT BUTTON END -->
+              </v-row>  
+              </v-col>
+              </v-row>
         </v-row>
           </v-col>
         </v-row>
@@ -173,7 +224,9 @@ export default {
 
       styleObject: { border: '2px solid #000000' },
       
-      isActive: false
+      isActive: false,
+      dialog: false,
+
 
     }
   },
@@ -184,7 +237,7 @@ export default {
         ...response.data,
         eventStart: DateConverter.getTime(response.data.eventStart),
         eventEnd: DateConverter.getTime(response.data.eventEnd),
-        date: DateConverter.getDate(response.data.date),
+        date: DateConverter.getDate(response.data.date)
       }
       this.alreadyJoined()
 
@@ -234,10 +287,11 @@ export default {
       
       if (!this.isActive) {
          this.isActive = true;
-         //   JOIN EVENT
+         //   join event
          requestProvider.joinEvent(memberId, eventId)
 
       } else {
+        //    leave event
         this.isActive = false;
          requestProvider.leaveEvent(memberId, eventId)
          
@@ -253,6 +307,7 @@ export default {
       });
 
     }
+    
   
 
   },
@@ -293,6 +348,7 @@ export default {
 .myLogo {
   height: 100%;
 }
+
 
 @media screen and (max-width: 600px) {
   .myLogoCard {
