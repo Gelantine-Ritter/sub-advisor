@@ -66,8 +66,8 @@
             :key="item.title"
             :to="item.route"
           >
-            <v-list-content>
-              <v-list-title>PLACES </v-list-title></v-list-content
+            <v-list-item-content>
+              <v-list-item-title>PLACES </v-list-item-title></v-list-item-content
             >
           </v-list-item>
           <template>
@@ -77,8 +77,8 @@
               :key="item.title"
               :to="item.route"
             >
-              <v-list-content>
-                <v-list-title>CONTACT </v-list-title></v-list-content
+              <v-list-item-content>
+                <v-list-item-title>CONTACT </v-list-item-title></v-list-item-content
               >
             </v-list-item>
           </template>
@@ -88,8 +88,8 @@
             :key="item.title"
             :to="item.route"
           >
-            <v-list-content>
-              <v-list-title>ABOUT </v-list-title></v-list-content
+            <v-list-item-content>
+              <v-list-item-title>ABOUT </v-list-item-title></v-list-item-content
             >
           </v-list-item>
         </v-list>
@@ -167,7 +167,7 @@
     <!-- DESKTOP: LEFT ALIGNED ITEMS END-->
     <v-spacer></v-spacer>
     <v-toolbar-title class="d-none d-sm-flex white--text"
-      ><img src="../../assets/logo.png" width="360px" alt="subadvisor logo"
+      ><img src="../../assets/logo.png" width="360px" alt="subadvisor logo" @click="redirectToHome()"
     /></v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- DESKTOP: RIGHT ALIGNED ITEMS START-->
@@ -295,7 +295,7 @@ export default {
         {
           action: 'mdi-ticket',
           items: [
-            { title: 'YOUR CALENDER', route: '/events' },
+            { title: 'YOUR CALENDAR', route: '/calendar' },
             { title: 'ALL EVENTS', route: '/events' },
             { title: 'POPULAR EVENTS', route: '/events' },
           ],
@@ -346,7 +346,7 @@ export default {
       ],
       subProfileLoggedInMember: [
         { title: 'YOUR PROFILE', route: '/myMemberProfile' },
-        { title: 'YOUR CALENDER', route: '/events' },
+        { title: 'YOUR CALENDAR', route: '/calendar' },
         { title: 'LOGOUT', action: this.logout },
       ],
     }
@@ -362,7 +362,11 @@ export default {
     ...mapActions({
       logout: 'auth/logout',
     }),
-
+    redirectToHome(){
+      this.$router.replace({
+        name: 'home',
+      })
+    },
     logoutSubmit(action) {
       if (action === this.logout) {
         this.logout()

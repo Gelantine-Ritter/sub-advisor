@@ -32,6 +32,7 @@ import MemberProfile from './views/MemberProfile.vue'
 import EventsFor1Venue from './views/EventsFor1Venue.vue'
 import PicOfTheWeek from './views/PicOfTheWeekPage.vue'
 import PopularEvents from './views/PopularEventsPage.vue'
+import Calendar from './views/CalendarPage.vue'
 
 import store from './store'
 import auth from './store/auth'
@@ -160,6 +161,11 @@ const router = new Router({
       path: '/popularEvents',
       name: 'popularEvents',
       component: PopularEvents,
+    },
+    {
+      path: '/calendar',
+      name: 'calendar',
+      component: Calendar,
     },
   ],
 })
