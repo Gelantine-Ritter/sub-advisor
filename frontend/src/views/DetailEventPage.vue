@@ -227,7 +227,8 @@ export default {
     toggle() {
       const eventId = this.eventObj.id
       const memberId = this.user.id
-      const auth = localStorage.getItem('token')
+      const auth = 'Bearer ' + localStorage.getItem('token')
+      console.log("UUU", auth);
       if (!this.isActive) {
          this.isActive = true;
          //   JOIN EVENT

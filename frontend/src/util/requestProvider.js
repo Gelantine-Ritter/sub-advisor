@@ -1,17 +1,7 @@
 import axios from 'axios'
 
 export const requestProvider = {
-  auth:{
-    headers: {
-        "Authorization": localStorage.token,
-    }
-},
-authAndContent: {
-    headers: {
-        "Authorization": localStorage.token,
-        "Content-Type": "application/json"
-    }
-},
+
 
   // VENUES
 
@@ -109,9 +99,8 @@ authAndContent: {
   updateMember: async (memberId, body, auth) => {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
-  joinEvent: async (memberId, eventId, auth) => {
-    console.log('MEMBERID ',memberId,'EVENTID ',eventId);
-    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`, auth)
+  joinEvent: async (memberId, eventId ) => {
+    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`, { Authorization: 'Bearer ' + localStorage.getItem('token')})
   },
  
 }
