@@ -102,8 +102,8 @@
             :key="item.title"
             :to="item.route"
           >
-            <v-list-content>
-              <v-list-title>PLACES </v-list-title></v-list-content
+            <v-list-item-content>
+              <v-list-item-title>PLACES </v-list-item-title></v-list-item-content
             >
           </v-list-item>
           <template>
@@ -113,8 +113,8 @@
               :key="item.title"
               :to="item.route"
             >
-              <v-list-content>
-                <v-list-title>CONTACT </v-list-title></v-list-content
+              <v-list-item-content>
+                <v-list-item-title>CONTACT </v-list-item-title></v-list-item-content
               >
             </v-list-item>
           </template>
@@ -124,8 +124,8 @@
             :key="item.title"
             :to="item.route"
           >
-            <v-list-content>
-              <v-list-title>ABOUT </v-list-title></v-list-content
+            <v-list-item-content>
+              <v-list-item-title>ABOUT </v-list-item-title></v-list-item-content
             >
           </v-list-item>
         </v-list>

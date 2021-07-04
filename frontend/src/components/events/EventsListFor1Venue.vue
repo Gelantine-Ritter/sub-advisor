@@ -98,7 +98,6 @@ export default {
     if (!venueId) {
       venueId = this.venueId
     }
-    console.log('VENUE ID IN ANDERER COENT', venueId)
     requestProvider.getEventsForVenue(venueId).then((response) => {
       const eventList = response.data
       for (let i = 0; i < eventList.length; i++) {
