@@ -4,7 +4,7 @@
       <!-- Tags -->
       <v-row v-if="tagCollection">
         <v-col>
-          <v-text-field v-model="searchWord" label="search"> </v-text-field>
+          <v-text-field v-model="selectedWord" label="search"> </v-text-field>
         </v-col>
 
         <v-col>
@@ -43,7 +43,7 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                v-model="dates"
+                v-model="selectedDate"
                 label="date"
                 readonly
                 v-bind="attrs"
@@ -51,13 +51,13 @@
                 clearable
               ></v-text-field>
             </template>
-            <v-date-picker v-model="dates" clearable range> </v-date-picker>
+            <v-date-picker v-model="selectedDate" clearable> </v-date-picker>
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
 
         <v-col>
-          <v-btn outlined rounded v-on:click="reloadFilterResults">
+          <v-btn outlined rounded v-on:click="buttonClicked">
             Refresh
           </v-btn>
         </v-col>
@@ -65,6 +65,39 @@
       <!-- Heading Date -->
       <v-row>
         <!-- EventList -->
+      </v-row>
+
+      <v-row>
+        <v-col
+          v-if="displayNavigateButtons"
+          style="display: flex; justify-content: center"
+        >
+          <v-btn
+            outlined
+            rounded
+            style="background-color: none; border: none"
+            v-on:click="manipulateDate(-1)"
+          >
+            {{ signPrev }}
+          </v-btn>
+        </v-col>
+        <v-col>
+          <h1 style="display: flex; justify-content: center">
+            {{ displayDate() }}
+          </h1>
+        </v-col>
+        <v-col
+          v-if="displayNavigateButtons"
+          style="display: flex; justify-content: center"
+        >
+          <v-btn
+            outlined
+            rounded
+            style="background-color: none; border: none"
+            v-on:click="manipulateDate(1)"
+            >{{ signNext }}</v-btn
+          >
+        </v-col>
       </v-row>
 
       <div v-if="eventObjects">
@@ -97,21 +130,23 @@ export default {
       selectedValue: null,
       selectedPrice: null,
       selectedDate: null,
-      searchWord: null,
+      selectedWord: null,
 
-      dates: null,
+      globalDate: null,
+
+      manipulatedDate: 0,
+
+      displayNavigateButtons: true,
+
       menu: false,
       modal: false,
       menu2: false,
+
+      signNext: '>>',
+      signPrev: '<<',
     }
   },
-  computed: {
-    dateRangeText() {
-      return this.dates.join('---')
-    },
-  },
   mounted() {
-    this.selectedDate = DateConverter.getTodayDate()
     this.reloadFilterResults()
 
     this.tagCollection = [
@@ -126,75 +161,89 @@ export default {
   },
   methods: {
     async reloadFilterResults() {
+      // TAG
       let tagValue
       if (this.selectedValue === 'tag') {
         tagValue = null
       } else {
         tagValue = this.selectedValue
       }
+
+      // PRICE
+      let priceValue
+      if (this.selectedPrice) {
+        priceValue = this.selectedPrice
+      }
+
+      // SEARCHWORD
+      let searchWordValue
+      if (this.selectedWord) {
+        searchWordValue = this.selectedWord
+      }
+
+      // DATE
+      if (this.selectedDate) {
+        this.date = DateConverter.getManipulatedDate(this.selectedDate, this.manipulatedDate)
+      } else {
+        this.date = DateConverter.getManipulatedDate(DateConverter.getTodayDate(), this.manipulatedDate)
+      }
+
+      // display Value
+      this.globalDate = this.date
+
+      if (searchWordValue || priceValue || tagValue ) {
+        if (!this.selectedDate) {
+          this.date = null
+        }
+      }
+
+
+      this.date = DateConverter.getManipulatedDate(this.date, this.manipulatedDate)
+
+      // Initial Request to 8080
       await requestProvider
-        .getEventsForDateVenueTag(null, null, tagValue)
+        .getEventsForDateVenueTag(null, this.date, tagValue)
         .then(async (response) => {
           let myData = response.data
 
           // Filter by price
-          if (this.selectedPrice) {
-            const userPrice = parseFloat(this.selectedPrice.replace(',', '.'))
+          if (priceValue) {
+            const userPrice = parseFloat(priceValue.replace(',', '.'))
             myData = await myData.filter((myEvent) => {
               return parseFloat(myEvent.price) <= userPrice
             })
           }
-          // Filter by date
-          myData = await myData.filter((myEvent) => {
-            if (this.dates === null) return myEvent
-            if (this.dates.length > 1) {
-              const sortedDates = this.sortDates(this.dates)
-              if (
-                moment(myEvent.date).isAfter(moment(sortedDates[0])) &&
-                moment(myEvent.date).isBefore(moment(sortedDates[1]))
-              ) {
-                return myEvent
-              }
-              return null
-            } else if (this.dates.length < 2) {
-              if (moment(myEvent.date).isSame(moment(this.dates[0])))
-                return myEvent
-              return null
-            } else {
-              return myEvent
-            }
-          })
+
           // Filter by searchword
           myData = await myData.filter((myEvent) => {
-            console.log('SEARCHWORDFILTER')
-            if (this.searchWord === null) return myEvent
-            if (
-              myEvent.title
-                .toLowerCase()
-                .includes(this.searchWord.toLowerCase())
-            )
-              return myEvent
+            if (searchWordValue === null || searchWordValue === undefined) return myEvent
+            if (myEvent.title.toLowerCase().includes(searchWordValue.toLowerCase())) return myEvent
 
             // filter by artistarr
-            let eventToReturn = null
             myEvent.artists.forEach((artist) => {
-              if (
-                artist.toLowerCase().includes(this.searchWord.toLowerCase())
-              ) {
-                eventToReturn = myEvent
+              if (artist.toLowerCase().includes(searchWordValue.toLowerCase())) {
+                return myEvent
               }
             })
-            return eventToReturn
           })
+
           this.eventObjects = myData
           // force the component to rerender
           this.keyToRerenderComponent += 1
         })
     },
-    // puts earlier date first
-    sortDates(dateArr) {
-      if (moment(dateArr[0]).isBefore(moment(dateArr[1]))) return dateArr
-      return [dateArr[1], dateArr[0]]
+    buttonClicked () {
+      this.manipulatedDate = 0;
+      this.reloadFilterResults()
+    },
+
+    manipulateDate(value) {
+      this.manipulatedDate += value
+      this.reloadFilterResults()
+    },
+
+    displayDate() {
+      return this.globalDate
     },
   },
   components: {

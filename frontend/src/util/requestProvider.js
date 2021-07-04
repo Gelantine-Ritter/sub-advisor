@@ -50,6 +50,8 @@ export const requestProvider = {
             return await axios.get(`/events/?date=${date}&tag=${tag}`)
         }else if (tag) {
             return await axios.get(`/events/?tag=${tag}`)
+        }else if (date) {
+          return await axios.get(`/events/?date=${date}`)
         }else{
             return await axios.get(`/events/`)
         }

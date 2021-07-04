@@ -1,3 +1,6 @@
+import moment from 'moment'
+moment().format()
+
 export const DateConverter = {
 
     getTime: (date) => {
@@ -21,5 +24,12 @@ export const DateConverter = {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); 
         var yyyy = today.getFullYear()
         return (`${yyyy}-${mm}-${dd}`)
+    },
+    getManipulatedDate: (date, days) => {
+        if (moment(date).isValid()) {
+            const pre = moment(date).add(days, 'd')._d
+            const fin = moment(pre).format("YYYY-MM-DD")
+            return fin
+        }
     }
 }
