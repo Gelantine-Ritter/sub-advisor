@@ -109,11 +109,9 @@ authAndContent: {
   updateMember: async (memberId, body, auth) => {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
-  joinEvent: async (memberId, eventId) => {
-    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`,   { headers: {
-      "Authorization": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZW1iZXI5MCIsImV4cCI6MTYyNTI3MTMzOSwiaWF0IjoxNjI1MjM1MzM5fQ.XEkhG3ykCVOzUTzkV6uLwlQXWvEvlr7wuNub-0zUgS8",
-
-  }})
+  joinEvent: async (memberId, eventId, auth) => {
+    console.log('MEMBERID ',memberId,'EVENTID ',eventId);
+    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`, auth)
   },
  
 }

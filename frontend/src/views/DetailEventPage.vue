@@ -131,6 +131,7 @@
 
           <template v-else> </template>
           <!-- DELETE EVENT BUTTON END -->
+          <!-- JOIN EVENT BUTTON START -->
           <v-btn
             outlined
             elevation="1"
@@ -140,6 +141,8 @@
             :class="{active:isActive}"
             >{{isActive ? 'LEAVE EVENT' : 'JOIN EVENT'}}</v-btn
           >
+          <!-- JOIN EVENT BUTTON END -->
+
         </v-row>
           </v-col>
         </v-row>
@@ -224,18 +227,19 @@ export default {
     toggle() {
       const eventId = this.eventObj.id
       const memberId = this.user.id
+      const auth = localStorage.getItem('token')
       if (!this.isActive) {
          this.isActive = true;
-         console.log("LEAVE EVENT", this.isActive);
-         console.log('MEMBERID ',memberId,'EVENTID ',eventId);
-         requestProvider.joinEvent(memberId, eventId).then((response)=>{
-          console.log(response);
+         //   JOIN EVENT
+         console.log("JOIN EVENT", this.isActive);
+         requestProvider.joinEvent(memberId, eventId, auth).then((response)=>{
+          console.log("RESPONSE",response);
          })
         
 
       } else {
         this.isActive = false;
-        console.log("JOIN EVENT", this.isActive);
+        console.log("LEAVE EVENT", this.isActive);
         
       }
     },
