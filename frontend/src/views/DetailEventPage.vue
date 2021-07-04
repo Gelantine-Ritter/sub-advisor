@@ -186,12 +186,15 @@ export default {
         eventEnd: DateConverter.getTime(response.data.eventEnd),
         date: DateConverter.getDate(response.data.date),
       }
+      this.alreadyJoined()
 
       requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
         this.venueObj = responseVenue.data
       })
     })
   },
+
+  
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
@@ -227,23 +230,29 @@ export default {
     toggle() {
       const eventId = this.eventObj.id
       const memberId = this.user.id
-      const auth = 'Bearer ' + localStorage.getItem('token')
-      console.log("UUU", auth);
+      
+      
       if (!this.isActive) {
          this.isActive = true;
          //   JOIN EVENT
-         console.log("JOIN EVENT", this.isActive);
-         requestProvider.joinEvent(memberId, eventId, auth).then((response)=>{
-          console.log("RESPONSE",response);
-         })
-        
+         requestProvider.joinEvent(memberId, eventId)
 
       } else {
         this.isActive = false;
-        console.log("LEAVE EVENT", this.isActive);
+         requestProvider.leaveEvent(memberId, eventId)
+         
         
       }
     },
+    alreadyJoined(){
+      const arr = this.eventObj.guests
+      arr.forEach(elem => {
+        if(elem === this.user.username){
+          this.isActive = true
+        }
+      });
+
+    }
   
 
   },

@@ -100,7 +100,10 @@ export const requestProvider = {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
   joinEvent: async (memberId, eventId ) => {
-    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`, { Authorization: 'Bearer ' + localStorage.getItem('token')})
+    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`)
+  },
+  leaveEvent: async (memberId, eventId ) => {
+    return await axios.put(`/members/${memberId}/?leaveEvent=${eventId}`)
   },
  
 }

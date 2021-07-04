@@ -54,13 +54,7 @@
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
-              <v-btn
-                outlined
-                elevation="1"
-                class="ma-2 rounded-pill text-decoration-none"
-                v-if="role == 'MEMBER'"
-                >JOIN EVENT</v-btn
-              >
+              
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->

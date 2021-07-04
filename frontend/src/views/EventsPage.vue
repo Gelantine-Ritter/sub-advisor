@@ -166,7 +166,6 @@ export default {
           })
           // Filter by searchword
           myData = await myData.filter((myEvent) => {
-            console.log('SEARCHWORDFILTER')
             if (this.searchWord === null) return myEvent
             if (
               myEvent.title
@@ -187,6 +186,7 @@ export default {
             return eventToReturn
           })
           this.eventObjects = myData
+          console.log("ZUM NACHSCHAUEN OB DIE MEMBER JOINEN/LEAVEN",this.eventObjects);
           // force the component to rerender
           this.keyToRerenderComponent += 1
         })
