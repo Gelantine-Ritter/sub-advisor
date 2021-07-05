@@ -3,7 +3,7 @@
     <v-container my-5>
       <!-- Tags -->
       <v-row v-if="tagCollection" class="d-flex justify-center align-center">
-        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2"> 
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-text-field v-model="selectedWord" clearable label="search">
           </v-text-field>
         </v-col>
@@ -30,7 +30,7 @@
             v-model="selectedPrice"
             label="max. price"
           ></v-text-field>
-        </v-col >
+        </v-col>
 
         <!-- DATEPICKER -->
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
@@ -52,11 +52,7 @@
                 clearable
               ></v-text-field>
             </template>
-<<<<<<< HEAD
             <v-date-picker v-model="selectedDate" clearable> </v-date-picker>
-=======
-            <v-date-picker v-model="dates" no-title clearable range> </v-date-picker>
->>>>>>> master
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
@@ -184,9 +180,8 @@ export default {
       if (this.selectedDate) {
         this.date = this.selectedDate
       } else {
-          this.date = DateConverter.getTodayDate()
+        this.date = DateConverter.getTodayDate()
       }
-
 
       if (searchWordValue || priceValue || tagValue || searchVenue) {
         if (!this.selectedDate) {
@@ -226,26 +221,17 @@ export default {
             if (searchWordValue === null || searchWordValue === undefined) {
               return myEvent
             }
-<<<<<<< HEAD
-=======
-          })
-          // Filter by searchword
-          myData = await myData.filter((myEvent) => {
-            if (this.searchWord === null) return myEvent
->>>>>>> master
             if (
               myEvent.title
                 .toLowerCase()
                 .includes(searchWordValue.toLowerCase())
             ) {
-
               return myEvent
             }
 
             let foundArtist
             // filter by artistarr
             myEvent.artists.forEach((artist) => {
-
               if (
                 artist.toLowerCase().includes(searchWordValue.toLowerCase())
               ) {
@@ -255,13 +241,8 @@ export default {
 
             if (foundArtist) return myEvent
           })
-<<<<<<< HEAD
 
           this.eventObjects = wordFoundArray
-=======
-          this.eventObjects = myData
-          console.log("ZUM NACHSCHAUEN OB DIE MEMBER JOINEN/LEAVEN",this.eventObjects);
->>>>>>> master
           // force the component to rerender
           this.keyToRerenderComponent += 1
         })
@@ -272,12 +253,6 @@ export default {
     },
 
     manipulateDate(value) {
-
-      console.log('DATE', this.date);
-      console.log('GLOBALDATE', this.globalDate);
-      console.log('SELECTEDDATE', this.selectedDate);
-      console.log('---------------------');
-
       this.manipulatedDate += value
       this.reloadFilterResults()
     },
