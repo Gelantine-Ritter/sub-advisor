@@ -24,44 +24,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
-      <!-- DRAWER FOR MEMBER -->
-      <template v-if="role == 'MEMBER'">
-        <v-list>
-          <v-list-group
-            v-for="item in menuItemsAsMember"
-            :key="item.title"
-            v-model="item.active"
-            :to="item.route"
-          >
-            <template v-slot:activator>
-              <v-list-item-content class="text-decoration-none">
-                <v-list-item-title
-                  v-text="item.title"
-                  :key="item.title"
-                  :to="item.route"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item
-              class="text-decoration-none"
-              v-for="child in item.items"
-              :key="child.title"
-              :to="child.route"
-            >
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="child.title"
-                  :key="child.title"
-                  :to="child.route"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-        </v-list>
-      </template>
       <!--  DRAWER FOR UNLOGGED AND VENUES -->
-      <template v-else>
+      <template>
         <v-list>
           <v-list-group
             color="white"
@@ -149,7 +113,7 @@
         </template>
         <v-list>
           <v-list-item
-            v-for="item in subEventsLoggedInMember"
+            v-for="item in subEvents"
             :key="item.title"
             :to="item.route"
           >

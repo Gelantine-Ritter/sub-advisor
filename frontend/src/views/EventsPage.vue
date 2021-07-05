@@ -52,7 +52,11 @@
                 clearable
               ></v-text-field>
             </template>
+<<<<<<< HEAD
             <v-date-picker v-model="selectedDate" clearable> </v-date-picker>
+=======
+            <v-date-picker v-model="dates" no-title clearable range> </v-date-picker>
+>>>>>>> master
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
@@ -222,6 +226,13 @@ export default {
             if (searchWordValue === null || searchWordValue === undefined) {
               return myEvent
             }
+<<<<<<< HEAD
+=======
+          })
+          // Filter by searchword
+          myData = await myData.filter((myEvent) => {
+            if (this.searchWord === null) return myEvent
+>>>>>>> master
             if (
               myEvent.title
                 .toLowerCase()
@@ -244,8 +255,13 @@ export default {
 
             if (foundArtist) return myEvent
           })
+<<<<<<< HEAD
 
           this.eventObjects = wordFoundArray
+=======
+          this.eventObjects = myData
+          console.log("ZUM NACHSCHAUEN OB DIE MEMBER JOINEN/LEAVEN",this.eventObjects);
+>>>>>>> master
           // force the component to rerender
           this.keyToRerenderComponent += 1
         })

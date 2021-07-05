@@ -54,6 +54,7 @@
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
+              
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->
@@ -79,6 +80,7 @@
 <script>
 import { requestProvider } from '../../util/requestProvider'
 import { DateConverter } from '../../util/DateConverter'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -122,6 +124,12 @@ export default {
     redirectToEvent(id) {
       location.replace(`/events/${id}`)
     },
+  },
+  computed: {
+    ...mapGetters({
+      authenticated: 'auth/authenticated',
+      role: 'auth/role',
+    }),
   },
 }
 </script>

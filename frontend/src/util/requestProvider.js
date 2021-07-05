@@ -1,6 +1,8 @@
 import axios from 'axios'
 
 export const requestProvider = {
+
+
   // VENUES
 
   getVenues: async () => {
@@ -101,4 +103,11 @@ export const requestProvider = {
   updateMember: async (memberId, body, auth) => {
     return await axios.put(`/members/${memberId}`, body, auth)
   },
+  joinEvent: async (memberId, eventId ) => {
+    return await axios.put(`/members/${memberId}/?joinEvent=${eventId}`)
+  },
+  leaveEvent: async (memberId, eventId ) => {
+    return await axios.put(`/members/${memberId}/?leaveEvent=${eventId}`)
+  },
+ 
 }
