@@ -267,6 +267,7 @@ export default {
     },
 
     displayDate() {
+      if (this.globalDate === DateConverter.getTodayDate()) return 'TODAY'
       return DateConverter.getDate(this.globalDate)
     },
   },
