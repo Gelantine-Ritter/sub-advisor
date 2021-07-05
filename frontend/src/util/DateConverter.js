@@ -26,6 +26,7 @@ export const DateConverter = {
         return (`${yyyy}-${mm}-${dd}`)
     },
     getManipulatedDate: (date, days) => {
+        if (!date) return null
         if (moment(date).isValid()) {
             const pre = moment(date).add(days, 'd')._d
             const fin = moment(pre).format("YYYY-MM-DD")

@@ -29,42 +29,44 @@ export const requestProvider = {
 
   // EVENTS
 
-    getEvent: async (eventId) => {
-        return await axios.get(`/events/${eventId}`)
-    },
-    getEventsForVenue: async (venueId) => {
-        return await axios.get(`/events/?venue=${venueId}`)
-    },
-    getEventsForVenueAndDate: async (venueId, date) => {
-        return await axios.get(`/events/?venue=${venueId}&date=${date}`)
-    },
-    getEventsForDate: async (date) => {
-        return await axios.get(`/events/?date=${date}`)
-    },
-    getEventsForDateVenueTag: async (venueId, date, tag) => {
-        if (date && venueId && tag) {
-            return await axios.get(`/events/?venue=${venueId}&date=${date}&tag=${tag}`)
-        }else if (date && venueId) {
-            return await axios.get(`/events/?venue=${venueId}&date=${date}`)
-        }else if (date && tag) {
-            return await axios.get(`/events/?date=${date}&tag=${tag}`)
-        }else if (tag) {
-            return await axios.get(`/events/?tag=${tag}`)
-        }else if (date) {
-          return await axios.get(`/events/?date=${date}`)
-        }else{
-            return await axios.get(`/events/`)
-        }
-    },
-    deleteEvent: async (eventId, auth) => {
-        return await axios.delete('/events/' + eventId, auth)
-    },
-    updateEvent: async (eventId, body, auth) => {
-        return await axios.put(`/events/${eventId}`, body, auth)
-    },
-    postEvent: async (body, auth) => {
-        return await axios.post(`/events/`, body, auth)
-    },
+  getEvent: async (eventId) => {
+    return await axios.get(`/events/${eventId}`)
+  },
+  getEventsForVenue: async (venueId) => {
+    return await axios.get(`/events/?venue=${venueId}`)
+  },
+  getEventsForVenueAndDate: async (venueId, date) => {
+    return await axios.get(`/events/?venue=${venueId}&date=${date}`)
+  },
+  getEventsForDate: async (date) => {
+    return await axios.get(`/events/?date=${date}`)
+  },
+  getEventsForDateVenueTag: async (venue, date, tag) => {
+    if (date && venue && tag) {
+      return await axios.get(`/events/?venueName=${venue}&date=${date}&tag=${tag}`)
+    } else if (date && venue) {
+      return await axios.get(`/events/?venueName=${venue}&date=${date}`)
+    } else if (date && tag) {
+      return await axios.get(`/events/?date=${date}&tag=${tag}`)
+    } else if (venue) {
+      return await axios.get(`/events/?venueName=${venue}`)
+    } else if (tag) {
+      return await axios.get(`/events/?tag=${tag}`)
+    } else if (date) {
+      return await axios.get(`/events/?date=${date}`)
+    } else {
+      return await axios.get(`/events/`)
+    }
+  },
+  deleteEvent: async (eventId, auth) => {
+    return await axios.delete('/events/' + eventId, auth)
+  },
+  updateEvent: async (eventId, body, auth) => {
+    return await axios.put(`/events/${eventId}`, body, auth)
+  },
+  postEvent: async (body, auth) => {
+    return await axios.post(`/events/`, body, auth)
+  },
 
   // LOGIN / REGISTRATE
 

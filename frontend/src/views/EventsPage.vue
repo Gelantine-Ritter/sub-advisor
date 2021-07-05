@@ -4,17 +4,27 @@
       <!-- Tags -->
       <v-row v-if="tagCollection">
         <v-col>
-          <v-text-field v-model="selectedWord" label="search"> </v-text-field>
+          <v-text-field v-model="selectedWord" clearable label="search">
+          </v-text-field>
+        </v-col>
+        <v-col>
+          <v-text-field
+            clearable
+            v-model="selectedVenue"
+            label="venue"
+          ></v-text-field>
         </v-col>
 
         <v-col>
           <v-select
             placeholder="tags"
+            clearable
             :items="tagCollection"
             v-model="selectedValue"
           />
         </v-col>
-
+      </v-row>
+      <v-row>
         <!--
 
       <v-col>
@@ -26,6 +36,7 @@
  -->
         <v-col>
           <v-text-field
+            clearable
             v-model="selectedPrice"
             label="max. price"
           ></v-text-field>
@@ -57,21 +68,11 @@
         <!--DATEPICKER ENDE-->
 
         <v-col>
-          <v-btn outlined rounded v-on:click="buttonClicked">
-            Refresh
-          </v-btn>
+          <v-btn outlined rounded v-on:click="buttonClicked"> Refresh </v-btn>
         </v-col>
       </v-row>
-      <!-- Heading Date -->
-      <v-row>
-        <!-- EventList -->
-      </v-row>
-
-      <v-row>
-        <v-col
-          v-if="displayNavigateButtons"
-          style="display: flex; justify-content: center"
-        >
+      <v-row v-if="displayNavigation">
+        <v-col style="display: flex; justify-content: center">
           <v-btn
             outlined
             rounded
@@ -86,10 +87,7 @@
             {{ displayDate() }}
           </h1>
         </v-col>
-        <v-col
-          v-if="displayNavigateButtons"
-          style="display: flex; justify-content: center"
-        >
+        <v-col style="display: flex; justify-content: center">
           <v-btn
             outlined
             rounded
@@ -128,6 +126,7 @@ export default {
       keyToRerenderComponent: 0,
 
       selectedValue: null,
+      selectedVenue: null,
       selectedPrice: null,
       selectedDate: null,
       selectedWord: null,
@@ -136,7 +135,7 @@ export default {
 
       manipulatedDate: 0,
 
-      displayNavigateButtons: true,
+      displayNavigation: true,
 
       menu: false,
       modal: false,
@@ -181,28 +180,45 @@ export default {
         searchWordValue = this.selectedWord
       }
 
+      // VENUE
+      let searchVenue
+      if (this.selectedVenue) {
+        searchVenue = this.selectedVenue
+      }
+
       // DATE
       if (this.selectedDate) {
-        this.date = DateConverter.getManipulatedDate(this.selectedDate, this.manipulatedDate)
+        this.date = DateConverter.getManipulatedDate(
+          this.selectedDate,
+          this.manipulatedDate
+        )
       } else {
-        this.date = DateConverter.getManipulatedDate(DateConverter.getTodayDate(), this.manipulatedDate)
+        this.date = DateConverter.getManipulatedDate(
+          DateConverter.getTodayDate(),
+          this.manipulatedDate
+        )
       }
 
       // display Value
       this.globalDate = this.date
 
-      if (searchWordValue || priceValue || tagValue ) {
+      if (searchWordValue || priceValue || tagValue || searchVenue) {
         if (!this.selectedDate) {
           this.date = null
+          this.displayNavigation = false
+        } else {
+          this.displayNavigation = true
         }
       }
 
-
-      this.date = DateConverter.getManipulatedDate(this.date, this.manipulatedDate)
+      this.date = DateConverter.getManipulatedDate(
+        this.date,
+        this.manipulatedDate
+      )
 
       // Initial Request to 8080
       await requestProvider
-        .getEventsForDateVenueTag(null, this.date, tagValue)
+        .getEventsForDateVenueTag(searchVenue, this.date, tagValue)
         .then(async (response) => {
           let myData = response.data
 
@@ -214,26 +230,43 @@ export default {
             })
           }
 
-          // Filter by searchword
-          myData = await myData.filter((myEvent) => {
-            if (searchWordValue === null || searchWordValue === undefined) return myEvent
-            if (myEvent.title.toLowerCase().includes(searchWordValue.toLowerCase())) return myEvent
+          let wordFoundArray = []
 
+          // Filter by searchword
+          wordFoundArray = await myData.filter((myEvent) => {
+            if (searchWordValue === null || searchWordValue === undefined) {
+              return myEvent
+            }
+            if (
+              myEvent.title
+                .toLowerCase()
+                .includes(searchWordValue.toLowerCase())
+            ) {
+
+              return myEvent
+            }
+
+            let foundArtist
             // filter by artistarr
             myEvent.artists.forEach((artist) => {
-              if (artist.toLowerCase().includes(searchWordValue.toLowerCase())) {
-                return myEvent
+
+              if (
+                artist.toLowerCase().includes(searchWordValue.toLowerCase())
+              ) {
+                foundArtist = myEvent
               }
             })
+
+            if (foundArtist) return myEvent
           })
 
-          this.eventObjects = myData
+          this.eventObjects = wordFoundArray
           // force the component to rerender
           this.keyToRerenderComponent += 1
         })
     },
-    buttonClicked () {
-      this.manipulatedDate = 0;
+    buttonClicked() {
+      this.manipulatedDate = 0
       this.reloadFilterResults()
     },
 
