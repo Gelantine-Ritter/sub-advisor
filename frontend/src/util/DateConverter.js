@@ -10,6 +10,7 @@ export const DateConverter = {
     },
 
     getDate: (date) => {
+        if (!date) return null
         const editDate = date.split('-')
         return (`${editDate[2]}.${editDate[1]}.${editDate[0]}`)
     },

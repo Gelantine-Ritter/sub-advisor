@@ -2,12 +2,12 @@
   <div>
     <v-container my-5>
       <!-- Tags -->
-      <v-row v-if="tagCollection">
-        <v-col>
+      <v-row v-if="tagCollection" class="d-flex justify-center align-center">
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2"> 
           <v-text-field v-model="selectedWord" clearable label="search">
           </v-text-field>
         </v-col>
-        <v-col>
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-text-field
             clearable
             v-model="selectedVenue"
@@ -15,7 +15,7 @@
           ></v-text-field>
         </v-col>
 
-        <v-col>
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-select
             placeholder="tags"
             clearable
@@ -23,27 +23,17 @@
             v-model="selectedValue"
           />
         </v-col>
-      </v-row>
-      <v-row>
-        <!--
 
-      <v-col>
-        <b-form-select
-          v-model="selectedValue"
-          :options="tagCollection"
-        ></b-form-select>
-      </v-col>
- -->
-        <v-col>
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-text-field
             clearable
             v-model="selectedPrice"
             label="max. price"
           ></v-text-field>
-        </v-col>
+        </v-col >
 
         <!-- DATEPICKER -->
-        <v-col>
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-menu
             v-model="menu2"
             :close-on-content-click="false"
@@ -67,7 +57,7 @@
         </v-col>
         <!--DATEPICKER ENDE-->
 
-        <v-col>
+        <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-btn outlined rounded v-on:click="buttonClicked"> Refresh </v-btn>
         </v-col>
       </v-row>
@@ -188,19 +178,11 @@ export default {
 
       // DATE
       if (this.selectedDate) {
-        this.date = DateConverter.getManipulatedDate(
-          this.selectedDate,
-          this.manipulatedDate
-        )
+        this.date = this.selectedDate
       } else {
-        this.date = DateConverter.getManipulatedDate(
-          DateConverter.getTodayDate(),
-          this.manipulatedDate
-        )
+          this.date = DateConverter.getTodayDate()
       }
 
-      // display Value
-      this.globalDate = this.date
 
       if (searchWordValue || priceValue || tagValue || searchVenue) {
         if (!this.selectedDate) {
@@ -215,6 +197,9 @@ export default {
         this.date,
         this.manipulatedDate
       )
+
+      // display Value
+      this.globalDate = this.date
 
       // Initial Request to 8080
       await requestProvider
@@ -271,12 +256,18 @@ export default {
     },
 
     manipulateDate(value) {
+
+      console.log('DATE', this.date);
+      console.log('GLOBALDATE', this.globalDate);
+      console.log('SELECTEDDATE', this.selectedDate);
+      console.log('---------------------');
+
       this.manipulatedDate += value
       this.reloadFilterResults()
     },
 
     displayDate() {
-      return this.globalDate
+      return DateConverter.getDate(this.globalDate)
     },
   },
   components: {
