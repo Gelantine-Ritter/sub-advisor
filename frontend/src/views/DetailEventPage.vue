@@ -5,7 +5,7 @@
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
     >
-      {{ eventObj.title }}
+      {{ venueObj.name }}
     </h1>
 
     <div class="rounded-xl mycontainer" fluid>
@@ -13,7 +13,11 @@
         <v-row center>
           <!-- venueName, adress, ... -->
           <v-col cols="12" xs="12" sm="12" md="8" lg="8" xl="8">
-              <h2>{{ venueObj.name }}</h2>
+            <v-row class="ma-1">
+              <h5 class="font-weight-bold text--disabled">{{ eventObj.date }} /</h5>
+              <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }}</h5>
+            </v-row>
+              <h2>{{ eventObj.title }}</h2>
               <div>
                 <h5>
                   {{ venueObj.address.street }}
@@ -25,21 +29,15 @@
           </v-col>
           <v-col cols="12" xs="12" sm="12" md="4" lg="4" xl="4">
                     <MapsView :adress="venueObj.address" />
-
           </v-col>
         </v-row>
         <v-row center>
               <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
-              <div>
-                Doors: {{ eventObj.eventStart }}
-              </div>
-              <div>
-                Date: {{ eventObj.date }}
-              </div>
-              </v-col>
-              <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4" class="text-center">
-            Price: {{ eventObj.price }} Euro
-              </v-col>
+              <v-icon small color="black" class="ma-1">fas fa-euro-sign</v-icon>
+             {{ eventObj.price }}  
+                <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
+                          {{eventObj.amountOfGuests}} 
+              </v-col>        
       </v-row>
         <v-row center>  
                         <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
@@ -141,13 +139,12 @@
                                   v-model="dialog"
                                   scrollable
                                   max-width="300px"
-                                >
-                                  <template v-slot:activator="{ on, attrs }">
+                                >                                  <template v-slot:activator="{ on, attrs }">
                                     <v-btn v-if="authenticated" 
                                       :disabled="!ifParticipants"
-                                     outlined
-                                    elevation="0"
-                                    class="ma-5 rounded-pill text-decoration-none"
+                                      outlined
+                                      elevation="0"
+                                      class="ma-5 rounded-pill text-decoration-none"
                                       v-bind="attrs"
                                       v-on="on"
                                     >
@@ -242,6 +239,7 @@ export default {
         eventEnd: DateConverter.getTime(response.data.eventEnd),
         date: DateConverter.getDate(response.data.date)
       }
+      console.log(this.eventObj);
       // show participants if there are any
       if (this.eventObj.guests.length < 1){
       this.ifParticipants=false
