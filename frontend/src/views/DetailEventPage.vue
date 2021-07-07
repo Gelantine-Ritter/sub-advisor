@@ -15,7 +15,9 @@
           <v-col cols="12" xs="12" sm="12" md="8" lg="8" xl="8">
             <v-row class="ma-1">
               <h5 class="font-weight-bold text--disabled">{{ eventObj.date }} /</h5>
-              <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }}</h5>
+              <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }} / </h5>
+              <h5 class="font-weight-bold text--disabled">  
+            / {{ eventObj.price }} € </h5>
             </v-row>
               <h2>{{ eventObj.title }}</h2>
               <div>
@@ -31,14 +33,7 @@
                     <MapsView :adress="venueObj.address" />
           </v-col>
         </v-row>
-        <v-row center>
-              <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
-              <v-icon small color="black" class="ma-1">fas fa-euro-sign</v-icon>
-             {{ eventObj.price }}  
-                <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
-                          {{eventObj.amountOfGuests}} 
-              </v-col>        
-      </v-row>
+  
         <v-row center>  
                         <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
             <div>

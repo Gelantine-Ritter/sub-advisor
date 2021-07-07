@@ -22,6 +22,9 @@
                 <v-list-item-subtitle>
                   Acts: {{ event.artists }}
                 </v-list-item-subtitle>
+                 <v-list-item-subtitle>
+ <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
+                          {{event.amountOfGuests}}                 </v-list-item-subtitle>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
