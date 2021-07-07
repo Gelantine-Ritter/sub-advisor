@@ -147,6 +147,7 @@
                                       class="ma-5 rounded-pill text-decoration-none"
                                       v-bind="attrs"
                                       v-on="on"
+                                      @click="updateList"
                                       
                                     >
                                       Show Participants
@@ -293,10 +294,13 @@ export default {
          this.isActive = true;
          //   join event
          requestProvider.joinEvent(memberId, eventId)
+  
       } else {
         //    leave event
         this.isActive = false;
         requestProvider.leaveEvent(memberId, eventId) 
+
+  
       }
     },
     alreadyJoined(){
@@ -307,9 +311,21 @@ export default {
         }
       });
     },
-    reload() {
-      this.$forceUpdate();
+    updateList(){
+          const eventId = this.$route.params.id
+             requestProvider.getEvent(eventId).then((response) => {
+      this.eventObj = {
+        ...response.data,
+        eventStart: DateConverter.getTime(response.data.eventStart),
+        eventEnd: DateConverter.getTime(response.data.eventEnd),
+        date: DateConverter.getDate(response.data.date),
+        guests: response.data.guests 
+      }
+
+    })
+
     }
+   
   
     
   },
