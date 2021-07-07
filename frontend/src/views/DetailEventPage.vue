@@ -139,7 +139,7 @@
                                   v-model="dialog"
                                   scrollable
                                   max-width="300px"
-                                >                                  <template v-slot:activator="{ on, attrs }">
+                                ><template v-slot:activator="{ on, attrs }">
                                     <v-btn v-if="authenticated" 
                                       :disabled="!ifParticipants"
                                       outlined
@@ -147,18 +147,18 @@
                                       class="ma-5 rounded-pill text-decoration-none"
                                       v-bind="attrs"
                                       v-on="on"
+                                      
                                     >
                                       Show Participants
                                     </v-btn>
                                   </template>
-                                  <v-card>
+                                  <v-card >
                                     <v-card-title class="justify-center">PARTICIPANTS</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px;">
-                                      <v-list-item 
-                                         >
-                                        <v-list-item-content>
-                                          <v-list-item-title v-for="guest in eventObj.guests" :key="guest.guests">{{guest}}</v-list-item-title>
+                                      <v-list-item >
+                                        <v-list-item-content >
+                                          <v-list-item-title  v-for="guest in eventObj.guests" :key="guest.guests">{{guest}}</v-list-item-title>
                                         </v-list-item-content>
                                       </v-list-item>
                                     </v-card-text>
@@ -225,7 +225,8 @@ export default {
       
       isActive: false,
       dialog: false,
-      ifParticipants: true
+      ifParticipants: true,
+
 
 
     }
@@ -239,7 +240,6 @@ export default {
         eventEnd: DateConverter.getTime(response.data.eventEnd),
         date: DateConverter.getDate(response.data.date)
       }
-      console.log(this.eventObj);
       // show participants if there are any
       if (this.eventObj.guests.length < 1){
       this.ifParticipants=false
@@ -288,20 +288,15 @@ export default {
     },
     toggle() {
       const eventId = this.eventObj.id
-      const memberId = this.user.id
-      
-      
+      const memberId = this.user.id    
       if (!this.isActive) {
          this.isActive = true;
          //   join event
          requestProvider.joinEvent(memberId, eventId)
-
       } else {
         //    leave event
         this.isActive = false;
-         requestProvider.leaveEvent(memberId, eventId)
-         
-        
+        requestProvider.leaveEvent(memberId, eventId) 
       }
     },
     alreadyJoined(){
@@ -312,10 +307,11 @@ export default {
         }
       });
     },
- 
-    
+    reload() {
+      this.$forceUpdate();
+    }
   
-
+    
   },
 }
 </script>
