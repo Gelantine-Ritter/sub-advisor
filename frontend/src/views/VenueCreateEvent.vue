@@ -346,7 +346,6 @@ export default {
     convertArtistToArray(artists) {
       if (typeof artists === 'string') {
         const artistsArr = artists.split(',')
-        //    map: trim jeden Artist aus Array
         const artistsArr1 = artistsArr.map((artist) => {
           return artist.trim()
         })

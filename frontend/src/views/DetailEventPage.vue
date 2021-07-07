@@ -131,7 +131,7 @@
 
           <template v-else> </template>
           <!-- DELETE EVENT BUTTON END -->
-          <!-- JOIN EVENT BUTTON START -->
+          <!-- JOIN EVENT BUTTON & SHOW PARTICIPANTS START -->
           <v-row>
            <v-col>
                   <v-row justify="center">
@@ -143,7 +143,8 @@
                                   max-width="300px"
                                 >
                                   <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
+                                    <v-btn v-if="authenticated" 
+                                      :disabled="!ifParticipants"
                                      outlined
                                     elevation="0"
                                     class="ma-5 rounded-pill text-decoration-none"
@@ -154,13 +155,13 @@
                                     </v-btn>
                                   </template>
                                   <v-card>
-                                    <v-card-title>PARTICIPANTS</v-card-title>
+                                    <v-card-title class="justify-center">PARTICIPANTS</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px;">
                                       <v-list-item 
                                          >
                                         <v-list-item-content>
-                                          <v-list-item-title v-for="guest in eventObj.guests" :key="guest.guests">{{eventObj.guests}}</v-list-item-title>
+                                          <v-list-item-title v-for="guest in eventObj.guests" :key="guest.guests">{{guest}}</v-list-item-title>
                                         </v-list-item-content>
                                       </v-list-item>
                                     </v-card-text>
@@ -181,7 +182,7 @@
                               </v-row>
                             </template>
                     </v-row>
-              <v-row v v-if="role==='MEMBER'" justify="center">
+              <v-row  v-if="role==='MEMBER'" justify="center">
                 <v-btn
                 outlined
                 elevation="1"
@@ -190,7 +191,7 @@
                 @click="toggle"
                 :class="{active:isActive}"
                 >{{isActive ? 'LEAVE EVENT' : 'JOIN EVENT'}}</v-btn>
-              <!-- JOIN EVENT BUTTON END -->
+              <!-- JOIN EVENT BUTTON & SHOW PARTICIPANTS END -->
               </v-row>  
               </v-col>
               </v-row>
@@ -217,6 +218,7 @@ import MapsView from '../components/features/MapsView.vue'
 export default {
   data() {
     return {
+      
       eventObj: null,
       venueObj: null,
       showDialogEditEvent: false,
@@ -226,6 +228,7 @@ export default {
       
       isActive: false,
       dialog: false,
+      ifParticipants: true
 
 
     }
@@ -239,15 +242,20 @@ export default {
         eventEnd: DateConverter.getTime(response.data.eventEnd),
         date: DateConverter.getDate(response.data.date)
       }
+      // show participants if there are any
+      if (this.eventObj.guests.length < 1){
+      this.ifParticipants=false
+      }
+      if(this.role==="MEMBER"||this.role==="VENUE"){
       this.alreadyJoined()
-
+      }
       requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
         this.venueObj = responseVenue.data
       })
     })
   },
 
-  
+ 
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
@@ -305,8 +313,8 @@ export default {
           this.isActive = true
         }
       });
-
-    }
+    },
+ 
     
   
 
