@@ -18,6 +18,8 @@
               <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }} / </h5>
               <h5 class="font-weight-bold text--disabled">  
             / {{ eventObj.price }} € </h5>
+             <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
+                          {{eventObj.amountOfGuests}}
             </v-row>
               <h2>{{ eventObj.title }}</h2>
               <div>
@@ -142,7 +144,7 @@
                                       class="ma-5 rounded-pill text-decoration-none"
                                       v-bind="attrs"
                                       v-on="on"
-                                      @click="updateList"
+                                      @click="getEvents"
                                       
                                     >
                                       Show Participants
@@ -288,14 +290,19 @@ export default {
       if (!this.isActive) {
          this.isActive = true;
          //   join event
-         requestProvider.joinEvent(memberId, eventId)
+         requestProvider.joinEvent(memberId, eventId).then(()=>{
+            this.getEvents()
+
+         })
   
       } else {
         //    leave event
         this.isActive = false;
-        requestProvider.leaveEvent(memberId, eventId) 
-
-  
+        requestProvider.leaveEvent(memberId, eventId).then(()=>{
+          this.getEvents()
+          
+        })
+        
       }
     },
     alreadyJoined(){
@@ -306,8 +313,8 @@ export default {
         }
       });
     },
-    updateList(){
-          const eventId = this.$route.params.id
+    getEvents(){
+         const eventId = this.$route.params.id
              requestProvider.getEvent(eventId).then((response) => {
       this.eventObj = {
         ...response.data,
@@ -316,10 +323,15 @@ export default {
         date: DateConverter.getDate(response.data.date),
         guests: response.data.guests 
       }
+      if (this.eventObj.guests.length < 1){
+          this.ifParticipants=false
+          }else{
+            this.ifParticipants=true
+          }
 
     })
-
     }
+    
    
   
     

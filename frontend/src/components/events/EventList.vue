@@ -11,6 +11,7 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
+                <h4>HUHUHUHUH</h4>
                 <h6>{{ event.title }}</h6>
                 <v-list-item-subtitle>
                   Time: {{ event.eventStart }} -
@@ -23,8 +24,8 @@
                   Acts: {{ event.artists }}
                 </v-list-item-subtitle>
                  <v-list-item-subtitle>
- <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
-                          {{event.amountOfGuests}}                 </v-list-item-subtitle>
+                    <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
+                          {{event.amountOfGuests}}</v-list-item-subtitle>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
