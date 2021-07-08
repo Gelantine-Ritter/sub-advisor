@@ -14,23 +14,28 @@
           <!-- venueName, adress, ... -->
           <v-col cols="12" xs="12" sm="12" md="8" lg="8" xl="8">
             <v-row class="ma-1">
-              <h5 class="font-weight-bold text--disabled">{{ eventObj.date }} /</h5>
-              <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }} / </h5>
-              <h5 class="font-weight-bold text--disabled">  / {{ eventObj.price }} € </h5>
-              <ParticipantsIcon  :number="this.eventObj.amountOfGuests"/>
+              <h5 class="mr-1 font-weight-bold text--disabled"> {{ eventObj.date }} // </h5>
+              <h5 class="mr-1 font-weight-bold text--disabled"> {{ eventObj.eventStart }} - {{eventObj.eventEnd}} // </h5>
+              <h5 class="mr-1 font-weight-bold text--disabled"> € {{ eventObj.price }}  // </h5>
+              <h5 class="mr-1 font-weight-bold text--disabled">  <ParticipantsIcon  :number="this.eventObj.amountOfGuests"/> </h5>
             </v-row>
-              <h2>{{ eventObj.title }}</h2>
-              <div>
+              <h2>{{ eventObj.title.toUpperCase() }}</h2>
+              <v-row class="ma-1">
+                  <div>
                 <h5>
                   {{ venueObj.address.street }}
                   {{ venueObj.address.number }},
                   {{ venueObj.address.plz }}
                   {{ venueObj.address.city }}
-                </h5>
+                </h5> 
               </div>
-          </v-col>
-          <v-col cols="12" xs="12" sm="12" md="4" lg="4" xl="4">
-                    <MapsView :adress="venueObj.address" />
+              <v-row class="mt-1">
+              <MapsView :adress="venueObj.address" />
+              </v-row>
+
+              </v-row>
+            
+
           </v-col>
         </v-row>
   

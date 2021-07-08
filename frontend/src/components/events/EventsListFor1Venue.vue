@@ -14,19 +14,18 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
-                <h6>{{ event.title }}</h6>
+
+              <v-row class="ma-1">
+                <h6 class="mr-1 font-weight-bold text--disabled">{{ event.date }} //</h6>
+                <h6 class="mr-1 font-weight-bold text--disabled"> {{ event.eventStart }} -
+                  {{ event.eventEnd }} // </h6>
+                <h6 class="font-weight-bold text--disabled"><ParticipantsIcon  :number="event.amountOfGuests"/>
+                </h6>
+                </v-row>
+                <h6>{{ event.title.toUpperCase() }}</h6> 
                 <v-list-item-subtitle>
-                  Time: {{ event.eventStart }} -
-                  {{ event.eventEnd }}</v-list-item-subtitle
-                >
-                <v-list-item-subtitle>
-                  Date: {{ event.date }}
+                  WITH: {{ event.artists.toUpperCase() }}
                 </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  Acts: {{ event.artists }}
-                </v-list-item-subtitle>
-                 <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
-                          {{event.amountOfGuests}} 
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
@@ -49,14 +48,15 @@
               <v-card flat tile class="pa-4">
                 {{ event.info }}
               </v-card>
+              <v-row class="justify-center">
               <v-btn
                 outlined
                 elevation="1"
-                class="rounded-pill text-decoration-none"
+                class="mb-6 rounded-pill text-decoration-none"
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
-              
+             </v-row>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->
@@ -83,17 +83,22 @@
 import { requestProvider } from '../../util/requestProvider'
 import { DateConverter } from '../../util/DateConverter'
 import { mapGetters } from 'vuex'
+import ParticipantsIcon from '../events/Participants.vue'
+
 
 export default {
-  props: {
-    venueId: String,
-  },
   data() {
     return {
       eventObjs: null,
       styleObject: { border: '2px solid #000000' },
       expand: false,
     }
+  },
+    props: {
+    venueId: String,
+  },
+  components:{
+    ParticipantsIcon
   },
 
    mounted() {

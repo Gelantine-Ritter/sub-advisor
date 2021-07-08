@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-icon small color="black" class="ml-2" >fas fa-users</v-icon>
+    <v-icon small class="ml-2" >fas fa-users</v-icon>
                           {{number}}
   </div>
 </template>

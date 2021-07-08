@@ -11,30 +11,28 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
-                <h4>HUHUHUHUH</h4>
-                <h6>{{ event.title }}</h6>
-                <v-list-item-subtitle>
-                  Time: {{ event.eventStart }} -
-                  {{ event.eventEnd }}</v-list-item-subtitle
-                >
-                <v-list-item-subtitle>
-                  Date: {{ event.date }}
-                </v-list-item-subtitle>
-                <v-list-item-subtitle>
-                  Acts: {{ event.artists }}
-                </v-list-item-subtitle>
-                 <v-list-item-subtitle>
-                    <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
-                          {{event.amountOfGuests}}</v-list-item-subtitle>
+                <v-row class="ma-1">
+                <h6 class="mr-1 font-weight-bold text--disabled">{{ event.date }} //</h6>
+                <h6 class="mr-1 font-weight-bold text--disabled"> {{ event.eventStart }} -
+                  {{ event.eventEnd }} // </h6>
+                <h6 class="font-weight-bold text--disabled"><ParticipantsIcon  :number="event.amountOfGuests"/>
+                </h6>
+                </v-row>
+                <v-row class="ma-1">
+                  <h6>{{ event.title.toUpperCase() }}</h6> 
+                   <v-list-item-subtitle> 
+                  WITH: {{ event.artists.toUpperCase() }}
+                  </v-list-item-subtitle>
+                  </v-row>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <v-card class="pa-2" tile elevation="0">
-                <v-chip class="ma-3" outlined>{{ event.price }}€</v-chip>
+                <v-chip class="ma-1" outlined>{{ event.price }}€</v-chip>
                 <v-chip
                   v-for="tag in event.tags"
                   :key="tag"
-                  class="ma-3"
+                  class="ma-1"
                   outlined
                   >{{ tag }}</v-chip
                 >
@@ -48,13 +46,6 @@
               <v-card flat tile class="pa-4">
                 {{ event.info }}
               </v-card>
-              <v-btn
-                outlined
-                elevation="1"
-                class="rounded-pill text-decoration-none"
-                @click="redirectToEvent(event.id)"
-                >Go to Event</v-btn
-              >
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->
@@ -75,6 +66,15 @@
               <!-- EVENT PICTURE END -->
               <v-row> </v-row>
             </v-col>
+              <v-row class="justify-center">
+              <v-btn
+                outlined
+                elevation="1"
+                class="mb-6 rounded-pill text-decoration-none"
+                @click="redirectToEvent(event.id)"
+                >Go to Event</v-btn
+              >
+              </v-row>
           </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -84,17 +84,21 @@
 
 <script>
 import { DateConverter } from '../../util/DateConverter'
+import ParticipantsIcon from '../events/Participants.vue'
 
 export default {
-  props: {
-    eventObjsList: Array,
-  },
   data() {
     return {
       eventObjs: null,
       styleObject: { border: '2px solid #000000' },
       expand: false,
     }
+  },
+    components:{
+    ParticipantsIcon
+  },
+    props: {
+    eventObjsList: Array,
   },
 
   mounted() {

@@ -25,13 +25,11 @@
                 {{ venueObj.address.plz }}
                 {{ venueObj.address.city }}
               </div>
-            </v-col>
-
-            <v-col xs="12" sm="4" md="4" lg="4" xl="3" class="pls_center_it">
+                <v-row class="mt-1">
               <MapsView :adress="venueObj.address" />
+              </v-row>
             </v-col>
           </v-row>
-
           <v-row>
             <!-- description -->
             <v-col xs="12" sm="8" md="8" lg="8" xl="8">

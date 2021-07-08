@@ -4,11 +4,13 @@
       <v-dialog v-model="dialog" width="80vw">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="rounded-pill border border-dark"
+          text
+          elevation="0"
+          class="text-decoration-underline"
             v-bind="attrs"
             v-on="on"
           >
-            Show on Map
+            show on maps
           </v-btn>
         </template>
 
@@ -110,4 +112,5 @@ export default {
 #mapContainer {
   overflow-y: hidden;
 }
+
 </style>
