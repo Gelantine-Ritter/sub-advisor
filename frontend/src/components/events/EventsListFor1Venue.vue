@@ -48,15 +48,6 @@
               <v-card flat tile class="pa-4">
                 {{ event.info }}
               </v-card>
-              <v-row class="justify-center">
-              <v-btn
-                outlined
-                elevation="1"
-                class="mb-6 rounded-pill text-decoration-none"
-                @click="redirectToEvent(event.id)"
-                >Go to Event</v-btn
-              >
-             </v-row>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->
@@ -72,6 +63,15 @@
               <!-- EVENT PICTURE END -->
               <v-row> </v-row>
             </v-col>
+                 <v-row class="justify-center">
+              <v-btn
+                outlined
+                elevation="1"
+                class="my-6 rounded-pill text-decoration-none"
+                @click="redirectToEvent(event.id)"
+                >Go to Event</v-btn
+              >
+             </v-row>
           </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>

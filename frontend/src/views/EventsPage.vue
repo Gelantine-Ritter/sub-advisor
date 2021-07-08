@@ -58,7 +58,7 @@
         <!--DATEPICKER ENDE-->
 
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
-          <v-btn outlined rounded v-on:click="buttonClicked"> Refresh </v-btn>
+          <v-btn outlined rounded v-on:click="buttonClicked"> Search </v-btn>
         </v-col>
       </v-row>
       <v-row v-if="displayNavigation">

@@ -30,7 +30,7 @@
               ÖFFNUNGSZEITE              </div>
               </v-col>
               <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4" class="text-center">
-PREIS              </v-col>
+                PREIS              </v-col>
       </v-row>
         <v-row center>  
                         <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
@@ -60,7 +60,23 @@ PREIS              </v-col>
 </template>
 
 <script>
-export default {}
+import { requestProvider } from '../util/requestProvider'
+import { DateConverter } from '../util/DateConverter'
+
+export default {
+  data(){
+    return{
+    }
+
+  },
+  mounted(){
+    const date1 = DateConverter.getTodayDate()
+    console.log("huhu ", date1);
+    requestProvider.getEventsForDateVenueTag(null,date1,null).then((response)=> {
+    console.log(response);
+    }) 
+  }
+}
 </script>
 
 <style></style>

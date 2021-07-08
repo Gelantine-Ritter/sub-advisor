@@ -2,14 +2,15 @@
   <v-container height="50" absolute>
     <v-row justify="center" no-gutters>
       <v-btn
-        v-for="link in links"
-        :key="link"
+        v-for="item in links"
+        :key="item.title"
+        :to="item.route"
         color="black"
         text
         rounded
         class="my-2"
       >
-        {{ link }}
+        {{ item.title }}
       </v-btn>
       <v-col
         class="caption border-top border-dark py-4 text-center black--text"
@@ -26,7 +27,10 @@
 <script>
 export default {
   data: () => ({
-    links: ['Contact', 'Impressum'],
+    links: [
+      {title: 'Contact', route: '/contact'}, 
+      {title: 'Impressum', route: '/impressum'}
+      ],
     release: process.env.VUE_APP_RELEASE_VERSION != null ? process.env.VUE_APP_RELEASE_VERSION : "dev_mode"
   }),
 }

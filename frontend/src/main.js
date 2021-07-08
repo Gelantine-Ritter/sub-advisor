@@ -33,6 +33,7 @@ import EventsFor1Venue from './views/EventsFor1Venue.vue'
 import PicOfTheWeek from './views/PicOfTheWeekPage.vue'
 import PopularEvents from './views/PopularEventsPage.vue'
 import Calendar from './views/CalendarPage.vue'
+import Impressum from './views/Impressum.vue'
 
 import store from './store'
 import auth from './store/auth'
@@ -79,6 +80,11 @@ const router = new Router({
       path: '/contact',
       name: 'contact',
       component: Contact,
+    },
+    {
+      path: '/impressum',
+      name: 'impressum',
+      component: Impressum,
     },
     {
       path: '/places',

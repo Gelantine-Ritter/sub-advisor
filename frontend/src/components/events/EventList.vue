@@ -70,7 +70,7 @@
               <v-btn
                 outlined
                 elevation="1"
-                class="mb-6 rounded-pill text-decoration-none"
+                class="my-6 rounded-pill text-decoration-none"
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >

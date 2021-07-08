@@ -130,9 +130,9 @@
           <template v-else> </template>
           <!-- DELETE EVENT BUTTON END -->
           <!-- JOIN EVENT BUTTON & SHOW PARTICIPANTS START -->
-          <v-row>
-           <v-col>
-                  <v-row justify="center">
+          <v-row v-if="role==='MEMBER'">
+           <v-col >
+                  <v-row justify="center" >
                             <template>
                               <v-row justify="center">
                                 <v-dialog
@@ -140,7 +140,7 @@
                                   scrollable
                                   max-width="300px"
                                 ><template v-slot:activator="{ on, attrs }">
-                                    <v-btn v-if="authenticated" 
+                                    <v-btn  
                                       :disabled="!ifParticipants"
                                       outlined
                                       elevation="0"
@@ -239,7 +239,7 @@ export default {
       if (this.eventObj.guests.length < 1){
       this.ifParticipants=false
       }
-      if(this.role==="MEMBER"||this.role==="VENUE"){
+      if(this.role==="MEMBER"){
       this.alreadyJoined()
       }
       requestProvider.getVenue(this.eventObj.venueId).then((responseVenue) => {
