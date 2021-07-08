@@ -4,7 +4,7 @@
       class="h1Style text-center display-3 font-weight-medium"
       :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
     >
-        Impressum    </h1>
+        IMPRESSUM    </h1>
 
 
   <div class='rounded-xl mycontainer impressum'><p>Angaben gemäß § 5 TMG</p><p>SUBADVISOR <br> 
