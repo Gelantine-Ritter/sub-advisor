@@ -16,10 +16,8 @@
             <v-row class="ma-1">
               <h5 class="font-weight-bold text--disabled">{{ eventObj.date }} /</h5>
               <h5 class="font-weight-bold text--disabled">/ {{ eventObj.eventStart }} / </h5>
-              <h5 class="font-weight-bold text--disabled">  
-            / {{ eventObj.price }} € </h5>
-             <v-icon small color="black" class="ma-2">fas fa-users</v-icon>
-                          {{eventObj.amountOfGuests}}
+              <h5 class="font-weight-bold text--disabled">  / {{ eventObj.price }} € </h5>
+              <ParticipantsIcon  :number="this.eventObj.amountOfGuests"/>
             </v-row>
               <h2>{{ eventObj.title }}</h2>
               <div>
@@ -192,11 +190,7 @@
               </v-row>
         </v-row>
           </v-col>
-        </v-row>
-
-       
-
-        
+        </v-row>  
       </v-container>
     </div>
     </v-container>
@@ -209,6 +203,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { requestProvider } from '../util/requestProvider'
 import { DateConverter } from '../util/DateConverter'
 import MapsView from '../components/features/MapsView.vue'
+import ParticipantsIcon from '../components/events/Participants.vue'
 
 export default {
   data() {
@@ -224,9 +219,6 @@ export default {
       isActive: false,
       dialog: false,
       ifParticipants: true,
-
-
-
     }
   },
   beforeCreate() {
@@ -250,8 +242,6 @@ export default {
       })
     })
   },
-
- 
   computed: {
     ...mapGetters({
       authenticated: 'auth/authenticated',
@@ -262,6 +252,7 @@ export default {
   components: {
     ModalEditEvent,
     MapsView,
+    ParticipantsIcon
   },
   methods: {
     picDataUrl(pic) {
@@ -292,17 +283,15 @@ export default {
          //   join event
          requestProvider.joinEvent(memberId, eventId).then(()=>{
             this.getEvents()
+            
 
          })
-  
       } else {
         //    leave event
         this.isActive = false;
         requestProvider.leaveEvent(memberId, eventId).then(()=>{
-          this.getEvents()
-          
-        })
-        
+          this.getEvents() 
+        })  
       }
     },
     alreadyJoined(){
@@ -328,13 +317,8 @@ export default {
           }else{
             this.ifParticipants=true
           }
-
-    })
+     })
     }
-    
-   
-  
-    
   },
 }
 </script>
