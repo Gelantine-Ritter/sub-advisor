@@ -71,10 +71,45 @@ export default {
   },
   mounted(){
     const date1 = DateConverter.getTodayDate()
-    console.log("huhu ", date1);
     requestProvider.getEventsForDateVenueTag(null,date1,null).then((response)=> {
-    console.log(response);
+    //   console.log('#############');
+    //  console.log('#' , response.data);
+     //  console.log(response.data.length);
+    //   if (response.data.length > 2){
+    //     console.log('++++++++++++++++++++');
+    //     console.log(response.data.slice(0,2));
+
+
+    //  }else{
+    //    console.log('lll');
+    //  }
+ 
+
+  const myData = response.data
+  console.log('MYDATA',myData);
+
+  var highest = myData[0]
+
+  for ( var i = 0; i< myData.length; i++){
+  if(myData[i].amountOfGuests > highest.amountOfGuests){
+      this.highest = myData[i] 
+      console.log('GEWINNER',this.highest);
+
+  }}
+
+     
     }) 
+  },
+  methods: {
+    highestAmount() {
+      return [].slice.call(arguments).sort(function(a,b){ 
+    return b - a; 
+  }); 
+  
+},
+
+
+    
   }
 }
 </script>

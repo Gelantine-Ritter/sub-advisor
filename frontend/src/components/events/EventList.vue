@@ -21,7 +21,7 @@
                 <v-row class="ma-1">
                   <h6>{{ event.title.toUpperCase() }}</h6> 
                    <v-list-item-subtitle> 
-                  WITH: {{ event.artists.toUpperCase() }}
+                  WHERE:  WITH: {{ event.artists.toUpperCase() }}
                   </v-list-item-subtitle>
                   </v-row>
               </v-card>
@@ -103,7 +103,7 @@ export default {
 
   mounted() {
     const myList = this.eventObjsList
-    this.eventObjs = this.reformatDateAndArray(myList)
+    this.eventObjs = this.reformatDateAndArray(myList)      
   },
   methods: {
     picDataUrl(pic) {
