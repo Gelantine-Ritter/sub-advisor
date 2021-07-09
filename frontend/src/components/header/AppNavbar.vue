@@ -7,11 +7,12 @@
     ></v-app-bar-nav-icon>
     <v-navigation-drawer
       v-model="sideNav"
+      :ripple="false"
       absolute
       side
       temporary
       app
-      class="myNavDrawer"
+      class="myNavDrawer noGreyHover noGrey"
     >
       <v-list-item>
         <v-list-item-content>
@@ -33,11 +34,14 @@
             :key="item.title"
             v-model="item.active"
             :to="item.route"
+            :ripple="false"
+            class= "noGreyHover noGrey"
           >
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title
-                  class="black--text"
+                :ripple="false"
+                  class="black--text noGreyHover noGrey"
                   v-text="item.title"
                   :key="item.title"
                   :to="item.route"
@@ -46,22 +50,26 @@
             </template>
 
             <v-list-item
-              class="black--text v-list-item--active text-decoration-none"
+            :ripple="false"
+              class="black--text v-list-item--active text-decoration-none noGreyHover noGrey "
               v-for="child in item.items"
               :key="child.title"
               :to="child.route"
             >
               <v-list-item-content>
                 <v-list-item-title
+                :ripple="false"
                   v-text="child.title"
                   :key="child.title"
                   :to="child.route"
+                  class="text-decoration-none noGreyHover noGrey "
                 ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
           <v-list-item
-            class="text-decoration-none"
+          :ripple="false"
+            class="text-decoration-none noGreyHover noGrey "
             v-for="item in subPlaces"
             :key="item.title"
             :to="item.route"
@@ -72,7 +80,8 @@
           </v-list-item>
           <template>
             <v-list-item
-              class="text-decoration-none"
+            :ripple="false"
+              class="text-decoration-none noGreyHover noGrey "
               v-for="item in subContact"
               :key="item.title"
               :to="item.route"
@@ -83,7 +92,8 @@
             </v-list-item>
           </template>
           <v-list-item
-            class="text-decoration-none"
+          :ripple="false"
+            class="text-decoration-none noGreyHover noGrey "
             v-for="item in subAbout"
             :key="item.title"
             :to="item.route"
@@ -104,6 +114,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="noGreyHover noGrey d-none text-decoration-none d-sm-flex ml-5 rounded-pill border border-dark"
+            :ripple="false"
             text
             v-bind="attrs"
             v-on="on"
@@ -113,9 +124,11 @@
         </template>
         <v-list>
           <v-list-item
+          :ripple="false"
             v-for="item in subEvents"
             :key="item.title"
             :to="item.route"
+            class="noGreyHover noGrey text-decoration-none"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -128,6 +141,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="noGreyHover noGrey d-none d-sm-flex ml-5 rounded-pill border border-dark"
+            :ripple="false"
             text
             v-bind="attrs"
             v-on="on"
@@ -137,9 +151,11 @@
         </template>
         <v-list>
           <v-list-item
+            :ripple="false"
             v-for="item in subEvents"
             :key="item.title"
             :to="item.route"
+            class="noGreyHover noGrey text-decoration-none"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -155,6 +171,7 @@
             :key="item.title"
             :to="item.route"
             class="noGreyHover noGrey d-none d-sm-flex ml-5 text-decoration-none rounded-pill border border-dark"
+            :ripple="false"
             text
             v-bind="attrs"
             v-on="on"
@@ -176,6 +193,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           class="noGreyHover noGrey d-none text-decoration-none d-sm-flex ml-5 rounded-pill border border-dark"
+          :ripple="false"
           text
           v-bind="attrs"
           v-on="on"
@@ -192,6 +210,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           class="noGreyHover noGrey d-none d-sm-flex ml-5 text-decoration-none rounded-pill border border-dark"
+          :ripple="false"
           text
           v-bind="attrs"
           v-on="on"
@@ -208,15 +227,17 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           v-if="!authenticated || user.pic === null"
+          :ripple="false"
           icon
-          class="mr-5 ml-5"
+          class="mr-5 ml-5 noGreyHover noGrey"
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon large class="d-sm-flex"> account_circle </v-icon>
+          <v-icon large class="d-sm-flex noGreyHover noGrey"> account_circle </v-icon>
         </v-btn>
         <v-btn
           v-else
+          :ripple="false"
           icon
           class="noGreyHover noGrey mr-5 ml-5"
           v-bind="attrs"
@@ -230,10 +251,12 @@
         <template v-if="role == 'VENUE'">
           <v-list>
             <v-list-item
+            :ripple="false"
               v-for="item in subProfileLoggedInVenue"
               :key="item.title"
               :to="item.route"
               @click="logoutSubmit(item.action)"
+              class="noGreyHover noGrey text-decoration-none"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
@@ -242,10 +265,12 @@
         <template v-else-if="role == 'MEMBER'">
           <v-list>
             <v-list-item
+            :ripple="false"
               v-for="item in subProfileLoggedInMember"
               :key="item.title"
               :to="item.route"
               @click="logoutSubmit(item.action)"
+              class="noGreyHover noGrey text-decoration-none"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
@@ -255,9 +280,11 @@
       <template v-else>
         <v-list>
           <v-list-item
+          :ripple="false"
             v-for="item in subProfile"
             :key="item.title"
             :to="item.route"
+            class="noGreyHover noGrey text-decoration-none"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item>
@@ -388,10 +415,48 @@ export default {
 i.v-icon.v-icon {
   color: black;
 }
+
 .noGrey:focus::before {
   opacity: 0 !important;
 }
 .noGreyHover:hover::before {
   opacity: 0 !important;
+}
+
+.theme--light.v-list-item--active:hover::before, .theme--light.v-list-item--active::before {
+    opacity: 0 !important;
+} 
+.theme--light.v-btn--active:hover::before, .theme--light.v-btn--active::before {
+    opacity: 0 !important;
+}
+.theme--light.v-btn:hover::before {
+    opacity: 0 !important;
+} 
+.v-btn{
+  transition-property:none;
+  transition:none;
+}
+.v-btn:before{
+  transition-property:none;
+  transition:none
+}
+a:hover{
+  text-decoration: none !important;
+}
+::v-deep .v-overlay__scrim{
+  opacity: 0 !important;
+}
+
+::v-deep .theme--light.v-list-item:focus::before{
+  opacity: 0!important;
+}
+::v-deep .theme--light.v-list-item:hover::before{
+  opacity: 0!important;
+}
+::v-deep .theme--light.v-list-item--active:hover::before{
+  opacity: 0!important;
+} 
+::before :not(v-app-bar-nav-icon){
+  opacity: 0!important;
 }
 </style>
