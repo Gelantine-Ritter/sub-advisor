@@ -311,7 +311,7 @@ export default {
           action: 'mdi-ticket',
           items: [
             { title: 'ALL EVENTS', route: '/events' },
-            { title: 'POPULAR EVENTS', route: '/popularEvents' },
+            { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
             { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
           ],
           title: 'EVENTS',
@@ -324,7 +324,7 @@ export default {
           items: [
             { title: 'YOUR CALENDAR', route: '/calendar' },
             { title: 'ALL EVENTS', route: '/events' },
-            { title: 'POPULAR EVENTS', route: '/events' },
+            { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
           ],
           title: 'EVENTS',
         },
@@ -350,7 +350,7 @@ export default {
       ],
       subEvents: [
         { title: 'ALL EVENTS', route: '/events' },
-        { title: 'POPULAR EVENTS', route: '/popularEvents' },
+        { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
         { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
       ],
       subPlacesLoggedInMember: [

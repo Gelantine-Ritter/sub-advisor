@@ -30,7 +30,7 @@
               ÖFFNUNGSZEITE              </div>
               </v-col>
               <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4" class="text-center">
-                PREIS              </v-col>
+                {{this.highest.price}}              </v-col>
       </v-row>
         <v-row center>  
                         <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
@@ -72,45 +72,14 @@ export default {
   mounted(){
     const date1 = DateConverter.getTodayDate()
     requestProvider.getEventsForDateVenueTag(null,date1,null).then((response)=> {
-    //   console.log('#############');
-    //  console.log('#' , response.data);
-     //  console.log(response.data.length);
-    //   if (response.data.length > 2){
-    //     console.log('++++++++++++++++++++');
-    //     console.log(response.data.slice(0,2));
-
-
-    //  }else{
-    //    console.log('lll');
-    //  }
- 
-
-  const myData = response.data
-  console.log('MYDATA',myData);
-
-  var highest = myData[0]
-
-  for ( var i = 0; i< myData.length; i++){
-  if(myData[i].amountOfGuests > highest.amountOfGuests){
-      this.highest = myData[i] 
-      console.log('GEWINNER',this.highest);
-
-  }}
-
-     
+      const myData = response.data
+      var highest = myData[0]
+      for ( var i = 0; i< myData.length; i++){
+      if(myData[i].amountOfGuests > highest.amountOfGuests){
+          this.highest = myData[i] 
+      }}
     }) 
   },
-  methods: {
-    highestAmount() {
-      return [].slice.call(arguments).sort(function(a,b){ 
-    return b - a; 
-  }); 
-  
-},
-
-
-    
-  }
 }
 </script>
 

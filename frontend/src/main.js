@@ -164,8 +164,8 @@ const router = new Router({
       component: PicOfTheWeek,
     },
     {
-      path: '/popularEvents',
-      name: 'popularEvents',
+      path: '/popularEvent',
+      name: 'popularEvent',
       component: PopularEvents,
     },
     {
