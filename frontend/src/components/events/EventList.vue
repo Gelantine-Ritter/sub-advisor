@@ -103,7 +103,9 @@ export default {
 
   mounted() {
     const myList = this.eventObjsList
-    this.eventObjs = this.reformatDateAndArray(myList)      
+    this.eventObjs = this.reformatDateAndArray(myList) 
+    console.log(myList);   
+     
   },
   methods: {
     picDataUrl(pic) {

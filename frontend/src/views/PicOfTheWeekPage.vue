@@ -1,86 +1,148 @@
 <template>
-<v-container my-5>
-    <h1
-      class="h1Style text-center display-3 font-weight-medium"
-      :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
-    >
-     PIC OF THE WEEK
-    </h1>
-  <div class="rounded-xl mycontainer" fluid>
-      <v-container>
-        <v-row center>
-          <!-- venueName, adress, ... -->
-          <v-col cols="12" xs="12" sm="12" md="8" lg="8" xl="8">
-              <h2>HIER VENUE NAME</h2>
+  <div v-if="venueObj != null">
+    <v-container my-5>
+    
+         <h6 class="mb-10 font-weight-bold text--disabled">WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR PRESENTS TODAY'S PIC OF THE WEEK:</h6>
+
+      <h1
+        class="h1Style text-center display-3 font-weight-medium"
+        :class="[$vuetify.breakpoint.mdAndUp ? 'display-4' : 'display-2']"
+      >
+        {{ venueObj.name.toUpperCase() }}
+      </h1>
+
+      <div
+        center
+        class="rounded-xl mycontainer" fluid
+      >
+        <v-container>
+          <v-row>
+            <!-- header info -->
+            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
               <div>
-                <h5>
-                 HIER ADRESSE
-                </h5>
+                {{ venueObj.website }}
               </div>
-          </v-col>
-          <v-col cols="12" xs="12" sm="12" md="4" lg="4" xl="4">
-            <h1>HIER MAP</h1>
-          </v-col>
-        </v-row>
-        <v-row center>
-              <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
               <div>
-                  ÖFFNUNGSZEITEN              </div>
-              <div>
-              ÖFFNUNGSZEITE              </div>
-              </v-col>
-              <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="4" class="text-center">
-                {{this.highest.price}}              </v-col>
-      </v-row>
-        <v-row center>  
-                        <v-col cols="12" xs="12" sm="12" md="12" lg="8" xl="8">
-            <div>
-            <!-- <p>{{ eventObj.info }}</p> -->
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed euismod nisi porta lorem mollis. Ipsum nunc aliquet bibendum enim facilisis gravida neque. Sed augue lacus viverra vitae congue eu consequat. Proin sed libero enim sed faucibus turpis in eu. Diam maecenas ultricies mi eget mauris pharetra et ultrices neque. Scelerisque fermentum dui faucibus in. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus. Elementum facilisis leo vel fringilla est ullamcorper. Donec ac odio tempor orci dapibus ultrices in iaculis. Sit amet risus nullam eget felis eget nunc. Ac turpis egestas integer eget aliquet nibh. Et tortor at risus viverra adipiscing at in tellus. Et tortor consequat id porta nibh venenatis. Sem nulla pharetra diam sit amet. Quis vel eros donec ac odio tempor orci dapibus. Consequat ac felis donec et odio pellentesque.
-            <br /><br />
-            Libero id faucibus nisl tincidunt eget nullam non. Est pellentesque elit ullamcorper dignissim cras tincidunt. Consectetur purus ut faucibus pulvinar elementum. Est velit egestas dui id ornare arcu. Egestas purus viverra accumsan in nisl nisi scelerisque. Nec ultrices dui sapien eget mi proin. Risus viverra adipiscing at in. Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Nunc sed velit dignissim sodales ut eu. Volutpat commodo sed egestas egestas fringilla phasellus. Elementum sagittis vitae et leo duis ut diam quam. Odio facilisis mauris sit amet massa vitae tortor.
-          </div>
-          </v-col>
-          <!-- tags, price, ... -->
-          <v-col cols="12" xs="12" sm="12" md="12" lg="4" xl="4" class="text-center">
-            <v-card
-            class="pa-2 rounded-xl myLogoCard"
-            flat
-            tile
-          >
-            <v-responsive class="myResponsivePictureContainer">
-             <h1>image und tags hier</h1>
-            </v-responsive>
-          </v-card>
-          </v-col>
-        </v-row> 
-      </v-container>
-    </div>
-</v-container>
+                {{ venueObj.address.street }}
+                {{ venueObj.address.number }},
+                {{ venueObj.address.plz }}
+                {{ venueObj.address.city }}
+              </div>
+                <v-row class="mt-1">
+              <MapsView :adress="venueObj.address" />
+              </v-row>
+            </v-col>
+          </v-row>
+          <v-row>
+            <!-- description -->
+            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
+              <!-- {{ venueObj.info }} -->
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </v-col>
+            <!-- venue img, map button -->
+            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+              <v-row class="pls_center_it">
+                <template v-if="venueObj.pic == null || venueObj.pic == ''">
+                      <div></div>
+                    </template>
+                    <template v-else>
+                <v-card
+                  class="pa-2 rounded-xl myLogoCard"
+                  flat
+                  tile
+                >
+                  <v-responsive class="myResponsivePictureContainer">
+                    
+                      <v-img
+                        fill
+                        class="myLogo"
+                        :src="picDataUrl(venueObj.pic)"
+                        alt=""
+                      />
+                    
+                  </v-responsive>
+                </v-card>
+                </template>
+              </v-row>
+              <v-row class="ml-10 mr-10 mt-5"> </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+      <EventsList class="mt-5" :venueId="this.venueId" />
+    </v-container>
+  </div>
 </template>
 
 <script>
+import MapsView from '../components/features/MapsView.vue'
+// import PictureView from '../components/features/PictureView.vue'
+import EventsList from '../components/events/EventsListFor1Venue.vue'
 import { requestProvider } from '../util/requestProvider'
-import { DateConverter } from '../util/DateConverter'
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
+      styleObject: { border: '2px solid #000000' },
+      fetchedAdressData: false,
+      venueObj: null,
+      venueId: null,
     }
-
   },
-  mounted(){
-    const date1 = DateConverter.getTodayDate()
-    requestProvider.getEventsForDateVenueTag(null,date1,null).then((response)=> {
-      const myData = response.data
-      var highest = myData[0]
-      for ( var i = 0; i< myData.length; i++){
-      if(myData[i].amountOfGuests > highest.amountOfGuests){
-          this.highest = myData[i] 
-      }}
-    }) 
+  mounted() {
+    requestProvider.getVenues().then((response) => {
+      var rdmVenue = response.data[Math.floor(Math.random()*response.data.length)]
+      this.venueObj = rdmVenue
+      console.log(rdmVenue.id);
+
+      this.venueId = rdmVenue.id
+    })
+  },
+  methods: {
+    redirectBackwards() {
+      history.back()
+    },
+    picDataUrl(pic) {
+      return 'data:image/png;base64, ' + pic
+    },
+  },
+  components: {
+    MapsView,
+    EventsList,
+    // PictureView,
   },
 }
 </script>
 
-<style></style>
+<style>
+.head_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.childElem {
+  margin: 2vw;
+}
+.pls_center_it {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+.myLogoCard {
+  width: 150px;
+  height: 150px;
+  padding: 2%;
+  margin-bottom: 8%;
+  border: 0;
+}
+.myResponsivePictureContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.myLogo {
+  height: 100%;
+}
+
+</style>
