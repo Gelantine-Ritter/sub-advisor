@@ -2,7 +2,7 @@
   <div v-if="venueObj != null">
     <v-container my-5>
     
-         <h6 class="mb-10 font-weight-bold text--disabled">WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR PRESENTS TODAY'S PIC OF THE WEEK:</h6>
+         <h6 class="mb-10 font-weight-bold text--disabled">WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR PRESENTS TODAY'S PIC OF THE DAY:</h6>
 
       <h1
         class="h1Style text-center display-3 font-weight-medium"

@@ -320,7 +320,7 @@ export default {
           items: [
             { title: 'ALL EVENTS', route: '/events' },
             { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
-            { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
+            { title: 'PIC OF THE DAY', route: '/picOfTheDay' },
           ],
           title: 'EVENTS',
         },
@@ -339,7 +339,7 @@ export default {
           action: 'mdi-ticket',
           items: [
             { title: 'ALL PLACES', route: '/places' },
-            { title: 'PIC OF THE WEEK', route: '/places' },
+            { title: 'PIC OF THE DAY', route: '/picOfTheDay' },
           ],
           title: 'PLACES',
         },
@@ -358,11 +358,11 @@ export default {
       subEvents: [
         { title: 'ALL EVENTS', route: '/events' },
         { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
-        { title: 'PIC OF THE WEEK', route: '/picOfTheWeek' },
+        { title: 'PIC OF THE DAY', route: '/picOfTheDay' },
       ],
       subPlacesLoggedInMember: [
         { title: 'ALL PLACES', route: '/places' },
-        { title: 'PIC OF THE WEEK', route: '/places' },
+        { title: 'PIC OF THE DAY', route: '/picOfTheDay' },
       ],
       subContact: [{ title: 'CONTACT', route: '/contact' }],
       subAbout: [{ title: 'ABOUT', route: '/about' }],
