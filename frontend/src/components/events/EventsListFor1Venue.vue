@@ -108,7 +108,7 @@ export default {
       venueId = this.venueId
     }
     requestProvider.getEventsForVenue(venueId).then((response) => {
-      const eventList = response.data
+      const eventList = DateConverter.sortEventArrayByStartingTime(response.data)
       for (let i = 0; i < eventList.length; i++) {
         eventList[i] = {
           ...eventList[i],

@@ -22,7 +22,7 @@ export const DateConverter = {
     getTodayDate: () => {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0')
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear()
         return (`${yyyy}-${mm}-${dd}`)
     },
@@ -33,5 +33,11 @@ export const DateConverter = {
             const fin = moment(pre).format("YYYY-MM-DD")
             return fin
         }
+    },
+    sortEventArrayByStartingTime: (eventList) => {
+        const afterList = eventList.sort((a, b) => {
+            return moment(a.date).diff(b.date);
+        });
+        return afterList
     }
 }

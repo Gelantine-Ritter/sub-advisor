@@ -21,7 +21,7 @@
                 </v-row>
                 <v-row class="ma-1">
                   <h6>{{ highest.title.toUpperCase() }}</h6> 
-                   <v-list-item-subtitle> 
+                   <v-list-item-subtitle v-if="venueObj"> 
                  WHERE {{ venueObj.name}}: {{venueObj.address.street}} {{venueObj.address.number}} {{venueObj.address.plz}} {{venueObj.address.city}} // WITH: {{ dateObj.artists}}  <MapsView :adress="venueObj.address" />
 
                   </v-list-item-subtitle>
@@ -91,7 +91,7 @@
                                     <v-divider></v-divider>
                                     <v-card-text style="height: 300px;">
                                       <v-list-item >
-                                        <v-list-item-content >
+                                        <v-list-item-content v-if="highest" >
                                           <v-list-item-title  v-for="guest in highest.guests" :key="guest">{{guest}}</v-list-item-title>
                                         </v-list-item-content>
                                       </v-list-item>

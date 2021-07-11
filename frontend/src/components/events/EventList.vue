@@ -105,7 +105,7 @@ export default {
   },
 
   mounted() {
-    const myList = this.eventObjsList
+    const myList = DateConverter.sortEventArrayByStartingTime(this.eventObjsList)
     this.eventObjs = this.reformatDateAndArray(myList) 
     for (var i = 0; i < myList.length; i++){
         var ids = myList[i]
