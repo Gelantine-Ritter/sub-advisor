@@ -4,7 +4,7 @@
       <v-expansion-panel
         class="shrink ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
         :style="styleObject"
-        v-for="event in eventObjs"
+        v-for="(event, index) in eventObjs"
         :key="event.id"
       >
         <v-expansion-panel-header>
@@ -21,7 +21,7 @@
                 <v-row class="ma-1">
                   <h6>{{ event.title.toUpperCase() }}</h6> 
                    <v-list-item-subtitle> 
-                  WHERE:  WITH: {{ event.artists.toUpperCase() }}
+                  WHERE: {{venueNames[index]}}  WITH: {{ event.artists.toUpperCase() }}
                   </v-list-item-subtitle>
                   </v-row>
               </v-card>
@@ -84,6 +84,7 @@
 
 <script>
 import { DateConverter } from '../../util/DateConverter'
+import { requestProvider } from '../../util/requestProvider'
 import ParticipantsIcon from '../events/Participants.vue'
 
 export default {
@@ -92,6 +93,8 @@ export default {
       eventObjs: null,
       styleObject: { border: '2px solid #000000' },
       expand: false,
+      venueNames: [],
+      eventCounter: 0
     }
   },
     components:{
@@ -104,10 +107,19 @@ export default {
   mounted() {
     const myList = this.eventObjsList
     this.eventObjs = this.reformatDateAndArray(myList) 
-    console.log(myList);   
-     
+    for (var i = 0; i < myList.length; i++){
+        var ids = myList[i]
+        requestProvider.getVenue(ids.venueId).then((response)=>{
+        this.venueNames.push(response.data.name)
+      })
+    }  
   },
   methods: {
+    getVenueNamesforEvent(){
+      const venueName = this.venueNames[this.eventCounter]
+      this.eventCounter += 1
+      return venueName
+    },
     picDataUrl(pic) {
       return 'data:image/png;base64, ' + pic
     },
