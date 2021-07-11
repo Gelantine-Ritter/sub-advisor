@@ -35,12 +35,12 @@
             v-model="item.active"
             :to="item.route"
             :ripple="false"
-            class= "noGreyHover noGrey"
+            class="noGreyHover noGrey"
           >
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title
-                :ripple="false"
+                  :ripple="false"
                   class="black--text noGreyHover noGrey"
                   v-text="item.title"
                   :key="item.title"
@@ -50,50 +50,54 @@
             </template>
 
             <v-list-item
-            :ripple="false"
-              class="black--text v-list-item--active text-decoration-none noGreyHover noGrey "
+              :ripple="false"
+              class="black--text v-list-item--active text-decoration-none noGreyHover noGrey"
               v-for="child in item.items"
               :key="child.title"
               :to="child.route"
             >
               <v-list-item-content>
                 <v-list-item-title
-                :ripple="false"
+                  :ripple="false"
                   v-text="child.title"
                   :key="child.title"
                   :to="child.route"
-                  class="text-decoration-none noGreyHover noGrey "
+                  class="text-decoration-none noGreyHover noGrey"
                 ></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
           <v-list-item
-          :ripple="false"
-            class="text-decoration-none noGreyHover noGrey "
+            :ripple="false"
+            class="text-decoration-none noGreyHover noGrey"
             v-for="item in subPlaces"
             :key="item.title"
             :to="item.route"
           >
             <v-list-item-content>
-              <v-list-item-title>PLACES </v-list-item-title></v-list-item-content
+              <v-list-item-title
+                >PLACES
+              </v-list-item-title></v-list-item-content
             >
           </v-list-item>
           <template>
             <v-list-item
-            :ripple="false"
-              class="text-decoration-none noGreyHover noGrey "
+              :ripple="false"
+              class="text-decoration-none noGreyHover noGrey"
               v-for="item in subContact"
               :key="item.title"
               :to="item.route"
             >
               <v-list-item-content>
-                <v-list-item-title>CONTACT </v-list-item-title></v-list-item-content
+                <v-list-item-title
+                  >CONTACT
+                </v-list-item-title></v-list-item-content
               >
             </v-list-item>
           </template>
           <v-list-item
-          :ripple="false"
-            class="text-decoration-none noGreyHover noGrey "
+            :ripple="false"
+            class="text-decoration-none noGreyHover noGrey"
             v-for="item in subAbout"
             :key="item.title"
             :to="item.route"
@@ -124,7 +128,7 @@
         </template>
         <v-list>
           <v-list-item
-          :ripple="false"
+            :ripple="false"
             v-for="item in subEvents"
             :key="item.title"
             :to="item.route"
@@ -183,9 +187,11 @@
     </template>
     <!-- DESKTOP: LEFT ALIGNED ITEMS END-->
     <v-spacer></v-spacer>
-    <v-toolbar-title class="d-none d-sm-flex white--text"
-      ><img src="../../assets/logo.png" width="360px" alt="subadvisor logo" @click="redirectToHome()"
-    /></v-toolbar-title>
+    <!-- <v-toolbar-title class="d-none d-sm-flex white--text myLogoNav"> -->
+    <v-toolbar-title class="d-none d-sm-flex white--text myLogoNav">
+      <v-img class="logo-img" contain src="../../assets/logo.png" height="200px" alt="subadvisor logo" @click="redirectToHome()"/> 
+            <v-img class="logo-img-small" contain src="../../assets/logo_small.png" height="200px" alt="subadvisor logo" @click="redirectToHome()"/> 
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- DESKTOP: RIGHT ALIGNED ITEMS START-->
     <!--CONTACT-->
@@ -233,7 +239,9 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon large class="d-sm-flex noGreyHover noGrey"> account_circle </v-icon>
+          <v-icon large class="d-sm-flex noGreyHover noGrey">
+            account_circle
+          </v-icon>
         </v-btn>
         <v-btn
           v-else
@@ -251,7 +259,7 @@
         <template v-if="role == 'VENUE'">
           <v-list>
             <v-list-item
-            :ripple="false"
+              :ripple="false"
               v-for="item in subProfileLoggedInVenue"
               :key="item.title"
               :to="item.route"
@@ -265,7 +273,7 @@
         <template v-else-if="role == 'MEMBER'">
           <v-list>
             <v-list-item
-            :ripple="false"
+              :ripple="false"
               v-for="item in subProfileLoggedInMember"
               :key="item.title"
               :to="item.route"
@@ -280,7 +288,7 @@
       <template v-else>
         <v-list>
           <v-list-item
-          :ripple="false"
+            :ripple="false"
             v-for="item in subProfile"
             :key="item.title"
             :to="item.route"
@@ -317,7 +325,6 @@ export default {
           title: 'EVENTS',
         },
       ],
-
       menuItemsAsMember: [
         {
           action: 'mdi-ticket',
@@ -360,7 +367,6 @@ export default {
       subContact: [{ title: 'CONTACT', route: '/contact' }],
       subAbout: [{ title: 'ABOUT', route: '/about' }],
       subPlaces: [{ title: 'ALL PLACES', route: '/places' }],
-
       subProfile: [
         { title: 'LOGIN', route: '/login' },
         { title: 'SIGNUP', route: '/signup' },
@@ -389,7 +395,7 @@ export default {
     ...mapActions({
       logout: 'auth/logout',
     }),
-    redirectToHome(){
+    redirectToHome() {
       this.$router.replace({
         name: 'home',
       })
@@ -423,40 +429,75 @@ i.v-icon.v-icon {
   opacity: 0 !important;
 }
 
-.theme--light.v-list-item--active:hover::before, .theme--light.v-list-item--active::before {
-    opacity: 0 !important;
-} 
-.theme--light.v-btn--active:hover::before, .theme--light.v-btn--active::before {
-    opacity: 0 !important;
+.theme--light.v-list-item--active:hover::before,
+.theme--light.v-list-item--active::before {
+  opacity: 0 !important;
+}
+.theme--light.v-btn--active:hover::before,
+.theme--light.v-btn--active::before {
+  opacity: 0 !important;
 }
 .theme--light.v-btn:hover::before {
-    opacity: 0 !important;
-} 
-.v-btn{
-  transition-property:none;
-  transition:none;
+  opacity: 0 !important;
 }
-.v-btn:before{
-  transition-property:none;
-  transition:none
+.v-btn {
+  transition-property: none;
+  transition: none;
 }
-a:hover{
+.v-btn:before {
+  transition-property: none;
+  transition: none;
+}
+a:hover {
   text-decoration: none !important;
 }
-::v-deep .v-overlay__scrim{
+::v-deep .v-overlay__scrim {
   opacity: 0 !important;
 }
 
-::v-deep .theme--light.v-list-item:focus::before{
-  opacity: 0!important;
+::v-deep .theme--light.v-list-item:focus::before {
+  opacity: 0 !important;
 }
-::v-deep .theme--light.v-list-item:hover::before{
-  opacity: 0!important;
+::v-deep .theme--light.v-list-item:hover::before {
+  opacity: 0 !important;
 }
-::v-deep .theme--light.v-list-item--active:hover::before{
-  opacity: 0!important;
+::v-deep .theme--light.v-list-item--active:hover::before {
+  opacity: 0 !important;
+}
+::before :not(v-app-bar-nav-icon) {
+  opacity: 0 !important;
+}
+.myNoButton {
+  opacity: 0 !important;
+}
+.myLogoNav {
+  padding-left: 107px !important;
+}
+@media screen and (min-width: 1000px) {      
+  .logo-img-small{
+   display: none; 
+  }
 } 
-::before :not(v-app-bar-nav-icon){
-  opacity: 0!important;
+@media screen and (max-width: 1000px) {    
+   
+  .myLogoNav {
+    padding-left: 98px !important;
+  }
+  
+} 
+@media screen and (max-width: 800px) {
+  .logo-img-small{
+       display:contents; 
+  }
+  .logo-img{
+       display: none; 
+  }
 }
+/*
+@media screen and (max-width: 700px) { 
+  ::v-deep .v-image__image--contain {
+    margin-left: -5vw !important;
+  }
+}
+*/
 </style>
