@@ -21,7 +21,6 @@ import Navbar from './components/header/AppNavbar'
 
 export default {
   name: 'App',
-
   components: { Navbar, Footer },
 }
 </script>
@@ -80,6 +79,13 @@ export default {
 .v-toolbar__content,
 .v-toolbar__extension {
   padding: 0;
+}
+.infoTruncate {
+  overflow: hidden;
+  position: relative;
+  max-height: 6em;
+  text-align: left;
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 600px) {
