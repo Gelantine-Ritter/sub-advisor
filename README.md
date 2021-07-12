@@ -1,9 +1,9 @@
-[![The MIT License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)]()
+[![The MIT License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/blob/master/LISCENSE.md)
 [![pipeline status](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/badges/master/pipeline.svg)](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/commits/master)
 
 # Subadvisor
 
-[subadvisor](https://subadvisor.herokuapp.com)
+[Subadvisor](https://subadvisor.herokuapp.com) is a platform for cultural venues that want to promote their events as well as for all those curious to know what's going on outside or online since the pandemic. We believe that culture makers are as much important as cultural events. subadvisor is not only an event calendar. We wanted to make it a place to discover the cultural places and artists too. Our project started in 2021 during the pandemic. Since the first lockdown, many events had to be cancelled or moved online. Missing concerts, parties and cultural experiences has led us to use these constrained months to develop this platform and reconnect with the emotions that cultural places offer us.
 
 ## Table of Content
 
@@ -96,4 +96,4 @@ Read the [READme!](./frontend/README.md "FRONTEND REAMDE")
 
 ### License
 
-Distributed under the MIT License. See [`LICENSE.md`]() for more information.
+Distributed under the MIT License. See [`LICENSE.md`](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/blob/master/LISCENSE.md) for more information.
