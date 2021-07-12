@@ -85,7 +85,9 @@ export default {
   position: relative;
   max-height: 6em;
   text-align: left;
-  margin-bottom: 0;
+}
+p.infoTruncate {
+    margin-bottom: 0!important;
 }
 
 @media screen and (max-width: 600px) {

@@ -46,7 +46,8 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card flat tile class="pa-4">
-                {{ event.info }}
+                <p class="infoTruncate"> {{ event.info }}</p>
+                <p>...</p>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
