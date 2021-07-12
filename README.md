@@ -42,7 +42,6 @@ Use git clone to get a copy of the projects repository:
 
 ```bash
 git clone git@gitlab.beuth-hochschule.de:mi-project/sub-advisor.git
-
 ```
 
 #### Docker
