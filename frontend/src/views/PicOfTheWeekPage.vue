@@ -1,8 +1,10 @@
 <template>
   <div v-if="venueObj != null">
     <v-container my-5>
-    
-         <h6 class="mb-10 font-weight-bold text--disabled">WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR PRESENTS TODAY'S PIC OF THE DAY:</h6>
+      <h6 class="mb-10 font-weight-bold text--disabled">
+        WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR
+        PRESENTS TODAY'S PIC OF THE DAY:
+      </h6>
 
       <h1
         class="h1Style text-center display-3 font-weight-medium"
@@ -11,10 +13,7 @@
         {{ venueObj.name.toUpperCase() }}
       </h1>
 
-      <div
-        center
-        class="rounded-xl mycontainer" fluid
-      >
+      <div center class="rounded-xl mycontainer" fluid>
         <v-container>
           <v-row>
             <!-- header info -->
@@ -28,40 +27,40 @@
                 {{ venueObj.address.plz }}
                 {{ venueObj.address.city }}
               </div>
-                <v-row class="mt-1">
-              <MapsView :adress="venueObj.address" />
+              <v-row class="mt-1">
+                <MapsView :adress="venueObj.address" />
               </v-row>
             </v-col>
           </v-row>
           <v-row>
             <!-- description -->
-            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
+            <v-col cols="12" xs="12" sm="8" md="8" lg="8" xl="8">
               <!-- {{ venueObj.info }} -->
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </v-col>
             <!-- venue img, map button -->
-            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+            <v-col cols="12" xs="12" sm="4" md="4" lg="4" xl="3">
               <v-row class="pls_center_it">
                 <template v-if="venueObj.pic == null || venueObj.pic == ''">
-                      <div></div>
-                    </template>
-                    <template v-else>
-                <v-card
-                  class="pa-2 rounded-xl myLogoCard"
-                  flat
-                  tile
-                >
-                  <v-responsive class="myResponsivePictureContainer">
-                    
+                  <div></div>
+                </template>
+                <template v-else>
+                  <v-card class="pa-2 rounded-xl myLogoCard" flat tile>
+                    <v-responsive class="myResponsivePictureContainer">
                       <v-img
                         fill
                         class="myLogo"
                         :src="picDataUrl(venueObj.pic)"
                         alt=""
                       />
-                    
-                  </v-responsive>
-                </v-card>
+                    </v-responsive>
+                  </v-card>
                 </template>
               </v-row>
               <v-row class="ml-10 mr-10 mt-5"> </v-row>
@@ -91,9 +90,10 @@ export default {
   },
   mounted() {
     requestProvider.getVenues().then((response) => {
-      var rdmVenue = response.data[Math.floor(Math.random()*response.data.length)]
+      var rdmVenue =
+        response.data[Math.floor(Math.random() * response.data.length)]
       this.venueObj = rdmVenue
-      console.log(rdmVenue.id);
+      console.log(rdmVenue.id)
 
       this.venueId = rdmVenue.id
     })
@@ -144,5 +144,9 @@ export default {
 .myLogo {
   height: 100%;
 }
-
+@media screen and (max-width: 600px) {
+  h6.mb-10.font-weight-bold.text--disabled {
+    color: white !important;
+  }
+}
 </style>

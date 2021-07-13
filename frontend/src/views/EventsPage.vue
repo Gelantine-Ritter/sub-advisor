@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container my-5>
+    <v-container my-5 class="mySpecialContainer">
       <!-- Tags -->
       <v-row v-if="tagCollection" class="d-flex justify-center align-center">
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
@@ -62,7 +62,7 @@
         </v-col>
       </v-row>
       <v-row v-if="displayNavigation">
-        <v-col style="display: flex; justify-content: center">
+        <v-col style="display: flex; justify-content: center" cols="2" xs="2" sm="2" md="5" lg="5" xl="5">
           <v-btn
             outlined
             rounded
@@ -72,12 +72,12 @@
             {{ signPrev }}
           </v-btn>
         </v-col>
-        <v-col>
+        <v-col cols="8" xs="8" sm="8" md="2" lg="2" xl="2">
           <h1 style="display: flex; justify-content: center">
             {{ displayDate() }}
           </h1>
         </v-col>
-        <v-col style="display: flex; justify-content: center">
+        <v-col style="display: flex; justify-content: center" cols="2" xs="2" sm="2" md="5" lg="5" xl="5">
           <v-btn
             outlined
             rounded
@@ -274,4 +274,12 @@ option:disabled {
   font-weight: 1000;
   color: black;
 }
+@media screen and (max-width: 600px) {
+  .mySpecialContainer {
+    background: white;
+    padding: 10px;
+    min-height: 70vh;
+  }
+}
+
 </style>

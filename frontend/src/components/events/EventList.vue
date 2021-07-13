@@ -1,14 +1,14 @@
 <template>
   <v-container v-if="eventObjs">
-    <v-expansion-panels>
+    <v-expansion-panels class= "myExpPanel">
       <v-expansion-panel
-        class="shrink ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
+        class="shrink rounded-xl md-layout md-gutter md-alignment-center "
         :style="styleObject"
         v-for="(event, index) in eventObjs"
         :key="event.id"
       >
         <v-expansion-panel-header>
-          <v-row>
+          <v-row class="myRow">
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
                 <v-row class="ma-1">
@@ -21,7 +21,7 @@
                 <v-row class="ma-1">
                   <h6>{{ event.title.toUpperCase() }}</h6> 
                    <v-list-item-subtitle> 
-                  WHERE: {{venueNames[index]}}  WITH: {{ event.artists.toUpperCase() }}
+                  WHERE: {{venueNames[index]}} <br />  WITH: {{ event.artists.toUpperCase() }}
                   </v-list-item-subtitle>
                   </v-row>
               </v-card>
@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       eventObjs: null,
-      styleObject: { border: '2px solid #000000' },
+      styleObject: { border: '2px solid #000000'},
       expand: false,
       venueNames: [],
       eventCounter: 0
@@ -174,6 +174,12 @@ export default {
 }
 .myPicture {
   height: 100%;
+}
+.myRow{
+  max-width: 100%;
+}
+.myExpPanel{
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   .myPictureCard {

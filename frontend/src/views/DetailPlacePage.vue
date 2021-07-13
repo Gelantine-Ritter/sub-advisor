@@ -15,7 +15,7 @@
         <v-container>
           <v-row>
             <!-- header info -->
-            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
+            <v-col xs="12" sm="12" md="8" lg="8" xl="8">
               <div>
                 {{ venueObj.website }}
               </div>
@@ -32,12 +32,12 @@
           </v-row>
           <v-row>
             <!-- description -->
-            <v-col xs="12" sm="8" md="8" lg="8" xl="8">
+            <v-col xs="12" sm="12" md="8" lg="8" xl="8">
               <!-- {{ venueObj.info }} -->
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </v-col>
             <!-- venue img, map button -->
-            <v-col xs="12" sm="4" md="4" lg="4" xl="3">
+            <v-col xs="12" sm="12" md="4" lg="4" xl="3">
               <v-row class="pls_center_it">
                 <template v-if="venueObj.pic == null || venueObj.pic == ''">
                       <div></div>

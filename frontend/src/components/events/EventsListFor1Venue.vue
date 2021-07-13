@@ -5,7 +5,7 @@
     </h1>
     <v-expansion-panels>
       <v-expansion-panel
-        class="shrink ml-10 mr-10 rounded-xl md-layout md-gutter md-alignment-center"
+        class="shrink rounded-xl md-layout md-gutter md-alignment-center"
         :style="styleObject"
         v-for="event in eventObjs"
         :key="event.id"
@@ -14,15 +14,18 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
-
-              <v-row class="ma-1">
-                <h6 class="mr-1 font-weight-bold text--disabled">{{ event.date }} //</h6>
-                <h6 class="mr-1 font-weight-bold text--disabled"> {{ event.eventStart }} -
-                  {{ event.eventEnd }} // </h6>
-                <h6 class="font-weight-bold text--disabled"><ParticipantsIcon  :number="event.amountOfGuests"/>
-                </h6>
+                <v-row class="ma-1">
+                  <h6 class="mr-1 font-weight-bold text--disabled">
+                    {{ event.date }} //
+                  </h6>
+                  <h6 class="mr-1 font-weight-bold text--disabled">
+                    {{ event.eventStart }} - {{ event.eventEnd }} //
+                  </h6>
+                  <h6 class="font-weight-bold text--disabled">
+                    <ParticipantsIcon :number="event.amountOfGuests" />
+                  </h6>
                 </v-row>
-                <h6>{{ event.title.toUpperCase() }}</h6> 
+                <h6>{{ event.title.toUpperCase() }}</h6>
                 <v-list-item-subtitle>
                   WITH: {{ event.artists.toUpperCase() }}
                 </v-list-item-subtitle>
@@ -46,25 +49,30 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card flat tile class="pa-4">
-                <p class="infoTruncate"> {{ event.info }}</p>
+                <p class="infoTruncate">{{ event.info }}</p>
                 <p>...</p>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
               <!-- EVENT PICTURE START -->
-              <v-card  class="pa-2 rounded-xl myPictureCard" flat tile>
+              <v-card class="pa-2 rounded-xl myPictureCard" flat tile>
                 <v-responsive>
                   <template v-if="event.pic == null || event.pic == ''">
                   </template>
                   <template v-else>
-                    <v-img fill class="myPicture" :src="picDataUrl(event.pic)" alt="" />
+                    <v-img
+                      fill
+                      class="myPicture"
+                      :src="picDataUrl(event.pic)"
+                      alt=""
+                    />
                   </template>
                 </v-responsive>
               </v-card>
               <!-- EVENT PICTURE END -->
               <v-row> </v-row>
             </v-col>
-                 <v-row class="justify-center">
+            <v-row class="justify-center">
               <v-btn
                 outlined
                 elevation="1"
@@ -72,7 +80,7 @@
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
-             </v-row>
+            </v-row>
           </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -86,7 +94,6 @@ import { DateConverter } from '../../util/DateConverter'
 import { mapGetters } from 'vuex'
 import ParticipantsIcon from '../events/Participants.vue'
 
-
 export default {
   data() {
     return {
@@ -95,21 +102,23 @@ export default {
       expand: false,
     }
   },
-    props: {
+  props: {
     venueId: String,
   },
-  components:{
-    ParticipantsIcon
+  components: {
+    ParticipantsIcon,
   },
 
-   mounted() {
+  mounted() {
     let venueId
     venueId = this.$route.params.id
     if (!venueId) {
       venueId = this.venueId
     }
     requestProvider.getEventsForVenue(venueId).then((response) => {
-      const eventList = DateConverter.sortEventArrayByStartingTime(response.data)
+      const eventList = DateConverter.sortEventArrayByStartingTime(
+        response.data
+      )
       for (let i = 0; i < eventList.length; i++) {
         eventList[i] = {
           ...eventList[i],
@@ -179,4 +188,5 @@ export default {
   .noPicture h1 {
     line-height: 150px;
   }
-}</style>
+}
+</style>
