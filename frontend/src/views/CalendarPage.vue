@@ -58,6 +58,7 @@
                   color="black"
                   readonly
                   v-on="on"
+                  v-model="dateValue"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -320,6 +321,11 @@ export default {
   }
   .noPicture h1 {
     line-height: 150px;
+  }
+  ::v-deep .v-label--active{
+    color: #cafb03 !important;
+    font: large !important;
+    font: bold !important;
   }
 }
 </style>
