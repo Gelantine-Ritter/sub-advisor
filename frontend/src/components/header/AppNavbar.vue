@@ -16,7 +16,7 @@
     >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="title"
+          <v-list-item-title class="title" @click.stop="sideNav = !sideNav"
             ><img
               src="../../assets/logo_small.png"
               width="100%"

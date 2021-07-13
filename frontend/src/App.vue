@@ -26,7 +26,8 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Fondamento&family=Orbitron:wght@500&display=swap');
 .mycontainer {
   border: solid 2px black;
   width: 70vw;
@@ -41,6 +42,12 @@ export default {
   color: #cafb03;
   text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px 1px 1px black,
     -1px -1px 1px black;
+}
+.v-application .display-3{
+  letter-spacing: .4rem !important;
+}
+.v-application .display-4{
+  letter-spacing: .4rem !important;
 }
 .myEnterBtn {
   background: black;

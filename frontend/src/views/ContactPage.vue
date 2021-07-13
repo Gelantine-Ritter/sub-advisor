@@ -1,8 +1,9 @@
 <template>
-  <v-container class="rounded-xl mycontainer" fluid>
+<v-container my-5>
     <h1 class="marginHeading h1Style text-center display-3 font-weight-medium">
       CONTACT US
     </h1>
+      <v-container class="rounded-xl mycontainer" fluid>
     <div>
       <form ref="contactform" @submit.prevent="sendEmail">
         <v-row>
@@ -52,6 +53,7 @@
       </form>
     </div>
   </v-container>
+</v-container>
 </template>
 
 <script>
