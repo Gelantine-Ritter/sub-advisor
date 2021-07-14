@@ -123,7 +123,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            Event
+            Events
           </v-btn>
         </template>
         <v-list>
@@ -150,7 +150,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            Event
+            Events
           </v-btn>
         </template>
         <v-list>

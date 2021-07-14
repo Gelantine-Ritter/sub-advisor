@@ -64,7 +64,7 @@
               </v-col>
               <v-col cols="12">
                 <v-list-item-subtitle class="text-h6"
-                  >NEW PASSWORD</v-list-item-subtitle
+                  >PASSWORD</v-list-item-subtitle
                 >
                 <v-text-field
                   type="password"
