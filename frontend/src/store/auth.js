@@ -78,7 +78,7 @@ export default {
 
       try {
         if (role === 'VENUE') {
-          requestProvider
+          await requestProvider
             .getVenue(userId, {
               headers: { Authorization: 'Bearer ' + jwt },
             })
@@ -91,7 +91,7 @@ export default {
             })
         }
         else if (role === 'MEMBER') {
-          requestProvider
+          await requestProvider
             .getMember(userId, {
               headers: { Authorization: 'Bearer ' + jwt },
             })
