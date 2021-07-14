@@ -84,9 +84,13 @@ export const requestProvider = {
     const mapData = await axios.get(finalUrl)
 
     axios.defaults.headers.common.Authorization =
-      'Baerer ' + localStorage.getItem('token')
+      'Bearer ' + localStorage.getItem('token')
 
     return mapData
+  },
+
+  fetchMapData: async (finalUrl) => {
+    return await fetch(finalUrl, { method: 'GET' })
   },
 
   // MEMBERS

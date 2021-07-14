@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import {requestProvider} from '../../util/requestProvider'
+
 export default {
   props: {
     adress: Object,
@@ -75,7 +77,8 @@ export default {
         'key=' +
         API_KEY_BING
 
-      fetch(finalUrl, { method: 'GET' }).then((response) => {
+      requestProvider.getMapData(finalUrl).then((response) => {
+
         const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
