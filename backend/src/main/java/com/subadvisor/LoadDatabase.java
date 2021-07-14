@@ -81,6 +81,35 @@ class LoadDatabase {
                     .build()
             );
 
+            Venue tor22 = venueRepository.save(Venue.builder()
+                    .username("tor-22")
+                    .password("tor22_pw")
+                    .name("Tor 22")
+                    .email("tor22@info.com")
+                    .info("Wer das Tor 22 nicht kennt hat nicht gelernt zu leben. 'Hier wird der Hip Hop noch hoch gehalten', findet auch der Karlshorster Lokalanzeiger. Jeden Samstag Beats aufs Ohr für einen schmalen Taler.")
+                    .mobile("0181-23443612")
+                    .hours(
+                            Map.of("monday", "closed",
+                                    "tuesday", "17:00 - 19:00",
+                                    "wednesday", "17:00 - 19:00",
+                                    "thursday", "17:00 - 19:00",
+                                    "friday", "17:00 - 04:00",
+                                    "saturday", "17:00 - 04:00",
+                                    "sunday", "17:00 - 22:00"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Ehrlichstrasse",
+                                    "number", "18",
+                                    "city", "Berlin",
+                                    "plz", "10318"
+                            )
+                    )
+                    .website("https://tor-22.de")
+                    .build()
+            );
+
             Venue hochbeetGarten = venueRepository.save(
                     Venue.builder()
                             .username("hochhinaus")
@@ -231,6 +260,64 @@ class LoadDatabase {
                             .build()
             );
 
+            Event eventMenschMeier03 = eventRepository.save(
+                    Event.builder()
+                            .title("Coma 92")
+                            .tags(Set.of("new wave", "inside"))
+                            .venue(menschmeier)
+                            .eventStart(LocalDateTime.parse("2021-07-24T20:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-24T23:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-24T20:00").toLocalDate())
+                            .info("auf der bühne fesselt der kompakte, ungeschliffene, doch sehr intelligent arrangierte z – sound, für den die band den begriff „berlin wave“ erfand, obwohl z durchaus wie eine englische gruppe klingt. keine musik für irgendeine schublade.")
+                            .artists(Set.of("Big Blue Cadillac"))
+                            .price(5)
+                            .build()
+            );
+
+            // =================
+
+            Event tor22_1 = eventRepository.save(
+                    Event.builder()
+                            .title("The ObX and friends")
+                            .tags(Set.of("hip hop", "inside", "concert"))
+                            .venue(tor22)
+                            .eventStart(LocalDateTime.parse("2021-07-17T19:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-18T02:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-17T19:00").toLocalDate())
+                            .info("hämmernde Beats, Herzen und Sargnägel. Warum auch immer. Abriss seit '96: Dafür stehen die Gesellen aus der Vorstadt. Keine Preise gewinnen, dafür auch mal heiser singen.")
+                            .artists(Set.of("The ObX", "DJ Jeezy", "Maxxx el toro"))
+                            .price(12)
+                            .build()
+            );
+
+            Event tor22_2 = eventRepository.save(
+                    Event.builder()
+                            .title("Heartbreak Festival")
+                            .tags(Set.of("hip hop", "outside", "performance", "dj", "concert", "jam"))
+                            .venue(tor22)
+                            .eventStart(LocalDateTime.parse("2021-07-24T18:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-26T02:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-24T18:00").toLocalDate())
+                            .info("Euch erwartet ein wundervolles Wochenende mit heftigen deutschlandweit bekannten DJ’s und Live Acts, vielen wunderschönen Bühnen, einem krachenden Abschlussfeuerwerk und zauberhaften Menschen.")
+                            .artists(Set.of("Jack und der Hühne", "Waldemar ohne F", "Krishna Meier", "Stangenlob Dreiviertel"))
+                            .price(25)
+                            .build()
+            );
+
+            Event tor22_3 = eventRepository.save(
+                    Event.builder()
+                            .title("JJ Colemans wild days")
+                            .tags(Set.of("hip hop", "concert", "jam", "outside", "political"))
+                            .venue(tor22)
+                            .eventStart(LocalDateTime.parse("2021-07-29T20:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-29T23:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-29T20:00").toLocalDate())
+                            .info("Gut zwei Jahre sind seit dem Debütalbum des Hamburgers ins Land gegangen. Was der Bonvivant in der Zwischenzeit gemacht hat? Natürlich hat er das Leben genossen – und wer JJ Coleman kennt, weiß, dass er das in vollen Zügen getan hat: Nachtclubs, Rauschmittel, schöne Frauen, gutes Essen. Klar, dass der 28-jährige diesen lockeren Lifestyle auf seinem neuen Album »Blueberry Boyz« noch und nöcher zelebriert. ")
+                            .artists(Set.of("JJ Coleman"))
+                            .price(5)
+                            .build()
+            );
+
             // Load Venues
             log.info("Preloading " + eventTrudeRuth01);
 
@@ -250,7 +337,7 @@ class LoadDatabase {
                             .lastName("bleu")
                             .email("jimmy.bleu@gmail.com")
                             .password("supercool")
-                            .events(Set.of(hochbeet01, eventTrudeRuth02, eventTrudeRuth04, eventTrudeRuth03))
+                            .events(Set.of(hochbeet01, eventTrudeRuth02, eventTrudeRuth04, eventTrudeRuth03, tor22_3, tor22_2))
                             .enabled(true)
                             .build())
             );
@@ -284,6 +371,36 @@ class LoadDatabase {
                             .events(Set.of(hochbeet02, eventTrudeRuth02, eventTrudeRuth04, eventTrudeRuth03, eventMenschMeier01, eventMenschMeier02))
                             .build())
             );
+
+            log.info("Preloading " + memberRepository.save(
+                    Member.builder()
+                            .username("kaiuwe")
+                            .firstName("Kai Uwe")
+                            .lastName("Salomon")
+                            .password("kaimachtheutefrei")
+                            .events(Set.of(hochbeet01, eventMenschMeier02, eventTrudeRuth04, tor22_3, tor22_1, tor22_2, eventTrudeRuth03))
+                            .build())
+            );
+
+            log.info("Preloading " + memberRepository.save(
+                    Member.builder()
+                            .username("hagendersiebert")
+                            .firstName("Hagen")
+                            .lastName("Siebert")
+                            .password("hagendermagen")
+                            .events(Set.of(eventMenschMeier02, tor22_3, tor22_1, eventMenschMeier01))
+                            .build())
+            );
+
+            log.info("Preloading " + memberRepository.save(
+                Member.builder()
+                        .username("erkanndas")
+                        .firstName("erkan")
+                        .lastName("Özmir-Hagen")
+                        .password("erkanndasrichtiggut")
+                        .events(Set.of(hochbeet01, hochbeet02, tor22_2, tor22_1, eventMenschMeier01, eventTrudeRuth01, eventTrudeRuth04))
+                        .build())
+        );
         };
     }
 }
