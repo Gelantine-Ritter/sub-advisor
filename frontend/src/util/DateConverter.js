@@ -39,5 +39,10 @@ export const DateConverter = {
             return moment(a.date).diff(b.date);
         });
         return afterList
+    },
+    addDays: (date, num) => {
+        if (!date) return null
+        const editDate = date.split('-')
+        return (`${editDate[0]}-${editDate[1]}-${parseInt(editDate[2]) + num}`)
     }
 }
