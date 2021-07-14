@@ -279,9 +279,6 @@ option:disabled {
   font-weight: 1000;
   color: black;
 }
-.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
-    color: rgba(0, 0, 0, 0.87) !important;
-}
 @media screen and (max-width: 600px) {
   .mySpecialContainer {
     background: white;
