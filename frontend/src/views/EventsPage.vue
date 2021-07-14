@@ -15,7 +15,6 @@
             color="black"
           ></v-text-field>
         </v-col>
-
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-select
             placeholder="tags"
@@ -25,7 +24,6 @@
             color="black"
           />
         </v-col>
-
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-text-field
             clearable
@@ -34,7 +32,6 @@
             color="black"
           ></v-text-field>
         </v-col>
-
         <!-- DATEPICKER -->
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-menu
@@ -61,7 +58,6 @@
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
-
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
           <v-btn outlined rounded v-on:click="buttonClicked"> Search </v-btn>
         </v-col>
