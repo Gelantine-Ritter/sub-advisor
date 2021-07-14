@@ -8,14 +8,18 @@
         {{ venueObj.name }}
       </h1>
 
-      <div
-        center
-        class="rounded-xl mycontainer" fluid
-      >
+      <div center class="rounded-xl mycontainer" fluid>
         <v-container>
           <v-row>
             <!-- header info -->
-            <v-col xs="12" sm="12" md="8" lg="8" xl="8">
+            <v-col
+              xs="12"
+              sm="12"
+              md="8"
+              lg="8"
+              xl="8"
+              v-if="venueObj.address.street"
+            >
               <div>
                 {{ venueObj.website }}
               </div>
@@ -25,8 +29,8 @@
                 {{ venueObj.address.plz }}
                 {{ venueObj.address.city }}
               </div>
-                <v-row class="mt-1">
-              <MapsView :adress="venueObj.address" />
+              <v-row class="mt-1">
+                <MapsView :adress="venueObj.address" />
               </v-row>
             </v-col>
           </v-row>
@@ -34,31 +38,31 @@
             <!-- description -->
             <v-col xs="12" sm="12" md="8" lg="8" xl="8">
               <!-- {{ venueObj.info }} -->
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </v-col>
             <!-- venue img, map button -->
             <v-col xs="12" sm="12" md="4" lg="4" xl="3">
               <v-row class="pls_center_it">
                 <template v-if="venueObj.pic == null || venueObj.pic == ''">
-                      <div></div>
-                    </template>
-                    <template v-else>
-                <v-card
-                  class="pa-2 rounded-xl myLogoCard"
-                  flat
-                  tile
-                >
-                  <v-responsive class="myResponsivePictureContainer">
-                    
+                  <div></div>
+                </template>
+                <template v-else>
+                  <v-card class="pa-2 rounded-xl myLogoCard" flat tile>
+                    <v-responsive class="myResponsivePictureContainer">
                       <v-img
                         fill
                         class="myLogo"
                         :src="picDataUrl(venueObj.pic)"
                         alt=""
                       />
-                    
-                  </v-responsive>
-                </v-card>
+                    </v-responsive>
+                  </v-card>
                 </template>
               </v-row>
               <v-row class="ml-10 mr-10 mt-5"> </v-row>
@@ -141,5 +145,4 @@ export default {
 .myLogo {
   height: 100%;
 }
-
 </style>

@@ -30,8 +30,6 @@
 
 <script>
 
-import {requestProvider} from '../../util/requestProvider'
-
 export default {
 
   props: {
@@ -49,7 +47,7 @@ export default {
       apikey: this.apikey,
     })
     this.platform = platform
-    this.initMap()
+    if (this.adress) this.initMap()
   },
   methods: {
     initMap() {
@@ -79,8 +77,9 @@ export default {
         'key=' +
         API_KEY_BING
 
-      requestProvider.getMapData(finalUrl)
+      fetch(finalUrl, { method: 'GET'})
         .then((response) => {
+          console.log(response);
                   const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
