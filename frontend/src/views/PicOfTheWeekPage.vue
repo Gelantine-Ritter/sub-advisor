@@ -1,9 +1,8 @@
 <template>
   <div v-if="venueObj != null">
     <v-container my-5>
-      <h6 class="mb-10 font-weight-bold text--disabled">
-        WE'LL INTRODUCE YOU TO A DIFFERENT SPECIAL PLACE EACH DAY. SUBADVISOR
-        PRESENTS TODAY'S PIC OF THE DAY:
+      <h6 class="mb-10 font-weight-bold text--disabled text-center">
+        DISCOVER NEW PLACES WITH SUB ADVISOR. HERE IS YOUR RANDOM PIC:
       </h6>
 
       <h1

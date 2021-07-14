@@ -16,7 +16,8 @@
     sub advisor is not only an event calendar. We wanted to make it a place to discover the cultural places and artists too.
     <br />
     <br />
-    Every week, the sub advisor editorial team highlights a special place and so do smaller and lesser-known organisers have the opportunity to welcome new visitors.
+    That's why the sub advisor editorial team has chosen to set up a random pic that selects a random place to highlight. 
+    So do smaller and lesser-known organisers have the opportunity to welcome new visitors and curious people to discover new places.
     <br />
     <br />
     Our project started in 2021 during the pandemic. Since the first lockdown, many events had to be cancelled or moved online. 

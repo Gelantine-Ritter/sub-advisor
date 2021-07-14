@@ -30,7 +30,7 @@ import VenueProfile from './views/VenueProfile.vue'
 import VenueCreateEvent from './views/VenueCreateEvent.vue'
 import MemberProfile from './views/MemberProfile.vue'
 import EventsFor1Venue from './views/EventsFor1Venue.vue'
-import PicOfTheDay from './views/PicOfTheWeekPage.vue'
+import RandomPic from './views/PicOfTheWeekPage.vue'
 import PopularEvents from './views/PopularEventsPage.vue'
 import Calendar from './views/CalendarPage.vue'
 import Impressum from './views/Impressum.vue'
@@ -159,9 +159,9 @@ const router = new Router({
       },
     },
     {
-      path: '/picOfTheDay',
-      name: 'picOfTheDay',
-      component: PicOfTheDay,
+      path: '/randompic',
+      name: 'RandomPic',
+      component: RandomPic,
     },
     {
       path: '/popularEvent',
