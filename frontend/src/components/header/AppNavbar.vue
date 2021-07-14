@@ -189,8 +189,8 @@
     <v-spacer></v-spacer>
     <!-- <v-toolbar-title class="d-none d-sm-flex white--text myLogoNav"> -->
     <v-toolbar-title class="d-none d-sm-flex white--text myLogoNav">
-      <v-img class="logo-img" contain src="../../assets/logo.png" height="200px" alt="subadvisor logo" @click="redirectToHome()"/> 
-            <v-img class="logo-img-small" contain src="../../assets/logo_small.png" height="200px" alt="subadvisor logo" @click="redirectToHome()"/> 
+      <v-img class="logo-img" contain src="../../assets/logo.png" height="50px" alt="subadvisor logo" @click="redirectToHome()"/> 
+            <v-img class="logo-img-small" contain src="../../assets/logo_small.png" height="50px" alt="subadvisor logo" @click="redirectToHome()"/> 
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- DESKTOP: RIGHT ALIGNED ITEMS START-->
@@ -478,12 +478,10 @@ a:hover {
    display: none; 
   }
 } 
-@media screen and (max-width: 1000px) {    
-   
+@media screen and (max-width: 1000px) {      
   .myLogoNav {
     padding-left: 98px !important;
   }
-  
 } 
 @media screen and (max-width: 800px) {
   .logo-img-small{
@@ -493,11 +491,4 @@ a:hover {
        display: none; 
   }
 }
-/*
-@media screen and (max-width: 700px) { 
-  ::v-deep .v-image__image--contain {
-    margin-left: -5vw !important;
-  }
-}
-*/
 </style>

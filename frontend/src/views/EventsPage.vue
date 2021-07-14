@@ -4,7 +4,7 @@
       <!-- Tags -->
       <v-row v-if="tagCollection" class="d-flex justify-center align-center">
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
-          <v-text-field v-model="selectedWord" clearable label="search">
+          <v-text-field v-model="selectedWord" clearable color="black" label="search">
           </v-text-field>
         </v-col>
         <v-col cols="6" xs="6" sm="6" md="2" lg="2" xl="2">
@@ -12,6 +12,7 @@
             clearable
             v-model="selectedVenue"
             label="venue"
+            color="black"
           ></v-text-field>
         </v-col>
 
@@ -21,6 +22,7 @@
             clearable
             :items="tagCollection"
             v-model="selectedValue"
+            color="black"
           />
         </v-col>
 
@@ -29,6 +31,7 @@
             clearable
             v-model="selectedPrice"
             label="max. price"
+            color="black"
           ></v-text-field>
         </v-col>
 
@@ -41,6 +44,7 @@
             transition="scale-transition"
             offset-y
             min-width="auto"
+            color="black"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -50,9 +54,10 @@
                 v-bind="attrs"
                 v-on="on"
                 clearable
+                color="black"
               ></v-text-field>
             </template>
-            <v-date-picker v-model="selectedDate" clearable> </v-date-picker>
+            <v-date-picker color="black" v-model="selectedDate" clearable> </v-date-picker>
           </v-menu>
         </v-col>
         <!--DATEPICKER ENDE-->
@@ -273,6 +278,9 @@ option:disabled {
   background-color: rgb(245, 245, 245);
   font-weight: 1000;
   color: black;
+}
+.theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 @media screen and (max-width: 600px) {
   .mySpecialContainer {

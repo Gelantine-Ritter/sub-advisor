@@ -21,7 +21,6 @@
       </div>
       <br/>
       <h1 class="text-center h1Two">THIS IS HAPPENING</h1>
-      
     <!-- </div>-->
   </v-parallax>
 </template>
