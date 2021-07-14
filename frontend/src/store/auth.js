@@ -71,31 +71,39 @@ export default {
       if (!state.role) {
         return
       }
-      
+
       if (userId) {
         commit('SET_USER_ID', userId)
       }
-      
+
       try {
-        if (role === 'VENUE'){
+        if (role === 'VENUE') {
           requestProvider
-          .getVenue(userId, {
-            headers: { Authorization: 'Bearer ' + jwt },
-          })
-          .then((response) => {
-            commit('SET_USER', response.data)
-          })
+            .getVenue(userId, {
+              headers: { Authorization: 'Bearer ' + jwt },
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                commit('SET_USER', response.data)
+              }else{
+                localStorage.clear()
+              }
+            })
         }
-        else if (role === 'MEMBER'){
+        else if (role === 'MEMBER') {
           requestProvider
-          .getMember(userId, {
-            headers: { Authorization: 'Bearer ' + jwt },
-          })
-          .then((response) => {
-            commit('SET_USER', response.data)
-          })
+            .getMember(userId, {
+              headers: { Authorization: 'Bearer ' + jwt },
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                commit('SET_USER', response.data)
+              }else{
+                localStorage.clear()
+              }
+            })
         }
-        
+
       } catch (e) {
         commit('SET_TOKEN', null)
         commit('SET_USER', null)
@@ -120,10 +128,10 @@ export default {
 
     // REGISTRATE
     async signupVenue({ commit }, username, name, password, email) {
-        requestProvider.postVenue(username, name, password, email)
+      requestProvider.postVenue(username, name, password, email)
     },
-    async signupMember({ commit }, username, password, email){
-        requestProvider.postMember(username, password, email)
+    async signupMember({ commit }, username, password, email) {
+      requestProvider.postMember(username, password, email)
     },
 
     // DELETE ACCOUNT
