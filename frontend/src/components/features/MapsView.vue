@@ -4,9 +4,9 @@
       <v-dialog v-model="dialog" width="80vw">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-          text
-          elevation="0"
-          class="text-decoration-underline"
+            text
+            elevation="0"
+            class="text-decoration-underline"
             v-bind="attrs"
             v-on="on"
           >
@@ -29,9 +29,7 @@
 </template>
 
 <script>
-
 export default {
-
   props: {
     adress: Object,
   },
@@ -77,10 +75,8 @@ export default {
         'key=' +
         API_KEY_BING
 
-      fetch(finalUrl, { method: 'GET'})
-        .then((response) => {
-          console.log(response);
-                  const latLngValue =
+      fetch(finalUrl, { method: 'GET' }).then((response) => {
+        const latLngValue =
           response.data.resourceSets[0].resources[0].geocodePoints[0]
             .coordinates
 
@@ -111,5 +107,4 @@ export default {
 #mapContainer {
   overflow-y: hidden;
 }
-
 </style>
