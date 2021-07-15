@@ -67,19 +67,45 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item
-            :ripple="false"
-            class="text-decoration-none noGreyHover noGrey"
-            v-for="item in subPlaces"
+          <v-list-group
+            color="white"
+            v-for="item in menuItemsPlaces"
             :key="item.title"
+            v-model="item.active"
             :to="item.route"
+            :ripple="false"
+            class="noGreyHover noGrey"
           >
-            <v-list-item-content>
-              <v-list-item-title
-                >PLACES
-              </v-list-item-title></v-list-item-content
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title
+                  :ripple="false"
+                  class="black--text noGreyHover noGrey"
+                  v-text="item.title"
+                  :key="item.title"
+                  :to="item.route"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item
+              :ripple="false"
+              class="black--text v-list-item--active text-decoration-none noGreyHover noGrey"
+              v-for="child in item.items"
+              :key="child.title"
+              :to="child.route"
             >
-          </v-list-item>
+              <v-list-item-content>
+                <v-list-item-title
+                  :ripple="false"
+                  v-text="child.title"
+                  :key="child.title"
+                  :to="child.route"
+                  class="text-decoration-none noGreyHover noGrey"
+                ></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
           <template>
             <v-list-item
               :ripple="false"
@@ -171,10 +197,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            v-for="item in subPlaces"
-            :key="item.title"
-            :to="item.route"
-            class="noGreyHover noGrey d-none d-sm-flex ml-5 text-decoration-none rounded-pill border border-dark"
+            class="noGreyHover noGrey d-none d-sm-flex ml-5 rounded-pill border border-dark"
             :ripple="false"
             text
             v-bind="attrs"
@@ -183,6 +206,17 @@
             Places
           </v-btn>
         </template>
+        <v-list>
+          <v-list-item
+            :ripple="false"
+            v-for="item in subPlaces"
+            :key="item.title"
+            :to="item.route"
+            class="noGreyHover noGrey text-decoration-none"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
       </v-menu>
     </template>
     <!-- DESKTOP: LEFT ALIGNED ITEMS END-->
@@ -320,9 +354,18 @@ export default {
           items: [
             { title: 'ALL EVENTS', route: '/events' },
             { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
-            { title: 'RANDOM PIC', route: '/randompic' },
           ],
           title: 'EVENTS',
+        },
+      ],
+      menuItemsPlaces: [
+        {
+          action: 'mdi-ticket',
+          items: [
+            { title: 'ALL PLACES', route: '/places' },
+            { title: 'RANDOM PIC', route: '/randompic' }
+          ],
+          title: 'PLACES',
         },
       ],
       menuItemsAsMember: [
@@ -358,7 +401,6 @@ export default {
       subEvents: [
         { title: 'ALL EVENTS', route: '/events' },
         { title: 'MOST POPULAR EVENT', route: '/popularEvent' },
-        { title: 'RANDOM PIC', route: '/randompic' },
       ],
       subPlacesLoggedInMember: [
         { title: 'ALL PLACES', route: '/places' },
@@ -366,7 +408,10 @@ export default {
       ],
       subContact: [{ title: 'CONTACT', route: '/contact' }],
       subAbout: [{ title: 'ABOUT', route: '/about' }],
-      subPlaces: [{ title: 'ALL PLACES', route: '/places' }],
+      subPlaces: [
+        { title: 'ALL PLACES', route: '/places' },
+        { title: 'RANDOM PIC', route: '/randompic' },
+      ],
       subProfile: [
         { title: 'LOGIN', route: '/login' },
         { title: 'SIGNUP', route: '/signup' },
