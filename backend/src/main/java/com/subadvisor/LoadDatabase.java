@@ -141,11 +141,100 @@ class LoadDatabase {
                             .website("https://hochbeet-wedding.com")
                             .build()
             );
+            
+            Venue schoenTheater = venueRepository.save(Venue.builder()
+                    .username("schoen-schoen-theater")
+                    .password("ichgeheinstheater")
+                    .name("Schöneberger Theater")
+                    .email("schoeneberger-theater@info.de")
+                    .info("Das Schöneberger Theater beherbergt zwei Bühnen: Das Kleine Haus mit ca. 200 Plätzen in einem Saal von 1820 mit gemischtem Repertoire, das Große Haus mit ca. 450 PlÄtzen (1910 von Peter Mayer eingerichtet). Das Schöneberger ist ein Ort für hautnahes Theater, neue Texte und aktuelle Themen. Im Jahr 2008 beschloss der Senat, auf der Linkeseite des Gebäudes ein Probebühnenzentrum anzubauen. Das I-foermige Gebäude besitzt vier Probebühnen übereinander, außerdem Werkstaetten, Garderoben- und Bueroraeume enthalten. ")
+                    .mobile("0154-3289941")
+                    .hours(
+                            Map.of("monday", "closed",
+                                    "tuesday", "19:00 - 23:00",
+                                    "wednesday", "closed",
+                                    "thursday", "19:00 - 23:00",
+                                    "friday", "19:00 - 23:00",
+                                    "saturday", "19:00 - 23:00",
+                                    "sunday", "19:00 - 23:00"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Barbarossaplatz",
+                                    "number", "5",
+                                    "city", "Berlin",
+                                    "plz", "10781"
+                            )
+                    )
+                    .website("https://schoen-theater.de")
+                    .build()
+            );
 
+            Venue tankstelle = venueRepository.save(Venue.builder()
+                    .username("super-diesel-98")
+                    .password("98dieselsuper")
+                    .name("Tankstelle")
+                    .email("zur-tankstelle@google.de")
+                    .info("Geht Ihnen die Energie aus? Müssen Sie Ihren Benzintank auffüllen? Hier sind Sie richtig: bei der Tankstelle können Sie mit dem kältesten Bier Berlins Ihre Batterien wieder aufladen. Dazu gibts vor allem gutem Sound, lautem Sound, Live-Sound mit regelmäßigen Konzerten von weniger bekannten Bands, anderen mehr und auch Überraschungskonzerten. Bis bald.")
+                    .mobile("0143-8478805")
+                    .hours(
+                            Map.of("monday", "17:00 - 01:00",
+                                    "tuesday", "closed",
+                                    "wednesday", "closed",
+                                    "thursday", "17:00 - 01:00",
+                                    "friday", "17:00 - 01:00",
+                                    "saturday", "17:00 - 01:00",
+                                    "sunday", "17:00 - 01:00"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Holzmarktstraße",
+                                    "number", "12-14",
+                                    "city", "Berlin",
+                                    "plz", "10179"
+                            )
+                    )
+                    .website("https://zur-tankstelle.de")
+                    .build()
+            );
+
+            Venue hertz = venueRepository.save(Venue.builder()
+                    .username("100megaHertz")
+                    .password("bipbipbip")
+                    .name("Hertz")
+                    .email("hertz-attack@info.de")
+                    .info("this place stands for: No Racism / No Homophobia / No Sexism / No Transphobia / No Heterosexism. There will be no tolerance for unjust behaviour. Please respect the property of the event. Disclaimer as part of Covid-19 precautions: The venue offers a test center at the entrance. We must note, this is an ever changing situation, we will keep you informed with updates as to the protocols to follow. In order to acquire a safe and enjoyable experience we have to abide to certain precautions. In accordance with the requirements of the SARS-CoV-2 infection protection ordinance, documentation of presence must be collected. The current rules read: Negative test result / proof of recovery from vaccination. Arrive wearing your mask, covering your mouth and nose constantly. Wear it at all times when not seated. Ensure that a safe distance of 1.5 m between you and other persons is maintained, also in front of the bar or while standing in the toilette row.")
+                    .mobile("0161-3297956")
+                    .hours(
+                            Map.of("monday", "closed",
+                                    "tuesday", "closed",
+                                    "wednesday", "closed",
+                                    "thursday", "23:59 - 02:00",
+                                    "friday", "23:59 - 10:00",
+                                    "saturday", "23:59 - 10:00",
+                                    "sunday", "23:59 - 10:00"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Ziegrastraße",
+                                    "number", "13",
+                                    "city", "Berlin",
+                                    "plz", "12057"
+                            )
+                    )
+                    .website("https://hertz-attack.de")
+                    .build()
+            );
 
             // Load Venues
             log.info("Preloading " + trudeRuth);
             log.info("Preloading " + hochbeetGarten);
+            log.info("Preloading " + schoenTheater);
+            log.info("Preloading " + tankstelle);
+            log.info("Preloading " + hertz);
 
             Event eventTrudeRuth01 = eventRepository.save(
                     Event.builder()
@@ -318,6 +407,50 @@ class LoadDatabase {
                             .build()
             );
 
+            //////
+
+            Event schoenTheater01 = eventRepository.save(
+                    Event.builder()
+                            .title("Die kahle Sängerin")
+                            .tags(Set.of("performance", "contemporary", "new wave", "inside"))
+                            .venue(schoenTheater)
+                            .eventStart(LocalDateTime.parse("2021-07-16T20:30"))
+                            .eventEnd(LocalDateTime.parse("2021-07-16T23:00").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-16T20:30").toLocalDate())
+                            .info("Die kahle Sängerin ist ein Theaterstück von Eugène Ionesco. Die Uraufführung fand am 11. Mai 1950 im Théâtre des Noctambules in Paris unter der Regie von Nicolas Bataille statt. Seit 1957 steht es täglich auf dem Spielplan des Théâtre de la Huchette, das Die kahle Sängerin zusammen mit Die Unterrichtsstunde bis heute mehr als 17.000 Mal gezeigt und für seine Doppelvorstellung den Molière Theaterpreis erhalten hat. In seinen verschiedenen Interpretationen gehört das Anti-Stück, so sein Untertitel, in Frankreich damit zu den am häufigsten aufgeführten Beispielen des Absurden Theaters. ")
+                            .artists(Set.of("Mariella Dietrich", "Günter Kinski", "Didier Depardieu", "Anna Waltz"))
+                            .price(35)
+                            .build()
+            );
+
+            Event tankstelle01 = eventRepository.save(
+                    Event.builder()
+                            .title("Rauchmilch")
+                            .tags(Set.of("concert", "inside", "rock", "punk", "political"))
+                            .venue(tankstelle)
+                            .eventStart(LocalDateTime.parse("2021-07-17T21:30"))
+                            .eventEnd(LocalDateTime.parse("2021-07-17T23:00").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-17T21:30").toLocalDate())
+                            .info("Nach eineinhalb Jahren ohne Konzert kehrt zu unserem größten Vergnügen Rauchmilch in die Tankstelle zurück. Das vierköpfige Team aus Berlin, Tokio und Edinburgh kombiniert Soundqualität, Inszenierung und Beteiligung des Publikums für Konzerte, die nah an Performances sind. Sie zu verpassen wäre ein Fehler...")
+                            .artists(Set.of("Rauchmilch"))
+                            .price(5)
+                            .build()
+            );
+
+            Event hertz01 = eventRepository.save(
+                    Event.builder()
+                            .title("Trance X #11")
+                            .tags(Set.of("outside", "dj", "techno", "acid"))
+                            .venue(hertz)
+                            .eventStart(LocalDateTime.parse("2021-07-17T23:59"))
+                            .eventEnd(LocalDateTime.parse("2021-08-18T10:00").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-17T23:59").toLocalDate())
+                            .info("Just bring your sexy mask and enjoy. We'll make a test if you couldn't do it before ;)")
+                            .artists(Set.of("DJ Trancemission, Hot Mama, Ily, DJ Spacer"))
+                            .price(12)
+                            .build()
+            );
+
             // Load Venues
             log.info("Preloading " + eventTrudeRuth01);
 
@@ -328,6 +461,12 @@ class LoadDatabase {
             log.info("Preloading " + hochbeet01);
 
             log.info("Preloading " + hochbeet02);
+
+            log.info("Preloading " + schoenTheater01);
+            
+            log.info("Preloading " + tankstelle01);
+
+            log.info("Preloading " + hertz01);
 
             // Load TestUser
             log.info("Preloading " + memberRepository.save(
