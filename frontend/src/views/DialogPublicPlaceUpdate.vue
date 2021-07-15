@@ -255,7 +255,6 @@ export default {
       info: {
         required,
         maxLength: maxLength(500),
-        alpha,
         minLength: minLength(200),
       },
       address: {
@@ -288,6 +287,7 @@ export default {
         return this.value
       },
       set(value) {
+        console.log(value)
         this.$emit('input', value)
       },
     },
