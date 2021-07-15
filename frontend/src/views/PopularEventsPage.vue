@@ -202,9 +202,6 @@ export default {
       let eventMaxAmount = 0
 
       events.forEach((event) => {
-        console.log('---');
-        console.log(event.amountOfGuests);
-        console.log(eventMaxAmount)
         if (event.amountOfGuests >= eventMaxAmount) {
           eventMaxAmount = event.amountOfGuests
           bestVisitedEvent = event
