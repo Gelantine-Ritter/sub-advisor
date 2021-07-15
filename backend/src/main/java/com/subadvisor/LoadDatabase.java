@@ -142,6 +142,35 @@ class LoadDatabase {
                             .build()
             );
 
+            Venue grueneSchatztruhe = venueRepository.save(Venue.builder()
+                    .username("grueneschatztruhe")
+                    .password("grueneschatztruhe")
+                    .name("Grüne Schatztruhe")
+                    .email("gruene@schatztruhe.com")
+                    .info("Blumen können uns verzaubern. Sie können eine Stimmung ausdrücken und ein Lächeln schenken. Sie können uns in unserer Trauer unterstützen und unsere Emotionen ausdrücken. Blumen können unsere Liebe gestehen oder einfach nur Freude schenken.")
+                    .mobile("0181-13242219")
+                    .hours(
+                            Map.of("monday", "closed",
+                                    "tuesday", "10:00 - 19:00",
+                                    "wednesday", "10:00 - 19:00",
+                                    "thursday", "10:00 - 19:00",
+                                    "friday", "10:00 - 17:00",
+                                    "saturday", "12:00 - 17:00",
+                                    "sunday", "12:00 - 13:00"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Lettestrasse",
+                                    "number", "6",
+                                    "city", "Berlin",
+                                    "plz", "10437"
+                            )
+                    )
+                    .website("https://gruene-schatztruhe.de")
+                    .build()
+            );
+
 
             // Load Venues
             log.info("Preloading " + trudeRuth);
@@ -308,7 +337,7 @@ class LoadDatabase {
                     Event.builder()
                             .title("JJ Colemans wild days")
                             .tags(Set.of("hip hop", "concert", "jam", "outside", "political"))
-                            .venue(tor22)
+                            .venue(grueneSchatztruhe)
                             .eventStart(LocalDateTime.parse("2021-07-29T20:00"))
                             .eventEnd(LocalDateTime.parse("2021-07-29T23:30").plusHours(24))
                             .date(LocalDateTime.parse("2021-07-29T20:00").toLocalDate())
@@ -317,6 +346,46 @@ class LoadDatabase {
                             .price(5)
                             .build()
             );
+
+            Event pflanzenmarkt = eventRepository.save(
+                    Event.builder()
+                            .title("Pflanzentauschbörse")
+                            .tags(Set.of("outside"))
+                            .venue(grueneSchatztruhe)
+                            .eventStart(LocalDateTime.parse("2021-07-18T13:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-18T18:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-18T13:00").toLocalDate())
+                            .info("Unsere tollen Mitarbeiter haben bei gegenseitigen Besuchen festgestellt, dass jeder so seine Pflanzen Schätzchen zu Hause hat. Wir haben fleißig Ableger seit dem Winter wachsen lassen und möchten nun wild tauschen. Wer da auch Spaß dran hat, kann gerne vorbei kommen und mitmachen.")
+                            .artists(Set.of(""))
+                            .price(0)
+                            .build()
+            );
+
+            Event pflanzentalk = eventRepository.save(
+                    Event.builder()
+                            .title("Lets talk about plants baby")
+                            .tags(Set.of("conversation", "exhibition", "outside"))
+                            .venue(grueneSchatztruhe)
+                            .eventStart(LocalDateTime.parse("2021-07-20T17:00"))
+                            .eventEnd(LocalDateTime.parse("2021-07-20T20:30").plusHours(24))
+                            .date(LocalDateTime.parse("2021-07-20T17:00").toLocalDate())
+                            .info("Wollt ihr über Pflanzen sprechen? Wer da auch Spaß dran hat, kann gerne vorbei kommen und mitmachen.")
+                            .artists(Set.of(""))
+                            .price(0)
+            );
+
+            Event kreativTagebuch = eventRepository.save(
+                Event.builder()
+                        .title("Workshop Kreativtagebuch")
+                        .tags(Set.of("conversation", "exhibition", "inside"))
+                        .venue(grueneSchatztruhe)
+                        .eventStart(LocalDateTime.parse("2021-07-17T11:00"))
+                        .eventEnd(LocalDateTime.parse("2021-07-17T12:30").plusHours(24))
+                        .date(LocalDateTime.parse("2021-07-17T11:00").toLocalDate())
+                        .info("Wir bieten ab diesem Samstag einen mehrteiligen Workshop Kreativtagebuch im Wedding an. Weil wir das ganze Konzept zunächst auch testen möchten, ist dieser erste Durchlauf kostenlos, nur geringe Materialkosten werden fällig, sonst nichts. Wir erkunden an vier Nachmittagen verschiedene Vorgehensweisen und Techniken des Journaling, lernen auch verschiedene Herangehensweisen kennen und mögliche Ziele, warum man das vielleicht so macht. ")
+                        .artists(Set.of("Elsa Wenger"))
+                        .price(0)
+        );
 
             // Load Venues
             log.info("Preloading " + eventTrudeRuth01);
@@ -358,7 +427,7 @@ class LoadDatabase {
                             .firstName("Nayla")
                             .lastName("Hammerschlag")
                             .password("hammer")
-                            .events(Set.of(hochbeet01, eventTrudeRuth02, eventTrudeRuth04, eventTrudeRuth03, eventMenschMeier01, eventMenschMeier02))
+                            .events(Set.of(hochbeet01, eventTrudeRuth02, pflanzenmarkt, eventTrudeRuth04, eventTrudeRuth03, eventMenschMeier01, eventMenschMeier02))
                             .build())
             );
 
@@ -378,7 +447,7 @@ class LoadDatabase {
                             .firstName("Kai Uwe")
                             .lastName("Salomon")
                             .password("kaimachtheutefrei")
-                            .events(Set.of(hochbeet01, eventMenschMeier02, eventTrudeRuth04, tor22_3, tor22_1, tor22_2, eventTrudeRuth03))
+                            .events(Set.of(hochbeet01, eventMenschMeier02, pflanzenmarkt, eventTrudeRuth04, tor22_3, tor22_1, tor22_2, eventTrudeRuth03))
                             .build())
             );
 
@@ -388,7 +457,7 @@ class LoadDatabase {
                             .firstName("Hagen")
                             .lastName("Siebert")
                             .password("hagendermagen")
-                            .events(Set.of(eventMenschMeier02, tor22_3, tor22_1, eventMenschMeier01))
+                            .events(Set.of(eventMenschMeier02, tor22_3, tor22_1, eventMenschMeier01, pflanzenmarkt))
                             .build())
             );
 
@@ -398,7 +467,7 @@ class LoadDatabase {
                         .firstName("erkan")
                         .lastName("Özmir-Hagen")
                         .password("erkanndasrichtiggut")
-                        .events(Set.of(hochbeet01, hochbeet02, tor22_2, tor22_1, eventMenschMeier01, eventTrudeRuth01, eventTrudeRuth04))
+                        .events(Set.of(hochbeet01, hochbeet02, tor22_2, tor22_1, eventMenschMeier01, pflanzentalk, eventTrudeRuth01, eventTrudeRuth04))
                         .build())
         );
         };
