@@ -189,6 +189,7 @@ export default {
         .getEventsForDateVenueTag(null, this.searchDay, null)
         .then((response) => {
           if (response.data.length > 0) {
+            console.log(response.data);
             this.fillEvents(response.data)
           } else {
             this.searchDay = DateConverter.addDays(this.searchDay, 1)
@@ -214,11 +215,6 @@ export default {
           this.venueObj = responseVenue.data
         })
 
-      //  check if member already joined this event
-      if (this.role === 'MEMBER') {
-        this.alreadyJoined()
-      }
-
       // convert Date + Time + Artists
       this.dateObj = {
         eventStart: DateConverter.getTime(bestVisitedEvent.eventStart),
@@ -228,6 +224,11 @@ export default {
       }
 
       this.highest = bestVisitedEvent
+
+      //  check if member already joined this event
+      if (this.role === 'MEMBER') {
+        this.alreadyJoined()
+      }
     },
     convertArtists(artistsArr) {
       return artistsArr.join(', ')
