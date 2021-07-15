@@ -228,6 +228,34 @@ class LoadDatabase {
                     .website("https://hertz-attack.de")
                     .build()
             );
+            Venue venueTeacher = venueRepository.save(Venue.builder()
+                    .username("venueTeacher")
+                    .password("venueTeacher123")
+                    .name("Kultur Hochschule")
+                    .email("kultur-hochschule@info.de")
+                    .info("Place for learning and enhancing your spirit.")
+                    .mobile("0126-9804443")
+                    .hours(
+                            Map.of("monday", "09:00 - 20:00",
+                                    "tuesday", "09:00 - 20:00",
+                                    "wednesday", "09:00 - 20:00",
+                                    "thursday", "09:00 - 20:00",
+                                    "friday", "09:00 - 20:00",
+                                    "saturday", "closed",
+                                    "sunday", "closed"
+                            )
+                    )
+                    .address(
+                            Map.of(
+                                    "street", "Ziegrastraße",
+                                    "number", "13",
+                                    "city", "Berlin",
+                                    "plz", "12057"
+                            )
+                    )
+                    .website("https://hertz-attack.de")
+                    .build()
+            );
 
             // Load Venues
             log.info("Preloading " + trudeRuth);
@@ -235,6 +263,7 @@ class LoadDatabase {
             log.info("Preloading " + schoenTheater);
             log.info("Preloading " + tankstelle);
             log.info("Preloading " + hertz);
+            log.info("Preloading " + venueTeacher);
 
             Event eventTrudeRuth01 = eventRepository.save(
                     Event.builder()
@@ -539,7 +568,16 @@ class LoadDatabase {
                         .password("erkanndasrichtiggut")
                         .events(Set.of(hochbeet01, hochbeet02, tor22_2, tor22_1, eventMenschMeier01, eventTrudeRuth01, eventTrudeRuth04))
                         .build())
-        );
+            );
+            log.info("Preloading " + memberRepository.save(
+                Member.builder()
+                        .username("memberTeacher")
+                        .firstName("Peter")
+                        .lastName("Mustermann")
+                        .password("memberTeacher123")
+                        .events(Set.of(hertz01, schoenTheater01, tankstelle01, tor22_1, eventMenschMeier01, eventTrudeRuth01, eventTrudeRuth04))
+                        .build())
+            );
         };
     }
 }
