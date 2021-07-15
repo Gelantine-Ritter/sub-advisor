@@ -1,8 +1,8 @@
 <template>
   <v-container v-if="eventObjs">
-    <v-expansion-panels class= "myExpPanel">
+    <v-expansion-panels class="myExpPanel">
       <v-expansion-panel
-        class="shrink rounded-xl md-layout md-gutter md-alignment-center "
+        class="shrink rounded-xl md-layout md-gutter md-alignment-center"
         :style="styleObject"
         v-for="(event, index) in eventObjs"
         :key="event.id"
@@ -12,18 +12,23 @@
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card class="pa-4" tile flat>
                 <v-row class="ma-1">
-                <h6 class="mr-1 font-weight-bold text--disabled">{{ event.date }} //</h6>
-                <h6 class="mr-1 font-weight-bold text--disabled"> {{ event.eventStart }} -
-                  {{ event.eventEnd }} // </h6>
-                <h6 class="font-weight-bold text--disabled"><ParticipantsIcon  :number="event.amountOfGuests"/>
-                </h6>
+                  <h6 class="mr-1 font-weight-bold text--disabled">
+                    {{ event.date }} //
+                  </h6>
+                  <h6 class="mr-1 font-weight-bold text--disabled">
+                    {{ event.eventStart }} - {{ event.eventEnd }} //
+                  </h6>
+                  <h6 class="font-weight-bold text--disabled">
+                    <ParticipantsIcon :number="event.amountOfGuests" />
+                  </h6>
                 </v-row>
                 <v-row class="ma-1">
-                  <h6>{{ event.title.toUpperCase() }}</h6> 
-                   <v-list-item-subtitle> 
-                  WHERE: {{venueNames[index]}} <br />  WITH: {{ event.artists.toUpperCase() }}
+                  <h6>{{ event.title.toUpperCase() }}</h6>
+                  <v-list-item-subtitle>
+                    WHERE: {{ venueNames[index] }} <br />
+                    WITH: {{ event.artists.toUpperCase() }}
                   </v-list-item-subtitle>
-                  </v-row>
+                </v-row>
               </v-card>
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="4" lg="5" xl="5">
@@ -44,7 +49,7 @@
           <v-row>
             <v-col cols="12" xs="12" sm="8" md="8" lg="7" xl="7">
               <v-card flat tile class="pa-4">
-                <p class="infoTruncate"> {{ event.info }}</p>
+                <p class="infoTruncate">{{ event.info }}</p>
                 <p>...</p>
               </v-card>
             </v-col>
@@ -67,7 +72,7 @@
               <!-- EVENT PICTURE END -->
               <v-row> </v-row>
             </v-col>
-              <v-row class="justify-center">
+            <v-row class="justify-center">
               <v-btn
                 outlined
                 elevation="1"
@@ -75,7 +80,7 @@
                 @click="redirectToEvent(event.id)"
                 >Go to Event</v-btn
               >
-              </v-row>
+            </v-row>
           </v-row>
         </v-expansion-panel-content>
       </v-expansion-panel>
@@ -92,31 +97,33 @@ export default {
   data() {
     return {
       eventObjs: null,
-      styleObject: { border: '2px solid #000000'},
+      styleObject: { border: '2px solid #000000' },
       expand: false,
       venueNames: [],
-      eventCounter: 0
+      eventCounter: 0,
     }
   },
-    components:{
-    ParticipantsIcon
+  components: {
+    ParticipantsIcon,
   },
-    props: {
+  props: {
     eventObjsList: Array,
   },
 
-  mounted() {
-    const myList = DateConverter.sortEventArrayByStartingTime(this.eventObjsList)
-    this.eventObjs = this.reformatDateAndArray(myList) 
-    for (var i = 0; i < myList.length; i++){
-        var ids = myList[i]
-        requestProvider.getVenue(ids.venueId).then((response)=>{
+  async created() {
+    const myList = DateConverter.sortEventArrayByStartingTime(
+      this.eventObjsList
+    )
+    this.eventObjs = this.reformatDateAndArray(myList)
+    for (var i = 0; i < myList.length; i++) {
+      var ids = myList[i]
+      await requestProvider.getVenue(ids.venueId).then((response) => {
         this.venueNames.push(response.data.name)
       })
-    }  
+    }
   },
   methods: {
-    getVenueNamesforEvent(){
+    getVenueNamesforEvent() {
       const venueName = this.venueNames[this.eventCounter]
       this.eventCounter += 1
       return venueName
@@ -175,10 +182,10 @@ export default {
 .myPicture {
   height: 100%;
 }
-.myRow{
+.myRow {
   max-width: 100%;
 }
-.myExpPanel{
+.myExpPanel {
   width: 100%;
 }
 @media screen and (max-width: 600px) {
