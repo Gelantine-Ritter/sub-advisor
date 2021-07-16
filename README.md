@@ -24,7 +24,9 @@
 
 ## Releases
 
-[v1.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v1.0.0)
++ [v1.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v1.0.0)
++ [v2.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v2.0.0)
++ [v3.0.0](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/releases/v3.0.0)
 
 ## Build With
 

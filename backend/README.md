@@ -1,6 +1,6 @@
 [![pipeline status](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/badges/master/pipeline.svg)](https://gitlab.beuth-hochschule.de/mi-project/sub-advisor/-/commits/master)
 
-# Subadvisor - Spring Backend - v0.0.1
+# Subadvisor - Spring Backend - v3.0.0
 
 Look at the current [Swagger!](./backend-swagger.yml "BACKEND SWAGGERE")
 
